@@ -237,12 +237,13 @@ mode "$mode_system" {
 bindsym $mod+p mode "$mode_system"
 
 
-exec_always feh --bg-scale '/home/birromer/Pictures/wallpapers/Wallpapers Arch/download (1).png' 
+#exec_always feh --bg-scale '/home/birromer/Pictures/wallpapers/Wallpapers Arch/download (1).png'
+exec_always feh --bg-scale '/home/birromer/Pictures/eagle-nebula.jpg'
 exec_always xautolock -time 30 -locker "i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'" &
 exec setxkbmap -layout br 
 exec xinput set-prop 10 278 1
 
-bindsym $mod+c exec compton
+bindsym $mod+c exec sudo killall compton; exec compton -b
 bindsym $mod+g exec ~/scripts/load_layout.sh; exec --no-startup-id compton
 
 bindsym $mod+n exec firefox
@@ -269,5 +270,49 @@ exec_always --no-startup-id redshift
 #exec google-chrome-stable
 #exec atom
 #exec discord
-#exec spotify 
+#exec spotify
 
+#i3 gaps mode
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym BackSpace mode "mode_gaps"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym BackSpace mode "mode_gaps"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+exec_always gaps outer all set 25
+exec_always gaps inner all set 25
+
+for_window [class="^.*"] border pixel 1
