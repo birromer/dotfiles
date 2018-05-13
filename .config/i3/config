@@ -243,7 +243,7 @@ exec_always xautolock -time 30 -locker "i3lock -c 010101 -i '/home/birromer/Pict
 exec setxkbmap -layout br 
 exec xinput set-prop 10 278 1
 
-bindsym $mod+c exec sudo killall compton; exec compton -b
+bindsym $mod+c exec killall compton &&  compton -b
 bindsym $mod+g exec ~/scripts/load_layout.sh; exec --no-startup-id compton
 
 bindsym $mod+n exec firefox
@@ -264,7 +264,7 @@ exec --no-startup-id /home/birromer/scripts/load_layout.sh
 #exec --no-startup-id termite -e htop
 #exec --no-startup-id termite
 
-exec_always --no-startup-id compton
+exec --no-startup-id compton
 
 exec_always --no-startup-id redshift
 #exec google-chrome-stable
@@ -272,7 +272,11 @@ exec_always --no-startup-id redshift
 #exec discord
 #exec spotify
 
+exec --no-startup-id lightscreen -b
+
 #i3 gaps mode
+smart_borders on
+
 set $mode_gaps Gaps: (o) outer, (i) inner
 set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
 set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
@@ -312,7 +316,7 @@ mode "$mode_gaps_outer" {
         bindsym Escape mode "default"
 }
 
-exec_always gaps outer all set 25
-exec_always gaps inner all set 25
+gaps outer 10
+gaps inner 10
 
 for_window [class="^.*"] border pixel 1
