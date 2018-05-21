@@ -1,71 +1,104 @@
+
+# ---  basic configuration --- #
 set $mod Mod4
 
 font pango:Dejavu Sans Mono 8
-#font pango:DejaVu Sans Mono 8
 
-# Use Mouse+$mod to drag floating windows to their wanted position
+exec_always fc-cache
+
 floating_modifier $mod
 
-# start a terminal
 bindsym $mod+Return exec termite -e tmux
 
-# kill focused window
 bindsym $mod+Shift+q kill
 
-# start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
-# change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
 bindsym $mod+l focus up
 bindsym $mod+semicolon focus right
 
-# alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# move focused window
 bindsym $mod+Shift+j move left
 bindsym $mod+Shift+k move down
 bindsym $mod+Shift+l move up
 bindsym $mod+Shift+semicolon move right
 
-# alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# split in horizontal orientation
 bindsym $mod+h split h
-
-# split in vertical orientation
 bindsym $mod+v split v
 
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+bindsym $mod+shift+f fullscreen toggle
 
-# change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
-# toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
-# focus the parent container
 bindsym $mod+a focus parent
-
-# focus the child container
 #bindsym $mod+d focus child
 
+#define locker
+set $Locker i3lock && sleep 1
+
+#set wallpaper
+#exec_always feh --bg-scale '/home/birromer/Pictures/wallpapers/Wallpapers Arch/download (1).png'
+exec_always feh --bg-scale '/home/birromer/Pictures/eagle-nebula.jpg'
+#set auto lock
+exec_always xautolock -time 30 -locker "i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'" &
+#set keyboard layout
+exec setxkbmap -layout br
+#enable touchpad tap
+exec xinput set-prop 10 279 1
+#starts terminal workspace windows loadout
+exec --no-startup-id /home/birromer/.scripts/load_layout.sh
+#exec --no-startup-id "i3-msg 'workspace $workspace1; append_layout /home/birromer/.i3/workspace-1.json'" #not working
+#composite manager
+exec --no-startup-id compton
+#reduces blue light
+exec_always --no-startup-id redshift
+#chat app
+#exec discord
+#music player
+#exec spotify
+#printscreen tool
+exec --no-startup-id lightscreen -b
+#Unclutter makes the mouse invisible after a brief period
+exec --no-startup-id unclutter
+#launch polybar
+exec_always --no-startup-id ~/.scripts/polybar_launch
+
+# --- i3bar --- #
+#bar {
+#    position bottom
+#    status_command i3status
+#}
+exec --no-startup-id i3mpdupdate
+
+
+# -- gaps -- #
+#window focus when only 1 open
+smart_borders on
+#sets default gap size
+gaps outer 10
+gaps inner 10
+#no borders
+for_window [class="^.*"] border pixel 2
+
+
+# --- workspaces --- #
 set $workspace1 "1: "
 set $workspace2 "2: "
 set $workspace3 "3: "
@@ -86,7 +119,7 @@ bindsym $mod+5 workspace $workspace5
 bindsym $mod+6 workspace $workspace6
 bindsym $mod+7 workspace $workspace7
 bindsym $mod+8 workspace $workspace8
-bindsym $mod+9 workspace $workspace9 
+bindsym $mod+9 workspace $workspace9
 bindsym $mod+0 workspace $workspace10
 
 # move focused container to workspace
@@ -101,33 +134,47 @@ bindsym $mod+Shift+8 move container to workspace $workspace8
 bindsym $mod+Shift+9 move container to workspace $workspace9
 bindsym $mod+Shift+0 move container to workspace $workspace10
 
+#assigns programs to certain workspaces
 assign [class="Firefox"] $workspace2
-
 assign [class="Google-chrome"] $workspace2
 #for_window [class="Google-chrome"] move to workspace $workspace2
-
 assign [class="Atom"] $workspace3
 #for_window [class="Atom"] move to workspace $workspace3
-
 assign [class="Spyder"] $workspace3
-
 assign [class="Vlc"] $workspace7
-
 assign [class="MComix"] $workspace7
-
-
 assign [class="Steam"] $workspace8
 #for_window [class="Steam"] move to workspace $workspace8
-
 assign [class="discord"] $workspace9
 #for_window [class="discord"] move to workspace $workspace9
-
 assign [class="Spotify"] $workspace10
 for_window [class="Spotify"] move to workspace $workspace10
 
 
-bindsym XF86MonBrightnessDown exec /home/birromer/scripts/./brightness2.sh down
-bindsym XF86MonBrightnessUp   exec /home/birromer/scripts/./brightness2.sh up
+# First I have a tmux window used for background scripts.
+# I'll later bind this to mod+u.
+for_window [instance="dropdown"] floating enable
+for_window [instance="dropdown"] resize set 625 400
+for_window [instance="dropdown"] move scratchpad
+for_window [instance="dropdown"] border pixel 5
+# Runs the tmuxinit script, which searches for an earlier tmux instance,
+# otherwise starts a new one (to prevent multiple dropdown sessions).
+exec --no-startup-id $term -n dropdown -e tmuxinit
+# Runs neofetch on first tmux screen if installed.
+exec_always --no-startup-id "tmux send-keys -t 0:0 'clear && neofetch 2>/dev/null' Enter"
+
+# Then I have a window running R I use for basic arithmetic
+# I'll later bind this to mod+a.
+for_window [instance="math"] floating enable
+for_window [instance="math"] resize set 800 300
+for_window [instance="math"] move scratchpad
+for_window [instance="math"] border pixel 5
+exec --no-startup-id termite -n math -f mono:pixelsize=24 -e dropdowncalc
+
+
+#screen brightness control
+bindsym XF86MonBrightnessDown exec /home/birromer/.scripts/./brightness2.sh down
+bindsym XF86MonBrightnessUp   exec /home/birromer/.scripts/./brightness2.sh up
 
 
 # reload the configuration file
@@ -137,63 +184,26 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-# resize window (you can also use the mouse for that)
-mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
+# resize window
+bindsym $mod+r mode "resize"
+mode "resize" {
         bindsym j resize shrink width 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
         bindsym l resize shrink height 10 px or 10 ppt
         bindsym semicolon resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
         bindsym Down resize grow height 10 px or 10 ppt
         bindsym Up resize shrink height 10 px or 10 ppt
         bindsym Right resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
 
-bindsym $mod+r mode "resize"
-
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-bar {
-        status_command i3status
-}
-
-bindsym $mod+Shift+x exec i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'
-#bindsym Super_L      exec i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png' 
-
-
-# Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
-
-# Sreen brightness controls
-#bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-#bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
-
-# Touchpad controls
-bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
-
-# Media player controls
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
-
-
-set $Locker i3lock && sleep 1
-
+# --- menus --- #
+bindsym $mod+p mode "$mode_system"
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id $Locker, mode "default"
@@ -201,59 +211,18 @@ mode "$mode_system" {
     bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
     bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"  
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
-bindsym $mod+p mode "$mode_system"
-
-
-#exec_always feh --bg-scale '/home/birromer/Pictures/wallpapers/Wallpapers Arch/download (1).png'
-exec_always feh --bg-scale '/home/birromer/Pictures/eagle-nebula.jpg'
-exec_always xautolock -time 30 -locker "i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'" &
-exec setxkbmap -layout br 
-exec xinput set-prop 10 279 1
-
-bindsym $mod+c exec killall compton &&  compton -b
-bindsym $mod+g exec ~/scripts/load_layout.sh; exec --no-startup-id compton
-
-bindsym $mod+n exec firefox
-bindsym $mod+m exec google-chrome-stable
-
-bindsym $mod+Shift+s exec spyder
-bindsym $mod+Shift+n exec jupyter-notebook
-
-#bindsym $mod+t exec 
-bindsym $mod+y exec vlc
-bindsym $mod+u exec mcomix
-#bindsym $mod+i exec
-bindsym $mod+z exec primusrun steam
-
-exec --no-startup-id /home/birromer/scripts/load_layout.sh
-#exec --no-startup-id "i3-msg 'workspace $workspace1; append_layout /home/birromer/.i3/workspace-1.json'"
-#exec --no-startup-id termite -e tmux
-#exec --no-startup-id termite -e htop
-#exec --no-startup-id termite
-
-exec --no-startup-id compton
-
-exec_always --no-startup-id redshift
-#exec discord
-#exec spotify
-
-exec --no-startup-id lightscreen -b
-
-#i3 gaps mode
-smart_borders on
-
+#menu to set gaps
 set $mode_gaps Gaps: (o) outer, (i) inner
 set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
 set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
 bindsym $mod+Shift+g mode "$mode_gaps"
-
 mode "$mode_gaps" {
         bindsym o      mode "$mode_gaps_outer"
         bindsym i      mode "$mode_gaps_inner"
@@ -288,8 +257,50 @@ mode "$mode_gaps_outer" {
         bindsym Escape mode "default"
 }
 
-gaps outer 10
-gaps inner 10
 
-for_window [class="^.*"] border pixel 1
-exec_always fc-cache
+# --- keybindings --- #
+bindsym $mod+Shift+x exec i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'
+#bindsym Super_L      exec i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'
+
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+
+# Sreen brightness controls
+#bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+#bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+
+# Touchpad controls
+bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
+
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+bindsym $mod+c exec killall compton &&  compton -b
+bindsym $mod+g exec ~/.scripts/load_layout.sh; exec --no-startup-id compton
+
+bindsym $mod+n exec firefox
+bindsym $mod+m exec google-chrome-stable
+
+bindsym $mod+Shift+s exec spyder
+bindsym $mod+Shift+n exec jupyter-notebook
+
+bindsym $mod+y exec vlc
+bindsym $mod+u exec mcomix
+bindsym $mod+shift+p exec primusrun steam
+
+bindsym $mod+f exec termite -e ranger
+
+bindsym $mod+shift+v exec termite -e ncmpcpp -s visualizer
+
+bindsym $mod+Shift+d		gaps inner current set 0; gaps outer current set 0
+
+bindsym $mod+b			 [instance="math"] scratchpad show; [instance="math"] move position center
+bindsym $mod+shift+b [instance="dropdown"] scratchpad show; [instance="dropdown"] move position centero
+
+#STOP/HIDE EVERYTHING:
+bindsym $mod+Shift+Delete	exec lmc truemute ; exec $truepause ; workspace lmao ; exec termite -e htop ; exec termite -e ranger
