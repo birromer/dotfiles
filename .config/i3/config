@@ -12,9 +12,9 @@ bindsym $mod+Return exec urxvt -e tmux
 
 bindsym $mod+Shift+q kill
 
-bindsym $mod+d exec dmenu_run
+# bindsym $mod+d exec dmenu_run
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-bindsym $mod+Tab exec rofi -show run 
+bindsym $mod+d exec rofi -show run 
 
 bindsym $mod+j focus left
 bindsym $mod+k focus down
