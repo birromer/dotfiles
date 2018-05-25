@@ -14,6 +14,7 @@ bindsym $mod+Shift+q kill
 
 bindsym $mod+d exec dmenu_run
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+Tab exec rofi -show run 
 
 bindsym $mod+j focus left
 bindsym $mod+k focus down
@@ -178,8 +179,6 @@ bindsym XF86MonBrightnessDown exec /home/birromer/.scripts/./brightness2.sh down
 bindsym XF86MonBrightnessUp   exec /home/birromer/.scripts/./brightness2.sh up
 
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
@@ -299,6 +298,9 @@ bindsym $mod+f exec urxvt -e ranger
 bindsym $mod+shift+v exec urxvt -e ncmpcpp -s visualizer
 
 bindsym $mod+Shift+d		gaps inner current set 0; gaps outer current set 0
+bindsym $mod+Shift+c        gaps inner current set 10; gaps outer current set 10
+
+# bindym $mod+Tab exec rofi -show window
 
 bindsym $mod+b			 [instance="math"] scratchpad show; [instance="math"] move position center
 bindsym $mod+shift+b [instance="dropdown"] scratchpad show; [instance="dropdown"] move position centero
