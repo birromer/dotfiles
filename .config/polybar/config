@@ -260,7 +260,7 @@ ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
 type = internal/network
-interface = enp0s25
+interface = enp2s0
 interval = 3.0
 
 format-connected-underline = ${xrdb:color2}
@@ -278,7 +278,7 @@ label-disconnected-foreground = ${colors.foreground-alt}
 
 [module/date]
 type = internal/date
-interval = 5
+interval = 1
 
 date = " %a, %b %d, %Y"
 ;date-alt = " %a, %b %d, %Y at %I:%M%p"

@@ -8,7 +8,7 @@ exec_always fc-cache
 
 floating_modifier $mod
 
-bindsym $mod+Return exec termite -e tmux
+bindsym $mod+Return exec urxvt -e tmux
 
 bindsym $mod+Shift+q kill
 
@@ -20,16 +20,15 @@ bindsym $mod+k focus down
 bindsym $mod+l focus up
 bindsym $mod+semicolon focus right
 
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
 bindsym $mod+Shift+j move left
 bindsym $mod+Shift+k move down
 bindsym $mod+Shift+l move up
 bindsym $mod+Shift+semicolon move right
 
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
@@ -138,6 +137,8 @@ bindsym $mod+Shift+0 move container to workspace $workspace10
 assign [class="Firefox"] $workspace2
 assign [class="Google-chrome"] $workspace2
 #for_window [class="Google-chrome"] move to workspace $workspace2
+workspace #workspace2 gaps outer 0
+workspace #workspace2 gaps inner 0
 assign [class="Atom"] $workspace3
 #for_window [class="Atom"] move to workspace $workspace3
 assign [class="Spyder"] $workspace3
@@ -169,7 +170,7 @@ for_window [instance="math"] floating enable
 for_window [instance="math"] resize set 800 300
 for_window [instance="math"] move scratchpad
 for_window [instance="math"] border pixel 5
-exec --no-startup-id termite -n math -f mono:pixelsize=24 -e dropdowncalc
+exec --no-startup-id urxvt -n math -f mono:pixelsize=24 -e dropdowncalc
 
 
 #screen brightness control
@@ -293,9 +294,9 @@ bindsym $mod+y exec vlc
 bindsym $mod+u exec mcomix
 bindsym $mod+shift+p exec primusrun steam
 
-bindsym $mod+f exec termite -e ranger
+bindsym $mod+f exec urxvt -e ranger
 
-bindsym $mod+shift+v exec termite -e ncmpcpp -s visualizer
+bindsym $mod+shift+v exec urxvt -e ncmpcpp -s visualizer
 
 bindsym $mod+Shift+d		gaps inner current set 0; gaps outer current set 0
 
@@ -303,4 +304,4 @@ bindsym $mod+b			 [instance="math"] scratchpad show; [instance="math"] move posi
 bindsym $mod+shift+b [instance="dropdown"] scratchpad show; [instance="dropdown"] move position centero
 
 #STOP/HIDE EVERYTHING:
-bindsym $mod+Shift+Delete	exec lmc truemute ; exec $truepause ; workspace lmao ; exec termite -e htop ; exec termite -e ranger
+bindsym $mod+Shift+Delete	exec lmc truemute ; exec $truepause ; workspace lmao ; exec urxvt -e htop ; exec urxvt -e ranger
