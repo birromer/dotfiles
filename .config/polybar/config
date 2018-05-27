@@ -50,8 +50,8 @@ padding-right = 0
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = mono:pixelsize=9;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-0 = Inconsolata:pixelsize=9;1
+font-1 = unifont:fontformat=truetype:size=9:antialias=false;0
 font-2 = Wuncon Siji:pixelsize=9;1
 
 #modules-left = i3

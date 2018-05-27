@@ -30,11 +30,15 @@
 *color15: #f1efee
 
 URxvt.intensityStyles:	false
-URxvt.background:       [85]#000000
+URxvt.background:   [85]#000000
 URxvt.depth:		32
-URxvt.font: 		 xft:Monofur:size=12,xft:Inconsolata\ for\ Powerline:size=12
+URxvt.font: 		xft:Monofur:size=12,xft:Inconsolata\ for\ Powerline:size=12
+URxvt.boldFont      xft:Monofur:size=12,xft:Inconsolata\ for\ Powerline:size=12
 URxvt.scrollBar:	false
 URxvt.cursorColor:	white
+URxvt.letterSpace:  0
+
+URxvt.saveLines:    100000
 
 !! Extensions
 URxvt.perl-ext-common:	default,matcher,resize-font,url-select,keyboard-select
@@ -51,6 +55,8 @@ URxvt.resize-font.bigger:	C-Up
 !! Matcher
 URxvt.url-launcher:	linkhandler
 URxvt.matcher.button:	1
+
+rofi.font: Inconsolata 12
 
 rofi.color-enabled:	true
 rofi.color-window:	#000, #000, #000

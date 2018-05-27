@@ -95,7 +95,7 @@ smart_borders on
 gaps outer 10
 gaps inner 10
 #no borders
-for_window [class="^.*"] border pixel 2
+for_window [class="^.*"] border pixel 3
 
 
 # --- workspaces --- #
@@ -161,7 +161,7 @@ for_window [instance="dropdown"] move scratchpad
 for_window [instance="dropdown"] border pixel 5
 # Runs the tmuxinit script, which searches for an earlier tmux instance,
 # otherwise starts a new one (to prevent multiple dropdown sessions).
-exec --no-startup-id $term -n dropdown -e tmuxinit
+exec --no-startup-id urxvt -n dropdown -e tmuxinit
 # Runs neofetch on first tmux screen if installed.
 exec_always --no-startup-id "tmux send-keys -t 0:0 'clear && neofetch 2>/dev/null' Enter"
 
@@ -290,7 +290,7 @@ bindsym $mod+Shift+s exec spyder
 bindsym $mod+Shift+n exec jupyter-notebook
 
 bindsym $mod+y exec vlc
-bindsym $mod+u exec mcomix
+#bindsym $mod+u exec mcomix
 bindsym $mod+shift+p exec primusrun steam
 
 bindsym $mod+Shuft+f exec urxvt -e ranger
@@ -303,7 +303,7 @@ bindsym $mod+Shift+c        gaps inner current set 10; gaps outer current set 10
 # bindym $mod+Tab exec rofi -show window
 
 bindsym $mod+b			 [instance="math"] scratchpad show; [instance="math"] move position center
-bindsym $mod+shift+b [instance="dropdown"] scratchpad show; [instance="dropdown"] move position centero
+bindsym $mod+u [instance="dropdown"] scratchpad show; [instance="dropdown"] move position centero
 
 #STOP/HIDE EVERYTHING:
 bindsym $mod+Shift+Delete	exec lmc truemute ; exec $truepause ; workspace lmao ; exec urxvt -e htop ; exec urxvt -e ranger
