@@ -63,7 +63,7 @@ exec setxkbmap -layout br
 #enable touchpad tap
 exec xinput set-prop 10 279 1
 #starts terminal workspace windows loadout
-exec --no-startup-id /home/birromer/.scripts/load_layout.sh
+#exec --no-startup-id /home/birromer/.scripts/load_layout.sh
 #exec --no-startup-id "i3-msg 'workspace $workspace1; append_layout /home/birromer/.i3/workspace-1.json'" #not working
 #composite manager
 exec --no-startup-id compton
@@ -156,22 +156,22 @@ for_window [class="Spotify"] move to workspace $workspace10
 # First I have a tmux window used for background scripts.
 # I'll later bind this to mod+u.
 for_window [instance="dropdown"] floating enable
-for_window [instance="dropdown"] resize set 625 400
+for_window [instance="dropdown"] resize set 825 500
 for_window [instance="dropdown"] move scratchpad
 for_window [instance="dropdown"] border pixel 5
 # Runs the tmuxinit script, which searches for an earlier tmux instance,
 # otherwise starts a new one (to prevent multiple dropdown sessions).
-exec --no-startup-id urxvt -n dropdown -e tmuxinit
+exec --no-startup-id urxvt -name dropdown -e tmux
 # Runs neofetch on first tmux screen if installed.
-exec_always --no-startup-id "tmux send-keys -t 0:0 'clear && neofetch 2>/dev/null' Enter"
+#exec_always --no-startup-id "tmux send-keys -t 0:0 'clear && neofetch 2>/dev/null' Enter"
 
 # Then I have a window running R I use for basic arithmetic
 # I'll later bind this to mod+a.
-for_window [instance="math"] floating enable
-for_window [instance="math"] resize set 800 300
-for_window [instance="math"] move scratchpad
-for_window [instance="math"] border pixel 5
-exec --no-startup-id urxvt -n math -f mono:pixelsize=24 -e dropdowncalc
+#for_window [instance="math"] floating enable
+#for_window [instance="math"] resize set 800 300
+#for_window [instance="math"] move scratchpad
+#for_window [instance="math"] border pixel 5
+#exec --no-startup-id urxvt -name math -f mono:pixelsize=24 -e dropdowncalc
 
 
 #screen brightness control
@@ -300,10 +300,8 @@ bindsym $mod+shift+v exec urxvt -e ncmpcpp -s visualizer
 bindsym $mod+Shift+d		gaps inner current set 0; gaps outer current set 0
 bindsym $mod+Shift+c        gaps inner current set 10; gaps outer current set 10
 
-# bindym $mod+Tab exec rofi -show window
-
-bindsym $mod+b			 [instance="math"] scratchpad show; [instance="math"] move position center
-bindsym $mod+u [instance="dropdown"] scratchpad show; [instance="dropdown"] move position centero
+bindsym $mod+u           [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
+bindsym $mod+Shift+u	 [instance="math"] scratchpad show; [instance="math"] move position center
 
 #STOP/HIDE EVERYTHING:
 bindsym $mod+Shift+Delete	exec lmc truemute ; exec $truepause ; workspace lmao ; exec urxvt -e htop ; exec urxvt -e ranger
