@@ -38,7 +38,7 @@ bindsym $mod+Shift+Right move right
 bindsym $mod+h split h
 bindsym $mod+v split v
 
-bindsym $mod+shift+f fullscreen toggle
+bindsym $mod+f fullscreen toggle
 
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
@@ -293,7 +293,7 @@ bindsym $mod+y exec vlc
 bindsym $mod+u exec mcomix
 bindsym $mod+shift+p exec primusrun steam
 
-bindsym $mod+f exec urxvt -e ranger
+bindsym $mod+Shuft+f exec urxvt -e ranger
 
 bindsym $mod+shift+v exec urxvt -e ncmpcpp -s visualizer
 
