@@ -8,7 +8,8 @@ exec_always fc-cache
 
 floating_modifier $mod
 
-bindsym $mod+Return exec urxvt -e tmux
+bindsym $mod+Return exec urxvt
+bindsym $mod+Shift+Return exec urxvt -e tmux
 
 bindsym $mod+Shift+q kill
 
@@ -63,7 +64,7 @@ exec setxkbmap -layout br
 #enable touchpad tap
 exec xinput set-prop 10 279 1
 #starts terminal workspace windows loadout
-#exec --no-startup-id /home/birromer/.scripts/load_layout.sh
+exec --no-startup-id /home/birromer/.scripts/load_layout.sh
 #exec --no-startup-id "i3-msg 'workspace $workspace1; append_layout /home/birromer/.i3/workspace-1.json'" #not working
 #composite manager
 exec --no-startup-id compton
@@ -95,7 +96,7 @@ smart_borders on
 gaps outer 10
 gaps inner 10
 #no borders
-for_window [class="^.*"] border pixel 3
+for_window [class="^.*"] border pixel 1
 
 
 # --- workspaces --- #
@@ -151,16 +152,10 @@ assign [class="discord"] $workspace9
 #for_window [class="discord"] move to workspace $workspace9
 assign [class="Spotify"] $workspace10
 for_window [class="Spotify"] move to workspace $workspace10
-
-
-# First I have a tmux window used for background scripts.
-# I'll later bind this to mod+u.
 for_window [instance="dropdown"] floating enable
-for_window [instance="dropdown"] resize set 825 500
+for_window [instance="dropdown"] resize set 825 900
 for_window [instance="dropdown"] move scratchpad
 for_window [instance="dropdown"] border pixel 5
-# Runs the tmuxinit script, which searches for an earlier tmux instance,
-# otherwise starts a new one (to prevent multiple dropdown sessions).
 exec --no-startup-id urxvt -name dropdown -e tmux
 # Runs neofetch on first tmux screen if installed.
 #exec_always --no-startup-id "tmux send-keys -t 0:0 'clear && neofetch 2>/dev/null' Enter"

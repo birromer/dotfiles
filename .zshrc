@@ -9,7 +9,9 @@ export ZSH=$HOME/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="agnosterzak"
+#ZSH_THEME="agnoster"
+ZSH_THEME="pygmalion"
+#ZSH_THEME="lambda-gitster"
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -96,9 +98,6 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 
-
-
-
 # =============================================================================
 #                                   Plugins
 # =============================================================================
@@ -108,9 +107,9 @@ source $ZSH/oh-my-zsh.sh
 source ~/.zplug/init.zsh
 
 #zplug "b4b4r07/enhancd", use:init.sh
-zplug "b4b4r07/enhancd", use:enhancd.sh
+#zplug "b4b4r07/enhancd", use:enhancd.sh
 #zplug "b4b4r07/zsh-vimode-visual", defer:3
-zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+#zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
 #zplug "knu/zsh-manydots-magic", use:manydots-magic, defer:2
 zplug "seebi/dircolors-solarized", ignore:"*", as:plugin
 
@@ -148,15 +147,6 @@ zplug "zsh-users/zsh-completions",              defer:0
 zplug "zsh-users/zsh-autosuggestions",          defer:2, on:"zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting",      defer:3, on:"zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-history-substring-search", defer:3, on:"zsh-users/zsh-syntax-highlighting"
-
-
-
-
-
-
-
-
-
 
 
 # =============================================================================
@@ -362,11 +352,5 @@ fi
 #compinit
 
 #ZLE_RPROMPT_INDENT=0
-
-
-
-
-
-
 
 

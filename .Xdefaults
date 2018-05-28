@@ -32,8 +32,8 @@
 URxvt.intensityStyles:	false
 URxvt.background:   [85]#000000
 URxvt.depth:		32
-URxvt.font: 		xft:Monofur:size=12,xft:Inconsolata\ for\ Powerline:size=12
-URxvt.boldFont      xft:Monofur:size=12,xft:Inconsolata\ for\ Powerline:size=12
+URxvt.font: 		xft:Monofur:size=12,xft:Hack:size=12
+URxvt.boldFont:     xft:Monofur:size=12,xft:Inconsolata\ for\ Powerline:size=12
 URxvt.scrollBar:	false
 URxvt.cursorColor:	white
 URxvt.letterSpace:  0
