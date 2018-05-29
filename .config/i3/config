@@ -8,7 +8,8 @@ exec_always fc-cache
 
 floating_modifier $mod
 
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec urxvt -e tmux
+#bindsym $mod+Return exec urxvt
 bindsym $mod+Shift+Return exec urxvt -e tmux
 
 bindsym $mod+Shift+q kill
@@ -36,9 +37,6 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-bindsym $mod+h split h
-bindsym $mod+v split v
-
 bindsym $mod+f fullscreen toggle
 
 bindsym $mod+s layout stacking
@@ -50,6 +48,8 @@ bindsym $mod+space focus mode_toggle
 
 bindsym $mod+a focus parent
 #bindsym $mod+d focus child
+
+bindsym $mod+t split toggle
 
 #define locker
 set $Locker i3lock && sleep 1
@@ -64,12 +64,12 @@ exec setxkbmap -layout br
 #enable touchpad tap
 exec xinput set-prop 10 279 1
 #starts terminal workspace windows loadout
-exec --no-startup-id /home/birromer/.scripts/load_layout.sh
+#  exec --no-startup-id /home/birromer/.scripts/load_layout.sh
 #exec --no-startup-id "i3-msg 'workspace $workspace1; append_layout /home/birromer/.i3/workspace-1.json'" #not working
 #composite manager
 exec --no-startup-id compton
 #reduces blue light
-exec_always --no-startup-id redshift
+exec --no-startup-id redshift
 #chat app
 #exec discord
 #music player
@@ -144,6 +144,8 @@ workspace #workspace2 gaps inner 0
 assign [class="Atom"] $workspace3
 #for_window [class="Atom"] move to workspace $workspace3
 assign [class="Spyder"] $workspace3
+assign [class="jetbrains-studio"] $workspace3
+assign [class="Evince"] $workspace3
 assign [class="Vlc"] $workspace7
 assign [class="MComix"] $workspace7
 assign [class="Steam"] $workspace8
@@ -177,7 +179,7 @@ bindsym XF86MonBrightnessUp   exec /home/birromer/.scripts/./brightness2.sh up
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+#bindsym $mod+Shift+l exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 
 # resize window
@@ -297,6 +299,10 @@ bindsym $mod+Shift+c        gaps inner current set 10; gaps outer current set 10
 
 bindsym $mod+u           [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
 bindsym $mod+Shift+u	 [instance="math"] scratchpad show; [instance="math"] move position center
+
+bindsym $mod+h exec urxvt -e htop
+
+bindsym $mod+Shift+e exec evince
 
 #STOP/HIDE EVERYTHING:
 bindsym $mod+Shift+Delete	exec lmc truemute ; exec $truepause ; workspace lmao ; exec urxvt -e htop ; exec urxvt -e ranger
