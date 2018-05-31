@@ -46,7 +46,7 @@ bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
-bindsym $mod+a focus parent
+#bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 bindsym $mod+t split toggle
@@ -145,7 +145,7 @@ assign [class="Atom"] $workspace3
 #for_window [class="Atom"] move to workspace $workspace3
 assign [class="Spyder"] $workspace3
 assign [class="jetbrains-studio"] $workspace3
-assign [class="Evince"] $workspace3
+#assign [class="Evince"] $workspace3
 assign [class="Vlc"] $workspace7
 assign [class="MComix"] $workspace7
 assign [class="Steam"] $workspace8
@@ -164,11 +164,11 @@ exec --no-startup-id urxvt -name dropdown -e tmux
 
 # Then I have a window running R I use for basic arithmetic
 # I'll later bind this to mod+a.
-#for_window [instance="math"] floating enable
-#for_window [instance="math"] resize set 800 300
-#for_window [instance="math"] move scratchpad
-#for_window [instance="math"] border pixel 5
-#exec --no-startup-id urxvt -name math -f mono:pixelsize=24 -e dropdowncalc
+for_window [instance="math"] floating enable
+for_window [instance="math"] resize set 800 300
+for_window [instance="math"] move scratchpad
+for_window [instance="math"] border pixel 5
+exec --no-startup-id urxvt -name math -e /home/birromer/.scripts/dropdowncalc
 
 
 #screen brightness control
@@ -290,15 +290,15 @@ bindsym $mod+y exec vlc
 #bindsym $mod+u exec mcomix
 bindsym $mod+shift+p exec primusrun steam
 
-bindsym $mod+Shuft+f exec urxvt -e ranger
+bindsym $mod+Shift+f exec urxvt -e ranger
 
-bindsym $mod+shift+v exec urxvt -e ncmpcpp -s visualizer
+bindsym $mod+Shift+v exec urxvt -e ncmpcpp -s visualizer
 
 bindsym $mod+Shift+d		gaps inner current set 0; gaps outer current set 0
 bindsym $mod+Shift+c        gaps inner current set 10; gaps outer current set 10
 
 bindsym $mod+u           [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
-bindsym $mod+Shift+u	 [instance="math"] scratchpad show; [instance="math"] move position center
+bindsym $mod+a      	 [instance="math"] scratchpad show; [instance="math"] move position center
 
 bindsym $mod+h exec urxvt -e htop
 
