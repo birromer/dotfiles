@@ -12,6 +12,7 @@ export ZSH=$HOME/.oh-my-zsh
 #ZSH_THEME="agnoster"
 ZSH_THEME="pygmalion"
 #ZSH_THEME="lambda-gitster"
+#ZSH_THEME="spaceship"
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
