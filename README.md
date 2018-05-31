@@ -1,6 +1,6 @@
 **Dotfiles for my Arch Linux Installation**
 
 Screenshots:
-[[https://raw.githubusercontent.com/birromer/dotfiles/master/screenshots/main-clean.png]]
+![Screenshot1](screenshots/main-clean.png)
 
-[[https://raw.githubusercontent.com/birromer/dotfiles/master/screenshots/main-load_layout.png]]
+![Screenshot2](screenshots/main-load_layout.png)
