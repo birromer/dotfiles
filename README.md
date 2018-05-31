@@ -1,3 +1,3 @@
-*Dotfiles for my Arch Linux Installation*
+**Dotfiles for my Arch Linux Installation**
 
 Screenshots:
