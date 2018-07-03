@@ -56,13 +56,13 @@ set $Locker i3lock && sleep 1
 
 #set wallpaper
 #exec_always feh --bg-scale '/home/birromer/Pictures/wallpapers/Wallpapers Arch/download (1).png'
-exec_always feh --bg-scale '/home/birromer/Pictures/eagle-nebula.jpg'
+exec_always feh --bg-scale '/home/birromer/Pictures/sandman-3.jpg'
 #set auto lock
 exec_always xautolock -time 30 -locker "i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'" &
 #set keyboard layout
 exec setxkbmap -layout br
 #enable touchpad tap
-exec xinput set-prop 10 279 1
+exec xinput set-prop 10 283 1
 #starts terminal workspace windows loadout
 #  exec --no-startup-id /home/birromer/.scripts/load_layout.sh
 #exec --no-startup-id "i3-msg 'workspace $workspace1; append_layout /home/birromer/.i3/workspace-1.json'" #not working
