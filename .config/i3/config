@@ -62,7 +62,7 @@ exec_always xautolock -time 30 -locker "i3lock -c 010101 -i '/home/birromer/Pict
 #set keyboard layout
 exec setxkbmap -layout br
 #enable touchpad tap
-exec xinput set-prop 10 283 1
+exec xinput set-prop 10 282 1
 #starts terminal workspace windows loadout
 #  exec --no-startup-id /home/birromer/.scripts/load_layout.sh
 #exec --no-startup-id "i3-msg 'workspace $workspace1; append_layout /home/birromer/.i3/workspace-1.json'" #not working
@@ -172,8 +172,8 @@ exec --no-startup-id urxvt -name math -e /home/birromer/.scripts/dropdowncalc
 
 
 #screen brightness control
-bindsym XF86MonBrightnessDown exec /home/birromer/.scripts/./brightness2.sh down
-bindsym XF86MonBrightnessUp   exec /home/birromer/.scripts/./brightness2.sh up
+bindsym XF86MonBrightnessDown exec sudo /home/birromer/.scripts/./brightness2.sh down
+bindsym XF86MonBrightnessUp   exec sudo /home/birromer/.scripts/./brightness2.sh up
 
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
