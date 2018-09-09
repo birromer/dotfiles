@@ -16,7 +16,7 @@ bindsym $mod+Shift+q kill
 
 # bindsym $mod+d exec dmenu_run
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-bindsym $mod+d exec rofi -show run 
+bindsym $mod+d exec rofi -show run
 
 bindsym $mod+j focus left
 bindsym $mod+k focus down
@@ -52,17 +52,19 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+t split toggle
 
 #define locker
-set $Locker i3lock && sleep 1
+set $Locker i3lock -i /home/birromer/Pictures/sandman-1.png && sleep 1
 
 #set wallpaper
 #exec_always feh --bg-scale '/home/birromer/Pictures/wallpapers/Wallpapers Arch/download (1).png'
-exec_always feh --bg-scale '/home/birromer/Pictures/sandman-3.jpg'
+#exec_always feh --bg-scale '/home/birromer/Pictures/sandman-3.jpg'
+exec_always feh --bg-scale '/home/birromer/Pictures/sandman-4.jpg'
 #set auto lock
-exec_always xautolock -time 30 -locker "i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'" &
+#exec_always xautolock -time 30 -locker "i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'" &
+exec_always xautolock -time 30 -locker "i3lock -i /home/birromer/Pictures/gwyn-1.png
 #set keyboard layout
 exec setxkbmap -layout br
 #enable touchpad tap
-exec xinput set-prop 10 282 1
+exec xinput set-prop 10 283 1
 #starts terminal workspace windows loadout
 #  exec --no-startup-id /home/birromer/.scripts/load_layout.sh
 #exec --no-startup-id "i3-msg 'workspace $workspace1; append_layout /home/birromer/.i3/workspace-1.json'" #not working
@@ -256,7 +258,10 @@ mode "$mode_gaps_outer" {
 
 
 # --- keybindings --- #
-bindsym $mod+Shift+x exec i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'
+#bindsym $mod+Shift+x exec i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'
+#bindsym $mod+Shift+x exec i3lock -i /home/birromer/Pictures/gwyn-1.png
+bindsym $mod+Shift+x exec i3lock -i /home/birromer/Pictures/nito-3.png
+
 #bindsym Super_L      exec i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'
 
 # Pulse Audio controls
@@ -303,6 +308,9 @@ bindsym $mod+a      	 [instance="math"] scratchpad show; [instance="math"] move 
 bindsym $mod+h exec urxvt -e htop
 
 bindsym $mod+Shift+e exec evince
+
+bindsym $mod+Shift+o exec optirun wine64 PlayOnLinux\'s\ virtual\ drives/Steam/drive_c/Program\ Files/Steam/Steam.exe -no-cef-sandbox
+
 
 #STOP/HIDE EVERYTHING:
 bindsym $mod+Shift+Delete	exec lmc truemute ; exec $truepause ; workspace lmao ; exec urxvt -e htop ; exec urxvt -e ranger
