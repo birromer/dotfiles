@@ -86,6 +86,9 @@ set colorcolumn=80
 " Trim the trailing white space on save.
 autocmd BufWritePre <buffer> :%s/\s\+$//e
 
+" Change needed for YCM to work
+let g:ycm_global_ycm_extra_conf = '$USER/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+
 " ---------- Indentation ----------
 " Use spaces instead of tabs
 set expandtab
