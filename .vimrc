@@ -129,3 +129,6 @@ nnoremap <F12> :YcmCompleter GoTo<CR>
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_collect_identifiers_from_tags_files = 1
 
+
+let g:haddock_browser = "/bin/firefox"
+let g:haddock_docdir = "/usr/share/doc/haskell-haddock-library/"
