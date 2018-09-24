@@ -373,6 +373,10 @@ globalkeys = awful.util.table.join(
               {description = "increase master width factor", group = "layout"}),
     awful.key({ altkey, "Shift"   }, "h",     function () awful.tag.incmwfact(-0.05)          end,
               {description = "decrease master width factor", group = "layout"}),
+    awful.key({ altkey, "Shift"   }, "j",     function () awful.client.incwfact( 0.05)          end,
+              {description = "increase master height factor", group = "layout"}),
+    awful.key({ altkey, "Shift"   }, "k",     function () awful.client.incwfact(-0.05)          end,
+              {description = "decrease master height factor", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1, nil, true) end,
               {description = "increase the number of master clients", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1, nil, true) end,
@@ -381,8 +385,8 @@ globalkeys = awful.util.table.join(
               {description = "increase the number of columns", group = "layout"}),
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
               {description = "decrease the number of columns", group = "layout"}),
-    awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
-              {description = "select next", group = "layout"}),
+    --awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
+    --          {description = "select next", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
 
@@ -402,12 +406,12 @@ globalkeys = awful.util.table.join(
               {description = "dropdown application", group = "launcher"}),
 
     -- Widgets popups
-    awful.key({ altkey, }, "c", function () lain.widget.calendar.show(7) end,
-              {description = "show calendar", group = "widgets"}),
-    awful.key({ altkey, }, "h", function () if beautiful.fs then beautiful.fs.show(7) end end,
-              {description = "show filesystem", group = "widgets"}),
-    awful.key({ altkey, }, "w", function () if beautiful.weather then beautiful.weather.show(7) end end,
-              {description = "show weather", group = "widgets"}),
+    --awful.key({ altkey, }, "c", function () lain.widget.calendar.show(7) end,
+    --          {description = "show calendar", group = "widgets"}),
+    --awful.key({ altkey, }, "h", function () if beautiful.fs then beautiful.fs.show(7) end end,
+    --          {description = "show filesystem", group = "widgets"}),
+    --awful.key({ altkey, }, "w", function () if beautiful.weather then beautiful.weather.show(7) end end,
+    --          {description = "show weather", group = "widgets"}),
 
     -- Brightness
     awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn("xbacklight -inc 10") end,
@@ -490,8 +494,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "c", function () awful.spawn("xsel | xsel -i -b") end,
               {description = "copy terminal to gtk", group = "hotkeys"}),
     -- Copy clipboard to primary (gtk to terminals)
-    awful.key({ altkey }, "v", function () awful.spawn("xsel -b | xsel") end,
-              {description = "copy gtk to terminal", group = "hotkeys"}),
+    --awful.key({ altkey }, "v", function () awful.spawn("xsel -b | xsel") end,
+    --          {description = "copy gtk to terminal", group = "hotkeys"}),
 
     -- User programs
     awful.key({ modkey }, "w", function () awful.spawn(browser) end,
@@ -512,12 +516,12 @@ globalkeys = awful.util.table.join(
         {description = "show dmenu", group = "launcher"}),
     --]]
     -- Prompt
-    awful.key({ altkey }, "F1", function () awful.util.spawn(dmenu_settings) end),
+    --awful.key({ altkey }, "F1", function () awful.util.spawn(dmenu_settings) end),
     awful.key({ modkey }, "d", function () awful.util.spawn(rofi_settings) end),
-    awful.key({ altkey }, "o", function () awful.screen.focused().mypromptbox:run() end,
-              {description = "run prompt", group = "launcher"}),
+    --awful.key({ altkey }, "o", function () awful.screen.focused().mypromptbox:run() end,
+    --          {description = "run prompt", group = "launcher"}),
 
-    awful.key({ altkey }, "l",
+    awful.key({ modkey, "Shift" }, "l",
               function ()
                   awful.prompt.run {
                     prompt       = "Run Lua code: ",
@@ -541,7 +545,7 @@ clientkeys = awful.util.table.join(
         {description = "toggle fullscreen", group = "client"}),
     awful.key({ modkey,  "Shift"  }, "q",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
-    awful.key({ altkey,           }, "space",  awful.client.floating.toggle                     ,
+    awful.key({ modkey,           }, "space",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
               {description = "move to master", group = "client"}),
