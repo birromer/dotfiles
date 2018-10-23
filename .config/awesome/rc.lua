@@ -1,6 +1,8 @@
 local awesome, client, mouse, screen, tag = awesome, client, mouse, screen, tag
 local ipairs, string, os, table, tostring, tonumber, type = ipairs, string, os, table, tostring, tonumber, type
 
+local xrandr = require("xrandr")
+
 local gears         = require("gears")
 local awful         = require("awful")
                       require("awful.autofocus")
@@ -52,7 +54,7 @@ run_once({ "compton" })
 run_once({ "wmname LG3D" }) -- Fix for java applications
 run_once({ "xautolock -time 10 -locker '/usr/share/i3lock-fancy/lock -f Meslo-LG-S-Regular -t Locked' -- scrot" })
 
-run_once({"xinput --set-prop 10 279 1"})
+run_once({"xinput --set-prop 10 283 1"})
 run_once({"setxkbmap -layout br"})
 
 -- Variable definitions
@@ -385,8 +387,8 @@ globalkeys = awful.util.table.join(
               {description = "increase the number of columns", group = "layout"}),
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
               {description = "decrease the number of columns", group = "layout"}),
-    --awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
-    --          {description = "select next", group = "layout"}),
+    awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
+              {description = "select next", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
 
