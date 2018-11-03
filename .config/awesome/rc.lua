@@ -76,7 +76,7 @@ local terminal     = "urxvt"
 local editor       = os.getenv("EDITOR") or "nano"
 local gui_editor   = "vim"
 local browser      = "firefox"
-local guieditor    = "atom"
+local guieditor    = "emacs"
 
 -- Naughty presets
 naughty.config.defaults.timeout = 5
@@ -659,7 +659,7 @@ awful.rules.rules = {
    -- Set Firefox to always map on the first tag on screen 1.
     { rule = { class = "Firefox" },
       properties = { screen = 1, maximized = true, switchtotag = true, tag = awful.util.tagnames[3] } },
-    { rule = { class = "Atom" },
+    { rule = { class = "Emacs" },
       properties = { screen = 1, switchtotag = true, tag = awful.util.tagnames[1] } },
     { rule = { class = "mpv" },
       properties = { maximized = true } },
