@@ -354,4 +354,6 @@ fi
 
 #ZLE_RPROMPT_INDENT=0
 
+export PATH=/opt/anaconda/bin:$PATH
 
+alias vibes="LD_PRELOAD=/usr/lib/libfreetype.so /home/birromer/cic/personal/IAMOOC/VIBes-0.2.3-linux.AppImage"
