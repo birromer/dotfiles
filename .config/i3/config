@@ -54,7 +54,8 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+t split toggle
 
 #define locker
-set $Locker i3lock -i /home/birromer/Pictures/dark-souls-firelink.png && sleep 1
+#set $Locker i3lock -i /home/birromer/Pictures/dark-souls-firelink.png && sleep 1
+set $Locker i3lock-fancy
 
 #set wallpaper
 #exec_always feh --bg-scale '/home/birromer/Pictures/wallpapers/Wallpapers Arch/download (1).png'
@@ -62,7 +63,7 @@ set $Locker i3lock -i /home/birromer/Pictures/dark-souls-firelink.png && sleep 1
 exec_always feh --bg-scale '/home/birromer/Pictures/sandman-4.jpg'
 #set auto lock
 #exec_always xautolock -time 30 -locker "i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'" &
-exec_always xautolock -time 30 -locker "i3lock -i /home/birromer/Pictures/dark-souls-firelink.png
+exec_always xautolock -time 10 -locker "/usr/bin/i3lock-fancy"
 #set keyboard layout
 exec setxkbmap -layout br
 #enable touchpad tap
@@ -270,7 +271,8 @@ mode "$mode_gaps_outer" {
 # --- keybindings --- #
 #bindsym $mod+Shift+x exec i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'
 #bindsym $mod+Shift+x exec i3lock -i /home/birromer/Pictures/gwyn-1.png
-bindsym $mod+Shift+x exec i3lock -i /home/birromer/Pictures/dark-souls-firelink.png
+#bindsym $mod+Shift+x exec i3lock -i /home/birromer/Pictures/dark-souls-firelink.png
+bindsym $mod+Shift+x exec i3lock-fancy
 
 #bindsym Super_L      exec i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'
 
