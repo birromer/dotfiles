@@ -6,6 +6,8 @@ font pango:Dejavu Sans Mono 8
 
 exec_always fc-cache
 
+exec_always conky -c /home/birromer/.config/conky/info
+
 floating_modifier $mod
 
 #bindsym $mod+Return exec urxvt -e tmux
@@ -18,7 +20,7 @@ bindsym $mod+Shift+q kill
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+d exec rofi -show run
 
-bindsym $mod+j focus left
+#bindsym $mod+j focus left
 bindsym $mod+k focus down
 bindsym $mod+l focus up
 bindsym $mod+semicolon focus right
@@ -95,8 +97,8 @@ exec --no-startup-id i3mpdupdate
 #window focus when only 1 open
 smart_borders on
 #sets default gap size
-gaps outer 10
-gaps inner 10
+gaps outer 5
+gaps inner 5
 #no borders
 for_window [class="^.*"] border pixel 1
 
@@ -144,6 +146,7 @@ assign [class="Google-chrome"] $workspace2
 workspace #workspace2 gaps outer 0
 workspace #workspace2 gaps inner 0
 assign [class="Atom"] $workspace3
+assign [class="Emacs"] $workspace3
 #for_window [class="Atom"] move to workspace $workspace3
 assign [class="Spyder"] $workspace3
 assign [class="jetbrains-studio"] $workspace3
@@ -216,6 +219,10 @@ mode "$mode_system" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
+#reduce and increase directly outer and inner gaps
+bindsym $mod+Mod1+Left gaps inner current minus 5; gaps outer current minus 5
+bindsym $mod+Mod1+Right gaps inner current plus 5; gaps outer current plus 5
 
 #menu to set gaps
 set $mode_gaps Gaps: (o) outer, (i) inner
@@ -300,7 +307,7 @@ bindsym $mod+Shift+f exec urxvt -e ranger
 bindsym $mod+Shift+v exec urxvt -e ncmpcpp -s visualizer
 
 bindsym $mod+Shift+d		gaps inner current set 0; gaps outer current set 0
-bindsym $mod+Shift+c        gaps inner current set 10; gaps outer current set 10
+bindsym $mod+Shift+c        gaps inner current set 5; gaps outer current set 5
 
 bindsym $mod+u           [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
 bindsym $mod+a      	 [instance="math"] scratchpad show; [instance="math"] move position center
@@ -311,6 +318,7 @@ bindsym $mod+Shift+e exec evince
 
 bindsym $mod+Shift+o exec optirun wine64 PlayOnLinux\'s\ virtual\ drives/Steam/drive_c/Program\ Files/Steam/Steam.exe -no-cef-sandbox
 
+bindsym $mod+j exec jgmenu_run
 
 #STOP/HIDE EVERYTHING:
 bindsym $mod+Shift+Delete	exec lmc truemute ; exec $truepause ; workspace lmao ; exec urxvt -e htop ; exec urxvt -e ranger
