@@ -2,9 +2,9 @@
 
 ## Screenshots:
 ### I3
-![Screenshot1](screenshots/new-i3-arch-clean.png)
+![Screenshot1](screenshots/new-i3-clean.png)
 
-![Screenshot2](screenshots/new-i3-arch-load_layout.png)
+![Screenshot2](screenshots/new-i3-load_layout.png)
 
 ### Awesome
 ![Screenshot3](screenshots/awesome-clean.png)
