@@ -63,7 +63,7 @@ set $Locker i3lock-fancy
 exec_always feh --bg-scale '/home/birromer/Pictures/sandman-4.jpg'
 #set auto lock
 #exec_always xautolock -time 30 -locker "i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'" &
-exec_always xautolock -time 10 -locker "/usr/bin/i3lock-fancy"
+exec_always xautolock -time 30 -locker "/usr/bin/i3lock-fancy"
 #set keyboard layout
 exec setxkbmap -layout br
 #enable touchpad tap
