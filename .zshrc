@@ -1,4 +1,4 @@
-export TERM="xterm-256color"
+export TERM="rxvt-unicode"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -356,5 +356,7 @@ fi
 
 export PATH=/opt/anaconda/bin:$PATH
 
+
 alias mtga="/home/birromer/.wine/drive_c/Program\ Files\ \(x86\)/Wizards\ of\ the\ Coast/MTGA/MTGA.exe"
 alias vibes="LD_PRELOAD=/usr/lib/libfreetype.so /home/birromer/cic/personal/IAMOOC/VIBes-0.2.3-linux.AppImage"
+alias sims4="/home/birromer/.wine/drive_c/Games/The Sims 4 Seasons/Game/Bin/TS4_x64.exe"
