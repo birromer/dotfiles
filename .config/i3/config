@@ -10,7 +10,6 @@ exec_always conky -c /home/birromer/.config/conky/info
 
 floating_modifier $mod
 
-#bindsym $mod+Return exec urxvt -e tmux
 bindsym $mod+Return exec urxvt
 bindsym $mod+Shift+Return exec urxvt -e tmux
 
@@ -20,20 +19,21 @@ bindsym $mod+Shift+q kill
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+d exec rofi -show run
 
-#bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+h move left 30
+bindsym $mod+Shift+j move down 30
+bindsym $mod+Shift+k move up 30
+bindsym $mod+Shift+l move right 30
 
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
+
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
@@ -47,6 +47,9 @@ bindsym $mod+e layout toggle split
 
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
+
+bindsym $mod+b bar mode toggle
+bindsym $mod+Shift+b floating toggle; sticky toggle; exec --no-startup-id ~/.scripts/bottomleft
 
 #bindsym $mod+a focus parent
 #bindsym $mod+d focus child
@@ -98,10 +101,10 @@ exec --no-startup-id i3mpdupdate
 #window focus when only 1 open
 smart_borders on
 #sets default gap size
-gaps outer 5
-gaps inner 5
+gaps outer 10
+gaps inner 10
 #no borders
-for_window [class="^.*"] border pixel 1
+for_window [class="^.*"] border pixel 2
 
 
 # --- workspaces --- #
@@ -151,10 +154,10 @@ workspace #workspace2 gaps outer 0
 workspace #workspace2 gaps inner 0
 assign [class="Atom"] $workspace3
 assign [class="Emacs"] $workspace3
-#for_window [class="Atom"] move to workspace $workspace3
+assign [class="Sublimme_text"] $workspace3
 assign [class="Spyder"] $workspace3
 assign [class="jetbrains-studio"] $workspace3
-#assign [class="Evince"] $workspace3
+assign [class="Evince"] $workspace4
 assign [class="Vlc"] $workspace7
 assign [class="MComix"] $workspace7
 assign [class="Steam"] $workspace8
@@ -181,8 +184,7 @@ exec --no-startup-id urxvt -name math -e /home/birromer/.scripts/dropdowncalc
 
 
 #screen brightness control
-bindsym XF86MonBrightnessDown exec sudo /home/birromer/.scripts/./brightness2.sh down
-bindsym XF86MonBrightnessUp   exec sudo /home/birromer/.scripts/./brightness2.sh up
+
 
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -227,6 +229,8 @@ mode "$mode_system" {
 #reduce and increase directly outer and inner gaps
 bindsym $mod+Mod1+Left gaps inner current minus 5; gaps outer current minus 5
 bindsym $mod+Mod1+Right gaps inner current plus 5; gaps outer current plus 5
+bindsym $mod+Mod1+Up gaps inner current minus 5;
+bindsym $mod+Mod1+Down gaps inner current plus 5;
 
 #menu to set gaps
 set $mode_gaps Gaps: (o) outer, (i) inner
@@ -267,14 +271,9 @@ mode "$mode_gaps_outer" {
         bindsym Escape mode "default"
 }
 
-
 # --- keybindings --- #
-#bindsym $mod+Shift+x exec i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'
-#bindsym $mod+Shift+x exec i3lock -i /home/birromer/Pictures/gwyn-1.png
 #bindsym $mod+Shift+x exec i3lock -i /home/birromer/Pictures/dark-souls-firelink.png
 bindsym $mod+Shift+x exec i3lock-fancy
-
-#bindsym Super_L      exec i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
@@ -282,11 +281,11 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #d
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
 # Sreen brightness controls
-#bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-#bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+bindsym XF86MonBrightnessDown exec sudo /home/birromer/.scripts/./brightness2.sh down
+bindsym XF86MonBrightnessUp   exec sudo /home/birromer/.scripts/./brightness2.sh up
 
 # Touchpad controls
-bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
+bindsym XF86TouchpadToggle exec ~/.scripts/toggletouchpad.sh
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
@@ -298,32 +297,30 @@ bindsym $mod+c exec killall compton &&  compton -b
 bindsym $mod+g exec ~/.scripts/load_layout.sh; exec --no-startup-id compton
 
 bindsym $mod+n exec firefox
-bindsym $mod+m exec google-chrome-stable
-
-bindsym $mod+Shift+s exec spyder
 bindsym $mod+Shift+n exec jupyter-notebook
 
-bindsym $mod+y exec vlc
-#bindsym $mod+u exec mcomix
-bindsym $mod+shift+p exec primusrun steam
+bindsym $mod+m exec google-chrome-stable
+bindsym $mod+Shift+m exec mcomix
+
+bindsym $mod+Shift+s exec spyder
+
+bindsym $mod+shift+p exec optirun steam
 
 bindsym $mod+Shift+f exec urxvt -e ranger
 
 bindsym $mod+Shift+v exec urxvt -e ncmpcpp -s visualizer
 
 bindsym $mod+Shift+d		gaps inner current set 0; gaps outer current set 0
-bindsym $mod+Shift+c        gaps inner current set 5; gaps outer current set 5
+bindsym $mod+Shift+c        gaps inner current set 10; gaps outer current set 10
 
 bindsym $mod+u           [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
 bindsym $mod+a      	 [instance="math"] scratchpad show; [instance="math"] move position center
 
-bindsym $mod+h exec urxvt -e htop
+bindsym $mod+i exec urxvt -e htop
 
-bindsym $mod+Shift+e exec evince
+#bindsym $mod+Shift+e exec evince
 
-bindsym $mod+Shift+o exec optirun wine64 PlayOnLinux\'s\ virtual\ drives/Steam/drive_c/Program\ Files/Steam/Steam.exe -no-cef-sandbox
-
-bindsym $mod+j exec jgmenu_run
+#bindsym $mod+j exec jgmenu_run
 
 #STOP/HIDE EVERYTHING:
 bindsym $mod+Shift+Delete	exec lmc truemute ; exec $truepause ; workspace lmao ; exec urxvt -e htop ; exec urxvt -e ranger
