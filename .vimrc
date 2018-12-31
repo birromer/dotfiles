@@ -25,7 +25,7 @@ call plug#end()
 	syntax on
 	set encoding=utf-8
 	set number relativenumber
-	set showmatch
+	" set showmatch
 	set hlsearch
 	set cursorline
 	set expandtab
@@ -36,10 +36,24 @@ call plug#end()
     set foldmethod=syntax
     set foldlevel=10000
 
+    noremap <leader>t :tabnew<CR>
+    noremap <leader>1 1gt
+    noremap <leader>2 2gt
+    noremap <leader>3 3gt
+    noremap <leader>4 4gt
+    noremap <leader>5 5gt
+    noremap <leader>6 6gt
+    noremap <leader>7 7gt
+    noremap <leader>8 8gt
+    noremap <leader>9 9gt
+
+" Disable Airline tagbar for better performance
+    let g:airline#extensions#tagbar#enabled = 0
+ let g:airline_theme='murmur'
+
 " NerdTrree Project Browser
     nnoremap <C-n> :NERDTreeToggle<CR>
     map <F3> :NERDTreeToggle<CR>
-
     let NERDTreeShowHidden=1
     autocmd StdinReadPre * let s:std_in=1
     autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
@@ -61,7 +75,7 @@ call plug#end()
 " Spell-check set to <leader>o, 'o' for 'orthography':
 	map <leader>o :setlocal spell! spelllang=en_us<CR>
 
-" Splits open at the bottom and right, which is non-retarded, unlike vim defaults.
+" Splits open at the bottom and right.
 	set splitbelow splitright
 
 " Shortcutting split navigation, saving a keypress:
