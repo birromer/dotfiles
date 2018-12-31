@@ -126,9 +126,9 @@ zplug "seebi/dircolors-solarized", ignore:"*", as:plugin
 #zplug "plugins/vi-mode", from:oh-my-zsh
 
 zplug "plugins/git",    from:oh-my-zsh, if:"which git"
-zplug "plugins/go",     from:oh-my-zsh, if:"which go"
-zplug "plugins/golang", from:oh-my-zsh, if:"which go"
-zplug "plugins/nmap",   from:oh-my-zsh, if:"which nmap"
+#zplug "plugins/go",     from:oh-my-zsh, if:"which go"
+#zplug "plugins/golang", from:oh-my-zsh, if:"which go"
+#zplug "plugins/nmap",   from:oh-my-zsh, if:"which nmap"
 zplug "plugins/sudo",   from:oh-my-zsh, if:"which sudo"
 zplug "plugins/tmux",   from:oh-my-zsh, if:"which tmux"
 
@@ -180,7 +180,7 @@ setopt hist_find_no_dups        # Dont display duplicates during searches.
 setopt hist_ignore_dups         # Ignore consecutive duplicates.
 setopt hist_ignore_all_dups     # Remember only one unique copy of the command.
 setopt hist_reduce_blanks       # Remove superfluous blanks.
-setopt hist_save_no_dups        # Omit older commands in favor of newer ones.
+#setopt hist_save_no_dups        # Omit older commands in favor of newer ones.
 
 # Changing directories
 #setopt auto_pushd
@@ -292,23 +292,23 @@ zstyle ":completion:*:default" list-colors ${(s.:.)LS_COLORS}
 #                                   Startup
 # =============================================================================
 
-# Load SSH and GPG agents via keychain.
-setup_agents() {
-  [[ $UID -eq 0 ]] && return
-
-  if which keychain &> /dev/null; then
-	local -a ssh_keys gpg_keys
-	for i in ~/.ssh/**/*pub; do test -f "$i(.N:r)" && ssh_keys+=("$i(.N:r)"); done
-	gpg_keys=$(gpg -K --with-colons 2>/dev/null | awk -F : '$1 == "sec" { print $5 }')
-    if (( $#ssh_keys > 0 )) || (( $#gpg_keys > 0 )); then
-	  alias run_agents='() { $(whence -p keychain) --quiet --eval --inherit any-once --agents ssh,gpg $ssh_keys ${(f)gpg_keys} }'
-	  [[ -t ${fd:-0} || -p /dev/stdin ]] && eval `run_agents`
-	  unalias run_agents
-    fi
-  fi
-}
-setup_agents
-unfunction setup_agents
+## Load SSH and GPG agents via keychain.
+#setup_agents() {
+#  [[ $UID -eq 0 ]] && return
+#
+#  if which keychain &> /dev/null; then
+#	local -a ssh_keys gpg_keys
+#	for i in ~/.ssh/**/*pub; do test -f "$i(.N:r)" && ssh_keys+=("$i(.N:r)"); done
+#	gpg_keys=$(gpg -K --with-colons 2>/dev/null | awk -F : '$1 == "sec" { print $5 }')
+#    if (( $#ssh_keys > 0 )) || (( $#gpg_keys > 0 )); then
+#	  alias run_agents='() { $(whence -p keychain) --quiet --eval --inherit any-once --agents ssh,gpg $ssh_keys ${(f)gpg_keys} }'
+#	  [[ -t ${fd:-0} || -p /dev/stdin ]] && eval `run_agents`
+#	  unalias run_agents
+#    fi
+#  fi
+#}
+#setup_agents
+#unfunction setup_agents
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check; then
