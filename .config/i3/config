@@ -150,8 +150,8 @@ bindsym $mod+Escape workspace back_and_forth
 assign [class="Firefox"] $workspace2
 assign [class="Google-chrome"] $workspace2
 #for_window [class="Google-chrome"] move to workspace $workspace2
-workspace #workspace2 gaps outer 0
-workspace #workspace2 gaps inner 0
+workspace $workspace2 gaps outer 0
+workspace $workspace2 gaps inner 0
 assign [class="Atom"] $workspace3
 assign [class="Emacs"] $workspace3
 assign [class="Sublimme_text"] $workspace3
@@ -161,7 +161,8 @@ assign [class="Evince"] $workspace4
 assign [class="Vlc"] $workspace7
 assign [class="MComix"] $workspace7
 assign [class="Steam"] $workspace8
-#for_window [class="Steam"] move to workspace $workspace8
+workspace $workspace8 gaps outer 0
+workspace $workspace8 gaps inner 0
 assign [class="discord"] $workspace9
 #for_window [class="discord"] move to workspace $workspace9
 assign [class="Spotify"] $workspace10
@@ -173,25 +174,33 @@ for_window [instance="dropdown"] border pixel 5
 exec --no-startup-id urxvt -name dropdown -e tmux
 # Runs neofetch on first tmux screen if installed.
 #exec_always --no-startup-id "tmux send-keys -t 0:0 'clear && neofetch 2>/dev/null' Enter"
-
 # Then I have a window running R I use for basic arithmetic
-# I'll later bind this to mod+a.
 for_window [instance="math"] floating enable
 for_window [instance="math"] resize set 800 300
 for_window [instance="math"] move scratchpad
 for_window [instance="math"] border pixel 5
 exec --no-startup-id urxvt -name math -e /home/birromer/.scripts/dropdowncalc
 
-
-#screen brightness control
-
-
-
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-#bindsym $mod+Shift+l exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
+
+
+# --- menus --- #
+bindsym $mod+p mode "$mode_system"
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 
 # resize window
 bindsym $mod+r mode "resize"
@@ -208,22 +217,6 @@ mode "resize" {
 
         bindsym Return mode "default"
         bindsym Escape mode "default"
-}
-
-# --- menus --- #
-bindsym $mod+p mode "$mode_system"
-set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
-mode "$mode_system" {
-    bindsym l exec --no-startup-id $Locker, mode "default"
-    bindsym e exec --no-startup-id i3-msg exit, mode "default"
-    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
-    bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
-
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
 }
 
 #reduce and increase directly outer and inner gaps
