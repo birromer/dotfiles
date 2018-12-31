@@ -1,0 +1,2 @@
+neofetch
+read line
