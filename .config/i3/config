@@ -39,6 +39,11 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+bindsym $mod+Shift+y exec --no-startup-id ~/.scripts/i3cmds/i3resize left
+bindsym $mod+Shift+u exec --no-startup-id ~/.scripts/i3cmds/i3resize down
+bindsym $mod+Shift+i exec --no-startup-id ~/.scripts/i3cmds/i3resize up
+bindsym $mod+Shift+o exec --no-startup-id ~/.scripts/i3cmds/i3resize right
+
 bindsym $mod+f fullscreen toggle
 
 bindsym $mod+s layout stacking
@@ -49,11 +54,12 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 bindsym $mod+b bar mode toggle
-bindsym $mod+Shift+b floating toggle; sticky toggle; exec --no-startup-id ~/.scripts/bottomleft
+bindsym $mod+Shift+b floating toggle; sticky toggle; exec --no-startup-id ~/.scripts/i3cmds/bottomright
 
 #bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
+bindsym $mod+o sticky toggle
 bindsym $mod+t split toggle
 
 #define locker
@@ -61,8 +67,6 @@ bindsym $mod+t split toggle
 set $Locker i3lock-fancy
 
 #set wallpaper
-#exec_always feh --bg-scale '/home/birromer/Pictures/wallpapers/Wallpapers Arch/download (1).png'
-#exec_always feh --bg-scale '/home/birromer/Pictures/sandman-3.jpg'
 exec_always feh --bg-scale '/home/birromer/Pictures/sandman-4.jpg'
 #set auto lock
 #exec_always xautolock -time 30 -locker "i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'" &
@@ -105,6 +109,7 @@ gaps outer 10
 gaps inner 10
 #no borders
 for_window [class="^.*"] border pixel 2
+
 
 
 # --- workspaces --- #
@@ -205,15 +210,15 @@ mode "$mode_system" {
 # resize window
 bindsym $mod+r mode "resize"
 mode "resize" {
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym h resize shrink width 5 px or 5 ppt
+        bindsym j resize grow height 5 px or 5 ppt
+        bindsym k resize shrink height 5 px or 5 ppt
+        bindsym l resize grow width 5 px or 5 ppt
 
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Left resize shrink width 5 px or 5 ppt
+        bindsym Down resize grow height 5 px or 5 ppt
+        bindsym Up resize shrink height 5 px or 5 ppt
+        bindsym Right resize grow width 5 px or 5 ppt
 
         bindsym Return mode "default"
         bindsym Escape mode "default"
@@ -222,47 +227,8 @@ mode "resize" {
 #reduce and increase directly outer and inner gaps
 bindsym $mod+Mod1+Left gaps inner current minus 5; gaps outer current minus 5
 bindsym $mod+Mod1+Right gaps inner current plus 5; gaps outer current plus 5
-bindsym $mod+Mod1+Up gaps inner current minus 5;
-bindsym $mod+Mod1+Down gaps inner current plus 5;
-
-#menu to set gaps
-set $mode_gaps Gaps: (o) outer, (i) inner
-set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
-bindsym $mod+Shift+g mode "$mode_gaps"
-mode "$mode_gaps" {
-        bindsym o      mode "$mode_gaps_outer"
-        bindsym i      mode "$mode_gaps_inner"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-mode "$mode_gaps_inner" {
-        bindsym plus  gaps inner current plus 5
-        bindsym minus gaps inner current minus 5
-        bindsym 0     gaps inner current set 0
-
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
-
-        bindsym BackSpace mode "mode_gaps"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-mode "$mode_gaps_outer" {
-        bindsym plus  gaps outer current plus 5
-        bindsym minus gaps outer current minus 5
-        bindsym 0     gaps outer current set 0
-
-        bindsym Shift+plus  gaps outer all plus 5
-        bindsym Shift+minus gaps outer all minus 5
-        bindsym Shift+0     gaps outer all set 0
-
-        bindsym BackSpace mode "mode_gaps"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
+bindsym $mod+Mod1+Up gaps inner current set 0; gaps outer current set 5
+bindsym $mod+Mod1+Down gaps inner current set 15; gaps outer current set 15
 
 # --- keybindings --- #
 #bindsym $mod+Shift+x exec i3lock -i /home/birromer/Pictures/dark-souls-firelink.png
@@ -311,8 +277,9 @@ bindsym $mod+a      	 [instance="math"] scratchpad show; [instance="math"] move 
 
 bindsym $mod+i exec urxvt -e htop
 
-#bindsym $mod+Shift+e exec evince
+bindsym $mod+Shift+w exec urxvt -e nmtui
 
+#bindsym $mod+Shift+e exec evince
 #bindsym $mod+j exec jgmenu_run
 
 #STOP/HIDE EVERYTHING:
