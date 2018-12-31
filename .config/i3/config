@@ -46,12 +46,15 @@ bindsym $mod+Shift+o exec --no-startup-id ~/.scripts/i3cmds/i3resize right
 
 bindsym $mod+f fullscreen toggle
 
-bindsym $mod+s layout stacking
+#bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
+
+bindsym $mod+v exec urxvt -e neomutt
+bindsym $mod+Shift+v floating toggle; sticky toggle; exec --no-startup-id ~/.scripts/i3cmds/bottomleft
 
 bindsym $mod+b bar mode toggle
 bindsym $mod+Shift+b floating toggle; sticky toggle; exec --no-startup-id ~/.scripts/i3cmds/bottomright
@@ -162,9 +165,10 @@ assign [class="Emacs"] $workspace3
 assign [class="Sublimme_text"] $workspace3
 assign [class="Spyder"] $workspace3
 assign [class="jetbrains-studio"] $workspace3
-assign [class="Evince"] $workspace4
+assign [class="Evince"] $workspace7
 assign [class="Vlc"] $workspace7
 assign [class="MComix"] $workspace7
+assign [class="calibre"] $workspace7
 assign [class="Steam"] $workspace8
 workspace $workspace8 gaps outer 0
 workspace $workspace8 gaps inner 0
@@ -252,7 +256,7 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-bindsym $mod+c exec killall compton &&  compton -b
+bindsym $mod+c exec calibre
 bindsym $mod+g exec ~/.scripts/load_layout.sh; exec --no-startup-id compton
 
 bindsym $mod+n exec firefox
@@ -261,13 +265,12 @@ bindsym $mod+Shift+n exec jupyter-notebook
 bindsym $mod+m exec google-chrome-stable
 bindsym $mod+Shift+m exec mcomix
 
-bindsym $mod+Shift+s exec spyder
+#bindsym $mod_s exec
+bindsym $mod+Shift+s exec /opt/anaconda/bin/spyder
 
 bindsym $mod+shift+p exec optirun steam
 
 bindsym $mod+Shift+f exec urxvt -e ranger
-
-bindsym $mod+Shift+v exec urxvt -e ncmpcpp -s visualizer
 
 bindsym $mod+Shift+d		gaps inner current set 0; gaps outer current set 0
 bindsym $mod+Shift+c        gaps inner current set 10; gaps outer current set 10
