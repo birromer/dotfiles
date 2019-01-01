@@ -96,6 +96,16 @@ label-indicator-margin = 1
 label-indicator-background = ${colors.secondary}
 label-indicator-underline = ${colors.secondary}
 
+
+[module/spotify]
+type = custom/script
+interval = 1
+format-prefix = " "
+format = <label>
+exec = python /home/birromer/.config/polybar/spotify_status.py -f '{artist}: {song}'
+format-underline = #1db954
+
+
 [module/filesystem]
 type = internal/fs
 interval = 25
@@ -412,4 +422,3 @@ screenchange-reload = true
 [global/wm]
 margin-top = 5
 margin-bottom = 5
-

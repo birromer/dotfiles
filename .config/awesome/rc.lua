@@ -251,6 +251,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
 
+
+
     -- Non-empty tag browsing
     -- awful.key({ modkey, "Shift" }, "Left", function () lain.util.tag_view_nonempty(-1) end,
     --           {description = "view  previous nonempty", group = "tag"}),
@@ -361,6 +363,7 @@ globalkeys = awful.util.table.join(
     awful.key({ }, "F2", function () scratch.drop("slack", "bottom", "right", 0.50, 0.60, true, mouse.screen) end),
     awful.key({ }, "F3", function () scratch.drop("urxvt -e ranger", "center", "center", 0.75, 0.7, true, mouse.screen) end),
     awful.key({ }, "F12", function () awful.util.spawn_with_shell("~/.config/scripts/translate_new.sh \"".. translate_service.. "\"",false) end),
+    awful.key({modkey,            }, "s", function() awful.spawn("/opt/anaconda/bin/spyder") end),
     -- Standard program
     awful.key({ modkey,           }, "x", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
