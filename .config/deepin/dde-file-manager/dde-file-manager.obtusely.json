@@ -1,0 +1,21 @@
+{
+    "FileViewState": {
+        "standard://music": {
+            "iconSizeLevel": 1,
+            "viewMode": 2
+        },
+        "standard://pictures": {
+            "iconSizeLevel": 2,
+            "viewMode": 1
+        }
+    },
+    "WindowManager": {
+        "SplitterState": {
+            "sidebar": 200
+        },
+        "WindowState": {
+            "height": 936,
+            "width": 840
+        }
+    }
+}

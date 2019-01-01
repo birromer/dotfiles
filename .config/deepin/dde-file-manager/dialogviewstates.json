@@ -1,0 +1,27 @@
+{
+    "file:///home/birromer": {
+        "iconSize": 1,
+        "sortOrder": "AscendingOrder",
+        "sortRole": 265,
+        "viewMode": "ListMode"
+    },
+    "file:///home/birromer/Documents/dotfiles": {
+        "iconSize": 1,
+        "sortOrder": "AscendingOrder",
+        "sortRole": 265,
+        "viewMode": "ListMode"
+    },
+    "file:///home/birromer/Downloads": {
+        "iconSize": 1,
+        "sortOrder": "DescendingOrder",
+        "sortRole": 262,
+        "viewMode": "ListMode"
+    },
+    "file:///home/birromer/Pictures": {
+        "iconSize": 1,
+        "sortOrder": "AscendingOrder",
+        "sortRole": 265,
+        "viewMode": "ListMode"
+    }
+}
+

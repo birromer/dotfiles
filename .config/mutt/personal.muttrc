@@ -1,0 +1,3 @@
+macro index,pager i1 '<sync-mailbox><enter-command>source /home/birromer/.config/mutt/accounts/.muttrc<enter><change-folder>!<enter>'
+source /home/birromer/.config/mutt/accounts/.muttrc
+macro index,pager i2 '<sync-mailbox><enter-command>source /home/birromer/.config/mutt/accounts/.muttrc<enter><change-folder>!<enter>'
