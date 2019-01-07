@@ -165,6 +165,8 @@ assign [class="Emacs"] $workspace3
 assign [class="Sublimme_text"] $workspace3
 assign [class="Spyder"] $workspace3
 assign [class="jetbrains-studio"] $workspace3
+workspace $workspace3 gaps outer 0
+workspace $workspace3 gaps inner 0
 assign [class="Evince"] $workspace7
 assign [class="Vlc"] $workspace7
 assign [class="MComix"] $workspace7
