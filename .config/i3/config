@@ -165,8 +165,12 @@ assign [class="Emacs"] $workspace3
 assign [class="Sublimme_text"] $workspace3
 assign [class="Spyder"] $workspace3
 assign [class="jetbrains-studio"] $workspace3
+assign [class="kile"] $workspace3
 workspace $workspace3 gaps outer 0
 workspace $workspace3 gaps inner 0
+assign [class="Tusk"] $workspace4
+workspace $workspace4 gaps outer 0
+workspace $workspace4 gaps inner 0
 assign [class="Evince"] $workspace7
 assign [class="Vlc"] $workspace7
 assign [class="MComix"] $workspace7
@@ -258,6 +262,8 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
+bindsym $mod+Shift+e exec tusk-app
+
 bindsym $mod+c exec calibre
 bindsym $mod+g exec ~/.scripts/load_layout.sh; exec --no-startup-id compton
 
@@ -283,6 +289,8 @@ bindsym $mod+a      	 [instance="math"] scratchpad show; [instance="math"] move 
 bindsym $mod+i exec urxvt -e htop
 
 bindsym $mod+Shift+w exec urxvt -e nmtui
+
+bindsym Mod1+l exec kile
 
 #bindsym $mod+Shift+e exec evince
 #bindsym $mod+j exec jgmenu_run
