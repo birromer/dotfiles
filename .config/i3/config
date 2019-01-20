@@ -175,6 +175,7 @@ assign [class="Evince"] $workspace7
 assign [class="Vlc"] $workspace7
 assign [class="MComix"] $workspace7
 assign [class="calibre"] $workspace7
+assign [class="Mendeley Desktop"] $workspace7
 assign [class="Steam"] $workspace8
 workspace $workspace8 gaps outer 0
 workspace $workspace8 gaps inner 0
@@ -265,6 +266,8 @@ bindsym XF86AudioPrev exec playerctl previous
 bindsym $mod+Shift+e exec tusk-app
 
 bindsym $mod+c exec calibre
+bindsym $mod+Shift+c exec mendeleydesktop
+
 bindsym $mod+g exec ~/.scripts/load_layout.sh; exec --no-startup-id compton
 
 bindsym $mod+n exec firefox
@@ -281,7 +284,7 @@ bindsym $mod+shift+p exec optirun steam
 bindsym $mod+Shift+f exec urxvt -e ranger
 
 bindsym $mod+Shift+d		gaps inner current set 0; gaps outer current set 0
-bindsym $mod+Shift+c        gaps inner current set 10; gaps outer current set 10
+#bindsym $mod+Shift+c        gaps inner current set 10; gaps outer current set 10
 
 bindsym $mod+u           [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
 bindsym $mod+a      	 [instance="math"] scratchpad show; [instance="math"] move position center
