@@ -265,8 +265,8 @@ bindsym XF86AudioPrev exec playerctl previous
 
 bindsym $mod+Shift+e exec tusk-app
 
-bindsym $mod+c exec calibre
-bindsym $mod+Shift+c exec mendeleydesktop
+bindsym $mod+c exec mendeleydesktop
+bindsym $modShift+c exec calibre
 
 bindsym $mod+g exec ~/.scripts/load_layout.sh; exec --no-startup-id compton
 
