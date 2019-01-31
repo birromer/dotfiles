@@ -13,8 +13,8 @@ Plug 'jreybert/vimagit'
 Plug 'LukeSmithxyz/vimling'
 Plug 'vimwiki/vimwiki'
 Plug 'scrooloose/nerdtree'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'Valloric/YouCompleteMe'
 call plug#end()
@@ -25,9 +25,9 @@ call plug#end()
 	syntax on
 	set encoding=utf-8
 	set number relativenumber
-	" set showmatch
+	"set showmatch
 	set hlsearch
-	set cursorline
+	"set cursorline
 	set expandtab
 	set tabstop=4
 	set shiftwidth=4
@@ -57,6 +57,19 @@ call plug#end()
     let NERDTreeShowHidden=1
     autocmd StdinReadPre * let s:std_in=1
     autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+" Language Client
+    set rtp+=~/.vim/pack/plugged/start/LanguageClient-neovim
+    let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
+
+    nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+    map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
+    map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
+    map <Leader>lr :call LanguageClient#textDocument_rename()<CR>
+    map <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
+    map <Leader>lb :call LanguageClient#textDocument_references()<CR>
+    map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
+    map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
 
 " Enhanced C++ syntax highlighting
     let g:cpp_class_scope_highlight=1
