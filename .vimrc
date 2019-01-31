@@ -17,6 +17,7 @@ Plug 'scrooloose/nerdtree'
 "Plug 'vim-airline/vim-airline-themes'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'Valloric/YouCompleteMe'
+Plug 'autozimu/LanguageClient-neovim', {'branch':'next', 'do': './install.sh'}
 call plug#end()
 
 " Basics settings:
@@ -59,7 +60,7 @@ call plug#end()
     autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
 " Language Client
-    set rtp+=~/.vim/pack/plugged/start/LanguageClient-neovim
+    set rtp+=~/.vim/plugged/LanguageClient-neovim
     let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
 
     nnoremap <F5> :call LanguageClient_contextMenu()<CR>
