@@ -263,7 +263,7 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-bindsym $mod+Shift+e exec tusk-app
+bindsym $mod+Shift+e exec tusk
 
 bindsym $mod+c exec mendeleydesktop
 bindsym $modShift+c exec calibre
