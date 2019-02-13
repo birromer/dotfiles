@@ -268,7 +268,8 @@ bindsym $mod+Shift+e exec tusk-app
 bindsym $mod+c exec mendeleydesktop
 bindsym $modShift+c exec calibre
 
-bindsym $mod+g exec ~/.scripts/load_layout.sh; exec --no-startup-id compton
+bindsym $mod+g exec subl
+bindsym $mod+Shift+g exec ~/.scripts/load_layout.sh; exec --no-startup-id compton
 
 bindsym $mod+n exec firefox
 bindsym $mod+Shift+n exec jupyter-notebook
