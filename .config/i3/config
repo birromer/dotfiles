@@ -172,6 +172,7 @@ assign [class="Tusk"] $workspace4
 workspace $workspace4 gaps outer 0
 workspace $workspace4 gaps inner 0
 assign [class="Evince"] $workspace7
+assign [class="okular"] $workspace7
 assign [class="Vlc"] $workspace7
 assign [class="MComix"] $workspace7
 assign [class="calibre"] $workspace7
@@ -219,7 +220,7 @@ mode "$mode_system" {
 }
 
 # resize window
-bindsym $mod+r mode "resize"
+#bindsym $mod+r mode "resize"
 mode "resize" {
         bindsym h resize shrink width 5 px or 5 ppt
         bindsym j resize grow height 5 px or 5 ppt
@@ -277,10 +278,13 @@ bindsym $mod+Shift+n exec jupyter-notebook
 bindsym $mod+m exec google-chrome-stable
 bindsym $mod+Shift+m exec mcomix
 
+bindsym $mod+r exec urxvt -e ranger
+
 #bindsym $mod_s exec
 bindsym $mod+Shift+s exec /opt/anaconda/bin/spyder
 
-bindsym $mod+shift+p exec optirun steam
+#bindsym $mod+shift+p exec optirun steam
+bindsym $mod+shift+p exec okular
 
 bindsym $mod+Shift+f exec urxvt -e ranger
 
