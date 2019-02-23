@@ -78,6 +78,8 @@ exec_always xautolock -time 30 -locker "/usr/bin/i3lock-fancy"
 exec setxkbmap -layout br
 #enable touchpad tap
 exec xinput set-prop 10 283 1
+exec xinput set-prop 11 207 1
+
 #starts terminal workspace windows loadout
 #  exec --no-startup-id /home/birromer/.scripts/load_layout.sh
 #exec --no-startup-id "i3-msg 'workspace $workspace1; append_layout /home/birromer/.i3/workspace-1.json'" #not working
@@ -269,7 +271,7 @@ bindsym $mod+Shift+e exec tusk
 bindsym $mod+c exec mendeleydesktop
 bindsym $modShift+c exec calibre
 
-bindsym $mod+g exec subl
+bindsym $mod+g exec code
 bindsym $mod+Shift+g exec ~/.scripts/load_layout.sh; exec --no-startup-id compton
 
 bindsym $mod+n exec firefox
@@ -279,6 +281,7 @@ bindsym $mod+m exec google-chrome-stable
 bindsym $mod+Shift+m exec mcomix
 
 bindsym $mod+r exec urxvt -e ranger
+#bindsym $mod+r exec code
 
 #bindsym $mod_s exec
 bindsym $mod+Shift+s exec /opt/anaconda/bin/spyder
