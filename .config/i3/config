@@ -163,6 +163,7 @@ assign [class="Google-chrome"] $workspace2
 workspace $workspace2 gaps outer 0
 workspace $workspace2 gaps inner 0
 assign [class="Atom"] $workspace3
+assign [class="code-oss"] $workspace3
 assign [class="Emacs"] $workspace3
 assign [class="Sublimme_text"] $workspace3
 assign [class="Spyder"] $workspace3
@@ -305,6 +306,10 @@ bindsym Mod1+l exec kile
 
 #bindsym $mod+Shift+e exec evince
 #bindsym $mod+j exec jgmenu_run
+
+bindsym $mod+Mod1+o exec xrandr --output eDP-1 --auto --output HDMI-1 --auto --right-of eDP-1; exec killall conky; restart
+
+bindsym $mod+Mod1+p exec xrandr --output HDMI-1 --off --output eDP-1 --auto;
 
 #STOP/HIDE EVERYTHING:
 bindsym $mod+Shift+Delete	exec lmc truemute ; exec $truepause ; workspace lmao ; exec urxvt -e htop ; exec urxvt -e ranger
