@@ -97,6 +97,7 @@ exec --no-startup-id lightscreen -b
 exec --no-startup-id unclutter
 #launch polybar
 exec_always --no-startup-id ~/.scripts/polybar_launch
+exec --no-startup-id telegram-desktop
 
 # --- i3bar --- #
 #bar {
@@ -180,6 +181,7 @@ assign [class="calibre"] $workspace7
 assign [class="Mendeley Desktop"] $workspace7
 assign [class="Steam"] $workspace8
 assign [class="discord"] $workspace9
+assign [class="TelegramDesktop"] $workspace9
 #for_window [class="discord"] move to workspace $workspace9
 assign [class="Spotify"] $workspace10
 for_window [class="Spotify"] move to workspace $workspace10
