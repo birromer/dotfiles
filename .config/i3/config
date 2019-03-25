@@ -174,7 +174,7 @@ assign [class="kile"] $workspace3
 assign [class="Tusk"] $workspace4
 workspace $workspace1 gaps outer 10
 workspace $workspace1 gaps inner 10
-assign [class="Org.gnome.Nautilus"] $workspace5
+assign [class="Nemo"] $workspace5
 assign [class="Evince"] $workspace7
 assign [class="okular"] $workspace7
 assign [class="Vlc"] $workspace7
