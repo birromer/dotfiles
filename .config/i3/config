@@ -278,7 +278,7 @@ bindsym $mod+Shift+g exec ~/.scripts/load_layout.sh; exec --no-startup-id compto
 bindsym $mod+n exec firefox
 bindsym $mod+Shift+n exec jupyter-notebook
 
-bindsym $mod+m exec nautilus
+bindsym $mod+m exec nemo
 bindsym $mod+Shift+m exec mcomix
 
 bindsym $mod+r exec urxvt -e ranger
