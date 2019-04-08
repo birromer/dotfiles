@@ -308,7 +308,7 @@ bindsym Mod1+l exec kile
 #bindsym $mod+Shift+e exec evince
 #bindsym $mod+j exec jgmenu_run
 
-bindsym $mod+Mod1+o exec xrandr --output eDP-1 --auto --output HDMI-1 --auto --right-of eDP-1; exec killall conky; restart
+bindsym $mod+Mod1+o exec xrandr --output eDP-1 --auto --output HDMI-1 --auto --left-of eDP-1; exec killall conky; restart
 
 bindsym $mod+Mod1+p exec xrandr --output HDMI-1 --off --output eDP-1 --auto;
 
