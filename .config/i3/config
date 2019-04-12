@@ -44,7 +44,7 @@ bindsym $mod+Shift+u exec --no-startup-id ~/.scripts/i3cmds/i3resize down
 bindsym $mod+Shift+i exec --no-startup-id ~/.scripts/i3cmds/i3resize up
 bindsym $mod+Shift+o exec --no-startup-id ~/.scripts/i3cmds/i3resize right
 
-bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+f fullscreen toggle
 
 #bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
@@ -279,7 +279,7 @@ bindsym $mod+Shift+g exec ~/.scripts/load_layout.sh; exec --no-startup-id compto
 bindsym $mod+n exec firefox
 bindsym $mod+Shift+n exec jupyter-notebook
 
-bindsym $mod+m exec nemo
+bindsym $mod+m exec nautlius
 bindsym $mod+Shift+m exec mcomix
 
 bindsym $mod+r exec urxvt -e ranger
@@ -291,7 +291,7 @@ bindsym $mod+Shift+s exec /opt/anaconda/bin/spyder
 #bindsym $mod+shift+p exec optirun steam
 bindsym $mod+shift+p exec okular
 
-bindsym $mod+Shift+f exec urxvt -e ranger
+bindsym $mod+f exec urxvt -e ranger
 
 bindsym $mod+Shift+d		gaps inner current set 0; gaps outer current set 0
 #bindsym $mod+Shift+c        gaps inner current set 10; gaps outer current set 10
