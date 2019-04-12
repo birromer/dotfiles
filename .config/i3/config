@@ -100,6 +100,7 @@ exec --no-startup-id unclutter
 exec_always --no-startup-id ~/.scripts/polybar_launch
 exec --no-startup-id telegram-desktop
 exec --no-startup-id megasync
+exec --no-startup-id pcloud
 
 # --- i3bar --- #
 #bar {
