@@ -190,8 +190,8 @@ bindsym $mod+Mod1+Right gaps inner current plus 5
 bindsym $mod+Mod1+Up gaps inner current set 0
 bindsym $mod+Mod1+Down gaps inner current set 10
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% 
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% 
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 # Sreen brightness controls
 bindsym XF86MonBrightnessDown exec ~/.scripts/./brightness2.sh down
@@ -206,6 +206,9 @@ bindsym XF86AudioPrev exec playerctl previous
 # RETURN
 bindsym $mod+Return exec urxvt
 bindsym $mod+Shift+Return exec urxvt -e tmux
+# TAB
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
 # Q
 #bindsym $modt+q kill
 bindsym $mod+Shift+q kill
