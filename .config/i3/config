@@ -10,61 +10,6 @@ exec_always conky -c /home/birromer/.config/conky/info
 
 floating_modifier $mod
 
-bindsym $mod+Return exec urxvt
-bindsym $mod+Shift+Return exec urxvt -e tmux
-
-bindsym $mod+Shift+q kill
-
-# bindsym $mod+d exec dmenu_run
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-bindsym $mod+d exec rofi -show run
-
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
-
-bindsym $mod+Shift+h move left 30
-bindsym $mod+Shift+j move down 30
-bindsym $mod+Shift+k move up 30
-bindsym $mod+Shift+l move right 30
-
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
-
-bindsym $mod+Shift+y exec --no-startup-id ~/.scripts/i3cmds/i3resize left
-bindsym $mod+Shift+u exec --no-startup-id ~/.scripts/i3cmds/i3resize down
-bindsym $mod+Shift+i exec --no-startup-id ~/.scripts/i3cmds/i3resize up
-bindsym $mod+Shift+o exec --no-startup-id ~/.scripts/i3cmds/i3resize right
-
-bindsym $mod+Shift+f fullscreen toggle
-
-#bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-
-bindsym $mod+Shift+space floating toggle
-bindsym $mod+space focus mode_toggle
-
-bindsym $mod+v exec urxvt -e neomutt
-bindsym $mod+Shift+v floating toggle; sticky toggle; exec --no-startup-id ~/.scripts/i3cmds/bottomleft
-
-bindsym $mod+b bar mode toggle
-bindsym $mod+Shift+b floating toggle; sticky toggle; exec --no-startup-id ~/.scripts/i3cmds/bottomright
-
-#bindsym $mod+a focus parent
-#bindsym $mod+d focus child
-
-bindsym $mod+o sticky toggle
-bindsym $Mod1+t split toggle
-
 #define locker
 #set $Locker i3lock -i /home/birromer/Pictures/dark-souls-firelink.png && sleep 1
 set $Locker i3lock-fancy
@@ -99,8 +44,9 @@ exec --no-startup-id unclutter
 #launch polybar
 exec_always --no-startup-id ~/.scripts/polybar_launch
 exec --no-startup-id telegram-desktop
-#exec --no-startup-id megasync
+exec --no-startup-id thunderbird
 exec --no-startup-id pcloud
+
 
 # --- i3bar --- #
 #bar {
@@ -108,7 +54,6 @@ exec --no-startup-id pcloud
 #    status_command i3status
 #}
 exec --no-startup-id i3mpdupdate
-
 
 # -- gaps -- #
 #window focus when only 1 open
@@ -118,7 +63,6 @@ gaps outer 0
 gaps inner 0
 #no borders
 for_window [class="^.*"] border pixel 2
-
 
 
 # --- workspaces --- #
@@ -160,6 +104,7 @@ bindsym $mod+Shift+0 move container to workspace $workspace10
 #switch to previsou workspace
 bindsym $mod+Escape workspace back_and_forth
 
+
 #assigns programs to certain workspaces
 #workspace $workspace1 gaps outer 10
 #workspace $workspace1 gaps inner 10
@@ -185,6 +130,7 @@ assign [class="MComix"] $workspace7
 assign [class="calibre"] $workspace7
 assign [class="Mendeley Desktop"] $workspace7
 assign [class="Steam"] $workspace8
+assign [class="Thunderbird"] $workspace8
 assign [class="discord"] $workspace9
 assign [class="TelegramDesktop"] $workspace9
 #for_window [class="discord"] move to workspace $workspace9
@@ -197,17 +143,11 @@ for_window [instance="dropdown"] border pixel 5
 exec --no-startup-id urxvt -name dropdown -e tmux
 # Runs neofetch on first tmux screen if installed.
 #exec_always --no-startup-id "tmux send-keys -t 0:0 'clear && neofetch 2>/dev/null' Enter"
-# Then I have a window running R I use for basic arithmetic
 for_window [instance="math"] floating enable
 for_window [instance="math"] resize set 800 300
 for_window [instance="math"] move scratchpad
 for_window [instance="math"] border pixel 5
 exec --no-startup-id urxvt -name math -e ~/.scripts/dropdowncalc
-
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-
-
 
 # --- menus --- #
 bindsym $mod+p mode "$mode_system"
@@ -227,93 +167,147 @@ mode "$mode_system" {
 
 # resize window
 #bindsym $mod+r mode "resize"
-mode "resize" {
-        bindsym h resize shrink width 5 px or 5 ppt
-        bindsym j resize grow height 5 px or 5 ppt
-        bindsym k resize shrink height 5 px or 5 ppt
-        bindsym l resize grow width 5 px or 5 ppt
-
-        bindsym Left resize shrink width 5 px or 5 ppt
-        bindsym Down resize grow height 5 px or 5 ppt
-        bindsym Up resize shrink height 5 px or 5 ppt
-        bindsym Right resize grow width 5 px or 5 ppt
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-#reduce and increase directly outer and inner gaps
-bindsym $mod+Mod1+Left gaps inner current minus 5; gaps outer current minus 5
-bindsym $mod+Mod1+Right gaps inner current plus 5; gaps outer current plus 5
-bindsym $mod+Mod1+Up gaps inner current set 0; gaps outer current set 0
-bindsym $mod+Mod1+Down gaps inner current set 10; gaps outer current set 10
+#mode "resize" {
+#        bindsym h resize shrink width 5 px or 5 ppt
+#        bindsym j resize grow height 5 px or 5 ppt
+#        bindsym k resize shrink height 5 px or 5 ppt
+#        bindsym l resize grow width 5 px or 5 ppt
+#
+#        bindsym Left resize shrink width 5 px or 5 ppt
+#        bindsym Down resize grow height 5 px or 5 ppt
+#        bindsym Up resize shrink height 5 px or 5 ppt
+#        bindsym Right resize grow width 5 px or 5 ppt
+#
+#        bindsym Return mode "default"
+#        bindsym Escape mode "default"
+#}
 
 # --- keybindings --- #
-#bindsym $mod+Shift+x exec i3lock -i /home/birromer/Pictures/dark-souls-firelink.png
-bindsym $mod+Shift+x exec i3lock-fancy
 
+#reduce and increase directly outer and inner gaps
+bindsym $mod+Mod1+Left gaps inner current minus 5
+bindsym $mod+Mod1+Right gaps inner current plus 5
+bindsym $mod+Mod1+Up gaps inner current set 0
+bindsym $mod+Mod1+Down gaps inner current set 10
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
-
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% 
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% 
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 # Sreen brightness controls
-bindsym XF86MonBrightnessDown exec sudo ~/.scripts/./brightness2.sh down
-bindsym XF86MonBrightnessUp   exec sudo ~/.scripts/./brightness2.sh up
-
+bindsym XF86MonBrightnessDown exec ~/.scripts/./brightness2.sh down
+bindsym XF86MonBrightnessUp   exec ~/.scripts/./brightness2.sh up
 # Touchpad controls
 bindsym XF86TouchpadToggle exec ~/.scripts/toggletouchpad.sh
-
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
 bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
-
+# RETURN
+bindsym $mod+Return exec urxvt
+bindsym $mod+Shift+Return exec urxvt -e tmux
+# Q
+#bindsym $modt+q kill
+bindsym $mod+Shift+q kill
+# w
+bindsym $mod+w layout tabbed
+bindsym $mod+Shift+w exec urxvt -e nmtui
+# E
+bindsym $mod+e layout toggle split
+#bindsym $mod+Shift+e exec evince
+# R
+bindsym $mod+r exec urxvt -e ranger
+bindsym $mod+Shift+r restart
+# T
 bindsym $mod+t exec typora
 bindsym $mod+Shift+t exec tusk
-
-bindsym $mod+c exec mendeleydesktop
-bindsym $modShift+c exec calibre
-
-bindsym $mod+g exec code
-bindsym $mod+Shift+g exec ~/.scripts/load_layout.sh; exec --no-startup-id compton
-
-bindsym $mod+n exec firefox
-bindsym $mod+Shift+n exec jupyter-notebook
-
-bindsym $mod+m exec nautilus
-bindsym $mod+Shift+m exec mcomix
-
-bindsym $mod+r exec urxvt -e ranger
-#bindsym $mod+r exec code
-
-#bindsym $mod_s exec
-bindsym $mod+Shift+s exec /opt/anaconda/bin/spyder
-
+# Y
+#bindsym $mod+Shift+y exec
+bindsym $mod+Shift+y exec --no-startup-id ~/.scripts/i3cmds/i3resize left
+# U
+bindsym $mod+u           [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
+bindsym $mod+Shift+u exec --no-startup-id ~/.scripts/i3cmds/i3resize down
+# I
+bindsym $mod+i exec urxvt -e htop
+bindsym $mod+Shift+i exec --no-startup-id ~/.scripts/i3cmds/i3resize up
+# O
+bindsym $mod+o sticky toggle
+bindsym $mod+Shift+o exec --no-startup-id ~/.scripts/i3cmds/i3resize right
+# O
+#bindsym $mod+p mode "$mode_system"
 #bindsym $mod+shift+p exec optirun steam
 bindsym $mod+shift+p exec okular
-
-bindsym $mod+f exec urxvt -e ranger
-
-bindsym $mod+Shift+d		gaps inner current set 0; gaps outer current set 0
-#bindsym $mod+Shift+c        gaps inner current set 10; gaps outer current set 10
-
-bindsym $mod+u           [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
-bindsym $mod+a      	 [instance="math"] scratchpad show; [instance="math"] move position center
-
-bindsym $mod+i exec urxvt -e htop
-
-bindsym $mod+Shift+w exec urxvt -e nmtui
-
-bindsym Mod1+l exec kile
-
-#bindsym $mod+Shift+e exec evince
-#bindsym $mod+j exec jgmenu_run
-
 bindsym $mod+Mod1+o exec xrandr --output eDP-1 --auto --output HDMI-1 --auto --left-of eDP-1; exec killall conky; restart
-
+# P
 bindsym $mod+Mod1+p exec xrandr --output HDMI-1 --off --output eDP-1 --auto;
-
-#STOP/HIDE EVERYTHING:
+# A
+#bindsym $mod+a focus parent
+bindsym $mod+a      	 [instance="math"] scratchpad show; [instance="math"] move position center
+# S
+#bindsym $mod+s layout stacking
+#bindsym $mod+s split toggle
+bindsym $mod+Shift+s exec ~/anaconda3/bin/spyder
+# D
+#bindsym $mod+d focus child
+#bindsym $mod+d exec dmenu_run
+#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec rofi -show run
+bindsym $mod+Shift+d		gaps inner current set 0; gaps outer current set 0
+# F
+bindsym $mod+f exec nautilus
+bindsym $mod+Shift+f fullscreen toggle
+# G
+bindsym $mod+g exec code
+bindsym $mod+Shift+g exec ~/.scripts/load_layout.sh; exec --no-startup-id compton
+# H
+bindsym $mod+h focus left
+bindsym $mod+Shift+h move left 30
+# J
+bindsym $mod+j focus down
+#bindsym $mod+j exec jgmenu_run
+bindsym $mod+Shift+j move down 30
+# K
+bindsym $mod+k focus up
+bindsym $mod+Shift+k move up 30
+# L
+bindsym $mod+l focus right
+bindsym $mod+Shift+l move right 30
+bindsym Mod1+l exec kile
+# Z
+bindsym $mod+z toggle split
+# X
+bindsym $mod+Shift+x exec i3lock-fancy
+#bindsym $mod+Shift+x exec i3lock -i /home/birromer/Pictures/dark-souls-firelink.png
+# C
+bindsym $mod+c exec mendeleydesktop
+bindsym $modShift+c exec calibre
+#bindsym $mod+Shift+c        gaps inner current set 10; gaps outer current set 10
+# V
+bindsym $mod+v exec urxvt -e neomutt
+bindsym $mod+Shift+v floating toggle; sticky toggle; exec --no-startup-id ~/.scripts/i3cmds/bottomleft
+# B
+bindsym $mod+b bar mode toggle
+bindsym $mod+Shift+b floating toggle; sticky toggle; exec --no-startup-id ~/.scripts/i3cmds/bottomright
+# N
+bindsym $mod+n exec firefox
+bindsym $mod+Shift+n exec jupyter-notebook
+# M
+bindsym $mod+m exec nautilus
+bindsym $mod+Shift+m exec mcomix
+# LEFT
+bindsym $mod+Left focus left
+bindsym $mod+Shift+Left move left
+# DOWN
+bindsym $mod+Down focus down
+bindsym $mod+Shift+Down move down
+# UP
+bindsym $mod+Up focus up
+bindsym $mod+Shift+Up move up
+# RIGHT
+bindsym $mod+Right focus right
+bindsym $mod+Shift+Right move right
+# SPACE
+bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+space floating toggle
+# DELETE
 bindsym $mod+Shift+Delete	exec lmc truemute ; exec $truepause ; workspace lmao ; exec urxvt -e htop ; exec urxvt -e ranger
