@@ -63,7 +63,7 @@ bindsym $mod+Shift+b floating toggle; sticky toggle; exec --no-startup-id ~/.scr
 #bindsym $mod+d focus child
 
 bindsym $mod+o sticky toggle
-bindsym $mod+t split toggle
+bindsym $Mod1+t split toggle
 
 #define locker
 #set $Locker i3lock -i /home/birromer/Pictures/dark-souls-firelink.png && sleep 1
@@ -99,7 +99,7 @@ exec --no-startup-id unclutter
 #launch polybar
 exec_always --no-startup-id ~/.scripts/polybar_launch
 exec --no-startup-id telegram-desktop
-exec --no-startup-id megasync
+#exec --no-startup-id megasync
 exec --no-startup-id pcloud
 
 # --- i3bar --- #
@@ -270,7 +270,8 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-bindsym $mod+Shift+e exec tusk
+bindsym $mod+t exec typora
+bindsym $mod+Shift+t exec tusk
 
 bindsym $mod+c exec mendeleydesktop
 bindsym $modShift+c exec calibre
