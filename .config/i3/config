@@ -1,4 +1,3 @@
-
 # ---  basic configuration --- #
 set $mod Mod4
 
@@ -43,10 +42,10 @@ exec --no-startup-id lightscreen -b
 exec --no-startup-id unclutter
 #launch polybar
 exec_always --no-startup-id ~/.scripts/polybar_launch
-exec --no-startup-id telegram-desktop
+exec --no-startup-id ~/Downloads/franz-5.0.1-x86_64.AppImage
 exec --no-startup-id thunderbird
 exec --no-startup-id pcloud
-
+exec --no-startup-id emacs --daemon
 
 # --- i3bar --- #
 #bar {
@@ -132,6 +131,7 @@ assign [class="Mendeley Desktop"] $workspace7
 assign [class="Steam"] $workspace8
 assign [class="Thunderbird"] $workspace8
 assign [class="discord"] $workspace9
+assign [class="Franz"] $workspace9
 assign [class="TelegramDesktop"] $workspace9
 #for_window [class="discord"] move to workspace $workspace9
 assign [class="Spotify"] $workspace10
@@ -248,7 +248,7 @@ bindsym $mod+Mod1+p exec xrandr --output HDMI-1 --off --output eDP-1 --auto;
 bindsym $mod+a      	 [instance="math"] scratchpad show; [instance="math"] move position center
 # S
 #bindsym $mod+s layout stacking
-#bindsym $mod+s split toggle
+bindsym $mod+s split toggle
 bindsym $mod+Shift+s exec ~/anaconda3/bin/spyder
 # D
 #bindsym $mod+d focus child
