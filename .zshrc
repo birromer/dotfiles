@@ -350,13 +350,36 @@ fi
 [[ -f ~/.zsh_aliases ]] && source ~/.zsh_aliases
 
 #autoload -Uz compinit
-#compinit
+#compinitee
 
 #ZLE_RPROMPT_INDENT=0
 
-export PATH=/opt/anaconda/bin:$PATH
+export PATH=/home/birromer/.local/bin:$PATH
 
+# added by Anaconda3 2018.12 installer
+# >>> conda init >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$(CONDA_REPORT_ERRORS=false '/home/birromer/anaconda3/bin/conda' shell.bash hook 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    \eval "$__conda_setup"
+else
+    if [ -f "/home/birromer/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/birromer/anaconda3/etc/profile.d/conda.sh"
+        CONDA_CHANGEPS1=false conda activate base
+    else
+        \export PATH="/home/birromer/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda init <<<
+
+export PYTHONPATH=/home/birromer/anaconda3/lib/python3.7/site-packages/
 
 alias mtga="/home/birromer/.wine/drive_c/Program\ Files\ \(x86\)/Wizards\ of\ the\ Coast/MTGA/MTGA.exe"
 alias vibes="LD_PRELOAD=/usr/lib/libfreetype.so /home/birromer/cic/personal/IAMOOC/VIBes-0.2.3-linux.AppImage"
 alias sims4="/home/birromer/.wine/drive_c/Games/The\ Sims\ 4\ Seasons/Game/Bin/TS4_x64.exe"
+
+alias e='emacsclient -c'
+alias ec='emacsclient -c'
+#alias vim='emacsclient -t'
+alias vi='emacsclient -t'
