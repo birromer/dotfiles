@@ -42,7 +42,7 @@ exec --no-startup-id lightscreen -b
 exec --no-startup-id unclutter
 #launch polybar
 exec_always --no-startup-id ~/.scripts/polybar_launch
-exec --no-startup-id ~/Downloads/franz-5.0.1-x86_64.AppImage
+exec --no-startup-id telegram-desktop
 exec --no-startup-id thunderbird
 exec --no-startup-id pcloud
 exec --no-startup-id emacs --daemon
