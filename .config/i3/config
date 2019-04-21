@@ -236,12 +236,11 @@ bindsym $mod+Shift+i exec --no-startup-id ~/.scripts/i3cmds/i3resize up
 # O
 bindsym $mod+o sticky toggle
 bindsym $mod+Shift+o exec --no-startup-id ~/.scripts/i3cmds/i3resize right
-# O
+bindsym $mod+Mod1+o exec xrandr --output eDP-1 --auto --output HDMI-1 --auto --left-of eDP-1; exec killall conky && xinput --set-prop 15 308 1; restart;
+# P
 #bindsym $mod+p mode "$mode_system"
 #bindsym $mod+shift+p exec optirun steam
 bindsym $mod+shift+p exec okular
-bindsym $mod+Mod1+o exec xrandr --output eDP-1 --auto --output HDMI-1 --auto --left-of eDP-1; exec killall conky; restart
-# P
 bindsym $mod+Mod1+p exec xrandr --output HDMI-1 --off --output eDP-1 --auto;
 # A
 #bindsym $mod+a focus parent
