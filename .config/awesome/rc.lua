@@ -47,12 +47,10 @@ local function run_once(cmd_arr)
 end
 
 -- Autostart programs
-run_once({ "kbdd" })
-run_once({ "perwindowlayoutd" })
-run_once({ "nm-applet -sm-disable" })
 run_once({ "compton" })
-run_once({ "wmname LG3D" }) -- Fix for java applications
 run_once({ "xautolock -time 10 -locker '/usr/share/i3lock-fancy/lock -f Meslo-LG-S-Regular -t Locked' -- scrot" })
+
+-- run_onde({xrandr --output eDP-1 --auto --output HDMI-1 --auto --left-of eDP-1})
 
 run_once({"xinput --set-prop 10 283 1"})
 run_once({"setxkbmap -layout br"})
@@ -73,7 +71,7 @@ local i3lock_settings = "i3lock-fancy -f Meslo-LG-S-Regular -t 'Locked' -n -- sc
 local modkey       = "Mod4"
 local altkey       = "Mod1"
 local terminal     = "urxvt"
-local editor       = os.getenv("EDITOR") or "nano"
+local editor       = os.getenv("EDITOR") or "vim"
 local gui_editor   = "vim"
 local browser      = "firefox"
 local guieditor    = "emacs"
@@ -100,8 +98,8 @@ awful.layout.layouts = {
     awful.layout.suit.tile,
     awful.layout.suit.floating,
     awful.layout.suit.max,
-    lain.layout.centerwork,
-    awful.layout.suit.spiral,
+    --lain.layout.centerwork,
+    --awful.layout.suit.spiral,
     awful.layout.suit.magnifier,
     awful.layout.suit.fair,
     --awful.layout.suit.tile.bottom,
@@ -244,9 +242,9 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "o",      hotkeys_popup.show_help,
               {description = "show help", group="awesome"}),
     -- Tag browsing
-    awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
+    awful.key({ modkey,   "Shift"  }, "Tab",   awful.tag.viewprev,
               {description = "view previous", group = "tag"}),
-    awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
+    awful.key({ modkey,           }, "Tab",  awful.tag.viewnext,
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
@@ -350,20 +348,18 @@ globalkeys = awful.util.table.join(
     -- awful.key({ modkey, "Shift" }, "d", function () lain.util.delete_tag() end,
     --           {description = "delete tag", group = "tag"}),
     -- Programms
-    awful.key({                   }, "XF86Launch1", function()  awful.util.spawn("subl3") end),
     awful.key({ modkey            }, "v", function() awful.util.spawn_with_shell("vivaldi-snapshot") end ),
     awful.key({ modkey            }, "f", function() awful.util.spawn_with_shell("nautilus") end ),
     awful.key({ modkey            }, "r", function() awful.util.spawn('urxvt -e ranger') end ),
-    awful.key({                   }, "F11", function() awful.util.spawn('qpaeq') end ),
     --awful.key({ modkey            }, "l", function() awful.util.spawn_with_shell("~/.config/scripts/lock.sh") end),
-    awful.key({ modkey            }, "l", function() awful.util.spawn(i3lock_settings) end),
+    awful.key({ modkey,  altkey   }, "l", function() awful.util.spawn(i3lock_settings) end),
     awful.key({                   }, "Print", function() awful.util.spawn("scrot -e 'mv %f ~/screenshots/'") end),
-    --awful.key({ }, "F4", function () scratch.drop("weechat", "bottom", "left", 0.60, 0.60, true, mouse.screen) end),
+    awful.key({ }, "F4", function () scratch.drop("weechat", "bottom", "left", 0.60, 0.60, true, mouse.screen) end),
     --awful.key({ }, "F6", function () scratch.drop("smuxi-frontend-gnome", "bottom", "left", 0.60, 0.60, true, mouse.screen) end),
-    awful.key({ }, "F2", function () scratch.drop("slack", "bottom", "right", 0.50, 0.60, true, mouse.screen) end),
+    awful.key({ }, "F2", function () scratch.drop("telegram-desktop", "bottom", "right", 0.50, 0.60, true, mouse.screen) end),
     awful.key({ }, "F3", function () scratch.drop("urxvt -e ranger", "center", "center", 0.75, 0.7, true, mouse.screen) end),
     awful.key({ }, "F12", function () awful.util.spawn_with_shell("~/.config/scripts/translate_new.sh \"".. translate_service.. "\"",false) end),
-    awful.key({modkey,            }, "s", function() awful.spawn("/opt/anaconda/bin/spyder") end),
+    awful.key({modkey,            }, "s", function() awful.spawn("~/anaconda3/bin/spyder") end),
     -- Standard program
     awful.key({ modkey,           }, "x", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
@@ -503,9 +499,9 @@ globalkeys = awful.util.table.join(
     --          {description = "copy gtk to terminal", group = "hotkeys"}),
 
     -- User programs
-    awful.key({ modkey }, "w", function () awful.spawn(browser) end,
+    awful.key({ modkey }, "n", function () awful.spawn(browser) end,
               {description = "run browser", group = "launcher"}),
-    awful.key({ modkey }, "a", function () awful.spawn(guieditor) end,
+    awful.key({ modkey }, "e", function () awful.spawn(guieditor) end,
               {description = "run gui editor", group = "launcher"}),
 
     -- Default
@@ -667,7 +663,7 @@ awful.rules.rules = {
     { rule = { class = "mpv" },
       properties = { maximized = true } },
     -- Caja is floating with fixed sizes. Titelbar enabled for Caja
-    { rule = { class = "Caja" },
+    { rule = { class = "Nautilus" },
       properties = { floating = true, titlebars_enabled = true, geometry = { x=200, y=150, height=600, width=1100 } } },
     { rule = { class = "Nm-connection-editor" },
       properties = { floating = true } },
@@ -684,9 +680,9 @@ awful.rules.rules = {
       properties = { screen = 1, maximized = true, titlebars_enabled = false, switchtotag = true, tag = awful.util.tagnames[3] } },
     { rule = { class = "Vivaldi-snapshot" },
       properties = { screen = 1, maximized = true, titlebars_enabled = false, switchtotag = true, tag = awful.util.tagnames[3] } },
-    { rule = { class = "Google-chrome" },
-      properties = { screen = 1, maximized = true, titlebars_enabled = false, switchtotag = true, tag = awful.util.tagnames[4] } },
-    { rule = { class = "Google-chrome-unstable" },
+    --{ rule = { class = "Firefox" },
+    --  properties = { screen = 1, maximized = true, titlebars_enabled = false, switchtotag = true, tag = awful.util.tagnames[4] } },
+    { rule = { class = "Google-chrome-stable" },
       properties = { screen = 1, maximized = true, titlebars_enabled = false, tag = awful.util.tagnames[5] } },
     { rule = { class = "Transmission-gtk" },
       properties = { screen = 1, maximized = true, switchtotag = true, tag = awful.util.tagnames[6] } },
