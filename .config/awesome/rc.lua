@@ -14,6 +14,10 @@ local scratch       = require("scratch")
 local freedesktop   = require("freedesktop")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 
+   local bind_key = function(mod, key, press, description, group)
+     return awful.key.new(mod, key, press, nil, {description=description, group=group})
+   end
+
 -- Error handling
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -49,9 +53,8 @@ end
 -- Autostart programs
 run_once({ "compton" })
 run_once({ "xautolock -time 10 -locker '/usr/share/i3lock-fancy/lock -f Meslo-LG-S-Regular -t Locked' -- scrot" })
-
+run_once({ "urxvtd -q"})
 -- run_onde({xrandr --output eDP-1 --auto --output HDMI-1 --auto --left-of eDP-1})
-
 run_once({"xinput --set-prop 10 283 1"})
 run_once({"setxkbmap -layout br"})
 
@@ -70,7 +73,7 @@ local rofi_settings = "rofi -show run"
 local i3lock_settings = "i3lock-fancy -f Meslo-LG-S-Regular -t 'Locked' -n -- scrot"
 local modkey       = "Mod4"
 local altkey       = "Mod1"
-local terminal     = "urxvt"
+local terminal     = "urxvtc"
 local editor       = os.getenv("EDITOR") or "vim"
 local gui_editor   = "vim"
 local browser      = "firefox"
@@ -117,6 +120,13 @@ awful.layout.layouts = {
     --lain.layout.centerwork.horizontal,
     --lain.layout.termfair.center,
 }
+
+   local revelation = require("third_party.revelation")
+   revelation.fg = beautiful.revelation_fg
+   revelation.border_color = beautiful.revelation_border_color
+   revelation.bg = beautiful.revelation_bg
+   revelation.font = beautiful.revelation_font
+   revelation.init()
 
 awful.util.taglist_buttons = awful.util.table.join(
                     awful.button({ }, 1, function(t) t:view_only() end),
@@ -249,6 +259,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
 
+    awful.key({modkey}, "a", revelation,
+              {description = "Revelation"}),
 
 
     -- Non-empty tag browsing
@@ -310,7 +322,7 @@ globalkeys = awful.util.table.join(
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
-    awful.key({ modkey,           }, "Tab",
+    awful.key({ altkey,           }, "Tab",
         function ()
             awful.client.focus.history.previous()
             if client.focus then
@@ -350,14 +362,14 @@ globalkeys = awful.util.table.join(
     -- Programms
     awful.key({ modkey            }, "v", function() awful.util.spawn_with_shell("vivaldi-snapshot") end ),
     awful.key({ modkey            }, "f", function() awful.util.spawn_with_shell("nautilus") end ),
-    awful.key({ modkey            }, "r", function() awful.util.spawn('urxvt -e ranger') end ),
+    awful.key({ modkey            }, "r", function() awful.util.spawn('urxvtc -e ranger') end ),
     --awful.key({ modkey            }, "l", function() awful.util.spawn_with_shell("~/.config/scripts/lock.sh") end),
     awful.key({ modkey,  altkey   }, "l", function() awful.util.spawn(i3lock_settings) end),
     awful.key({                   }, "Print", function() awful.util.spawn("scrot -e 'mv %f ~/screenshots/'") end),
     awful.key({ }, "F4", function () scratch.drop("weechat", "bottom", "left", 0.60, 0.60, true, mouse.screen) end),
     --awful.key({ }, "F6", function () scratch.drop("smuxi-frontend-gnome", "bottom", "left", 0.60, 0.60, true, mouse.screen) end),
     awful.key({ }, "F2", function () scratch.drop("telegram-desktop", "bottom", "right", 0.50, 0.60, true, mouse.screen) end),
-    awful.key({ }, "F3", function () scratch.drop("urxvt -e ranger", "center", "center", 0.75, 0.7, true, mouse.screen) end),
+    awful.key({ }, "F3", function () scratch.drop("urxvtc -e ranger", "center", "center", 0.75, 0.7, true, mouse.screen) end),
     awful.key({ }, "F12", function () awful.util.spawn_with_shell("~/.config/scripts/translate_new.sh \"".. translate_service.. "\"",false) end),
     awful.key({modkey,            }, "s", function() awful.spawn("~/anaconda3/bin/spyder") end),
     -- Standard program
@@ -374,8 +386,8 @@ globalkeys = awful.util.table.join(
               {description = "increase master width factor", group = "layout"}),
     awful.key({ altkey, "Shift"   }, "h",     function () awful.tag.incmwfact(-0.05)          end,
               {description = "decrease master width factor", group = "layout"}),
-    -- awful.key({ altkey, "Shift"   }, "j",     function () awful.client.incwfact( 0.05)          end,
-   --           {description = "increase master height factor", group = "layout"}),
+     awful.key({ altkey, "Shift"   }, "j",     function () awful.client.incwfact( 0.05)          end,
+              {description = "increase master height factor", group = "layout"}),
     awful.key({ altkey, "Shift"   }, "k",     function () awful.client.incwfact(-0.05)          end,
               {description = "decrease master height factor", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1, nil, true) end,
