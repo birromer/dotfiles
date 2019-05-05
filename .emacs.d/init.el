@@ -292,10 +292,10 @@ Entered on %U
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("1436d643b98844555d56c59c74004eb158dc85fc55d2e7205f8d9b8c860e177f" "274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" default)))
+    ("bc75dfb513af404a26260b3420d1f3e4131df752c19ab2984a7c85def9a2917e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "f8fb7488faa7a70aee20b63560c36b3773bd0e4c56230a97297ad54ff8263930" "f8067b7d0dbffb29a79e0843797efabdf5e1cf326639874d8b407e9b034136a4" "97965ccdac20cae22c5658c282544892959dc541af3e9ef8857dbf22eb70e82b" "9129c2759b8ba8e8396fe92535449de3e7ba61fd34569a488dd64e80f5041c9f" "1436d643b98844555d56c59c74004eb158dc85fc55d2e7205f8d9b8c860e177f" "274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" default)))
  '(package-selected-packages
    (quote
-    (dracula-theme magit exec-path-from-shell htmlize ess auctex))))
+    (smooth-scroll haskell-mode evil-nerd-commenter highlight-parentheses latex-preview-pane smart-mode-line highlight-indent-guides poet-theme dracula-theme magit exec-path-from-shell htmlize ess auctex))))
 
 (load-theme 'dracula t)
 
@@ -307,4 +307,22 @@ Entered on %U
 (require 'neotree)
 (global-set-key [f3] 'neotree-toggle)
 
-(add-hook 'pro-mode-hook 'linum-mode)
+(add-hook 'prog-mode-hook 'linum-mode)
+
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+(setq highlight-indent-guides-method 'character)
+
+(sml/setup)
+(setq sml/theme 'atom-one-dark)
+
+;; (latex-preview-pane-enable)
+
+;; (add-hook 'prog-mode-hook 'highlight-parenteses-mode)
+
+;; (evilnc-default-hotkeys)
+
+(add-to-list 'load-path "~/.emacs.d/evil")
+(setq evil-shift-width 4)
+(require 'evil)
+(evil-mode 1)
+
