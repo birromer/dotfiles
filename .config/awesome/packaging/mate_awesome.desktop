@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=MATE Awesome ARGB
+Comment=This session logs you into MATE Awesome
+Type=Application
+#Exec=mate-session -f -a /usr/share/xsession_current
+#Exec=env WINDOW_MANAGER=awesome_argb mate-session -f -a /dev/null
+#Exec=env WINDOW_MANAGER=awesome mate-session -f
+#Exec=mate-session -f -a /usr/share/xsession_current
+#Exec=/usr/bin/awesome-mate-session
+#TryExec=awesome_argb
+Exec=mate-session
+TryExec=mate-session
