@@ -84,6 +84,13 @@ function rules.init(awesome_context)
         }
       },
 
+      { rule = { class = "Sublime_text" },
+        properties = {
+          tag=capi.screen.primary.tags[3],
+          raise=false
+        }
+      },
+
       { rule = { class = "code-oss" },
         properties = {
           tag=capi.screen.primary.tags[3],
@@ -101,6 +108,13 @@ function rules.init(awesome_context)
       { rule = { class = "Vlc" },
         properties = {
           tag=capi.screen.primary.tags[7],
+          raise=false
+        }
+      },
+
+      { rule = { class = "Zotero" },
+        properties = {
+          tag=capi.screen.primary.tags[9],
           raise=false
         }
       },
@@ -128,7 +142,7 @@ function rules.init(awesome_context)
 
       { rule = { class = "Mcomix" },
         properties = {
-          tag=capi.screen.primary.tags[9],
+          tag=capi.screen.primary.tags[8],
           raise=false
         }
       },
