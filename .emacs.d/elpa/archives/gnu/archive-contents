@@ -70,7 +70,7 @@
 	((:url . "http://elpa.gnu.org/packages/ampc.html")
 	 (:keywords "ampc" "mpc" "mpd"))])
  (arbitools .
-	    [(0 975)
+	    [(0 976)
 	     ((cl-lib
 	       (0 5)))
 	     "Package for chess tournaments administration" single
@@ -111,12 +111,12 @@
 		 ((:keywords "extensions")
 		  (:url . "http://www.dr-qubit.org/emacs.php"))])
  (avy .
-      [(0 4 0)
+      [(0 5 0)
        ((emacs
 	 (24 1))
 	(cl-lib
 	 (0 5)))
-       "tree-based completion" tar
+       "Jump to arbitrary positions in visible text and select text quickly." tar
        ((:keywords "point" "location")
 	(:url . "https://github.com/abo-abo/avy"))])
  (bbdb .
@@ -133,7 +133,7 @@
 	  ((:url . "https://github.com/Malabarba/beacon")
 	   (:keywords "convenience"))])
  (bnf-mode .
-	   [(0 4 1)
+	   [(0 4 2)
 	    ((cl-lib
 	      (0 5))
 	     (emacs
@@ -392,7 +392,7 @@
 	     ((:keywords "killing" "convenience")
 	      (:url . "https://github.com/leoliu/easy-kill"))])
  (ebdb .
-       [(0 6 7)
+       [(0 6 8)
 	((emacs
 	  (25 1))
 	 (cl-lib
@@ -426,9 +426,9 @@
 	     ((:url . "http://elpa.gnu.org/packages/ediprolog.html")
 	      (:keywords "languages" "processes"))])
  (eev .
-      [(20190410)
+      [(20190425)
        ((emacs
-	 (24 3)))
+	 (24 1)))
        "Support for e-scripts (eepitch blocks, elisp hyperlinks, etc)" tar
        ((:keywords "lisp" "e-scripts")
 	(:url . "http://angg.twu.net/#eev"))])
@@ -538,7 +538,7 @@
 	   ((:url . "http://elpa.gnu.org/packages/flymake.html")
 	    (:keywords "c" "languages" "tools"))])
  (fountain-mode .
-		[(2 6 2)
+		[(2 7 0)
 		 ((emacs
 		   (24 5)))
 		 "Major mode for screenwriting in Fountain markup" single
@@ -681,7 +681,7 @@
 	 ((:keywords "bindings")
 	  (:url . "https://github.com/abo-abo/hydra"))])
  (hyperbole .
-	    [(7 0 2)
+	    [(7 0 3)
 	     ((emacs
 	       (24 4)))
 	     "GNU Hyperbole: The Everyday Hypertextual Information Manager" tar
@@ -700,7 +700,7 @@
 	     ((:url . "http://elpa.gnu.org/packages/iterators.html")
 	      (:keywords "extensions" "elisp"))])
  (ivy .
-      [(0 10 0)
+      [(0 11 0)
        ((emacs
 	 (24 1)))
        "Incremental Vertical completYon" tar
@@ -958,7 +958,7 @@
 	 ((:keywords "convenience")
 	  (:url . "https://github.com/clemera/objed"))])
  (olivetti .
-	   [(1 7 0)
+	   [(1 7 1)
 	    ((emacs
 	      (24 5)))
 	    "Minor mode for a nice writing environment" single
@@ -1118,6 +1118,43 @@
 	   "A modular front-end for interacting with external debuggers" tar
 	   ((:keywords "gdb" "python" "perl" "go" "bash" "nodejs" "zsh" "bashdb" "zshdb" "remake" "make" "trepan" "perldb" "pdb")
 	    (:url . "http://github.com/realgud/realgud/"))])
+ (realgud-ipdb .
+	       [(1 0 0)
+		((realgud
+		  (1 4 5))
+		 (load-relative
+		  (1 2))
+		 (cl-lib
+		  (0 5))
+		 (emacs
+		  (24)))
+		"Realgud front-end to ipdb" single
+		((:url . "http://github.com/rocky/realgud-ipdb")
+		 (:keywords))])
+ (realgud-node-debug .
+		     [(1 0 0)
+		      ((realgud
+			(1 4 5))
+		       (load-relative
+			(1 2))
+		       (cl-lib
+			(0 5))
+		       (emacs
+			(24)))
+		      "Realgud front-end to older nodejs \"node debug\"" tar
+		      ((:url . "http://github.com/realgud/realgud-node-debug"))])
+ (realgud-node-inspect .
+		       [(1 0 0)
+			((realgud
+			  (1 4 5))
+			 (load-relative
+			  (1 2))
+			 (cl-lib
+			  (0 5))
+			 (emacs
+			  (24)))
+			"Realgud front-end to newer \"node inspect\"" tar
+			((:url . "http://github.com/realgud/realgud-node-inspect"))])
  (register-list .
 		[(0 1)
 		 nil "Interactively list/edit registers" single
