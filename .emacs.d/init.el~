@@ -153,7 +153,7 @@
 (add-hook 'tex-mode-hook 'auto-fill-mode-on)
 (add-hook 'latex-mode-hook 'auto-fill-mode-on)
 
-(setq org-directory "~/org/")
+(setq org-directory "~/Documents/org/")
 
 (setq org-hide-leading-stars t)
 (setq org-alphabetical-lists t)
@@ -295,7 +295,7 @@ Entered on %U
     ("2540689fd0bc5d74c4682764ff6c94057ba8061a98be5dd21116bf7bf301acfb" "725a0ac226fc6a7372074c8924c18394448bb011916c05a87518ad4563738668" "eb7be1648009af366d83f855191057bdc09348a2d9353db31da03b1cdec50cc5" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "d8dc153c58354d612b2576fea87fe676a3a5d43bcc71170c62ddde4a1ad9e1fb" "bc75dfb513af404a26260b3420d1f3e4131df752c19ab2984a7c85def9a2917e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "f8fb7488faa7a70aee20b63560c36b3773bd0e4c56230a97297ad54ff8263930" "f8067b7d0dbffb29a79e0843797efabdf5e1cf326639874d8b407e9b034136a4" "97965ccdac20cae22c5658c282544892959dc541af3e9ef8857dbf22eb70e82b" "9129c2759b8ba8e8396fe92535449de3e7ba61fd34569a488dd64e80f5041c9f" "1436d643b98844555d56c59c74004eb158dc85fc55d2e7205f8d9b8c860e177f" "274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" default)))
  '(package-selected-packages
    (quote
-    (smooth-scrolling afternoon-theme interleave pdf-tools helm zotxt zones gotham-theme jazz-theme abyss-theme smooth-scroll haskell-mode evil-nerd-commenter highlight-parentheses latex-preview-pane smart-mode-line highlight-indent-guides poet-theme dracula-theme magit exec-path-from-shell htmlize ess auctex))))
+    (org-ref org-category-capture counsel-org-capture-string org-capture-pop-frame helm-bibtex smooth-scrolling afternoon-theme interleave pdf-tools helm zotxt zones gotham-theme jazz-theme abyss-theme smooth-scroll haskell-mode evil-nerd-commenter highlight-parentheses latex-preview-pane smart-mode-line highlight-indent-guides poet-theme dracula-theme magit exec-path-from-shell htmlize ess auctex))))
 
 (load-theme 'afternoon t)
 
@@ -327,9 +327,12 @@ Entered on %U
 (evil-mode 1)
 
 ;;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
-;;(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 ;;(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
-(setq scroll-step 1) ;; keyboard scroll one line at a time
+;;(setq scroll-step 1) ;; keyboard scroll one line at a time
+
+(require 'smooth-scrolling)
+(smooth-scrolling-mode 1)
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 
 ;; Activate org-zotxt-mode in org-mode buffers
 (add-hook 'org-mode-hook (lambda () (org-zotxt-mode 1)))
@@ -344,16 +347,17 @@ Entered on %U
 
 (add-hook 'doc-view-mode-hook 'pdf-tools-install)
 
-(setq org-ref-bibliography-notes "~/org/notes.org"
-      org-ref-default-bibliography '("~/papers/references.bib")
-      org-ref-pdf-directory "~/papers/pdfs/")
+(setq org-ref-notes-directory "~/Documents/org/references/notes"
+      org-ref-bibliography-notes "~/Documents/org/references/articles.org"
+      org-ref-default-bibliography '("~/Documents/org/references/references.bib")
+      org-ref-pdf-directory "~/Documents/org/references/pdfs/")
 
-(setq bibtex-completion-bibliography
-      '("~/papers/references.bib"))
-
-(setq bibtex-completion-library-path '("~/papers/pdfs"))
-
-(setq helm-bibtex-notes-path "~/org/notes.org")
+(setq helm-bibtex-bibliography "~/Documents/org/references/references.bib"
+      helm-bibtex-library-path "~/Documents/org/references/pdfs"
+      helm-bibtex-notes-path "~/Documents/org/references/articles.org"
+      bibtex-completion-notes-path "~/Documents/org/references/articles.org"
+      bibtex-completion-bibliography "~/Documents/org/references/references.bib"
+      bibtex-completion-library-path '("~/Documents/org/references/pdfs"))
 
 (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
 
@@ -361,3 +365,7 @@ Entered on %U
 (add-hook 'bibtex-mode-hook (lambda () (local-set-key (kbd "C-c n") 'org-ref-open-bibtex-notes)))
 (add-hook 'org-mode-hook (lambda () (local-set-key (kbd "C-c i") 'interleave-mode)))
 (add-hook 'pdf-view-mode-hook (lambda () (linum-mode -1)))
+
+(scroll-bar-mode -1)
+
+(setq-default tab-width 4)
