@@ -141,10 +141,10 @@ function keys.init(awesome_context)
       "toggle systray popup", AWESOME_COLOR
     ),
 
-    bind_key({ modkey,  "Control"  }, "l",
-      function() run_once{"i3lock-fancy"} end,
-      "xscreensaver lock", AWESOME_COLOR
-    ),
+    --bind_key({ modkey,  "Control"  }, "l",
+    --  function() run_once{"i3lock-fancy"} end,
+    --  "xscreensaver lock", AWESOME_COLOR
+    --),
     bind_key({ modkey,  "Control"  }, "d",
       function() awful.spawn.with_shell("sleep 1 && xset dpms force off") end,
       "turn off display", AWESOME_COLOR
