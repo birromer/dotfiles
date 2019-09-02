@@ -64,17 +64,17 @@ ${voffset -5}${font Ubuntu Condensed:pixelsize=13}${color FFFFFF}CPU2 $color${cp
 ${cpugraph cpu2 40,0 000000 543500}
 ${voffset 5}${font Ubuntu Condensed:pixelsize=13}${color FFFFFF}CPU3 $color${cpu cpu3}% ${color FFFFFF}${alignr}TEMP $color${exec sensors|grep 'Core 3'|awk '{print $3}'}
 ${cpugraph cpu3 40,0 000000 543500}
-${voffset 5}${font Ubuntu Condensed:pixelsize=13}${color 000000}CPU Process
+${voffset 5}${font Ubuntu Condensed:pixelsize=13}${color FFFFFF}CPU Process
 ${voffset -5}$hr
-${font Ubuntu Condensed:pixelsize=13}${color 000000}${top name 1} ${color}${alignr}${top cpu 1}%
-${color 000000}${top name 2} ${color}${alignr}${top cpu 2}%
+${font Ubuntu Condensed:pixelsize=13}${color FFFFFF}${top name 1} ${color}${alignr}${top cpu 1}%
+${color FFFFFF}${top name 2} ${color}${alignr}${top cpu 2}%
 ${color 000000}${top name 3} ${color}${alignr}${top cpu 3}%
 ${color 000000}${top name 4} ${color}${alignr}${top cpu 4}%
 
 # Network
-${font Ubuntu Condensed:pixelsize=15}${color FFFFFF}Network
+${font Ubuntu Condensed:pixelsize=15}${color 000000}Network
 ${voffset -5}$hr
-${voffset -5}${font Ubuntu Condensed:pixelsize=13}${color FFFFFF}DOWN $color${downspeedf wlp3s0} KiB/s ${alignr}${color FFFFFF} TOTAL DOWN $color${totaldown wlp3s0}
+${voffset -5}${font Ubuntu Condensed:pixelsize=13}${color 000000}DOWN ${downspeedf wlp3s0} KiB/s ${alignr}${color FFFFFF} TOTAL DOWN $color${totaldown wlp3s0}
 ${downspeedgraph wlp3s0 40,0 000000 543500}
 ${voffset -5}${font Ubuntu Condensed:pixelsize=13}${color FFFFFF}UP $color${upspeedf wlp3s0} KiB/s ${alignr}${color FFFFFF} TOTAL UP $color${totalup wlp3s0}
 ${upspeedgraph wlp3s0 40,0 000000 543500}
