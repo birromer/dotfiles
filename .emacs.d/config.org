@@ -71,3 +71,36 @@ Use =evil= with Org agendas.
     (evil-org-agenda-set-keys))
 #+end_src
 
+* Prettyness
+
+The default interface is filled with garbage that wastes screen space, so just remove it all
+
+#+BEGIN_SRC emacs-lisp
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+#+END_SRC 
+
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-screen t
+	initial-scratch-message ""
+	initial-major-mode 'org-mode)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package afternoon-theme
+    :demand
+    :config
+    (load-theme 'aftenoon t))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (setq auto-window-vscroll nil
+	scroll-step 1
+	scroll-conservatively most-positive-fixnum
+	scroll-margin 10)
+#+END_SRC
+
+* Emacs extensions
+
+All the stuff that I use that need to be installed
