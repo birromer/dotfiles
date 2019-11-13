@@ -1,0 +1,6 @@
+#name : class ... end
+#group : definitions
+# --
+class ${1:ClassName}
+  $0
+end

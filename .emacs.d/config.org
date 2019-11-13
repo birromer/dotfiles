@@ -1,0 +1,73 @@
+#+TITLE: Emacs Configuration
+#+AUTHOR: Bernardo Hummes
+#+EMAIL: hummes@ieee.org
+#+OPTIONS: toc:nil num:nil
+
+* Configure =use-package=
+  
+I use =use-package= to install and configure my packages. My =init.el= includes
+the initial setup for =package.el= and ensures that =use-package= is installed,
+since I wanna do that right away.
+
+This makes sure that =use-package= will install the package if it's not already
+available. It also means that I should be able to open Emacs for the first time
+on a fresh Debian box and have my whole environment automatically installed. I'm
+not /totally/ sure about that, but we're gettin' close.
+
+#+begin_src emacs-lisp
+  (require 'use-package-ensure)
+  (setq use-package-always-ensure t)
+#+end_src
+
+Always compile packages, and use the newest version available.
+
+#+begin_src emacs-lisp
+  (use-package auto-compile
+    :config (auto-compile-on-load-mode))
+
+    (setq load-prefer-newer t)
+#+end_src
+
+* =evil-mode=
+
+#+begin_src emacs-lisp
+  (setq evil-want-abbrev-expand-on-insert-exit nil)
+#+end_src
+
+Use =evil=.
+
+#+begin_src emacs-lisp
+  (use-package evil
+    :demand
+    :config
+    (evil-mode 1))
+#+end_src
+
+Install =evil-collection=, which provides evil-friendly bindings for many modes.
+
+#+begin_src emacs-lisp
+  (use-package evil-collection
+    :after evil)
+#+end_src
+
+Enable =surround= everywhere.
+
+#+begin_src emacs-lisp
+  (use-package evil-surround
+    :config
+    (global-evil-surround-mode 1))
+#+end_src
+
+Use =evil= with Org agendas.
+
+#+begin_src emacs-lisp
+  (use-package evil-org
+    :after org
+    :config
+    (add-hook 'org-mode-hook 'evil-org-mode)
+    (add-hook 'evil-org-mode-hook
+              (lambda () (evil-org-set-key-theme)))
+    (require 'evil-org-agenda)
+    (evil-org-agenda-set-keys))
+#+end_src
+
