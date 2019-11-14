@@ -40,15 +40,33 @@
       initial-scratch-message ""
       initial-major-mode 'org-mode)
 
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(use-package afternoon-theme
+  :demand
+  :config
+  ;;(load-theme 'gruvbox-dark-soft t))
+  (load-theme 'aftenoon t))
+
+(setq-default display-line-numbers-type 'relative
+              display-line-numbers-width-start 4)
+
+(global-display-line-numbers-mode)
+
 (setq auto-window-vscroll nil
       scroll-step 1
       scroll-conservatively most-positive-fixnum
       scroll-margin 10)
 
-(use-package afternoon-theme
-  :demand
-  :config
-  (load-theme 'aftenoon t))
+(global-hl-line-mode 1)
+
+(setq-default display-time-format "%H:%M "
+              display-time-default-load-average nil)
+
+(display-time-mode 1)
+(line-number-mode t)
+(column-number-mode t)
+(size-indication-mode t)
 
 (use-package org
   :hook
@@ -59,3 +77,10 @@
   (org-modules (append org-modules '(org-tempo ox-extra)))
   (org-edit-source-content-indentation 0)
   )
+
+(defun c-mode-defauults ()
+  (setq c-defaults-style "linux"
+        c-basic-offset 4)
+  (c-set-offset 'substatement-open 0))
+
+(add-hook 'c-mode-common-hook (lambda () (run-hooks 'c-mode-defaults-hook)))

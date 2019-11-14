@@ -71,6 +71,7 @@ Use =evil= with Org agendas.
     (evil-org-agenda-set-keys))
 #+end_src
 
+
 * Prettyness
 ** Definitions
 
@@ -88,15 +89,8 @@ The default interface is filled with garbage that wastes screen space, so just r
         initial-scratch-message ""
         initial-major-mode 'org-mode)
 
-  (setq auto-window-vscroll nil
-        scroll-step 1
-        scroll-conservatively most-positive-fixnum
-        scroll-margin 10)
-
   (fset 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
-
-** 
 ** Font
 Fonts cuz yes
 
@@ -108,12 +102,53 @@ Fonts cuz yes
   (use-package afternoon-theme
     :demand
     :config
+    ;;(load-theme 'gruvbox-dark-soft t))
     (load-theme 'aftenoon t))
 #+END_SRC
+** Numbers and scrolling
 
+A bit for line numbering 
+
+#+BEGIN_SRC emacs-lisp
+  (setq-default display-line-numbers-type 'relative
+                display-line-numbers-width-start 4)
+
+  (global-display-line-numbers-mode)
+#+END_SRC
+
+Improved scrolling and highlight
+
+#+BEGIN_SRC emacs-lisp
+  (setq auto-window-vscroll nil
+        scroll-step 1
+        scroll-conservatively most-positive-fixnum
+        scroll-margin 10)
+
+  (global-hl-line-mode 1)
+#+END_SRC
+** Mode line
+Nice stuff for it
+
+#+BEGIN_SRC emacs-lisp
+  (setq-default display-time-format "%H:%M "
+                display-time-default-load-average nil)
+
+  (display-time-mode 1)
+  (line-number-mode t)
+  (column-number-mode t)
+  (size-indication-mode t)
+#+END_SRC
 * Emacs extensions
-
 All the stuff that I use that alter the way Emacs works
+
+** Mode line
+#+BEGIN_SRC emacs-lisp
+  (use-package smart-mode-line
+    :demand
+    :config
+    (sml/setup))
+#+END_SRC
+
 * Programming languages support
 ** Org 
   #+BEGIN_SRC emacs-lisp
@@ -127,4 +162,17 @@ All the stuff that I use that alter the way Emacs works
     (org-edit-source-content-indentation 0)
     )
   #+END_SRC 
+** C++
+Defaults for the language
+
+#+BEGIN_SRC emacs-lisp
+  (defun c-mode-defauults ()
+    (setq c-defaults-style "linux"
+          c-basic-offset 4)
+    (c-set-offset 'substatement-open 0))
+
+  (add-hook 'c-mode-common-hook (lambda () (run-hooks 'c-mode-defaults-hook)))
+#+END_SRC
+
+
 
