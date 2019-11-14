@@ -72,6 +72,7 @@ Use =evil= with Org agendas.
 #+end_src
 
 * Prettyness
+** Definitions
 
 The default interface is filled with garbage that wastes screen space, so just remove it all
 
@@ -79,14 +80,30 @@ The default interface is filled with garbage that wastes screen space, so just r
   (tool-bar-mode -1)
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
-#+END_SRC 
 
-#+BEGIN_SRC emacs-lisp
+  (setq indent-tabs-mode nil
+        tab-width 4)
+
   (setq inhibit-startup-screen t
-	initial-scratch-message ""
-	initial-major-mode 'org-mode)
+        initial-scratch-message ""
+        initial-major-mode 'org-mode)
+
+  (setq auto-window-vscroll nil
+        scroll-step 1
+        scroll-conservatively most-positive-fixnum
+        scroll-margin 10)
+
+  (fset 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
+** 
+** Font
+Fonts cuz yes
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (setq default-frame-alist '((font . "Inconsolata-12")))
+#+END_SRC
+** Theme
 #+BEGIN_SRC emacs-lisp
   (use-package afternoon-theme
     :demand
@@ -94,13 +111,20 @@ The default interface is filled with garbage that wastes screen space, so just r
     (load-theme 'aftenoon t))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-  (setq auto-window-vscroll nil
-	scroll-step 1
-	scroll-conservatively most-positive-fixnum
-	scroll-margin 10)
-#+END_SRC
-
 * Emacs extensions
 
-All the stuff that I use that need to be installed
+All the stuff that I use that alter the way Emacs works
+* Programming languages support
+** Org 
+  #+BEGIN_SRC emacs-lisp
+  (use-package org
+    :hook
+    ((org-mode . turn-on-auto-fill) ;; auto break line
+     (org-mode . org-indent-mode)) 
+    :custom
+    (org-hide-leading-starts t)
+    (org-modules (append org-modules '(org-tempo ox-extra)))
+    (org-edit-source-content-indentation 0)
+    )
+  #+END_SRC 
+

@@ -33,16 +33,29 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
+(setq indent-tabs-mode nil
+      tab-width 4)
+
 (setq inhibit-startup-screen t
       initial-scratch-message ""
       initial-major-mode 'org-mode)
+
+(setq auto-window-vscroll nil
+      scroll-step 1
+      scroll-conservatively most-positive-fixnum
+      scroll-margin 10)
 
 (use-package afternoon-theme
   :demand
   :config
   (load-theme 'aftenoon t))
 
-(setq auto-window-vscroll nil
-      scroll-step 1
-      scroll-conservatively most-positive-fixnum
-      scroll-margin 10)
+(use-package org
+  :hook
+  ((org-mode . turn-on-auto-fill) ;; auto break line
+   (org-mode . org-indent-mode)) 
+  :custom
+  (org-hide-leading-starts t)
+  (org-modules (append org-modules '(org-tempo ox-extra)))
+  (org-edit-source-content-indentation 0)
+  )
