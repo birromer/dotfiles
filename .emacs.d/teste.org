@@ -1,3 +1,0 @@
-#+BEGIN_SRC emacs-lisp 
-  (setq t)
-#+END_SRC
