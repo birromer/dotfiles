@@ -21,13 +21,12 @@ exec_always xautolock -time 30 -locker "/usr/bin/i3lock-fancy"
 #set keyboard layout
 exec setxkbmap -layout br
 #enable touchpad tap
-exec xinput set-prop 10 290 1
-exec xinput set-prop 11 207 1
+exec xinput --set-prop 'Synaptics TM3336-001' 'libinput Tapping Enabled' 1
 
 #starts terminal workspace windows loadout
 #  exec --no-startup-id /home/birromer/.scripts/load_layout.sh
 #exec --no-startup-id "i3-msg 'workspace $workspace1; append_layout /home/birromer/.i3/workspace-1.json'" #not working
-exec urxvt -e gtop
+#exec urxvt -e gtop
 #composite manager
 exec --no-startup-id compton
 #reduces blue light
@@ -37,15 +36,17 @@ exec --no-startup-id redshift
 #music player
 #exec spotify
 #printscreen tool
-exec --no-startup-id lightscreen -b
+#exec --no-startup-id lightscreen -b
 #Unclutter makes the mouse invisible after a brief period
-exec --no-startup-id unclutter
+#exec --no-startup-id unclutter
 #launch polybar
 exec_always --no-startup-id ~/.scripts/polybar_launch
-exec --no-startup-id telegram-desktop
+#exec --no-startup-id telegram-desktop
 exec --no-startup-id thunderbird
-exec --no-startup-id pcloud
-exec --no-startup-id emacs --daemon
+#exec --no-startup-id pcloud
+exec --no-startup-id megasync
+
+#exec --no-startup-id emacs --daemon
 
 # --- i3bar --- #
 #bar {
@@ -207,8 +208,10 @@ bindsym XF86AudioPrev exec playerctl previous
 bindsym $mod+Return exec urxvt
 bindsym $mod+Shift+Return exec urxvt -e tmux
 # TAB
-bindsym $mod+Tab workspace next
-bindsym $mod+Shift+Tab workspace prev
+bindsym $mod+q exec i3wins
+
+#bindsym $mod+Tab workspace next
+#bindsym $mod+Shift+Tab workspace prev
 # Q
 #bindsym $modt+q kill
 bindsym $mod+Shift+q kill
@@ -253,7 +256,8 @@ bindsym $mod+Shift+s exec ~/anaconda3/bin/spyder
 #bindsym $mod+d focus child
 #bindsym $mod+d exec dmenu_run
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-bindsym $mod+d exec rofi -show run
+bindsym $mod+d focus mode_toggle
+#bindsym $mod+d exec rofi -show run
 bindsym $mod+Shift+d		gaps inner current set 0; gaps outer current set 0
 # F
 bindsym $mod+f exec nautilus
@@ -309,7 +313,8 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Right focus right
 bindsym $mod+Shift+Right move right
 # SPACE
-bindsym $mod+space focus mode_toggle
+#bindsym $mod+space focus mode_toggle
+bindsym $mod+space exec rofi -show run
 bindsym $mod+Shift+space floating toggle
 # DELETE
 bindsym $mod+Shift+Delete	exec lmc truemute ; exec $truepause ; workspace lmao ; exec urxvt -e htop ; exec urxvt -e ranger
