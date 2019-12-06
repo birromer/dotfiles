@@ -62,7 +62,7 @@ smart_borders on
 gaps outer 0
 gaps inner 0
 #no borders
-for_window [class="^.*"] border pixel 2
+for_window [class="^.*"] border pixel 3
 
 
 # --- workspaces --- #
@@ -108,6 +108,7 @@ bindsym $mod+Escape workspace back_and_forth
 #assigns programs to certain workspaces
 #workspace $workspace1 gaps outer 10
 #workspace $workspace1 gaps inner 10
+assign [class="Navigator"] $workspace2
 assign [class="Firefox"] $workspace2
 assign [class="Google-chrome"] $workspace2
 #for_window [class="Google-chrome"] move to workspace $workspace2
