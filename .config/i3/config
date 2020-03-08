@@ -5,7 +5,7 @@ font pango:Dejavu Sans Mono 8
 
 exec_always fc-cache
 
-exec_always conky -c /home/birromer/.config/conky/info
+exec_always conky -c /home/birromer/.config/conky/info-capra
 
 floating_modifier $mod
 
@@ -14,7 +14,7 @@ floating_modifier $mod
 set $Locker i3lock-fancy
 
 #set wallpaper
-exec_always feh --bg-scale '/home/birromer/Pictures/capra-demon-1.png'
+exec_always feh --bg-scale '/home/birromer/Pictures/capra-demon-1-grey.png'
 #exec_always feh --bg-scale '/home/birromer/Pictures/sandman-4.jpg'
 #set auto lock
 #exec_always xautolock -time 30 -locker "i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'" &
