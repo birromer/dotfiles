@@ -14,7 +14,8 @@ floating_modifier $mod
 set $Locker i3lock-fancy
 
 #set wallpaper
-exec_always feh --bg-scale '/home/birromer/Pictures/sandman-4.jpg'
+exec_always feh --bg-scale '/home/birromer/Pictures/capra-demon-1.png'
+#exec_always feh --bg-scale '/home/birromer/Pictures/sandman-4.jpg'
 #set auto lock
 #exec_always xautolock -time 30 -locker "i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'" &
 exec_always xautolock -time 30 -locker "/usr/bin/i3lock-fancy"
@@ -40,9 +41,10 @@ exec --no-startup-id redshift
 #Unclutter makes the mouse invisible after a brief period
 #exec --no-startup-id unclutter
 #launch polybar
-exec_always --no-startup-id ~/.scripts/polybar_launch
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+#exec_always --no-startup-id ~/.scripts/polybar_launch
 #exec --no-startup-id telegram-desktop
-exec --no-startup-id thunderbird
+#exec --no-startup-id thunderbird
 #exec --no-startup-id pcloud
 exec --no-startup-id megasync
 
