@@ -14,7 +14,7 @@ floating_modifier $mod
 set $Locker i3lock-fancy
 
 #set wallpaper
-exec_always feh --bg-scale '/home/birromer/Pictures/capra-demon-1-grey-samll.png'
+exec_always feh --bg-scale '/home/birromer/Pictures/capra-demon-1-grey-small.png'
 #exec_always feh --bg-scale '/home/birromer/Pictures/sandman-4.jpg'
 #set auto lock
 #exec_always xautolock -time 30 -locker "i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'" &
