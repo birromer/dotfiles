@@ -10,10 +10,11 @@ export ZSH=$HOME/.oh-my-zsh
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 #ZSH_THEME="agnoster"
-ZSH_THEME="pygmalion"
+#ZSH_THEME="pygmalion"
 #ZSH_THEME="lambda-gitster"
+#ZSH_THEME="lambda"
 #ZSH_THEME="spaceship"
-
+ZSH_THEME="cdimascio-lambda"
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
 # cause zsh load theme from this variable instead of
@@ -374,12 +375,15 @@ unset __conda_setup
 # <<< conda init <<<
 
 export PYTHONPATH=/home/birromer/anaconda3/lib/python3.7/site-packages/
+export PATH=$PATH:$HOME/.cargo/bin
 
 alias mtga="/home/birromer/.wine/drive_c/Program\ Files\ \(x86\)/Wizards\ of\ the\ Coast/MTGA/MTGA.exe"
 alias vibes="LD_PRELOAD=/usr/lib/libfreetype.so /home/birromer/cic/personal/IAMOOC/VIBes-0.2.3-linux.AppImage"
 alias sims4="/home/birromer/.wine/drive_c/Games/The\ Sims\ 4\ Seasons/Game/Bin/TS4_x64.exe"
+alias mobilesim="/usr/local/MobileSim/MobileSim"
 
 alias e='emacsclient -c'
 alias ec='emacsclient -c'
 #alias vim='emacsclient -t'
-alias vi='emacsclient -t'
+#alias vi='emacsclient -t'
+export PATH=$PATH:/home/birromer/.gem/ruby/2.7.0/bin
