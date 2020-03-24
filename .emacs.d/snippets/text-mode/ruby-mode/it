@@ -1,6 +1,0 @@
-#name : it
-#group : rspec
-# --
-it "${1:satisfies a condition}" do
-  $0
-end
