@@ -14,8 +14,8 @@ floating_modifier $mod
 set $Locker i3lock-fancy
 
 #set wallpaper
-exec_always feh --bg-scale '/home/birromer/Pictures/zissou-3-color.jpg'
-exec_always feh --bg-scale '/home/birromer/Pictures/capra-demon-1-grey-small.png'
+exec_always feh --bg-scale '/home/birromer/Pictures/night-in-the-woods-3.jpg'
+#exec_always feh --bg-scale '/home/birromer/Pictures/capra-demon-1-grey-small.png'
 #exec_always feh --bg-scale '/home/birromer/Pictures/sandman-4.jpg'
 #set auto lock
 #exec_always xautolock -time 30 -locker "i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'" &
@@ -23,7 +23,7 @@ exec_always xautolock -time 30 -locker "/usr/bin/i3lock-fancy"
 #set keyboard layout
 exec setxkbmap -layout br
 #enable touchpad tap
-exec xinput --set-prop 'Synaptics TM3336-001' 'libinput Tapping Enabled' 1
+exec xinput --set-prop 'ELAN0B00:00 04F3:30EA Touchpad' 'libinput Tapping Enabled' 1
 
 #starts terminal workspace windows loadout
 #  exec --no-startup-id /home/birromer/.scripts/load_layout.sh
@@ -113,6 +113,7 @@ bindsym $mod+Escape workspace back_and_forth
 #workspace $workspace1 gaps inner 10
 assign [class="Navigator"] $workspace2
 assign [class="Firefox"] $workspace2
+assign [class="firefoxdeveloperedition"] $workspace2
 assign [class="Google-chrome"] $workspace2
 #for_window [class="Google-chrome"] move to workspace $workspace2
 assign [class="Atom"] $workspace3
@@ -127,12 +128,13 @@ assign [class="Typora"] $workspace4
 workspace $workspace1 gaps outer 10
 workspace $workspace1 gaps inner 10
 assign [class="Org.gnome.Nautilus"] $workspace5
-assign [class="Evince"] $workspace7
-assign [class="okular"] $workspace7
-assign [class="Vlc"] $workspace7
-assign [class="MComix"] $workspace7
-assign [class="calibre"] $workspace7
+assign [class="Evince"] $workspace6
+assign [class="okular"] $workspace6
+assign [class="Vlc"] $workspace6
+assign [class="MComix"] $workspace6
+assign [class="calibre"] $workspace6
 assign [class="Mendeley Desktop"] $workspace7
+assign [class="Zotero"] $workspace7
 assign [class="Steam"] $workspace8
 assign [class="Thunderbird"] $workspace8
 assign [class="discord"] $workspace9
@@ -299,7 +301,7 @@ bindsym $mod+Shift+v floating toggle; sticky toggle; exec --no-startup-id ~/.scr
 bindsym $mod+b bar mode toggle
 bindsym $mod+Shift+b floating toggle; sticky toggle; exec --no-startup-id ~/.scripts/i3cmds/bottomright
 # N
-bindsym $mod+n exec firefox
+bindsym $mod+n exec firefox-developer-edition
 bindsym $mod+Shift+n exec jupyter-notebook
 # M
 bindsym $mod+m exec nautilus
