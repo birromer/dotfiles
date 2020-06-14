@@ -387,5 +387,16 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig/
-export ANDROID_SDK_ROOT=/opt/android-sdk
 
+#android sdk root
+export ANDROID_SDK_ROOT=/opt/android-sdk
+export PATH=$ANDROID_SDK_ROOT:$PATH
+
+#android home
+#export ANDROID_HOME=/opt/android-sdk
+export ANDROID_HOME=/home/birromer/.android
+export PATH=$ANDROID_SDK_ROOT/tools:$PATH
+export PATH=$ANDROID_SDK_ROOT/tools/bin:$PATH
+export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH
+
+export BROWSER=/usr/bin/firefox-developer-edition
