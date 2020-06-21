@@ -1,4 +1,4 @@
-Xcursor.size: 32
+Xcursor.size: 22
 
 *foreground: #00cc00
 *foreground_bold: #a8a19f
@@ -32,7 +32,8 @@ Xcursor.size: 32
 *color15: #f1efee
 
 URxvt.intensityStyles:	false
-URxvt.background:   [95]#11100e
+!! URxvt.background:   [95]#11100e
+URxvt.background: #141c21
 URxvt.depth:		32
 URxvt*font: 		xft:Source\ Code\ Pro\ for\ Powerline:pixelsize=15,xft:PowerlineSymbols
 URxvt.boldFont:     xft:Source\ Code\ Pro\ for\ Powerline:pixelsize=15,xft:PowerlineSymbols
