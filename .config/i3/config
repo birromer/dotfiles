@@ -6,7 +6,7 @@ font pango:Dejavu Sans Mono 8
 
 exec_always fc-cache
 
-exec_always conky -c /home/birromer/.config/conky/info-zissou
+#exec_always conky -c /home/birromer/.config/conky/info-zissou
 
 floating_modifier $mod
 
@@ -33,8 +33,12 @@ exec xinput --set-prop 'ELAN0B00:00 04F3:30EA Touchpad' 'libinput Tapping Enable
 #  exec --no-startup-id /home/birromer/.scripts/load_layout.sh
 #exec --no-startup-id "i3-msg 'workspace $workspace1; append_layout /home/birromer/.i3/workspace-1.json'" #not working
 #exec urxvt -e gtop
+
 #composite manager
-exec --no-startup-id compton
+#exec --no-startup-id compton
+
+# notifications manager
+exec --no-startup-id dunst
 
 #reduces blue light
 exec --no-startup-id redshift
@@ -155,6 +159,7 @@ assign [class="TelegramDesktop"] $workspace9
 assign [class="Spotify"] $workspace10
 for_window [class="Spotify"] move to workspace $workspace10
 for_window [instance="VIBes-viewer"] floating enable
+for_window [instance="opencv"] floating enable
 for_window [instance="dropdown"] floating enable
 for_window [instance="dropdown"] resize set 825 900
 for_window [instance="dropdown"] move scratchpad
