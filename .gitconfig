@@ -1,0 +1,71 @@
+[user]
+	email = hummescmpa@gmail.com
+	name = Bernardo Hummes
+
+[github]
+    user = birromer
+
+[alias]
+    # today's done stuff
+    day = "!sh -c 'git log --reverse --no-merges --branches=* --date=local --after=\"yesterday 11:59PM\" --author=\"`git config --get user.name`\"'"
+
+    # pretty hist
+    hist = log --color --pretty=format:\"%C(yellow)%h%C(reset) %s%C(bold red)%d%C(reset) %C(green)%ad%C(reset) %C(blue)[%an]%C(reset)\" --relative-date --decorate
+
+    # pretty log graph
+    lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
+
+    # show number of commits per contributer sorted
+    count = shortlog -sn
+
+	# current branch
+	cbr = rev-parse --abbrev-ref HEAD
+
+
+    # -- open github pages --
+    # ...repo commits
+	opencommits = !hub browse -- commits
+
+	# ...commit page for HEAD
+	openhead = !hub browse -- commit/$(git rev-parse HEAD)
+
+    # ...commit page for a passed SHA (defaults to HEAD)
+	opencommit = "!f() { sha=$(git rev-parse ${1:-HEAD}); hub browse -- commit/$sha; }; f"
+
+	# ...blame page for the passed file (a line number/range can be passed in too)
+	openblame = "!f() { sha=$(git log --format='%h' -1 $1); hub browse -- blame/$sha/$1#L$2; }; f"
+
+	# ...commit history page for the passed file
+	openhistory = "!f() { sha=$(git log --format='%h' -1 $1); hub browse -- commits/$sha/$1; }; f"
+
+	# ...pull request page for current branch (if one exists)
+	openpr = "!f() { url=$(github_pr_url); open $url; }; f"
+
+	# ...repo issues
+	issues = !hub browse -- issues
+
+	# ...repo pull requests
+	pulls = !hub browse -- pulls
+
+	# ...repo wiki
+	wiki = !hub browse -- wiki
+
+	# ...repo settings
+	settings = !hub browse -- settings
+
+	# ...repo branches
+    branches = !hub browse -- branches
+
+    # -- utilities --
+    # ...delete merged branches
+	cleanup = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+
+	# ...push current branch to origin and set as a tracking branch
+	publish = !git push -u origin $(git branchname)
+
+	# ...delete remote branch
+	unpublish = !git push -u origin :$(git branchname)
+
+	# ...push a branch and create a pull request
+	pr = !git publish && hub pull-request
+
