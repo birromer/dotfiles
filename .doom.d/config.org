@@ -38,33 +38,30 @@
 
 (setq doom-modeline-icon nil)
 
-(setq default-tab-width 4)
-
-(use-package! org-super-agenda
-  :after org-agenda
-  :init
-  (setq org-super-agenda-groups '((:name "Today"
-                                         :time-grid t
-                                         :scheduled today)
-                                  (:name "Due today"
-                                         :deadline today)
-                                  (:name "Important"
-                                         ::priority: "A")
-                                  (:name "Overdue"
-                                         :deadline past)
-                                  (:name "Due soon"
-                                         :deadline future)
-                                  (:name "Big Outcomes"
-                                         :tag "bo")))
-  :config
-  (org-super-agenda-mode)
-)
+;;(def-package! org-super-agenda
+;;  :after org-agenda
+;;  :init
+;;  (setq org-super-agenda-groupd '((:name "Today"
+;;                                         :time-grid t
+;;                                         :scheduled today)
+;;                                  (:name "Due today"
+;;                                         :deadline today)
+;;                                  (:name "Important"
+;;                                         ::priority: "A")
+;;                                  (:name "Overdue"
+;;                                         :deadline past)
+;;                                  (:name "Due soon"
+;;                                         :deadline future)
+;;                                  (:name "Big Outcomes"
+;;                                         :tag "bo")))
+;;  :config
+;;  (org-super-agenda-mode))
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
 ;; - `use-package' for configuring packages
-;; - `after!' for running code after a package has loaded                                                IMPORTANTE para configurar pacotes do doom
+;; - `after!' for running code after a package has loaded
 ;; - `add-load-path!' for adding directories to the `load-path', relative to
 ;;   this file. Emacs searches the `load-path' when you load packages with
 ;;   `require' or `use-package'.
