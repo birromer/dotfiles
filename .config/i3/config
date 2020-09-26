@@ -10,31 +10,29 @@ exec_always fc-cache
 
 floating_modifier $mod
 
-#define locker
+# define locker
 #set $Locker i3lock -i /home/birromer/Pictures/dark-souls-firelink.png && sleep 1
 set $Locker i3lock-fancy
 
-#set wallpaper
+# set wallpaper
 exec_always feh --bg-scale '/home/birromer/Pictures/night-in-the-woods-3.jpg'
 #exec_always feh --bg-scale '/home/birromer/Pictures/capra-demon-1-grey-small.png'
 #exec_always feh --bg-scale '/home/birromer/Pictures/sandman-4.jpg'
 
-#set auto lock
+# set auto lock
 #exec_always xautolock -time 30 -locker "i3lock -c 010101 -i '/home/birromer/Pictures/wallpapers/Wallpapers Arch/NOFQh9F.png'" &
 exec_always xautolock -time 30 -locker "/usr/bin/i3lock-fancy"
 
-#set keyboard layout
+# set keyboard layout
 exec setxkbmap -layout br
 
-#enable touchpad tap
+# enable touchpad tap
 exec xinput --set-prop 'ELAN0B00:00 04F3:30EA Touchpad' 'libinput Tapping Enabled' 1
 
-#starts terminal workspace windows loadout
-#  exec --no-startup-id /home/birromer/.scripts/load_layout.sh
-#exec --no-startup-id "i3-msg 'workspace $workspace1; append_layout /home/birromer/.i3/workspace-1.json'" #not working
-#exec urxvt -e gtop
+# starts terminal workspace windows loadout
+# exec --no-startup-id /home/birromer/.scripts/load_layout.sh
 
-#composite manager
+# composite manager
 #exec --no-startup-id compton
 
 # notifications manager
@@ -43,26 +41,30 @@ exec --no-startup-id dunst
 #reduces blue light
 exec --no-startup-id redshift
 
-#chat app
+# chat app
 #exec discord
+exec --no-startup-id telegram-desktop
 
-#music player
+# email application
+exec --no-startup-id thunderbird
+
+# music player
 #exec spotify
 
-#printscreen tool
-#exec --no-startup-id lightscreen -b
+# printscreen tool
+exec --no-startup-id lightscreen -b
 
-#Unclutter makes the mouse invisible after a brief period
-#exec --no-startup-id unclutter
+# Unclutter makes the mouse invisible after a brief period
+exec --no-startup-id unclutter
 
 #launch polybar
-#exec_always --no-startup-id ~/.config/polybar/launch.sh
+#exec_always --no-startup-id ~/.config/polybar/launch.sh # changed for it to run with the ultrawide script,
+                                                         # uncomment if not using
 
-#exec --no-startup-id telegram-desktop
-#exec --no-startup-id thunderbird
-#exec --no-startup-id pcloud
+# launch sync tool
 exec --no-startup-id megasync
 
+# gotta have them speed
 #exec --no-startup-id emacs --daemon
 
 # --- i3bar --- #
@@ -77,7 +79,7 @@ exec --no-startup-id i3mpdupdate
 smart_borders on
 #sets default gap size
 gaps outer 0
-gaps inner 0
+gaps inner 10
 #no borders
 for_window [class="^.*"] border pixel 3
 
@@ -118,60 +120,80 @@ bindsym $mod+Shift+8 move container to workspace $workspace8
 bindsym $mod+Shift+9 move container to workspace $workspace9
 bindsym $mod+Shift+0 move container to workspace $workspace10
 
-#switch to previsou workspace
+# switch to previsou workspace
 bindsym $mod+Escape workspace back_and_forth
 
-
-#assigns programs to certain workspaces
-#workspace $workspace1 gaps outer 10
-#workspace $workspace1 gaps inner 10
+# assigns programs to certain workspaces
+# workspace 1
+workspace $workspace1 gaps outer 10
+workspace $workspace1 gaps inner 10
+# workspace 2
 assign [class="Navigator"] $workspace2
 assign [class="Firefox"] $workspace2
 assign [class="firefoxdeveloperedition"] $workspace2
 assign [class="Google-chrome"] $workspace2
-#for_window [class="Google-chrome"] move to workspace $workspace2
+# workspace 3
 assign [class="Atom"] $workspace3
 assign [class="code-oss"] $workspace3
 assign [class="Emacs"] $workspace3
 assign [class="Sublimme_text"] $workspace3
 assign [class="Spyder"] $workspace3
-assign [class="jetbrains-studio"] $workspace3
+assign [class="libreoffice-writer"] $workspace3
 assign [class="kile"] $workspace3
+# workspace 4
 assign [class="Tusk"] $workspace4
-assign [class="Typora"] $workspace4
-workspace $workspace1 gaps outer 10
-workspace $workspace1 gaps inner 10
+# workspace 5
 assign [class="Org.gnome.Nautilus"] $workspace5
+# workspace 6
 assign [class="Evince"] $workspace6
 assign [class="okular"] $workspace6
 assign [class="Vlc"] $workspace6
 assign [class="MComix"] $workspace6
 assign [class="calibre"] $workspace6
+# workspace 7
 assign [class="Mendeley Desktop"] $workspace7
 assign [class="Zotero"] $workspace7
+# workspace 8
 assign [class="Steam"] $workspace8
-assign [class="Thunderbird"] $workspace9
 assign [class="discord"] $workspace8
 assign [class="Slack"] $workspace8
-assign [class="Franz"] $workspace8
 assign [class="TelegramDesktop"] $workspace8
+# workspace 9
+assign [class="Thunderbird"] $workspace9
+# workspace 10
 assign [class="Spotify"] $workspace10
 for_window [class="Spotify"] move to workspace $workspace10
+
+# set floating windows
 for_window [instance="VIBes-viewer"] floating enable
+for_window [instance="Microsoft Teams - Preview"] floating enable
+for_window [instance="MEGAsync"] floating enable
 for_window [instance="Android Emulator - pixel:5554"] floating enable
 for_window [instance="opencv"] floating enable
+
+# scratchpad applications
+# dropdown terminal
 for_window [instance="dropdown"] floating enable
 for_window [instance="dropdown"] resize set 825 900
 for_window [instance="dropdown"] move scratchpad
 for_window [instance="dropdown"] border pixel 5
 exec --no-startup-id urxvt -name dropdown -e tmux
+
 # Runs neofetch on first tmux screen if installed.
 #exec_always --no-startup-id "tmux send-keys -t 0:0 'clear && neofetch 2>/dev/null' Enter"
+
+# dropdown calculator (R)
 for_window [instance="math"] floating enable
 for_window [instance="math"] resize set 800 300
 for_window [instance="math"] move scratchpad
 for_window [instance="math"] border pixel 5
 exec --no-startup-id urxvt -name math -e ~/.scripts/dropdowncalc
+
+# dropdown telegram
+for_window [class="TelegramDesktop"] floating enable
+for_window [class="TelegramDesktop"] resize set 1000 900
+for_window [class="TelegramDesktop"] move scratchpad
+for_window [class="TelegramDesktop"] border pixel 5
 
 # --- menus --- #
 bindsym $mod+p mode "$mode_system"
@@ -208,7 +230,7 @@ mode "$mode_system" {
 
 # --- keybindings --- #
 
-#reduce and increase directly outer and inner gaps
+# reduce and increase directly outer and inner gaps
 bindsym $mod+Mod1+Left gaps inner current minus 5
 bindsym $mod+Mod1+Right gaps inner current plus 5
 bindsym $mod+Mod1+Up gaps inner current set 0
@@ -231,16 +253,15 @@ bindsym XF86AudioPrev exec playerctl previous
 bindsym $mod+Return exec urxvt
 bindsym $mod+Shift+Return exec urxvt -e tmux
 # TAB
-bindsym $mod+q exec i3wins
-
 #bindsym $mod+Tab workspace next
 #bindsym $mod+Shift+Tab workspace prev
 # Q
 #bindsym $modt+q kill
+bindsym $mod+q exec i3wins
 bindsym $mod+Shift+q kill
 # w
 bindsym $mod+w layout tabbed
-bindsym $mod+Shift+w exec urxvt -e nmtui
+bindsym $mod+Shift+w exec urxvt -e nmtui  # manage internet connections
 # E
 bindsym $mod+e layout toggle split
 #bindsym $mod+Shift+e exec evince
@@ -248,13 +269,13 @@ bindsym $mod+e layout toggle split
 bindsym $mod+r exec urxvt -e ranger
 bindsym $mod+Shift+r restart
 # T
-bindsym $mod+t exec typora
+bindsym $mod+t exec [class="TelegramDesktop"] scratchpad show; [class="TelegramDesktop"] move position center
 bindsym $mod+Shift+t exec tusk
 # Y
 #bindsym $mod+Shift+y exec
 bindsym $mod+Shift+y exec --no-startup-id ~/.scripts/i3cmds/i3resize left
 # U
-bindsym $mod+u           [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
+bindsym $mod+u  [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
 bindsym $mod+Shift+u exec --no-startup-id ~/.scripts/i3cmds/i3resize down
 # I
 bindsym $mod+i exec urxvt -e htop
