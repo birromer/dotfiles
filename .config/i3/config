@@ -43,7 +43,7 @@ exec --no-startup-id redshift
 
 # chat app
 #exec discord
-exec --no-startup-id telegram-desktop
+#exec --no-startup-id telegram-desktop
 
 # email application
 exec --no-startup-id thunderbird
@@ -157,7 +157,7 @@ assign [class="Zotero"] $workspace7
 assign [class="Steam"] $workspace8
 assign [class="discord"] $workspace8
 assign [class="Slack"] $workspace8
-assign [class="TelegramDesktop"] $workspace8
+#assign [class="TelegramDesktop"] $workspace8
 # workspace 9
 assign [class="Thunderbird"] $workspace9
 # workspace 10
@@ -191,9 +191,10 @@ exec --no-startup-id urxvt -name math -e ~/.scripts/dropdowncalc
 
 # dropdown telegram
 for_window [class="TelegramDesktop"] floating enable
-for_window [class="TelegramDesktop"] resize set 1000 900
+for_window [class="TelegramDesktop"] resize set 1205 911
 for_window [class="TelegramDesktop"] move scratchpad
-for_window [class="TelegramDesktop"] border pixel 5
+for_window [class="TelegramDesktop"] border pixel 3
+exec --no-startup-id telegram-desktop
 
 # --- menus --- #
 bindsym $mod+p mode "$mode_system"
@@ -269,7 +270,7 @@ bindsym $mod+e layout toggle split
 bindsym $mod+r exec urxvt -e ranger
 bindsym $mod+Shift+r restart
 # T
-bindsym $mod+t exec [class="TelegramDesktop"] scratchpad show; [class="TelegramDesktop"] move position center
+bindsym $mod+t [class="TelegramDesktop"] scratchpad show ; [class="TelegramDesktop"] move position center
 bindsym $mod+Shift+t exec tusk
 # Y
 #bindsym $mod+Shift+y exec
@@ -290,7 +291,7 @@ bindsym $mod+Mod1+p exec optirun intel-virtual-output; exec "sh ~/.scripts/load-
 bindsym $mod+shift+p exec "~/.config/polybar/launch.sh"
 # A
 #bindsym $mod+a focus parent
-bindsym $mod+a      	 [instance="math"] scratchpad show; [instance="math"] move position center
+bindsym $mod+a [instance="math"] scratchpad show; [instance="math"] move position center
 # S
 #bindsym $mod+s layout stacking
 bindsym $mod+s split toggle
