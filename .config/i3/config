@@ -46,13 +46,14 @@ exec --no-startup-id redshift
 #exec --no-startup-id telegram-desktop
 
 # email application
-exec --no-startup-id thunderbird
+#exec --no-startup-id thunderbird
 
 # music player
 #exec spotify
 
 # printscreen tool
-exec --no-startup-id lightscreen -b
+#exec --no-startup-id lightscreen -b
+exec --no-startup-id flameshot
 
 # Unclutter makes the mouse invisible after a brief period
 exec --no-startup-id unclutter
