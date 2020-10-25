@@ -1,0 +1,82 @@
+/*
+ * Auto-hide the URL-bar show on hover or focus
+ * as seen in https://www.reddit.com/r/FirefoxCSS/comments/boetx7/annoying_page_jump_with_address_bar_autohide/engne27/
+ * by https://www.reddit.com/user/SkyrimForTheDragons/
+ *
+ * slightly modified for more responsiveness
+ *
+ * Note that this version DOES NOT hide the bookmarks toolbar!
+ */
+#nav-bar:not([customizing="true"]):not([inFullscreen]) {
+    min-height: 0px !important;
+    max-height: 0px !important;
+    margin-top: 0px !important;
+    margin-bottom: -1px !important;
+    transition: all 50ms ease-out 0s !important;
+    z-index: -5 !important;
+    box-shadow: none !important;
+    border-top: none !important;
+}
+
+#navigator-toolbox:hover:not([inFullscreen]) :-moz-any(#nav-bar),
+#navigator-toolbox:focus-within :-moz-any(#nav-bar) {
+    min-height: 32px !important;
+    max-height: 32px !important;
+    margin-top: 0px !important;
+    margin-bottom: -32px !important;
+    transition: all 50ms ease-in 0s !important;
+    z-index: 5 !important;
+    border-bottom: 0px !important;
+}
+
+/* Needed for for FF 75 megabar */
+#urlbar {
+    --urlbar-toolbar-height: 32px !important;
+}
+
+#navigator-toolbox::after {
+    border-bottom: 0px !important;
+}
+#nav-bar {
+    box-shadow: none !important;
+    border-top: none !important;
+}
+
+
+/*
+* Makes tabs only 22px high rather than the default 29px
+* Only works on compact mode, otherwise tab height will be normal
+*
+* Contributor(s): DrPugsley
+*/
+
+[uidensity="compact"]:root {
+  --tab-min-height: 22px !important;
+  --newtab-margin: -3px 0 -3px -3px !important;
+}
+
+:root[uidensity="compact"] #tabbrowser-tabs {
+  --tab-min-height: var(--tab-min-height) !important;
+}
+
+.tabbrowser-tab {
+  max-height: var(--tab-min-height) !important;
+}
+
+.tabs-newtab-button{
+  margin: var(--newtab-margin) !important;
+}
+
+/*
+ * Removes the side borders from active and inactive tabs.
+ *
+ * Contributor(s): Madis0
+ */
+
+.tabbrowser-tab::after, .tabbrowser-tab::before {
+   border-left: none !important; /* Remove borders from inactive tabs */
+}
+
+:root {
+  --tabs-border: transparent !important; /* Remove borders from active tab and below tabs */
+}
