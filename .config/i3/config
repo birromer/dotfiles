@@ -188,7 +188,7 @@ for_window [instance="math"] floating enable
 for_window [instance="math"] resize set 800 300
 for_window [instance="math"] move scratchpad
 for_window [instance="math"] border pixel 5
-exec --no-startup-id urxvt -name math -e ~/.scripts/dropdowncalc
+exec --no-startup-id urxvt -name math -e ipython
 
 # dropdown telegram
 for_window [class="TelegramDesktop"] floating enable
