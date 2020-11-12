@@ -6,6 +6,9 @@ font pango:Dejavu Sans Mono 8
 
 exec_always fc-cache
 
+exec_always xmodmap -e "keycode 45 = k K NoSymbol NoSymbol backslash"
+exec_always xmodmap -e "keycode 46 = l L NoSymbol NoSymbol bar"
+
 #exec_always conky -c /home/birromer/.config/conky/info-zissou
 
 floating_modifier $mod
