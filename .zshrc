@@ -360,7 +360,7 @@ export PATH=/home/birromer/.local/bin:$PATH
 export PATH=$PATH:$HOME/.cargo/bin
 
 alias mtga="/home/birromer/.wine/drive_c/Program\ Files\ \(x86\)/Wizards\ of\ the\ Coast/MTGA/MTGA.exe"
-alias vibes="LD_PRELOAD=/usr/lib/libfreetype.so /home/birromer/cic/personal/IAMOOC/VIBes-0.2.3-linux.AppImage"
+#alias vibes="LD_PRELOAD=/usr/lib/libfreetype.so /home/birromer/Documents/VIBES/viewer/build/distrib/bin/VIBes-viewer"
 alias sims4="/home/birromer/.wine/drive_c/Games/The\ Sims\ 4\ Seasons/Game/Bin/TS4_x64.exe"
 alias mobilesim="/usr/local/MobileSim/MobileSim"
 
@@ -379,7 +379,8 @@ else
     if [ -f "/home/birromer/anaconda3/etc/profile.d/conda.sh" ]; then
         . "/home/birromer/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/birromer/anaconda3/bin:$PATH"
+        export NOCONDA_PATH=$PATH
+#        export PATH="/home/birromer/anaconda3/bin:$PATH"
 #        alias pyconda="~/anaconda3/bin/python3"
     fi
 fi
@@ -400,3 +401,15 @@ export PATH=$ANDROID_SDK_ROOT/tools/bin:$PATH
 export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH
 
 export BROWSER=/usr/bin/firefox-developer-edition
+
+eval "$(starship init zsh)"
+export EDITOR=vim
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
+
+alias coursdir="cd ~/mega/ensta/Cours"
+
+# added by travis gem
+[ ! -s /home/birromer/.travis/travis.sh ] || source /home/birromer/.travis/travis.sh
+
+source /opt/ros/melodic/setup.zsh
+#source /home/birromer/ros_catkin_ws/devel/setup.zsh
