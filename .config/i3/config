@@ -293,7 +293,8 @@ bindsym $mod+Mod1+o exec xrandr --output eDP-1 --auto --output HDMI-1 --auto --l
 # P
 #bindsym $mod+p mode "$mode_system"
 bindsym $mod+Mod1+p exec optirun intel-virtual-output; exec "sh ~/.scripts/load-wide.sh"; exec "~/.config/polybar/launch.sh"
-bindsym $mod+shift+p exec "~/.config/polybar/launch.sh"
+#bindsym $mod+shift+p exec "~/.config/polybar/launch.sh"
+bindsym $mod+shift+p exec system-config-priter
 # A
 #bindsym $mod+a focus parent
 bindsym $mod+a [instance="math"] scratchpad show; [instance="math"] move position center
