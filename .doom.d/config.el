@@ -60,6 +60,44 @@
   (org-super-agenda-mode)
 )
 
+;; ROS related configutations
+(add-to-list 'load-path "/opt/ros/melodic/share/emacs/site-lisp")
+(require 'rosemacs-config)
+
+;; run catkin_make
+(defun ros-catkin-make (dir)
+  "Run catkin_make command in DIR."
+  (interactive (list (read-directory-name "Directory: ")))
+  (let* ((default-directory dir)
+         (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
+    (compile "catkin_make"))
+  )
+
+;; generate compile_commands.json
+(defun ros-catkin-make-json (dir)
+  "Run catkin_make command in DIR."
+  (interactive (list (read-directory-name "Directory: ")))
+  (let* ((default-directory dir)
+         (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
+    (compile "catkin_make -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ."))
+  )
+
+(defun ros-catkin-make-debug (dir)
+  "Run catkin_make with Debug mode in DIR."
+  (interactive (list (read-directory-name "Directory: ")))
+  (let* ((default-directory dir)
+         (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
+    (compile "catkin_make -DCMAKE_BUILD_TYPE=Debug"))
+  )
+
+(global-set-key (kbd "C-x C-r M") 'ros-catkin-make)
+(global-set-key (kbd "C-x C-r C-j") 'ros-catkin-make-json)
+
+
+;; YAML mode
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
