@@ -31,6 +31,49 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/mega/org/")
+(setq org-roam-directory "~/mega/org/roam")
+
+(after! org-roam
+    (map! :leader
+        :prefix "n"
+        :desc "org-roam" "l" #'org-roam
+        :desc "org-roam-insert" "i" #'org-roam-insert
+        :desc "org-roam-switch-to-buffer" "b" #'org-roam-switch-to-buffer
+        :desc "org-roam-find-file" "f" #'org-roam-find-file
+        :desc "org-roam-show-graph" "g" #'org-roam-show-graph
+        :desc "org-roam-insert" "i" #'org-roam-insert
+        :desc "org-roam-capture" "c" #'org-roam-capture))
+
+(require 'company-org-roam)
+(use-package company-org-roam
+  :when (featurep! :completion company)
+  :after org-roam
+  :config
+  (set-company-backend! 'org-mode '(company-org-roam company-yasnippet company-dabbrev)))
+
+(use-package org-journal
+  :bind
+  ("C-c n j" . org-journal-new-entry)
+  :custom
+  (org-journal-dir "~/mega/org/roam")
+  (org-journal-date-prefix "#+TITLE: ")
+  (org-journal-file-format "%Y-%m-%d.org")
+  (org-journal-date-format "%A, %d %m %Y"))
+(setq org-journal-enable-agenda-integration t)
+
+(use-package deft
+  :after org
+  :bind
+  ("C-c n d" . deft)
+  :custom
+  (deft-recursive t)
+  (deft-use-filter-string-for-filename t)
+  (deft-default-extension "org")
+  (deft-directory "~/mega/org/roam"))
+
+(setq org-startup-folded nil)
+
+(setq org-startup-idented t)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -38,7 +81,7 @@
 
 (setq doom-modeline-icon nil)
 
-(setq default-tab-width 4)
+(setq default-tab-width 2)
 
 (use-package! org-super-agenda
   :after org-agenda
@@ -92,7 +135,6 @@
 
 (global-set-key (kbd "C-x C-r M") 'ros-catkin-make)
 (global-set-key (kbd "C-x C-r C-j") 'ros-catkin-make-json)
-
 
 ;; YAML mode
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))

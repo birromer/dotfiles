@@ -412,4 +412,47 @@ alias coursdir="cd ~/mega/ensta/Cours"
 [ ! -s /home/birromer/.travis/travis.sh ] || source /home/birromer/.travis/travis.sh
 
 source /opt/ros/melodic/setup.zsh
-#source /home/birromer/ros_catkin_ws/devel/setup.zsh
+#source /opt/ros/noetic/setup.zsh
+
+#ros-env(){
+#    source /opt/ros/noetic/setup.bash
+#    source /ros/catkin_ws/devel/setup.bash
+#    export ROS_PACKAGE_PATH=/ros/catkin_ws/:/opt/ros/noetic/share/
+#}
+#ros-env
+
+ros-start(){
+docker run --rm -it --privileged --net=host --ipc=host --env="DISPLAY" \
+    --device=/dev/dri:/dev/dri \
+    -v "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+    -v $HOME/.Xauthority:/home/$(id -un)/.Xauthority -e XAUTHORITY=/home/$(id -un)/.Xauthority \
+    -v /home/$(id -un)/ros:/home/$(id -un)/ros \
+    -v /home/$(id -un)/Documents/CoppeliaSim:/home/$(id -un)/ros/CoppeliaSim \
+    -e DISPLAY=$DISPLAY \
+    -e DOCKER_USER_NAME=$(id -un) \
+    -e DOCKER_USER_ID=$(id -u) \
+    -e DOCKER_USER_GROUP_NAME=$(id -gn) \
+    -e DOCKER_USER_GROUP_ID=$(id -g) \
+    -e ROS_IP=127.0.0.1 \
+    birromer/ros-noetic:cpu #-c "cp /ros/.bashrc /root/.bashrc && bash"
+#docker run -it --env="DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" -v /home/$(whoami)/ros:/ros --device /dev/video0 --device /dev/dri osrf/ros:noetic-desktop-full bash -c "cp /ros/.bashrc /root/.bashrc && bash"
+}
+
+ros-connect(){
+docker exec -ti $(docker ps -aq --filter ancestor=birrome/ros-noetic:cpu --filter status=running) bash
+}
+
+ros-clean(){
+docker rm $(docker ps -aq --filter ancestor=birromer/ros-noetic:cpu --filter status=exited)
+}
+
+export ROS_MASTER_URI=http://127.0.0.1:11315
+
+export COPPELIASIM_ROOT_DIR="~/Documents/CoppeliaSim"
+
+alias t="tmux"
+alias ta="t a -t"    # attach session
+alias tls="t ls"     # list sessions
+alias tn="t new -t"  # new sessiosn
+
+export DISABLE_AUTO_TITLE='true'
