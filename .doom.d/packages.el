@@ -23,6 +23,9 @@
 ;(package! some-package)
 
 (package! org-super-agenda)
+(package! org-bullets)
+(package! org-superstar)
+(package! ivy-bibtex)
 
 (package! company-org-roam
    :recipe (:host github :repo "jethrokuan/company-org-roam"))

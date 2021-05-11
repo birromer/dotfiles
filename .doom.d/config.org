@@ -6,7 +6,6 @@
 
 * Introduction
 aaa
-
 * Core configuration
 ** Personal information
 #+begin_src emacs-lisp
@@ -19,75 +18,131 @@ aaa
   (setq doom-font (font-spec :family "Office Code Pro" :size 14))
 #+end_src
 
-**  Theme
+** Theme and aesthetics
 #+begin_src emacs-lisp
   (setq doom-theme 'doom-dracula)
 #+end_src
 
+#+begin_src emacs-lisp
+(setq doom-modeline-icon nil)
+#+end_src
+
+** User Interface
+Tab length
+#+begin_src emacs-lisp
+(setq default-tab-width 2)
+#+end_src
+
+Line numbering
+#+begin_src emacs-lisp
+(setq display-line-numbers-type 'relative)
+#+end_src
+
+Highlight trailing whitespace
+#+begin_src emacs-lisp
+(setq show-trailing-whitespace t)
+#+end_src
 
 * Packages
-bbb
+** ROS
+;;#+begin_src emacs-lisp
+;;  (add-to-list 'load-path "/opt/ros/melodic/share/emacs/site-lisp")
+;;  (require 'rosemacs-config)
+;;#+end_src
+;;
+;;catkin_make and compilation stuff
+;;#+begin_src emacs-lisp
+;;  ;; run catkin_make
+;;  (defun ros-catkin-make (dir)
+;;    "Run catkin_make command in DIR."
+;;    (interactive (list (read-directory-name "Directory: ")))
+;;    (let* ((default-directory dir)
+;;           (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
+;;      (compile "catkin_make"))
+;;    )
+;;#+end_src
+;;
+;;#+begin_src emacs-lisp
+;;  ;; generate compile_commands.json
+;;  (defun ros-catkin-make-json (dir)
+;;    "Run catkin_make command in DIR."
+;;    (interactive (list (read-directory-name "Directory: ")))
+;;    (let* ((default-directory dir)
+;;           (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
+;;      (compile "catkin_make -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ."))
+;;    )
+;;#+end_src
+;;
+;;Debugging
+;;#+begin_src emacs-lisp
+;;  (defun ros-catkin-make-debug (dir)
+;;    "Run catkin_make with Debug mode in DIR."
+;;    (interactive (list (read-directory-name "Directory: ")))
+;;    (let* ((default-directory dir)
+;;           (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
+;;      (compile "catkin_make -DCMAKE_BUILD_TYPE=Debug"))
+;;    )
+;;#+end_src
+;;
+;;Some keybindings
+;;#+begin_src emacs-lisp
+;;(global-set-key (kbd "C-x C-r M") 'ros-catkin-make)
+;;(global-set-key (kbd "C-x C-r C-j") 'ros-catkin-make-json)
+;;#+end_src
+** ivy-bibtex
+#+begin_src emacs-lisp
+(setq bibtex-completion-bibliography
+      '("~/mega/org/library.bib"
+        ))
+#+end_src
+
+#+begin_src emacs-lisp
+  (after! ivy-bibtex
+      (map! :leader
+          :prefix "i"
+          :desc "ivy-bibtex" "l" #'ivy-bibtex))
+
+#+end_src
 
 * File modes
-** Org mode
+** Org
 *** Base directories
 #+begin_src emacs-lisp
   (setq org-directory "~/mega/org/")
   (setq org-roam-directory "~/mega/org/roam")
 #+end_src
 
+*** Aesthetics
+#+begin_src emacs-lisp
+  (setq org-startup-folded nil)
+  (setq org-startup-idented t)
+#+end_src
+
+*** org-bullets
+#+begin_src emacs-lisp
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package org-superstar  ;; improved bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
+#+end_src
+
+*** org-genda
+Base agenda config
+#+begin_src emacs-lisp
+(setq org-log-done t)
+(setq org-agenda-file '("~/mega/org/notes.org"
+                        "~/mega/org/todo.org"))
+#+end_src
 
 
-(after! org-roam
-    (map! :leader
-        :prefix "n"
-        :desc "org-roam" "l" #'org-roam
-        :desc "org-roam-insert" "i" #'org-roam-insert
-        :desc "org-roam-switch-to-buffer" "b" #'org-roam-switch-to-buffer
-        :desc "org-roam-find-file" "f" #'org-roam-find-file
-        :desc "org-roam-show-graph" "g" #'org-roam-show-graph
-        :desc "org-roam-insert" "i" #'org-roam-insert
-        :desc "org-roam-capture" "c" #'org-roam-capture))
-
-(require 'company-org-roam)
-(use-package company-org-roam
-  :when (featurep! :completion company)
-  :after org-roam
-  :config
-  (set-company-backend! 'org-mode '(company-org-roam company-yasnippet company-dabbrev)))
-
-(use-package org-journal
-  :bind
-  ("C-c n j" . org-journal-new-entry)
-  :custom
-  (org-journal-dir "~/mega/org/roam")
-  (org-journal-date-prefix "#+TITLE: ")
-  (org-journal-file-format "%Y-%m-%d.org")
-  (org-journal-date-format "%A, %d %m %Y"))
-(setq org-journal-enable-agenda-integration t)
-
-(use-package deft
-  :after org
-  :bind
-  ("C-c n d" . deft)
-  :custom
-  (deft-recursive t)
-  (deft-use-filter-string-for-filename t)
-  (deft-default-extension "org")
-  (deft-directory "~/mega/org/roam"))
-
-(setq org-startup-folded nil)
-
-(setq org-startup-idented t)
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
-
-(setq doom-modeline-icon nil)
-
-(setq default-tab-width 2)
-
+#+begin_src emacs-lisp
 (use-package! org-super-agenda
   :after org-agenda
   :init
@@ -107,43 +162,62 @@ bbb
   :config
   (org-super-agenda-mode)
 )
+#+end_src
 
-;; ROS related configutations
-(add-to-list 'load-path "/opt/ros/melodic/share/emacs/site-lisp")
-(require 'rosemacs-config)
+*** Roam related stuff
+Keybindings
+#+begin_src emacs-lisp
+  (after! org-roam
+      (map! :leader
+          :prefix "n"
+          :desc "org-roam" "l" #'org-roam
+          :desc "org-roam-insert" "i" #'org-roam-insert
+          :desc "org-roam-switch-to-buffer" "b" #'org-roam-switch-to-buffer
+          :desc "org-roam-find-file" "f" #'org-roam-find-file
+          :desc "org-roam-show-graph" "g" #'org-roam-show-graph
+          :desc "org-roam-insert" "i" #'org-roam-insert
+          :desc "org-roam-capture" "c" #'org-roam-capture))
+#+end_src
 
-;; run catkin_make
-(defun ros-catkin-make (dir)
-  "Run catkin_make command in DIR."
-  (interactive (list (read-directory-name "Directory: ")))
-  (let* ((default-directory dir)
-         (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
-    (compile "catkin_make"))
-  )
 
-;; generate compile_commands.json
-(defun ros-catkin-make-json (dir)
-  "Run catkin_make command in DIR."
-  (interactive (list (read-directory-name "Directory: ")))
-  (let* ((default-directory dir)
-         (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
-    (compile "catkin_make -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ."))
-  )
+Completion
+#+begin_src emacs-lisp
+  (require 'company-org-roam)
+  (use-package company-org-roam
+    :when (featurep! :completion company)
+    :after org-roam
+    :config
+    (set-company-backend! 'org-mode '(company-org-roam company-yasnippet company-dabbrev)))
+#+end_src
 
-(defun ros-catkin-make-debug (dir)
-  "Run catkin_make with Debug mode in DIR."
-  (interactive (list (read-directory-name "Directory: ")))
-  (let* ((default-directory dir)
-         (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
-    (compile "catkin_make -DCMAKE_BUILD_TYPE=Debug"))
-  )
+Journaling
+#+begin_src emacs-lisp
+  (use-package org-journal
+    :bind
+    ("C-c n j" . org-journal-new-entry)
+    :custom
+    (org-journal-dir "~/mega/org/roam")
+    (org-journal-date-prefix "#+TITLE: ")
+    (org-journal-file-format "%Y-%m-%d.org")
+    (org-journal-date-format "%A, %d %m %Y"))
+  (setq org-journal-enable-agenda-integration t)
+#+end_src
 
-(global-set-key (kbd "C-x C-r M") 'ros-catkin-make)
-(global-set-key (kbd "C-x C-r C-j") 'ros-catkin-make-json)
+Note searching
+#+begin_src emacs-lisp
+  (use-package deft
+    :after org
+    :bind
+    ("C-c n d" . deft)
+    :custom
+    (deft-recursive t)
+    (deft-use-filter-string-for-filename t)
+    (deft-default-extension "org")
+    (deft-directory "~/mega/org/roam"))
+#+end_src
 
-;; YAML mode
-(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+
+
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -161,3 +235,21 @@ bbb
 ;;
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
+
+** YAML
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+#+end_src
+
+** LaTeX
+#+begin_src
+
+#+end_src
+
+** C++
+** C
+** Rust
+** Shell script
+** Python
+** CMake
