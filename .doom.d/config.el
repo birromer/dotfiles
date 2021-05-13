@@ -44,9 +44,26 @@
   :config
   (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
 
+(use-package org-fancy-priorities
+  :hook
+  (org-mode . org-fancy-priorities-mode)
+  :config
+  (setq org-fancy-priorities-list '("+" "+" "+")))
+
 (setq org-log-done t)
 (setq org-agenda-file '("~/mega/org/notes.org"
                         "~/mega/org/todo.org"))
+
+(after! org
+    (setq org-todo-keywords '((sequence "TODO(t)" "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)""IDEA(i)" "|" "DONE(d)" "KILL(k)")
+                              (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)")
+                              (sequence "OKAY(o)" "YES(y)" "|" "NO(n)" ))
+  ))
+
+(after! org
+  (setq org-priority-faces '((65 :foreground "#e45649")
+                             (66 :foreground "#da8548")
+                             (67 :foreground "#0098dd"))))
 
 (use-package! org-super-agenda
   :commands (org-super-agenda-mode))
@@ -59,7 +76,9 @@
       org-agenda-block-separator nil
       org-agenda-tags-column 100 ;; from testing this seems to be a good value
       org-agenda-compact-blocks t)
-(setq org-agenda-files "~/mega/org/daily/")
+(setq org-agenda-files "~/mega/org/roam/daily/")
+;;                       "~/mega/org/roam/"
+;;                       "~/mega/org/")
 (setq org-agenda-custom-commands
       '(("o" "Overview"
          ((agenda "" ((org-agenda-span 'day)
@@ -123,10 +142,16 @@
                            :order 90)
                           (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
 
-(setq org-journal-date-prefix "#TITLE: "
-      org-journal-time-prefix "* "
-      org-journal-date-format "%a, %Y-%m-%d"
-      org-journal-file-format "%Y-%m-%d.org")
+(use-package org-journal
+  :bind
+  ("C-c n j" . org-journal-new-entry)
+  :custom
+  (org-journal-dir "~/mega/org/roam/daily/")
+  (org-journal-time-prefix "* ")
+  (org-journal-date-prefix "#+TITLE: ")
+  (org-journal-file-format "%Y-%m-%d.org")
+  (org-journal-date-format "%A, %d %m %Y"))
+(setq org-journal-enable-agenda-integration t)
 
 (use-package! org-ref
     :after org
@@ -169,7 +194,7 @@
           :desc "org-roam-switch-to-buffer" "b" #'org-roam-switch-to-buffer
           :desc "org-roam-find-file" "f" #'org-roam-find-file
           :desc "org-roam-show-graph" "g" #'org-roam-show-graph
-          :desc "org-roam-insert" "i" #'org-roam-insert
+          :desc "org-roam-capture-today" "N" #'org-roam-dailies-capture-today
           :desc "org-roam-capture" "c" #'org-roam-capture))
 
 (after! org-roam
@@ -189,16 +214,6 @@
   :config
   (set-company-backend! 'org-mode '(company-org-roam company-yasnippet company-dabbrev)))
 
-(use-package org-journal
-  :bind
-  ("C-c n j" . org-journal-new-entry)
-  :custom
-  (org-journal-dir "~/mega/org/roam")
-  (org-journal-date-prefix "#+TITLE: ")
-  (org-journal-file-format "%Y-%m-%d.org")
-  (org-journal-date-format "%A, %d %m %Y"))
-(setq org-journal-enable-agenda-integration t)
-
 (use-package deft
   :after org
   :bind
@@ -207,7 +222,8 @@
   (deft-recursive t)
   (deft-use-filter-string-for-filename t)
   (deft-default-extension "org")
-  (deft-directory "~/mega/org/roam/"))
+  (deft-directory "~/mega/org/roam/"
+    "~/mega/org/roam/daily/"))
 
 (use-package! org-roam-bibtex
   :load-path "~/mega/org/library.bib"

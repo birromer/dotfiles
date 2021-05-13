@@ -58,11 +58,10 @@ Bibliography file location
           ))
 #+end_src
 
-Ieitial configuration
+Initial configuration
 #+begin_src emacs-lisp
   (setq ivy-use-virtual-buffers t)
 #+end_src
-
 
 Keybindings
 #+begin_src emacs-lisp
@@ -146,13 +145,40 @@ Keybindings
     (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
 #+end_src
 
+*** org-fancy-priorities
+#+begin_src emacs-lisp
+(use-package org-fancy-priorities
+  :hook
+  (org-mode . org-fancy-priorities-mode)
+  :config
+  (setq org-fancy-priorities-list '("+" "+" "+")))
+#+end_src
+
 *** org-agenda
-Base agenda config
+Base agenda
 #+begin_src emacs-lisp
 (setq org-log-done t)
 (setq org-agenda-file '("~/mega/org/notes.org"
                         "~/mega/org/todo.org"))
 #+end_src
+
+TODOs options
+#+begin_src emacs-lisp
+(after! org
+    (setq org-todo-keywords '((sequence "TODO(t)" "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)""IDEA(i)" "|" "DONE(d)" "KILL(k)")
+                              (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)")
+                              (sequence "OKAY(o)" "YES(y)" "|" "NO(n)" ))
+  ))
+#+end_src
+
+Priorities
+#+begin_src emacs-lisp
+(after! org
+  (setq org-priority-faces '((65 :foreground "#e45649")
+                             (66 :foreground "#da8548")
+                             (67 :foreground "#0098dd"))))
+#+end_src
+
 
 Super agenda
 #+begin_src emacs-lisp
@@ -167,7 +193,9 @@ Super agenda
       org-agenda-block-separator nil
       org-agenda-tags-column 100 ;; from testing this seems to be a good value
       org-agenda-compact-blocks t)
-(setq org-agenda-files "~/mega/org/daily/")
+(setq org-agenda-files "~/mega/org/roam/daily/")
+;;                       "~/mega/org/roam/"
+;;                       "~/mega/org/")
 (setq org-agenda-custom-commands
       '(("o" "Overview"
          ((agenda "" ((org-agenda-span 'day)
@@ -233,13 +261,18 @@ Super agenda
 #+end_src
 
 *** org-journal
-Change format of the dates
+Change format of the dates and folder
 #+begin_src emacs-lisp
-(setq org-journal-date-prefix "#TITLE: "
-      org-journal-time-prefix "* "
-      org-journal-date-format "%a, %Y-%m-%d"
-      org-journal-file-format "%Y-%m-%d.org")
-
+  (use-package org-journal
+    :bind
+    ("C-c n j" . org-journal-new-entry)
+    :custom
+    (org-journal-dir "~/mega/org/roam/daily/")
+    (org-journal-time-prefix "* ")
+    (org-journal-date-prefix "#+TITLE: ")
+    (org-journal-file-format "%Y-%m-%d.org")
+    (org-journal-date-format "%A, %d %m %Y"))
+  (setq org-journal-enable-agenda-integration t)
 #+end_src
 
 *** org-ref
@@ -284,6 +317,7 @@ Base directory
 #+begin_src emacs-lisp
   (setq org-roam-directory "~/mega/org/roam/")
 #+end_src
+
 Keybindings
 #+begin_src emacs-lisp
   (after! org-roam
@@ -294,7 +328,7 @@ Keybindings
           :desc "org-roam-switch-to-buffer" "b" #'org-roam-switch-to-buffer
           :desc "org-roam-find-file" "f" #'org-roam-find-file
           :desc "org-roam-show-graph" "g" #'org-roam-show-graph
-          :desc "org-roam-insert" "i" #'org-roam-insert
+          :desc "org-roam-capture-today" "N" #'org-roam-dailies-capture-today
           :desc "org-roam-capture" "c" #'org-roam-capture))
 
 (after! org-roam
@@ -308,6 +342,11 @@ Keybindings
                :unnarrowed t))))
 #+end_src
 
+Dailies
+;;#+begin_src emacs-lisp
+;;  (setq org-roam-dailies-directory "~/mega/org/roam/daily/"
+;;#+end_src
+
 Completion
 #+begin_src emacs-lisp
   (require 'company-org-roam)
@@ -316,19 +355,6 @@ Completion
     :after org-roam
     :config
     (set-company-backend! 'org-mode '(company-org-roam company-yasnippet company-dabbrev)))
-#+end_src
-
-Journaling
-#+begin_src emacs-lisp
-  (use-package org-journal
-    :bind
-    ("C-c n j" . org-journal-new-entry)
-    :custom
-    (org-journal-dir "~/mega/org/roam")
-    (org-journal-date-prefix "#+TITLE: ")
-    (org-journal-file-format "%Y-%m-%d.org")
-    (org-journal-date-format "%A, %d %m %Y"))
-  (setq org-journal-enable-agenda-integration t)
 #+end_src
 
 Note searching
@@ -341,7 +367,8 @@ Note searching
     (deft-recursive t)
     (deft-use-filter-string-for-filename t)
     (deft-default-extension "org")
-    (deft-directory "~/mega/org/roam/"))
+    (deft-directory "~/mega/org/roam/"
+      "~/mega/org/roam/daily/"))
 #+end_src
 
 Bibtex integration
@@ -383,10 +410,6 @@ Bibtex integration
 #+end_src
 
 ** LaTeX
-#+begin_src
-
-#+end_src
-
 ** C++
 ** C
 ** Rust

@@ -27,6 +27,8 @@
 (package! org-superstar)
 (package! org-roam-bibtex)
 
+(package! org-fancy-priorities)
+
 (package! ivy-bibtex)
 
 (package! company-org-roam
