@@ -1,4 +1,4 @@
-(setq user-full-name "Bernardo Hummes"
+(setq user-full-name "Bernardo Hummes Flores"
       user-mail-address "hummes@ieee.org")
 
 (setq doom-font (font-spec :family "Office Code Pro" :size 14))
@@ -28,7 +28,6 @@
         :desc "ivy-bibtex" "l" #'ivy-bibtex))
 
 (setq org-directory "~/mega/org/")
-(setq org-roam-directory "~/mega/org/roam/")
 
 (setq org-startup-folded t)
 (setq org-startup-idented t)
@@ -124,6 +123,11 @@
                            :order 90)
                           (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
 
+(setq org-journal-date-prefix "#TITLE: "
+      org-journal-time-prefix "* "
+      org-journal-date-format "%a, %Y-%m-%d"
+      org-journal-file-format "%Y-%m-%d.org")
+
 (use-package! org-ref
     :after org
     :preface
@@ -154,6 +158,8 @@
   :defer t
   :hook
   (org-mode-hook . toc-org-mode))
+
+(setq org-roam-directory "~/mega/org/roam/")
 
 (after! org-roam
       (map! :leader

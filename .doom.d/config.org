@@ -4,13 +4,12 @@
 #+LANGUAGE: en
 #+STARTUP: inlineimages toc:2
 
-
 * Introduction
 aaa
 * Core configuration
 ** Personal information
 #+begin_src emacs-lisp
-  (setq user-full-name "Bernardo Hummes"
+  (setq user-full-name "Bernardo Hummes Flores"
         user-mail-address "hummes@ieee.org")
 #+end_src
 
@@ -51,6 +50,28 @@ Highlight trailing whitespace
 #+end_src
 
 * Packages
+** ivy-bibtex
+Bibliography file location
+#+begin_src emacs-lisp
+  (setq bibtex-completion-bibliography
+        '("~/mega/org/library.bib"
+          ))
+#+end_src
+
+Ieitial configuration
+#+begin_src emacs-lisp
+  (setq ivy-use-virtual-buffers t)
+#+end_src
+
+
+Keybindings
+#+begin_src emacs-lisp
+  (after! ivy-bibtex
+      (map! :leader
+          :prefix "i"
+          :desc "ivy-bibtex" "l" #'ivy-bibtex))
+
+#+end_src
 ** ROS
 ;;#+begin_src emacs-lisp
 ;;  (add-to-list 'load-path "/opt/ros/melodic/share/emacs/site-lisp")
@@ -96,35 +117,11 @@ Highlight trailing whitespace
 ;;(global-set-key (kbd "C-x C-r M") 'ros-catkin-make)
 ;;(global-set-key (kbd "C-x C-r C-j") 'ros-catkin-make-json)
 ;;#+end_src
-** ivy-bibtex
-Bibliography file location
-#+begin_src emacs-lisp
-  (setq bibtex-completion-bibliography
-        '("~/mega/org/library.bib"
-          ))
-#+end_src
-
-Ieitial configuration
-#+begin_src emacs-lisp
-  (setq ivy-use-virtual-buffers t)
-#+end_src
-
-
-Keybindings
-#+begin_src emacs-lisp
-  (after! ivy-bibtex
-      (map! :leader
-          :prefix "i"
-          :desc "ivy-bibtex" "l" #'ivy-bibtex))
-
-#+end_src
-
 * File modes
 ** Org
-*** Base directories
+*** Base directory
 #+begin_src emacs-lisp
   (setq org-directory "~/mega/org/")
-  (setq org-roam-directory "~/mega/org/roam/")
 #+end_src
 *** Aesthetics
 #+begin_src emacs-lisp
@@ -235,6 +232,16 @@ Super agenda
                           (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
 #+end_src
 
+*** org-journal
+Change format of the dates
+#+begin_src emacs-lisp
+(setq org-journal-date-prefix "#TITLE: "
+      org-journal-time-prefix "* "
+      org-journal-date-format "%a, %Y-%m-%d"
+      org-journal-file-format "%Y-%m-%d.org")
+
+#+end_src
+
 *** org-ref
 #+begin_src emacs-lisp
 (use-package! org-ref
@@ -273,6 +280,10 @@ Super agenda
 #+end_src
 
 *** org-roam
+Base directory
+#+begin_src emacs-lisp
+  (setq org-roam-directory "~/mega/org/roam/")
+#+end_src
 Keybindings
 #+begin_src emacs-lisp
   (after! org-roam
@@ -364,9 +375,6 @@ Bibtex integration
   :NOTER_PAGE:
   :END:")))
 #+end_src
-
-
-
 
 ** YAML
 #+begin_src emacs-lisp

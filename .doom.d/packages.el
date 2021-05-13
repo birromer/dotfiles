@@ -25,6 +25,7 @@
 (package! org-super-agenda)
 (package! org-bullets)
 (package! org-superstar)
+(package! org-roam-bibtex)
 
 (package! ivy-bibtex)
 
