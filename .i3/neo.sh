@@ -1,2 +1,0 @@
-neofetch
-read line
