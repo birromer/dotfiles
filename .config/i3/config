@@ -189,7 +189,7 @@ exec --no-startup-id urxvt -name dropdown -e tmux
 # Runs neofetch on first tmux screen if installed.
 #exec_always --no-startup-id "tmux send-keys -t 0:0 'clear && neofetch 2>/dev/null' Enter"
 
-# dropdown calculator (R)
+# dropdown calculator (IPython)
 for_window [instance="math"] floating enable
 for_window [instance="math"] resize set 800 300
 for_window [instance="math"] move scratchpad
@@ -202,6 +202,13 @@ for_window [class="TelegramDesktop"] resize set 1205 911
 for_window [class="TelegramDesktop"] move scratchpad
 for_window [class="TelegramDesktop"] border pixel 3
 exec --no-startup-id telegram-desktop
+
+# dropdown spotify
+for_window [instance="spt"] floating enable
+for_window [instance="spt"] resize set 1205 911
+for_window [instance="spt"] move scratchpad
+for_window [instance="spt"] border pixel 3
+exec --no-startup-id urxvt -name spt -e spt
 
 # --- menus --- #
 bindsym $mod+p mode "$mode_system"
@@ -302,8 +309,9 @@ bindsym $mod+shift+p exec system-config-priter
 bindsym $mod+a [instance="math"] scratchpad show; [instance="math"] move position center
 # S
 #bindsym $mod+s layout stacking
-bindsym $mod+s split toggle
-bindsym $mod+Shift+s exec ~/anaconda3/bin/spyder
+bindsym $mod+s [instance="spt"] scratchpad show; [instance="spt"] move position center
+bindsym $mod+Shift+s split toggle
+#bindsym $mod+Shift+s exec ~/anaconda3/bin/spyder
 # D
 #bindsym $mod+d focus child
 #bindsym $mod+d exec dmenu_run
@@ -316,7 +324,7 @@ bindsym $mod+f exec nautilus
 bindsym $mod+Shift+f fullscreen toggle
 # G
 #bindsym $mod+g exec code
-bindsym $mod+Shift+g exec ~/.scripts/load_layout.sh; exec --no-startup-id compton
+#bindsym $mod+Shift+g exec ~/.scripts/load_layout.sh; #exec --no-startup-id compton
 # H
 bindsym $mod+h focus left
 bindsym $mod+Shift+h move left 30
@@ -349,7 +357,6 @@ bindsym $mod+Shift+b floating toggle; sticky toggle; exec --no-startup-id ~/.scr
 # N
 bindsym $mod+n exec firefox-developer-edition
 bindsym $mod+Shift+n exec jupyter-notebook
-# M
 # M
 bindsym $mod+m exec nautilus
 bindsym $mod+Shift+m exec mcomix
