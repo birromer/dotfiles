@@ -1,86 +1,37 @@
-#+TITLE: doom emacs configuration
-#+AUTHOR: Bernardo Hummes
-#+EMAIL: hummes@ieee.org
-#+LANGUAGE: en
-#+STARTUP: inlineimages toc:2
-
-* Introduction
-aaa
-* Core configuration
-** Personal information
-#+begin_src emacs-lisp
   (setq user-full-name "Bernardo Hummes Flores"
         user-mail-address "hummes@ieee.org")
-#+end_src
 
-** Font
-#+begin_src emacs-lisp
   (setq doom-font (font-spec :family "Office Code Pro" :size 14))
-#+end_src
 
-** Theme and aesthetics
-#+begin_src emacs-lisp
   (setq doom-theme 'doom-dracula)
-#+end_src
 
-#+begin_src emacs-lisp
 (setq doom-modeline-icon nil)
-#+end_src
 
-** Editing
-Tab length
-#+begin_src emacs-lisp
 (setq default-tab-width 2)
-#+end_src
 
-Increase undo limit and make it save smaller chunks
-#+begin_src emacs-lisp
 (setq undo-limit 80000000
       evil-want-fine-undo t)
-#+end_src
 
-Line numbering
-#+begin_src emacs-lisp
 (setq display-line-numbers-type 'relative)
-#+end_src
 
-Highlight trailing whitespace
-#+begin_src emacs-lisp
 (setq show-trailing-whitespace t)
-#+end_src
 
-* Packages
-** ivy-bibtex
-Bibliography file location
-#+begin_src emacs-lisp
   (setq bibtex-completion-bibliography
         '("~/mega/org/library.bib"
           ))
-#+end_src
 
-Initial configuration
-#+begin_src emacs-lisp
   (setq ivy-use-virtual-buffers t)
-#+end_src
 
-Keybindings
-#+begin_src emacs-lisp
   (after! ivy-bibtex
       (map! :leader
           :prefix "i"
           :desc "ivy-bibtex" "l" #'ivy-bibtex))
 
-#+end_src
-** ox-jekyll-lite
-This is a package for converting org files into markdown posts for jekyll
-#+begin_src emacs-lisp
 (setq org-jekyll-project-root "~/Documents/birromer.github.io/")
-#+end_src
-** ox-latex
-Latex org exporter
-#+begin_src emacs-lisp
+
 (use-package ox-latex
   :after ox
+  :straight (:type built-in)
   :custom
   (org-latex-image-default-width "1\\linewidth")
   (org-latex-packages-alist
@@ -119,117 +70,45 @@ Latex org exporter
          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
          ("\\paragraph{%s}"     . "\\paragraph*{%s}")
          ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))))
-#+end_src
 
-** ROS
-;;#+begin_src emacs-lisp
-;;  (add-to-list 'load-path "/opt/ros/melodic/share/emacs/site-lisp")
-;;  (require 'rosemacs-config)
-;;#+end_src
-;;
-;;catkin_make and compilation stuff
-;;#+begin_src emacs-lisp
-;;  ;; run catkin_make
-;;  (defun ros-catkin-make (dir)
-;;    "Run catkin_make command in DIR."
-;;    (interactive (list (read-directory-name "Directory: ")))
-;;    (let* ((default-directory dir)
-;;           (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
-;;      (compile "catkin_make"))
-;;    )
-;;#+end_src
-;;
-;;#+begin_src emacs-lisp
-;;  ;; generate compile_commands.json
-;;  (defun ros-catkin-make-json (dir)
-;;    "Run catkin_make command in DIR."
-;;    (interactive (list (read-directory-name "Directory: ")))
-;;    (let* ((default-directory dir)
-;;           (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
-;;      (compile "catkin_make -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ."))
-;;    )
-;;#+end_src
-;;
-;;Debugging
-;;#+begin_src emacs-lisp
-;;  (defun ros-catkin-make-debug (dir)
-;;    "Run catkin_make with Debug mode in DIR."
-;;    (interactive (list (read-directory-name "Directory: ")))
-;;    (let* ((default-directory dir)
-;;           (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
-;;      (compile "catkin_make -DCMAKE_BUILD_TYPE=Debug"))
-;;    )
-;;#+end_src
-;;
-;;Some keybindings
-;;#+begin_src emacs-lisp
-;;(global-set-key (kbd "C-x C-r M") 'ros-catkin-make)
-;;(global-set-key (kbd "C-x C-r C-j") 'ros-catkin-make-json)
-;;#+end_src
-* File modes
-** Org
-*** Base directory
-#+begin_src emacs-lisp
   (setq org-directory "~/mega/org/")
-#+end_src
-*** Aesthetics
-#+begin_src emacs-lisp
+
   (setq org-startup-folded t)
   (setq org-startup-idented t)
   (setq org-fontify-done-headline t)
   (setq org-fontify-todo-headline t)
-#+end_src
 
-*** org-bullets
-#+begin_src emacs-lisp
   (use-package org-bullets
+    :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-#+end_src
 
-#+begin_src emacs-lisp
   (use-package org-superstar  ;; improved bullets
+    :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
-#+end_src
 
-*** org-fancy-priorities
-#+begin_src emacs-lisp
 (use-package org-fancy-priorities
   :hook
   (org-mode . org-fancy-priorities-mode)
   :config
   (setq org-fancy-priorities-list '("+" "+" "+")))
-#+end_src
 
-*** org-agenda
-Base agenda
-#+begin_src emacs-lisp
 (setq org-log-done t)
 (setq org-agenda-file '("~/mega/org/notes.org"
                         "~/mega/org/todo.org"))
-#+end_src
 
-TODOs options
-#+begin_src emacs-lisp
 (after! org
     (setq org-todo-keywords '((sequence "TODO(t)" "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)""IDEA(i)" "|" "DONE(d)" "KILL(k)")
                               (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)")
                               (sequence "OKAY(o)" "YES(y)" "|" "NO(n)" ))
   ))
-#+end_src
 
-Priorities
-#+begin_src emacs-lisp
 (after! org
   (setq org-priority-faces '((65 :foreground "#e45649")
                              (66 :foreground "#da8548")
                              (67 :foreground "#0098dd"))))
-#+end_src
 
-
-Super agenda
-#+begin_src emacs-lisp
 (use-package! org-super-agenda
   :commands (org-super-agenda-mode))
 (after! org-agenda
@@ -306,11 +185,7 @@ Super agenda
                            :todo ("SOMEDAY" )
                            :order 90)
                           (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
-#+end_src
 
-*** org-journal
-Change format of the dates and folder
-#+begin_src emacs-lisp
   (use-package org-journal
     :bind
     ("C-c n j" . org-journal-new-entry)
@@ -321,10 +196,7 @@ Change format of the dates and folder
     (org-journal-file-format "%Y-%m-%d.org")
     (org-journal-date-format "%A, %d %m %Y"))
   (setq org-journal-enable-agenda-integration t)
-#+end_src
 
-*** org-ref
-#+begin_src emacs-lisp
 (use-package! org-ref
     :after org
     :preface
@@ -350,24 +222,14 @@ Change format of the dates and folder
     :config
     (require 'doi-utils)
     )
-#+end_src
 
-*** toc-org
-#+begin_src emacs-lisp
 (use-package! toc-org
   :defer t
   :hook
   (org-mode-hook . toc-org-mode))
-#+end_src
 
-*** org-roam
-Base directory
-#+begin_src emacs-lisp
   (setq org-roam-directory "~/mega/org/roam/")
-#+end_src
 
-Keybindings
-#+begin_src emacs-lisp
   (after! org-roam
       (map! :leader
           :prefix "n"
@@ -385,28 +247,17 @@ Keybindings
                "%?"
                :file-name "websites/${slug}"
                :head "#+TITLE: ${title}
-    ,#+ROAM_KEY: ${ref}
+    #+ROAM_KEY: ${ref}
     - source :: ${ref}"
                :unnarrowed t))))
-#+end_src
 
-Dailies
-;;#+begin_src emacs-lisp
-;;  (setq org-roam-dailies-directory "~/mega/org/roam/daily/"
-;;#+end_src
-
-Completion
-#+begin_src emacs-lisp
   (require 'company-org-roam)
   (use-package company-org-roam
     :when (featurep! :completion company)
     :after org-roam
     :config
     (set-company-backend! 'org-mode '(company-org-roam company-yasnippet company-dabbrev)))
-#+end_src
 
-Note searching
-#+begin_src emacs-lisp
   (use-package deft
     :after org
     :bind
@@ -417,10 +268,7 @@ Note searching
     (deft-default-extension "org")
     (deft-directory "~/mega/org/roam/"
       "~/mega/org/roam/daily/"))
-#+end_src
 
-Bibtex integration
-#+begin_src emacs-lisp
   (use-package! org-roam-bibtex
     :load-path "~/mega/org/library.bib"
     :hook (org-roam-mode . org-roam-bibtex-mode)
@@ -449,18 +297,6 @@ Bibtex integration
   :NOTER_DOCUMENT: %(orb-process-file-field \"${citekey}\")
   :NOTER_PAGE:
   :END:")))
-#+end_src
 
-** YAML
-#+begin_src emacs-lisp
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
-#+end_src
-
-** LaTeX
-** C++
-** C
-** Rust
-** Shell script
-** Python
-** CMake

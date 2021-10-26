@@ -22,18 +22,6 @@
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
 
-(package! org-super-agenda)
-(package! org-bullets)
-(package! org-superstar)
-(package! org-roam-bibtex)
-
-(package! org-fancy-priorities)
-
-(package! ivy-bibtex)
-
-(package! company-org-roam
-   :recipe (:host github :repo "jethrokuan/company-org-roam"))
-
 ;; To install a package directly from a particular repo, you'll need to specify
 ;; a `:recipe'. You'll find documentation on what `:recipe' accepts here:
 ;; https://github.com/raxod502/straight.el#the-recipe-format
@@ -61,3 +49,20 @@
 ;; This is required for some packages whose default branch isn't 'master' (which
 ;; our package manager can't deal with; see raxod502/straight.el#279)
 ;(package! builtin-package :recipe (:branch "develop"))
+
+(package! org-super-agenda)
+(package! org-bullets)
+(package! org-superstar)
+(package! org-roam-bibtex)
+
+(package! org-fancy-priorities)
+
+(package! ivy-bibtex)
+
+(package! company-org-roam
+   :recipe (:host github :repo "jethrokuan/company-org-roam"))
+
+(package! ox-jekyll-lite
+   :recipe (:host github :repo "peterewills/ox-jekyll-lite"))
+
+(package! ox-latex)

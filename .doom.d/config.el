@@ -1,9 +1,9 @@
-(setq user-full-name "Bernardo Hummes Flores"
-      user-mail-address "hummes@ieee.org")
+  (setq user-full-name "Bernardo Hummes Flores"
+        user-mail-address "hummes@ieee.org")
 
-(setq doom-font (font-spec :family "Office Code Pro" :size 14))
+  (setq doom-font (font-spec :family "Office Code Pro" :size 14))
 
-(setq doom-theme 'doom-dracula)
+  (setq doom-theme 'doom-dracula)
 
 (setq doom-modeline-icon nil)
 
@@ -16,33 +16,74 @@
 
 (setq show-trailing-whitespace t)
 
-(setq bibtex-completion-bibliography
-      '("~/mega/org/library.bib"
-        ))
+  (setq bibtex-completion-bibliography
+        '("~/mega/org/library.bib"
+          ))
 
-(setq ivy-use-virtual-buffers t)
+  (setq ivy-use-virtual-buffers t)
 
-(after! ivy-bibtex
-    (map! :leader
-        :prefix "i"
-        :desc "ivy-bibtex" "l" #'ivy-bibtex))
+  (after! ivy-bibtex
+      (map! :leader
+          :prefix "i"
+          :desc "ivy-bibtex" "l" #'ivy-bibtex))
 
-(setq org-directory "~/mega/org/")
+(setq org-jekyll-project-root "~/Documents/birromer.github.io/")
 
-(setq org-startup-folded t)
-(setq org-startup-idented t)
-(setq org-fontify-done-headline t)
-(setq org-fontify-todo-headline t)
-
-(use-package org-bullets
-  :ensure t
+(use-package ox-latex
+  :after ox
+  :custom
+  (org-latex-image-default-width "1\\linewidth")
+  (org-latex-packages-alist
+   `((,(concat "cache=false,outputdir=" org-export-default-output-folder) "minted")
+     ("T1" "fontenc")
+     ("" "placeins")))
+  (org-latex-listings 'minted)
+  (org-latex-minted-options
+   '(("breaklines")
+     ("breakafter" "d")
+     ("linenos" "true")
+     ("xleftmargin" "\\parindent")))
+  (org-latex-pdf-process
+   '("latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"))
   :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+  (add-to-list 'org-latex-classes
+           '("iiufrgs"
+         "\\documentclass{iiufrgs}"
+         ("\\chapter{%s}"       . "\\chapter*{%s}")
+         ("\\section{%s}"       . "\\section*{%s}")
+         ("\\subsection{%s}"    . "\\subsection*{%s}")
+         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+         ("\\paragraph{%s}"     . "\\paragraph*{%s}")))
+  (add-to-list 'org-latex-classes
+           '("newlfm"
+         "\\documentclass{newlfm}"
+         ("\\chapter{%s}"       . "\\chapter*{%s}")
+         ("\\section{%s}"       . "\\section*{%s}")
+         ("\\subsection{%s}"    . "\\subsection*{%s}")
+         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+  (add-to-list 'org-latex-classes
+           '("IEEEtran"
+         "\\documentclass{IEEEtran}"
+         ("\\section{%s}"       . "\\section*{%s}")
+         ("\\subsection{%s}"    . "\\subsection*{%s}")
+         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+         ("\\paragraph{%s}"     . "\\paragraph*{%s}")
+         ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))))
 
-(use-package org-superstar  ;; improved bullets
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
+  (setq org-directory "~/mega/org/")
+
+  (setq org-startup-folded t)
+  (setq org-startup-idented t)
+  (setq org-fontify-done-headline t)
+  (setq org-fontify-todo-headline t)
+
+  (use-package org-bullets
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+  (use-package org-superstar  ;; improved bullets
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
 
 (use-package org-fancy-priorities
   :hook
@@ -142,16 +183,16 @@
                            :order 90)
                           (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
 
-(use-package org-journal
-  :bind
-  ("C-c n j" . org-journal-new-entry)
-  :custom
-  (org-journal-dir "~/mega/org/roam/daily/")
-  (org-journal-time-prefix "* ")
-  (org-journal-date-prefix "#+TITLE: ")
-  (org-journal-file-format "%Y-%m-%d.org")
-  (org-journal-date-format "%A, %d %m %Y"))
-(setq org-journal-enable-agenda-integration t)
+  (use-package org-journal
+    :bind
+    ("C-c n j" . org-journal-new-entry)
+    :custom
+    (org-journal-dir "~/mega/org/roam/daily/")
+    (org-journal-time-prefix "* ")
+    (org-journal-date-prefix "#+TITLE: ")
+    (org-journal-file-format "%Y-%m-%d.org")
+    (org-journal-date-format "%A, %d %m %Y"))
+  (setq org-journal-enable-agenda-integration t)
 
 (use-package! org-ref
     :after org
@@ -184,9 +225,9 @@
   :hook
   (org-mode-hook . toc-org-mode))
 
-(setq org-roam-directory "~/mega/org/roam/")
+  (setq org-roam-directory "~/mega/org/roam/")
 
-(after! org-roam
+  (after! org-roam
       (map! :leader
           :prefix "n"
           :desc "org-roam" "l" #'org-roam
@@ -207,52 +248,52 @@
     - source :: ${ref}"
                :unnarrowed t))))
 
-(require 'company-org-roam)
-(use-package company-org-roam
-  :when (featurep! :completion company)
-  :after org-roam
-  :config
-  (set-company-backend! 'org-mode '(company-org-roam company-yasnippet company-dabbrev)))
+  (require 'company-org-roam)
+  (use-package company-org-roam
+    :when (featurep! :completion company)
+    :after org-roam
+    :config
+    (set-company-backend! 'org-mode '(company-org-roam company-yasnippet company-dabbrev)))
 
-(use-package deft
-  :after org
-  :bind
-  ("C-c n d" . deft)
-  :custom
-  (deft-recursive t)
-  (deft-use-filter-string-for-filename t)
-  (deft-default-extension "org")
-  (deft-directory "~/mega/org/roam/"
-    "~/mega/org/roam/daily/"))
+  (use-package deft
+    :after org
+    :bind
+    ("C-c n d" . deft)
+    :custom
+    (deft-recursive t)
+    (deft-use-filter-string-for-filename t)
+    (deft-default-extension "org")
+    (deft-directory "~/mega/org/roam/"
+      "~/mega/org/roam/daily/"))
 
-(use-package! org-roam-bibtex
-  :load-path "~/mega/org/library.bib"
-  :hook (org-roam-mode . org-roam-bibtex-mode)
-  :bind (:map org-mode-map
-         (("C-c n a" . orb-note-actions))))
-(setq orb-templates
-      '(("r" "ref" plain (function org-roam-capture--get-point) ""
-         :file-name "${citekey}"
-         :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}\n" ; <--
-         :unnarrowed t)))
-(setq orb-preformat-keywords '(("citekey" . "=key=") "title" "url" "file" "author-or-editor" "keywords"))
+  (use-package! org-roam-bibtex
+    :load-path "~/mega/org/library.bib"
+    :hook (org-roam-mode . org-roam-bibtex-mode)
+    :bind (:map org-mode-map
+           (("C-c n a" . orb-note-actions))))
+  (setq orb-templates
+        '(("r" "ref" plain (function org-roam-capture--get-point) ""
+           :file-name "${citekey}"
+           :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}\n" ; <--
+           :unnarrowed t)))
+  (setq orb-preformat-keywords '(("citekey" . "=key=") "title" "url" "file" "author-or-editor" "keywords"))
 
-(setq orb-templates
-      '(("n" "ref+noter" plain (function org-roam-capture--get-point)
-         ""
-         :file-name "${slug}"
-         :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS:
+  (setq orb-templates
+        '(("n" "ref+noter" plain (function org-roam-capture--get-point)
+           ""
+           :file-name "${slug}"
+           :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS:
 
-- tags ::
-- keywords :: ${keywords}
-\* ${title}
-:PROPERTIES:
-:Custom_ID: ${citekey}
-:URL: ${url}
-:AUTHOR: ${author-or-editor}
-:NOTER_DOCUMENT: %(orb-process-file-field \"${citekey}\")
-:NOTER_PAGE:
-:END:")))
+  - tags ::
+  - keywords :: ${keywords}
+  \* ${title}
+  :PROPERTIES:
+  :Custom_ID: ${citekey}
+  :URL: ${url}
+  :AUTHOR: ${author-or-editor}
+  :NOTER_DOCUMENT: %(orb-process-file-field \"${citekey}\")
+  :NOTER_PAGE:
+  :END:")))
 
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
