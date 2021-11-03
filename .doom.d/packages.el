@@ -54,10 +54,12 @@
 (package! org-bullets)
 (package! org-superstar)
 (package! org-roam-bibtex)
-
 (package! org-fancy-priorities)
 
-(package! ivy-bibtex)
+;;(package! ivy-bibtex)
+(package! helm-bibtex)
+(package! helm-ls-git)
+(package! helm-addressbook)
 
 (package! company-org-roam
    :recipe (:host github :repo "jethrokuan/company-org-roam"))
@@ -65,4 +67,3 @@
 (package! ox-jekyll-lite
    :recipe (:host github :repo "peterewills/ox-jekyll-lite"))
 
-(package! ox-latex)
