@@ -21,7 +21,7 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#3d434d" "#171b24"))
  '(objed-cursor-color "#f28779")
  '(org-agenda-files
-   '("/home/birromer/Documents/teste.org" "/home/birromer/mega/org/notes.org" "/home/birromer/mega/org/journal.org" "/home/birromer/mega/org/todo.org" "/home/birromer/mega/org/roam/journal/2021-05-13.org" "/home/birromer/mega/org/roam/daily/2021-10-28.org"))
+   '("/home/birromer/Documents/teste.org" "/home/birromer/mega/org/notes.org" "/home/birromer/mega/org/journal.org" "/home/birromer/mega/org/todo.org" "/home/birromer/mega/org/roam/journal/2021-05-13.org"))
  '(package-selected-packages '(ample-theme org-bullets travis))
  '(pdf-view-midnight-colors (cons "#cbccc6" "#1f2430"))
  '(rustic-ansi-faces

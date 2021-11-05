@@ -50,8 +50,16 @@ Highlight trailing whitespace
 (setq show-trailing-whitespace t)
 #+end_src
 
+** Default programs
+#+begin_src emacs-lisp
+(setq +latex-viewers '(zathura))
+#+end_src
+
 * Packages
 ** helm
+#+begin_src emacs-lisp
+  (setq helm-locate-fuzzy-match t)
+#+end_src
 
 ** helm-bibtex
 Bibliography file location
@@ -65,10 +73,9 @@ Bibliography file location
 
 Keybindings
 #+begin_src emacs-lisp
-  (after! helm-bibtex
-      (map! :leader
-          :prefix "o"
-          :desc "helm-bibtex" "b" #'helm-bibtex))
+  (map! :leader
+      :prefix "o"
+      :desc "helm-bibtex" "b" #'helm-bibtex)
 #+end_src
 
 ** ivy-bibtex
@@ -95,46 +102,46 @@ This is a package for converting org files into markdown posts for jekyll
 ** ox-latex
 Latex org exporter
 #+begin_src emacs-lisp
-;;(use-package ox-latex
-;;  :after ox
-;;  :custom
-;;  (org-latex-image-default-width "1\\linewidth")
-;;  (org-latex-packages-alist
-;;   `((,(concat "cache=false,outputdir=" org-export-default-output-folder) "minted")
-;;     ("T1" "fontenc")
-;;     ("" "placeins")))
-;;  (org-latex-listings 'minted)
-;;  (org-latex-minted-options
-;;   '(("breaklines")
-;;     ("breakafter" "d")
-;;     ("linenos" "true")
-;;     ("xleftmargin" "\\parindent")))
-;;  (org-latex-pdf-process
-;;   '("latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"))
-;;  :config
-;;  (add-to-list 'org-latex-classes
-;;           '("iiufrgs"
-;;         "\\documentclass{iiufrgs}"
-;;         ("\\chapter{%s}"       . "\\chapter*{%s}")
-;;         ("\\section{%s}"       . "\\section*{%s}")
-;;         ("\\subsection{%s}"    . "\\subsection*{%s}")
-;;         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-;;         ("\\paragraph{%s}"     . "\\paragraph*{%s}")))
-;;  (add-to-list 'org-latex-classes
-;;           '("newlfm"
-;;         "\\documentclass{newlfm}"
-;;         ("\\chapter{%s}"       . "\\chapter*{%s}")
-;;         ("\\section{%s}"       . "\\section*{%s}")
-;;         ("\\subsection{%s}"    . "\\subsection*{%s}")
-;;         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
-;;  (add-to-list 'org-latex-classes
-;;           '("IEEEtran"
-;;         "\\documentclass{IEEEtran}"
-;;         ("\\section{%s}"       . "\\section*{%s}")
-;;         ("\\subsection{%s}"    . "\\subsection*{%s}")
-;;         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-;;         ("\\paragraph{%s}"     . "\\paragraph*{%s}")
-;;         ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))))
+(use-package ox-latex
+  :after ox
+  :custom
+  (org-latex-image-default-width "1\\linewidth")
+  (org-latex-packages-alist
+   `((,(concat "cache=false,outputdir=" org-export-default-output-folder) "minted")
+     ("T1" "fontenc")
+     ("" "placeins")))
+  (org-latex-listings 'minted)
+  (org-latex-minted-options
+   '(("breaklines")
+     ("breakafter" "d")
+     ("linenos" "true")
+     ("xleftmargin" "\\parindent")))
+  (org-latex-pdf-process
+   '("latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"))
+  :config
+  (add-to-list 'org-latex-classes
+           '("iiufrgs"
+         "\\documentclass{iiufrgs}"
+         ("\\chapter{%s}"       . "\\chapter*{%s}")
+         ("\\section{%s}"       . "\\section*{%s}")
+         ("\\subsection{%s}"    . "\\subsection*{%s}")
+         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+         ("\\paragraph{%s}"     . "\\paragraph*{%s}")))
+  (add-to-list 'org-latex-classes
+           '("newlfm"
+         "\\documentclass{newlfm}"
+         ("\\chapter{%s}"       . "\\chapter*{%s}")
+         ("\\section{%s}"       . "\\section*{%s}")
+         ("\\subsection{%s}"    . "\\subsection*{%s}")
+         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+  (add-to-list 'org-latex-classes
+           '("IEEEtran"
+         "\\documentclass{IEEEtran}"
+         ("\\section{%s}"       . "\\section*{%s}")
+         ("\\subsection{%s}"    . "\\subsection*{%s}")
+         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+         ("\\paragraph{%s}"     . "\\paragraph*{%s}")
+         ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))))
 #+end_src
 
 Export latex to pdf
@@ -190,6 +197,7 @@ Export latex to pdf
 ;;(global-set-key (kbd "C-x C-r M") 'ros-catkin-make)
 ;;(global-set-key (kbd "C-x C-r C-j") 'ros-catkin-make-json)
 ;;#+end_src
+
 * File modes
 ** Org
 *** Base directory
@@ -199,10 +207,12 @@ Export latex to pdf
 *** Aesthetics
 #+begin_src emacs-lisp
   (setq org-startup-folded t)
-  (setq org-startup-idented t)
+  (setq org-startup-indented t)
   (setq org-fontify-done-headline t)
   (setq org-fontify-todo-headline t)
 #+end_src
+
+[[mailto:hummes@ieee.org][my email]]
 
 *** org-bullets
 #+begin_src emacs-lisp
@@ -234,10 +244,10 @@ Base agenda
                         "~/mega/org/todo.org"))
 #+end_src
 
-TODOs options
+TODO options
 #+begin_src emacs-lisp
 (after! org
-    (setq org-todo-keywords '((sequence "TODO(t)" "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)""IDEA(i)" "|" "DONE(d)" "KILL(k)")
+    (setq org-todo-keywords '((sequence "TODO(t)" "LOOP(r)" "START(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)" "|" "DONE(d)" "KILLED(k)")
                               (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)")
                               (sequence "OKAY(o)" "YES(y)" "|" "NO(n)" ))
   ))
@@ -250,7 +260,6 @@ Priorities
                              (66 :foreground "#da8548")
                              (67 :foreground "#0098dd"))))
 #+end_src
-
 
 Super agenda
 #+begin_src emacs-lisp
@@ -403,10 +412,10 @@ Keybindings
       (map! :leader
           :prefix "n"
           :desc "org-roam" "l" #'org-roam
-          :desc "org-roam-insert" "i" #'org-roam-insert
-          :desc "org-roam-switch-to-buffer" "b" #'org-roam-switch-to-buffer
-          :desc "org-roam-find-file" "f" #'org-roam-find-file
-          :desc "org-roam-show-graph" "g" #'org-roam-show-graph
+          :desc "org-roam-node-insert" "i" #'org-roam-node-insert
+          :desc "org-roam-node-find" "f" #'org-roam-node-find
+          :desc "org-roam-buffer-toggle" "b" #'org-roam-buffer-toggle
+          :desc "org-roam-graph" "g" #'org-roam-graph
           :desc "org-roam-capture-today" "N" #'org-roam-dailies-capture-today
           :desc "org-roam-capture" "c" #'org-roam-capture))
 
