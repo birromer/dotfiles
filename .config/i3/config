@@ -16,7 +16,7 @@ floating_modifier $mod
 
 # define locker
 #set $Locker i3lock -i /home/birromer/Pictures/wallpapers/dark-souls-firelink.png && sleep 1
-set $Locker i3lock-fancy -t "type password to unlock"
+set $Locker i3lock-fancy -t "go away" -f "Comic-Sans-MS-Bold"
 
 # set wallpaper
 exec_always feh --bg-scale '/home/birromer/Pictures/wallpapers/night-in-the-woods-3.jpg'
@@ -24,7 +24,7 @@ exec_always feh --bg-scale '/home/birromer/Pictures/wallpapers/night-in-the-wood
 #exec_always feh --bg-scale '/home/birromer/Pictures/wallpapers/sandman-4.jpg'
 
 # set auto lock
-exec_always xautolock -time 30 -locker "/usr/bin/i3lock-fancy -t 'type password to unlock'"
+exec_always xautolock -time 30 -locker $Locker
 
 # set keyboard layout
 exec setxkbmap -layout br
