@@ -135,6 +135,13 @@ Latex org exporter
          ("\\subsection{%s}"    . "\\subsection*{%s}")
          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
   (add-to-list 'org-latex-classes
+           '("if-beamer"
+         "\\documentclass{if-beamer}"
+         ("\\chapter{%s}"       . "\\chapter*{%s}")
+         ("\\section{%s}"       . "\\section*{%s}")
+         ("\\subsection{%s}"    . "\\subsection*{%s}")
+         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+  (add-to-list 'org-latex-classes
            '("IEEEtran"
          "\\documentclass{IEEEtran}"
          ("\\section{%s}"       . "\\section*{%s}")
@@ -149,7 +156,22 @@ Export latex to pdf
   (map! :leader
         :prefix "c"
         :desc "org-latex-export-to-pdf" "p" #'org-latex-export-to-pdf)
+#+end_src
 
+Export beamer to pdf
+#+begin_src emacs-lisp
+  (map! :leader
+        :prefix "c"
+        :desc "org-beamer-export-to-pdf" "b" #'org-beamer-export-to-pdf)
+
+#+end_src
+
+Make UNNUMBERED headers export as =\*section{}=
+#+begin_src emacs-lisp
+(advice-add 'org-export-numbered-headline-p :around
+            (lambda (orig headline info)
+              (and (funcall orig headline info)
+                   (not (org-element-property :UNNUMBERED headline)))))
 #+end_src
 
 ** ROS
@@ -197,6 +219,20 @@ Export latex to pdf
 ;;(global-set-key (kbd "C-x C-r M") 'ros-catkin-make)
 ;;(global-set-key (kbd "C-x C-r C-j") 'ros-catkin-make-json)
 ;;#+end_src
+
+**
+
+** Hypothesis
+Set user variables
+#+begin_src emacs-lisp
+  (setq hypothesis-username "birromer")
+  (setq hypothesis-token "6879-kTl5hR8KRzyVYL5u78DzJdD0Rt0wx0EIpcPHQdmW2y0")
+#+end_src
+
+Set file where to import the data, synced inside org-roam
+#+begin_src emacs-lisp
+  (setq hypothesis-archive "~/mega/org/roam/20211109230343-hypothesis_archive.org")
+#+end_src
 
 * File modes
 ** Org
@@ -503,4 +539,9 @@ Bibtex integration
 ** Rust
 ** Shell script
 ** Python
+Disable flycheck with pylint
+#+begin_src emacs-lisp
+(setq-default flycheck-disable-checkers '(python-pylint))
+#+end_src
+
 ** CMake

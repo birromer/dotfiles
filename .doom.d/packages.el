@@ -67,3 +67,6 @@
 (package! ox-jekyll-lite
    :recipe (:host github :repo "peterewills/ox-jekyll-lite"))
 
+(package! request)
+(package! hypotehsis
+   :recipe (:host github :repo "Kungsgeten/hypothesis"))
