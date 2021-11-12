@@ -71,11 +71,49 @@ exec --no-startup-id megasync
 # gotta have them speed
 #exec --no-startup-id emacs --daemon
 
+# Active Colors
+set $bg #2f343f
+set $fg #1C1E20
+set $fg-alt #16537e
+set $mf #C4C7C5
+set $ac #B4BC67
+
+# Bars
+set $bn #308634
+set $bm #E57C46
+set $bd #E24C49
+
+set $white #FFFFFF
+set $black #000000
+
 # --- i3bar --- #
-#bar {
-#    position bottom
-#    status_command i3status
-#}
+bar {
+    font pango:Siji,FontAwesome, PowerlineSymbols, Material\ Icons 11
+    position top
+#    separator_symbol ""
+    separator_symbol "<"
+    status_command /usr/bin/i3status-rs ~/.config/i3status-rust/config.toml
+    colors {
+        separator  #666666
+        background $bg
+        statusline #1C1E20
+        #                  border  background  text
+        focused_workspace  $bg     $ac         #ffffff
+        active_workspace   $bg     $fg-alt         #ffffff
+        inactive_workspace $bg     $bg         #888888
+        urgent_workspace   $bg     $bd         #ffffff
+    }
+#    colors {
+#        separator #666666
+#        background #222222
+#        statusline #dddddd
+#        focused_workspace #0088CC #0088CC #ffffff
+#        active_workspace #333333 #333333 #ffffff
+#        inactive_workspace #333333 #333333 #888888
+#        urgent_workspace #2f343a #900000 #ffffff
+#    }
+}
+
 exec --no-startup-id i3mpdupdate
 
 # -- gaps -- #
@@ -89,16 +127,27 @@ for_window [class="^.*"] border pixel 3
 
 
 # --- workspaces --- #
-set $workspace1 "1: "
-set $workspace2 "2: "
-set $workspace3 "3: "
-set $workspace4 "4:  1"
-set $workspace5 "5:  2"
-set $workspace6 "6:  3"
-set $workspace7 "7: "
-set $workspace8 "8: "
-set $workspace9 "9: "
-set $workspace10 "10: "
+#set $workspace1 "1: "
+#set $workspace2 "2: "
+#set $workspace3 "3: "
+#set $workspace4 "4:  1"
+#set $workspace5 "5:  2"
+#set $workspace6 "6:  3"
+#set $workspace7 "7: "
+#set $workspace8 "8: "
+#set $workspace9 "9: "
+#set $workspace10 "10: "
+
+set $workspace1 "1"
+set $workspace2 "2"
+set $workspace3 "3"
+set $workspace4 "4"
+set $workspace5 "5"
+set $workspace6 "6"
+set $workspace7 "7"
+set $workspace8 "8"
+set $workspace9 "9"
+set $workspace10 "10"
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
@@ -167,7 +216,6 @@ assign [class="Slack"] $workspace8
 # workspace 9
 assign [class="Thunderbird"] $workspace9
 # workspace 10
-assign [class="Spotify"] $workspace10
 for_window [class="Spotify"] move to workspace $workspace10
 
 # set floating windows
