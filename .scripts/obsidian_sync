@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+VAULT_PATH=~/mega/obsidian/pensar/
+
+cd "$VAULT_PATH"
+changes_flag="$(git status --porcelain | wc -l)"
+
+if [ "$changes_flag" -eq 0 ]; then
+   exit 0
+fi
+
+git pull
+git add -A
+git commit -q -m "last sync: $(date +'%Y-%m-%d %H:%M:%S')"
+git push -q
+
