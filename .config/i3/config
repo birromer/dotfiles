@@ -67,6 +67,7 @@ exec --no-startup-id unclutter
 
 # launch sync tool
 exec --no-startup-id megasync
+exec --no-startup-id dropbox
 
 # gotta have them speed
 #exec --no-startup-id emacs --daemon
@@ -215,6 +216,8 @@ assign [class="Slack"] $workspace8
 #assign [class="TelegramDesktop"] $workspace8
 # workspace 9
 assign [class="Thunderbird"] $workspace9
+workspace $workspace9 gaps outer 0
+workspace $workspace9 gaps inner 0
 # workspace 10
 for_window [class="Spotify"] move to workspace $workspace10
 
@@ -239,7 +242,7 @@ exec --no-startup-id urxvt -name dropdown -e tmux
 # Runs neofetch on first tmux screen if installed.
 #exec_always --no-startup-id "tmux send-keys -t 0:0 'clear && neofetch 2>/dev/null' Enter"
 
-# dropdown calculator (IPython)
+# dropdown calculator (julia)
 for_window [instance="math"] floating enable
 for_window [instance="math"] resize set 800 300
 for_window [instance="math"] move scratchpad
@@ -254,11 +257,18 @@ for_window [class="TelegramDesktop"] border pixel 3
 exec --no-startup-id telegram-desktop
 
 # dropdown spotify
-for_window [instance="spt"] floating enable
-for_window [instance="spt"] resize set 1205 911
-for_window [instance="spt"] move scratchpad
-for_window [instance="spt"] border pixel 3
-exec --no-startup-id urxvt -name spt -e spt
+#for_window [instance="spt"] floating enable
+#for_window [instance="spt"] resize set 1205 911
+#for_window [instance="spt"] move scratchpad
+#for_window [instance="spt"] border pixel 3
+#exec --no-startup-id urxvt -name spt -e spt
+
+# dropdown todoist
+for_window [class="Todoist"] floating enable
+for_window [class="Todoist"] resize set 1305 911
+for_window [class="Todoist"] move scratchpad
+for_window [class="Todoist"] border pixel 3
+exec --no-startup-id todoist
 
 # --- menus --- #
 bindsym $mod+p mode "$mode_system"
@@ -359,7 +369,8 @@ bindsym $mod+shift+p exec system-config-priter
 bindsym $mod+a [instance="math"] scratchpad show; [instance="math"] move position center
 # S
 #bindsym $mod+s layout stacking
-bindsym $mod+s [instance="spt"] scratchpad show; [instance="spt"] move position center
+#bindsym $mod+s [instance="spt"] scratchpad show; [instance="spt"] move position center
+bindsym $mod+s [class="Todoist"] scratchpad show; [class="Todoist"] move position center
 bindsym $mod+Shift+s split toggle
 #bindsym $mod+Shift+s exec ~/anaconda3/bin/spyder
 # D
@@ -368,7 +379,7 @@ bindsym $mod+Shift+s split toggle
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+d focus mode_toggle
 #bindsym $mod+d exec rofi -theme ~/.config/rofi/onemon.rasi -show run
-bindsym $mod+Shift+d		gaps inner current set 0; gaps outer current set 0
+bindsym $mod+Shift+d gaps inner current set 0; gaps outer current set 0
 # F
 bindsym $mod+f exec nautilus
 bindsym $mod+Shift+f fullscreen toggle

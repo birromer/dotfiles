@@ -40,7 +40,7 @@ icons = true
 
 [[block]]
 block = "net"
-format = "{ssid} {speed_down;K*b} {speed_up;K*b}"
+format = "{ssid}"
 format_alt = "{ssid} {signal_strength} {ip} {speed_down;K*b} {graph_down;K} {speed_up;K*b} {graph_up;K}"
 interval = 5
 
@@ -55,6 +55,10 @@ block = "temperature"
 scale = "celsius"
 collapsed = false
 format = "{average}"
+good = 25
+idle = 45
+info = 65
+warning = 80
 
 [[block]]
 block = "disk_space"
@@ -63,8 +67,8 @@ info_type = "available"
 unit = "GB"
 alert_absolute = true
 interval = 30
-warning = 20
-alert = 10
+warning = 15
+alert = 7
 format = "/: {available}"
 
 #[[block]]
