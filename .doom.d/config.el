@@ -1,14 +1,17 @@
 (setq user-full-name "Bernardo Hummes Flores"
-      user-mail-address "hummes@ieee.org")
+        user-mail-address "hummes@ieee.org")
+;;  (setq user-full-name "BHF")
 
 (setq doom-font (font-spec :family "Office Code Pro" :size 14))
 
 ;(setq doom-theme 'doom-dracula)
+;(setq doom-theme 'doom-laserwave)
 (setq doom-theme 'doom-acario-dark)
 
 (setq doom-modeline-icon nil)
 
 (setq default-tab-width 2)
+(custom-set-variables '(tab-width 2))
 
 (setq undo-limit 80000000
       evil-want-fine-undo t)
@@ -19,7 +22,27 @@
 
 (setq +latex-viewers '(zathura))
 
-(setq helm-locate-fuzzy-match t)
+;;(use-package company
+;;  :config
+;;  (define-key company-active-map (kbd "<return>") nil)
+;;  (define-key company-active-map (kbd "RET") nil)
+;;  (define-key company-active-map (kbd "C-SPC") #'company-complete-selection))
+
+;;(use-package helm
+;;    :config
+;;    (setq helm-M-x-fuzzy-match t
+;;          helm-apropos-fuzzy-match t
+;;          helm-buffers-fuzzy-matching t
+;;          helm-semantic-fuzzy-matching t
+;;          helm-sessions-fuzzy-matching t
+;;          helm-locate-fuzzy-matching t
+;;          helm-imenu-fuzzy-match t
+;;          helm-recentf-fuzzy-match t))
+
+;;  (use-package helm-fuzzy
+;;    :init
+;;    (with-eval-after-load 'helm
+;;      (helm-fuzzy-mode 1)))
 
 (setq bibtex-completion-bibliography
       '("~/mega/org/library.bib"
@@ -42,6 +65,7 @@
 
 (use-package ox-latex
   :after ox
+  :after org
   :custom
   (org-latex-image-default-width "1\\linewidth")
   (org-latex-packages-alist
@@ -87,6 +111,73 @@
          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
          ("\\paragraph{%s}"     . "\\paragraph*{%s}")
          ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))))
+  ;(add-to-list 'org-structure-template-alist
+  ;             '(,"B"
+  ;"#+TITLE:
+  ;,#+AUTHOR:
+  ;,#+EMAIL:
+  ;,#+DATE:   \\today
+  ;,#+DESCRIPTION:
+  ;,#+KEYWORDS:
+  ;,#+LANGUAGE: en
+  ;,#+LaTeX_HEADER: \\institute[short]{long}
+
+  ;,#+STARTUP: beamer
+  ;,#+STARTUP: oddeven
+  ;,#+STARTUP: latexpreview
+
+  ;,#+LaTeX_CLASS: beamer
+  ;,#+LaTeX_CLASS_OPTIONS: [bigger]
+  ;,#+latex_class_options: [9pt]
+
+  ;,#+BEAMER_THEME: Frankfurt
+
+  ;,#+OPTIONS:   H:2 toc:t
+
+  ;,#+SELECT_TAGS: export
+  ;,#+EXCLUDE_TAGS: noexport
+
+  ;,#+latex_header: \\usepackage{amsmath}
+  ;,#+latex_header: \\usepackage{amsfonts}
+  ;,#+latex_header: \\usepackage{amssymb}
+
+  ;,#+latex_header: \\useinnertheme[shadow=false]{rounded}
+  ;,#+latex_header: \\usecolortheme{orchid}
+  ;,#+begin_src latex
+  ;,\\setbeamertemplate{footline}
+  ;,{
+  ;,    \\leavevmode%
+  ;,    \\hbox{%
+  ;,        \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,center]{author in head/foot}%
+  ;,            \\usebeamerfont{author in head/foot}\\insertshortauthor
+  ;,        \\end{beamercolorbox}%
+  ;,        \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,center]{title in head/foot}%
+  ;,            \\usebeamerfont{title in head/foot}\\insertshorttitle
+  ;,        \\end{beamercolorbox}%
+  ;,        \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,right]{date in head/foot}%
+  ;,            \\usebeamerfont{institute in head/foot}\\insertshortinstitute{}\\hspace*{2em}
+  ;,            \\insertframenumber{} / \\inserttotalframenumber\\hspace*{2ex}
+  ;,        \\end{beamercolorbox}}%
+  ;,        \\vskip0pt%
+  ;,}
+  ;,,#+end_src
+
+
+  ;,,* Emacs setup :noexport:
+  ;,# Local Variables:
+  ;,# eval: (add-to-list 'load-path ".")
+  ;,# eval: (indent-tabs-mode nil)
+  ;,# eval: (tab-width 4)
+  ;,# eval: (fill-column 70)
+  ;,# eval: (sentence-end-double-space t)
+  ;,# eval: (org-edit-src-content-indentation 0)
+  ;,# eval: (org-adapt-indentation nil)
+  ;,# eval: (org-list-two-spaces-after-bullet-regexp nil)
+  ;,# eval: (org-list-description-max-indent 5)
+  ;,# eval: (org-blank-before-new-entry '((heading . auto) (plain-list-item . auto)))
+  ;,# eval: (set-input-method 'TeX)
+  ;,# eval: (org-pretty-entities t)
+  ;,# End:\n\n? "))
 
 (map! :leader
       :prefix "c"
@@ -96,15 +187,28 @@
       :prefix "c"
       :desc "org-beamer-export-to-pdf" "b" #'org-beamer-export-to-pdf)
 
+(global-set-key (kbd "C-c C-g") 'org-preview-latex-fragment)
+
 (advice-add 'org-export-numbered-headline-p :around
             (lambda (orig headline info)
               (and (funcall orig headline info)
                    (not (org-element-property :UNNUMBERED headline)))))
 
+
+
 (setq hypothesis-username "birromer")
 (setq hypothesis-token "6879-kTl5hR8KRzyVYL5u78DzJdD0Rt0wx0EIpcPHQdmW2y0")
 
 (setq hypothesis-archive "~/mega/org/roam/20211109230343-hypothesis_archive.org")
+
+;;  (use-package esup
+;;    ;; To use MELPA Stable use ":pin melpa-stable",
+;;    :pin melpa)
+
+;;  (use-package benchmark-init
+;;    :config
+;;    ;; To disable collection of benchmark data after init is done.
+;;    (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 (setq org-directory "~/mega/org/")
 
