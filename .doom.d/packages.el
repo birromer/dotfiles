@@ -70,3 +70,5 @@
 (package! request)
 (package! hypotehsis
    :recipe (:host github :repo "Kungsgeten/hypothesis"))
+
+(package! esup)

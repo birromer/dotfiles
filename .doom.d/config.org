@@ -11,6 +11,7 @@ aaa
 #+begin_src emacs-lisp
   (setq user-full-name "Bernardo Hummes Flores"
         user-mail-address "hummes@ieee.org")
+;;  (setq user-full-name "BHF")
 #+end_src
 
 ** Font
@@ -21,6 +22,7 @@ aaa
 ** Theme and aesthetics
 #+begin_src emacs-lisp
   ;(setq doom-theme 'doom-dracula)
+  ;(setq doom-theme 'doom-laserwave)
   (setq doom-theme 'doom-acario-dark)
 #+end_src
 
@@ -32,6 +34,7 @@ aaa
 Tab length
 #+begin_src emacs-lisp
 (setq default-tab-width 2)
+(custom-set-variables '(tab-width 2))
 #+end_src
 
 Increase undo limit and make it save smaller chunks
@@ -56,9 +59,35 @@ Highlight trailing whitespace
 #+end_src
 
 * Packages
+** Company
+#+begin_src emacs-lisp
+;;(use-package company
+;;  :config
+;;  (define-key company-active-map (kbd "<return>") nil)
+;;  (define-key company-active-map (kbd "RET") nil)
+;;  (define-key company-active-map (kbd "C-SPC") #'company-complete-selection))
+#+end_src
+
 ** helm
 #+begin_src emacs-lisp
-  (setq helm-locate-fuzzy-match t)
+;;(use-package helm
+;;    :config
+;;    (setq helm-M-x-fuzzy-match t
+;;          helm-apropos-fuzzy-match t
+;;          helm-buffers-fuzzy-matching t
+;;          helm-semantic-fuzzy-matching t
+;;          helm-sessions-fuzzy-matching t
+;;          helm-locate-fuzzy-matching t
+;;          helm-imenu-fuzzy-match t
+;;          helm-recentf-fuzzy-match t))
+#+end_src
+
+** helm-fuzzy
+#+begin_src emacs-lisp
+;;  (use-package helm-fuzzy
+;;    :init
+;;    (with-eval-after-load 'helm
+;;      (helm-fuzzy-mode 1)))
 #+end_src
 
 ** helm-bibtex
@@ -104,6 +133,7 @@ Latex org exporter
 #+begin_src emacs-lisp
 (use-package ox-latex
   :after ox
+  :after org
   :custom
   (org-latex-image-default-width "1\\linewidth")
   (org-latex-packages-alist
@@ -149,6 +179,73 @@ Latex org exporter
          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
          ("\\paragraph{%s}"     . "\\paragraph*{%s}")
          ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))))
+  ;(add-to-list 'org-structure-template-alist
+  ;             '(,"B"
+  ;"#+TITLE:
+  ;,#+AUTHOR:
+  ;,#+EMAIL:
+  ;,#+DATE:   \\today
+  ;,#+DESCRIPTION:
+  ;,#+KEYWORDS:
+  ;,#+LANGUAGE: en
+  ;,#+LaTeX_HEADER: \\institute[short]{long}
+
+  ;,#+STARTUP: beamer
+  ;,#+STARTUP: oddeven
+  ;,#+STARTUP: latexpreview
+
+  ;,#+LaTeX_CLASS: beamer
+  ;,#+LaTeX_CLASS_OPTIONS: [bigger]
+  ;,#+latex_class_options: [9pt]
+
+  ;,#+BEAMER_THEME: Frankfurt
+
+  ;,#+OPTIONS:   H:2 toc:t
+
+  ;,#+SELECT_TAGS: export
+  ;,#+EXCLUDE_TAGS: noexport
+
+  ;,#+latex_header: \\usepackage{amsmath}
+  ;,#+latex_header: \\usepackage{amsfonts}
+  ;,#+latex_header: \\usepackage{amssymb}
+
+  ;,#+latex_header: \\useinnertheme[shadow=false]{rounded}
+  ;,#+latex_header: \\usecolortheme{orchid}
+  ;,#+begin_src latex
+  ;,\\setbeamertemplate{footline}
+  ;,{
+  ;,    \\leavevmode%
+  ;,    \\hbox{%
+  ;,        \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,center]{author in head/foot}%
+  ;,            \\usebeamerfont{author in head/foot}\\insertshortauthor
+  ;,        \\end{beamercolorbox}%
+  ;,        \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,center]{title in head/foot}%
+  ;,            \\usebeamerfont{title in head/foot}\\insertshorttitle
+  ;,        \\end{beamercolorbox}%
+  ;,        \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,right]{date in head/foot}%
+  ;,            \\usebeamerfont{institute in head/foot}\\insertshortinstitute{}\\hspace*{2em}
+  ;,            \\insertframenumber{} / \\inserttotalframenumber\\hspace*{2ex}
+  ;,        \\end{beamercolorbox}}%
+  ;,        \\vskip0pt%
+  ;,}
+  ;,,#+end_src
+
+
+  ;,,* Emacs setup :noexport:
+  ;,# Local Variables:
+  ;,# eval: (add-to-list 'load-path ".")
+  ;,# eval: (indent-tabs-mode nil)
+  ;,# eval: (tab-width 4)
+  ;,# eval: (fill-column 70)
+  ;,# eval: (sentence-end-double-space t)
+  ;,# eval: (org-edit-src-content-indentation 0)
+  ;,# eval: (org-adapt-indentation nil)
+  ;,# eval: (org-list-two-spaces-after-bullet-regexp nil)
+  ;,# eval: (org-list-description-max-indent 5)
+  ;,# eval: (org-blank-before-new-entry '((heading . auto) (plain-list-item . auto)))
+  ;,# eval: (set-input-method 'TeX)
+  ;,# eval: (org-pretty-entities t)
+  ;,# End:\n\n? "))
 #+end_src
 
 Export latex to pdf
@@ -163,7 +260,11 @@ Export beamer to pdf
   (map! :leader
         :prefix "c"
         :desc "org-beamer-export-to-pdf" "b" #'org-beamer-export-to-pdf)
+#+end_src
 
+Quick latex snippet preview
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-c C-g") 'org-preview-latex-fragment)
 #+end_src
 
 Make UNNUMBERED headers export as =\*section{}=
@@ -172,6 +273,11 @@ Make UNNUMBERED headers export as =\*section{}=
             (lambda (orig headline info)
               (and (funcall orig headline info)
                    (not (org-element-property :UNNUMBERED headline)))))
+#+end_src
+
+Template for creating presentations
+#+begin_src emacs-lisp
+
 #+end_src
 
 ** ROS
@@ -232,6 +338,21 @@ Set user variables
 Set file where to import the data, synced inside org-roam
 #+begin_src emacs-lisp
   (setq hypothesis-archive "~/mega/org/roam/20211109230343-hypothesis_archive.org")
+#+end_src
+
+** esup
+Having problems with startup time, gotta trim
+#+begin_src emacs-lisp
+;;  (use-package esup
+;;    ;; To use MELPA Stable use ":pin melpa-stable",
+;;    :pin melpa)
+#+end_src
+
+#+begin_src emacs-lisp
+;;  (use-package benchmark-init
+;;    :config
+;;    ;; To disable collection of benchmark data after init is done.
+;;    (add-hook 'after-init-hook 'benchmark-init/deactivate))
 #+end_src
 
 * File modes
