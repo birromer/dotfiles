@@ -39,11 +39,6 @@
 ;;          helm-imenu-fuzzy-match t
 ;;          helm-recentf-fuzzy-match t))
 
-;;  (use-package helm-fuzzy
-;;    :init
-;;    (with-eval-after-load 'helm
-;;      (helm-fuzzy-mode 1)))
-
 (setq bibtex-completion-bibliography
       '("~/mega/org/library.bib"
         ))
@@ -79,7 +74,9 @@
      ("linenos" "true")
      ("xleftmargin" "\\parindent")))
   (org-latex-pdf-process
-   '("latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"))
+   '("latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"
+     "latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"
+     "latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"))
   :config
   (add-to-list 'org-latex-classes
            '("iiufrgs"
@@ -216,6 +213,7 @@
 (setq org-startup-indented t)
 (setq org-fontify-done-headline t)
 (setq org-fontify-todo-headline t)
+(setq org-src-fontify-natively t)
 
 (use-package org-bullets
   :config
@@ -340,16 +338,16 @@
     (defconst birromer/user-org-ref-path
       (expand-file-name "~/mega/org/"))
     :custom
-    (org-ref-bibliography-notes (expand-file-name "notes.org" birromer/user-org-ref-path))
-    (org-ref-default-bibliography `(,(expand-file-name "library.bib" birromer/user-org-ref-path)))
-    (reftex-default-bibliography `(,(expand-file-name "library.bib" birromer/user-org-ref-path)))
-;;    (org-ref-pdf-directory birromer/user-org-ref-path)
+    (org-ref-bibliography-notes "~/mega/org/notes.org")
+    (org-ref-default-bibliography '("~/mega/org/library.bib"))
+    (reftex-default-bibliography '("~/mega/org/library.bib"))
     (org-ref-completion-library 'org-ref-cite-insert-helm)
     (org-ref-insert-cite-function 'org-ref-cite-insert-helm)
     (org-ref-insert-label-function 'org-ref-cite-insert-helm)
     (org-ref-insert-ref-function 'org-ref-cite-insert-helm)
     (org-ref-show-broken-links nil)
     (org-ref-notes-directory birromer/user-org-ref-path)
+
     :init
     :general
     (:states '(normal visual)
@@ -360,9 +358,37 @@
     (require 'doi-utils)
     )
 
-(map! :leader
-      :prefix "i"
-      :desc "insert citation link" "l" #'org-ref-insert-link)
+  (map! :leader
+        :prefix "i"
+        :desc "insert citation link" "l" #'org-ref-insert-link)
+
+(setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
+       org-ref-insert-cite-function 'org-ref-cite-insert-helm
+       org-ref-insert-label-function 'org-ref-insert-label-link
+       org-ref-insert-ref-function 'org-ref-insert-ref-link
+       org-ref-cite-onclick-function (lambda (_) (org-ref-citation-hydra/body)))
+
+ (setq org-src-fontify-natively t
+       org-confirm-babel-evaluate nil
+       org-src-preserve-identation t)
+
+
+ (setq bibtex-completion-bibliography '("~/mega/org/library.bib")
+;       bibtex-completion-library-path '("~/Dropbox/emacs/bibliography/bibtex-pdfs/")
+       bibtex-completion-pdf-field "File"
+       bibtex-completion-notes-path "~/mega/org/notes.org"
+       bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
+
+       bibtex-completion-additional-search-fields '(keywords)
+       bibtex-completion-display-formats
+         '((article       . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${journal:40}")
+           (inbook        . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
+           (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+           (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
+           (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
+      bibtex-completion-pdf-open-function
+      (lambda (fpath)
+        (call-process "open" nil 0 nil fpath)))
 
 (use-package! toc-org
   :defer t
@@ -380,23 +406,35 @@
           :desc "org-roam-buffer-toggle" "b" #'org-roam-buffer-toggle
           :desc "org-roam-graph" "g" #'org-roam-graph
           :desc "org-roam-capture-today" "N" #'org-roam-dailies-capture-today
-          :desc "org-roam-capture" "c" #'org-roam-capture))
-
-(after! org-roam
+          :desc "org-roam-capture" "c" #'org-roam-capture)
       (setq org-roam-ref-capture-templates
             '(("r" "ref" plain (function org-roam-capture--get-point)
                "%?"
                :file-name "websites/${slug}"
+               :head "#+TITLE: ${title}\n,#+ROAM_KEY: ${ref}\n- source :: ${ref}"
+               :unnarrowed t)
+              ("t" "text" plain (function org-roam-capture--get-point)
+               "%?"
+               :file-name "${slug}"
                :head "#+TITLE: ${title}
-    #+ROAM_KEY: ${ref}
-    - source :: ${ref}"
+#+LANGUAGE: en
+#+OPTIONS: broken-links:t toc:nil
+#+STARTUP: overview indent
+#+TAGS: noexport(n) deprecated(d) ignore(i)
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper, 11pt, english]
+#+Latex_HEADER: \\usepackage[utf8]{inputenc}
+
+* metadata :noexport:
+  - tags :: [[id:61e0b309-641e-47b7-b6b6-d966b65e9900][no_tag]]"
                :unnarrowed t))))
 
 (require 'company-org-roam)
 (use-package company-org-roam
   :when (featurep! :completion company)
-  :after org-roam
-  :config
+  :after org-roam :config
   (set-company-backend! 'org-mode '(company-org-roam company-yasnippet company-dabbrev)))
 
 (use-package deft

@@ -72,3 +72,4 @@
    :recipe (:host github :repo "Kungsgeten/hypothesis"))
 
 (package! esup)
+(package! org-ref)

@@ -22,7 +22,8 @@
  '(objed-cursor-color "#f28779")
  '(org-agenda-files
    '("/home/birromer/Documents/teste.org" "/home/birromer/mega/org/notes.org" "/home/birromer/mega/org/journal.org" "/home/birromer/mega/org/todo.org" "/home/birromer/mega/org/roam/journal/2021-05-13.org"))
- '(package-selected-packages '(paper-theme helm-fuzzy ample-theme org-bullets travis))
+ '(package-selected-packages
+   '(bibtex-completion paper-theme helm-fuzzy ample-theme org-bullets travis))
  '(pdf-view-midnight-colors (cons "#cbccc6" "#1f2430"))
  '(rustic-ansi-faces
    ["#1f2430" "#f28779" "#bae67e" "#ffd580" "#73d0ff" "#d4bfff" "#5ccfe6" "#cbccc6"])
