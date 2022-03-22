@@ -44,6 +44,8 @@ exec --no-startup-id dunst
 #reduces blue light
 exec --no-startup-id redshift
 
+# notifications manager
+
 # chat app
 #exec discord
 #exec --no-startup-id telegram-desktop
@@ -67,10 +69,10 @@ exec --no-startup-id unclutter
 
 # launch sync tool
 exec --no-startup-id megasync
-exec --no-startup-id dropbox
+# exec --no-startup-id dropbox  # activate if not using zotero sync
 
 # gotta have them speed
-#exec --no-startup-id emacs --daemon
+exec --no-startup-id emacs --daemon
 
 # Active Colors
 set $bg #2f343f
@@ -200,7 +202,7 @@ assign [class="kile"] $workspace3
 assign [class="Roam Research"] $workspace4
 # workspace 5
 assign [class="Org.gnome.Nautilus"] $workspace5
-assign [class="vlc"] $workspace5
+#assign [class="vlc"] $workspace5
 # workspace 6
 assign [class="Evince"] $workspace6
 assign [class="okular"] $workspace6
@@ -268,7 +270,7 @@ for_window [class="Todoist"] floating enable
 for_window [class="Todoist"] resize set 1305 911
 for_window [class="Todoist"] move scratchpad
 for_window [class="Todoist"] border pixel 3
-exec --no-startup-id todoist
+#exec --no-startup-id todoist
 
 # --- menus --- #
 bindsym $mod+p mode "$mode_system"
