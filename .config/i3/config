@@ -41,8 +41,11 @@ exec xinput --set-prop 'ELAN0B00:00 04F3:30EA Touchpad' 'libinput Tapping Enable
 # notifications manager
 exec --no-startup-id dunst
 
-#reduces blue light
+# reduces blue light
 exec --no-startup-id redshift
+
+# todo app
+exec todoist
 
 # notifications manager
 
