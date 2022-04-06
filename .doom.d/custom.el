@@ -22,11 +22,49 @@
  '(objed-cursor-color "#f28779")
  '(org-agenda-files
    '("/home/birromer/Documents/teste.org" "/home/birromer/mega/org/notes.org" "/home/birromer/mega/org/journal.org" "/home/birromer/mega/org/todo.org" "/home/birromer/mega/org/roam/journal/2021-05-13.org"))
+ '(org-format-latex-header
+   "\\documentclass{article}
+\\usepackage[usenames]{color}
+[PACKAGES]
+[DEFAULT-PACKAGES]
+\\pagestyle{empty}             % do not remove
+% The settings below are copied from fullpage.sty
+\\setlength{\\textwidth}{\\paperwidth}
+\\addtolength{\\textwidth}{-3cm}
+\\setlength{\\oddsidemargin}{1.5cm}
+\\addtolength{\\oddsidemargin}{-2.54cm}
+\\setlength{\\evensidemargin}{\\oddsidemargin}
+\\setlength{\\textheight}{\\paperheight}
+\\addtolength{\\textheight}{-\\headheight}
+\\addtolength{\\textheight}{-\\headsep}
+\\addtolength{\\textheight}{-\\footskip}
+\\addtolength{\\textheight}{-3cm}
+\\setlength{\\topmargin}{1.5cm}
+\\addtolength{\\topmargin}{-2.54cm}
+\\AtBeginDocument{\\color{white}}")
  '(package-selected-packages
    '(bibtex-completion paper-theme helm-fuzzy ample-theme org-bullets travis))
  '(pdf-view-midnight-colors (cons "#cbccc6" "#1f2430"))
  '(rustic-ansi-faces
    ["#1f2430" "#f28779" "#bae67e" "#ffd580" "#73d0ff" "#d4bfff" "#5ccfe6" "#cbccc6"])
+ '(safe-local-variable-values
+   '((eval org-pretty-entities t)
+     (eval set-input-method 'TeX)
+     (eval org-blank-before-new-entry
+           '((heading . auto)
+             (plain-list-item . auto)))
+     (eval org-list-description-max-indent 5)
+     (eval org-list-two-spaces-after-bullet-regexp nil)
+     (eval org-adapt-indentation nil)
+     (eval org-edit-src-content-indentation 0)
+     (eval sentence-end-double-space t)
+     (eval fill-column 70)
+     (eval tab-width 4)
+     (eval indent-tabs-mode nil)
+     (eval ox-extras-activate
+           '(ignore-headlines))
+     (eval require 'ox-extra)
+     (eval add-to-list 'load-path ".")))
  '(tab-width 2)
  '(vc-annotate-background "#1f2430")
  '(vc-annotate-color-map

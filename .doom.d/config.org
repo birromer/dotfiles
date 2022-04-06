@@ -16,7 +16,8 @@ aaa
 
 ** Font
 #+begin_src emacs-lisp
-  (setq doom-font (font-spec :family "Office Code Pro" :size 14))
+  (setq doom-font (font-spec :family "Source Code Pro" :size 14))
+;;  (setq doom-font (font-spec :family "Inconsolata" :size 16))
 #+end_src
 
 ** Theme and aesthetics
@@ -356,6 +357,7 @@ Having problems with startup time, gotta trim
 #+begin_src emacs-lisp
   (setq org-directory "~/mega/org/")
 #+end_src
+
 *** Aesthetics
 #+begin_src emacs-lisp
   (setq org-startup-folded t)
@@ -365,7 +367,18 @@ Having problems with startup time, gotta trim
   (setq org-src-fontify-natively t)
 #+end_src
 
-[[mailto:hummes@ieee.org][my email]]
+*** Structure templates
+#+begin_src emacs-lisp
+(use-package org-tempo
+  :config
+  (add-to-list 'org-structure-template-alist '("th" . "theorem"))
+  (add-to-list 'org-structure-template-alist '("de" . "definition"))
+  (add-to-list 'org-structure-template-alist '("re" . "remark"))
+  (add-to-list 'org-structure-template-alist '("pr" . "proof"))
+  (add-to-list 'org-structure-template-alist '("le" . "lemma"))
+  (add-to-list 'org-structure-template-alist '("pro" . "proposition"))
+)
+#+end_src
 
 *** org-bullets
 #+begin_src emacs-lisp

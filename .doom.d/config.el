@@ -2,7 +2,8 @@
         user-mail-address "hummes@ieee.org")
 ;;  (setq user-full-name "BHF")
 
-(setq doom-font (font-spec :family "Office Code Pro" :size 14))
+(setq doom-font (font-spec :family "Source Code Pro" :size 14))
+;;  (setq doom-font (font-spec :family "Inconsolata" :size 16))
 
 ;(setq doom-theme 'doom-dracula)
 ;(setq doom-theme 'doom-laserwave)
@@ -214,6 +215,16 @@
 (setq org-fontify-done-headline t)
 (setq org-fontify-todo-headline t)
 (setq org-src-fontify-natively t)
+
+(use-package org-tempo
+  :config
+  (add-to-list 'org-structure-template-alist '("th" . "theorem"))
+  (add-to-list 'org-structure-template-alist '("de" . "definition"))
+  (add-to-list 'org-structure-template-alist '("re" . "remark"))
+  (add-to-list 'org-structure-template-alist '("pr" . "proof"))
+  (add-to-list 'org-structure-template-alist '("le" . "lemma"))
+  (add-to-list 'org-structure-template-alist '("pro" . "proposition"))
+)
 
 (use-package org-bullets
   :config
