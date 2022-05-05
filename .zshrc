@@ -1,4 +1,5 @@
-export TERM="rxvt-unicode"
+#export TERM="rxvt-unicode"
+export TERM="xterm-256color"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -356,10 +357,9 @@ fi
 #ZLE_RPROMPT_INDENT=0
 
 export PATH=/home/birromer/.local/bin:$PATH
-#export PYTHONPATH=/home/birromer/anaconda3/lib/python3.7/site-packages/
 export PATH=$PATH:$HOME/.cargo/bin
 
-alias mtga="/home/birromer/.wine/drive_c/Program\ Files\ \(x86\)/Wizards\ of\ the\ Coast/MTGA/MTGA.exe"
+alias mtga="/home/birromer/Games/magic-the-gathering-arena/drive_c/Program Files/Wizards of the Coast/MTGA/MTGA.exe"
 #alias vibes="LD_PRELOAD=/usr/lib/libfreetype.so /home/birromer/Documents/VIBES/viewer/build/distrib/bin/VIBes-viewer"
 alias sims4="/home/birromer/.wine/drive_c/Games/The\ Sims\ 4\ Seasons/Game/Bin/TS4_x64.exe"
 alias mobilesim="/usr/local/MobileSim/MobileSim"
@@ -369,23 +369,6 @@ alias ec='emacsclient -c'
 #alias vim='emacsclient -t'
 #alias vi='emacsclient -t'
 #export PATH=$PATH:/home/birromer/.gem/ruby/2.7.0/bin
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/birromer/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/birromer/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/birromer/anaconda3/etc/profile.d/conda.sh"
-    else
-        export NOCONDA_PATH=$PATH
-#        export PATH="/home/birromer/anaconda3/bin:$PATH"
-#        alias pyconda="~/anaconda3/bin/python3"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig/
 
@@ -406,49 +389,56 @@ eval "$(starship init zsh)"
 export EDITOR=vim
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
 
-alias coursdir="cd ~/mega/ensta/Cours"
-
 # added by travis gem
 [ ! -s /home/birromer/.travis/travis.sh ] || source /home/birromer/.travis/travis.sh
 
-source /opt/ros/melodic/setup.zsh
-#source /opt/ros/noetic/setup.zsh
+#source /opt/ros/melodic/setup.zsh
+#export ROS_MASTER_URI=http://127.0.0.1:11313
+#export COPPELIASIM_ROOT_DIR="~/Documents/CoppeliaSim"
 
-#ros-env(){
-#    source /opt/ros/noetic/setup.bash
-#    source /ros/catkin_ws/devel/setup.bash
-#    export ROS_PACKAGE_PATH=/ros/catkin_ws/:/opt/ros/noetic/share/
-#}
-#ros-env
-
-ros-start(){
+ros-start-custom(){
 docker run --rm -it --privileged --net=host --ipc=host --env="DISPLAY" \
     --device=/dev/dri:/dev/dri \
     -v "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
     -v $HOME/.Xauthority:/home/$(id -un)/.Xauthority -e XAUTHORITY=/home/$(id -un)/.Xauthority \
-    -v /home/$(id -un)/ros:/home/$(id -un)/ros \
-    -v /home/$(id -un)/Documents/CoppeliaSim:/home/$(id -un)/ros/CoppeliaSim \
+    -v /home/$(id -un)/robotics:/home/$(id -un)/ros \
+    -v /home/$(id -un)/mega/datasets:/home/$(id -un)/ros/data \
+    -v /home/$(id -un)/Documents/CoppeliaSim:/home/$(id -un)/ros/software/coppelia_sim \
     -e DISPLAY=$DISPLAY \
     -e DOCKER_USER_NAME=$(id -un) \
     -e DOCKER_USER_ID=$(id -u) \
     -e DOCKER_USER_GROUP_NAME=$(id -gn) \
     -e DOCKER_USER_GROUP_ID=$(id -g) \
     -e ROS_IP=127.0.0.1 \
-    birromer/ros-noetic:cpu #-c "cp /ros/.bashrc /root/.bashrc && bash"
-#docker run -it --env="DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" -v /home/$(whoami)/ros:/ros --device /dev/video0 --device /dev/dri osrf/ros:noetic-desktop-full bash -c "cp /ros/.bashrc /root/.bashrc && bash"
+    birromer/ros-noetic:robot #-c "cp /ros/.bashrc /root/.bashrc && bash"
+}
+
+ros-start(){
+docker run --rm -it --privileged --net=host --ipc=host --env="DISPLAY" \
+    --device=/dev/dri:/dev/dri \
+    -v "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+    -v $HOME/.Xauthority:/home/robot/.Xauthority \
+    -e XAUTHORITY=/home/robot/.Xauthority \
+    -v /home/$(id -un)/robotics:/home/robot/ros \
+    -v /tmp/:/tmp \
+    -v /home/$(id -un)/mega/datasets:/home/robot/ros/data \
+    -v /home/$(id -un)/Documents/CoppeliaSim:/home/robot/ros/software/coppelia_sim \
+    -e DISPLAY=$DISPLAY \
+    -e ROS_IP=127.0.0.1 \
+    -e DOCKER_USER_NAME=robot \
+    -e DOCKER_USER_ID=$(id -u) \
+    -e DOCKER_USER_GROUP_NAME=$(id -gn) \
+    -e DOCKER_USER_GROUP_ID=$(id -g) \
+    birromer/ros-noetic-intervals:latest
 }
 
 ros-connect(){
-docker exec -ti $(docker ps -aq --filter ancestor=birrome/ros-noetic:cpu --filter status=running) bash
+    docker exec -ti $(docker ps -aq --filter ancestor=birromer/ros-noetic-intervals:latest --filter status=running) zsh
 }
 
 ros-clean(){
-docker rm $(docker ps -aq --filter ancestor=birromer/ros-noetic:cpu --filter status=exited)
+    docker rm $(docker ps -aq --filter ancestor=birromer/ros-noetic-intervals:latest --filter status=exited)
 }
-
-export ROS_MASTER_URI=http://127.0.0.1:11315
-
-export COPPELIASIM_ROOT_DIR="~/Documents/CoppeliaSim"
 
 alias t="tmux"
 alias ta="t a -t"    # attach session
@@ -456,3 +446,32 @@ alias tls="t ls"     # list sessions
 alias tn="t new -t"  # new sessiosn
 
 export DISABLE_AUTO_TITLE='true'
+
+alias kakapo="curl parrot.live"
+export PATH=~/bin:$PATH
+
+alias reset="clear && printf '\e[3J'"
+
+alias firefox="firefox-developer-edition"
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/wxgtk-dev/lib/
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/birromer/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/birromer/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/birromer/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/birromer/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+export PATH=/home/birromer/.MATLAB/bin:$PATH
+
+alias pru="paru"
+
