@@ -107,10 +107,10 @@ state_path = "/home/birromer/.config/watson/state"
 [[block]]
 block = "toggle"
 text = "ext"
-#command_state = "xrandr --listactivemonitors | grep DP1 | grep -v eDP1"
-command_state = "xrandr --listactivemonitors | grep DP1-2 | grep -v eDP1"
-#command_on = "~/.screenlayout/external.sh"
-command_on = "~/.screenlayout/external_inria.sh"
+command_state = "xrandr --listactivemonitors | grep DP1 | grep -v eDP1"
+#command_state = "xrandr --listactivemonitors | grep DP1-2 | grep -v eDP1"
+command_on = "~/.screenlayout/external.sh"
+#command_on = "~/.screenlayout/external_inria.sh"
 command_off = "~/.screenlayout/laptop.sh"
 interval = 10
 
