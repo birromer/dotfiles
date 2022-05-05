@@ -1,5 +1,10 @@
-theme = "nord-dark"
-icons = "awesome"
+[theme]
+name = "nord-dark"
+[theme.overrides]
+separator = "\ue0be"
+
+[icons]
+name = "material-nf"
 
 [[block]]
 block = "focused_window"
@@ -28,7 +33,7 @@ format = "{volume}"
 [[block]]
 block = "cpu"
 interval = 1
-format = "{barchart} {utilization}"
+format = "{barchart} {utilization:2}"
 
 [[block]]
 block = "memory"
@@ -43,6 +48,12 @@ block = "net"
 format = "{ssid}"
 format_alt = "{ssid} {signal_strength} {ip} {speed_down;K*b} {graph_down;K} {speed_up;K*b} {graph_up;K}"
 interval = 5
+
+# [[block]]
+# block = "networkmanager"
+# on_click = "alacritty -e nmtui"
+# interface_name_exclude = ["br\\-[0-9a-f]{12}", "docker\\d+"]
+# interface_name_include = []
 
 [[block]]
 block = "backlight"
@@ -71,16 +82,16 @@ warning = 15
 alert = 7
 format = "/: {available}"
 
-#[[block]]
-#block = "disk_space"
-#path = "/home/birromer"
-#info_type = "available"
-#unit = "GB"
-#interval = 30
-#alert_absolute = true
-#warning = 20
-#alert = 10
-#format = "~: {available}"
+[[block]]
+block = "disk_space"
+path = "/home/birromer"
+info_type = "available"
+unit = "GB"
+interval = 30
+alert_absolute = true
+warning = 20
+alert = 10
+format = "~: {available}"
 
 [[block]]
 block = "battery"
@@ -99,10 +110,10 @@ interval = 5
 format = "%d-%m-%y %H:%M"
 #format = "%a %d/%m %R"
 
-[[block]]
-block = "watson"
-show_time = true
-state_path = "/home/birromer/.config/watson/state"
+#[[block]]
+#block = "watson"
+#show_time = true
+#state_path = "/home/birromer/.config/watson/state"
 
 [[block]]
 block = "toggle"
