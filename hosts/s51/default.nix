@@ -23,8 +23,8 @@ in
 {
   imports =
     [(import ./hardware-configuration.nix)] ++
-    (import ../../modules/hardware) ++
-    (import ../../modules/shell);
+    [(import ../../modules/hardware)] ++
+    [(import ../../modules/shell)];
 
   boot = {
     # kernelPackages = pkgs.linuxPackages_latest;  # get latest kernel
@@ -81,8 +81,8 @@ in
 
     blueman.enable = true;  # bluetooth
 
-    tlp.enable = true;  # power management
-    auto-cpufreq.enable = true;
+#    tlp.enable = true;  # power management
+     auto-cpufreq.enable = true;
   };
 
   hardware = {

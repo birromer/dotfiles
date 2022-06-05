@@ -27,8 +27,6 @@
     gnomeExtensions.nordvpn-connect
     i3status-rust
     i3lock-fancy
-    spotify
-    discord
     thunderbird
     zathura
     vlc
