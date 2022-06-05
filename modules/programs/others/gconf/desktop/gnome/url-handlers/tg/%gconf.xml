@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<gconf>
-	<entry name="enabled" mtime="1540239989" type="bool" value="true"/>
-	<entry name="needs_terminal" mtime="1540239989" type="bool" value="false"/>
-	<entry name="command" mtime="1540239989" type="string">
-		<stringvalue>/usr/bin/telegram-desktop -- %s</stringvalue>
-	</entry>
-</gconf>

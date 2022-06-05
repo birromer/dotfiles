@@ -45,6 +45,9 @@
     dmenu
   ];
 
+  programs = {
+    rofi.enable = true;
+  };
 
 
   # home.file.".doom.d" = {

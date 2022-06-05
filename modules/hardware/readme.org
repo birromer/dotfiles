@@ -1,3 +1,0 @@
-#+title: Readme
-
-everything that interacts with metal

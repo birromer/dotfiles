@@ -1,3 +1,0 @@
-#+title: Readme
-
-specific theming customizations

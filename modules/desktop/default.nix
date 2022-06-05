@@ -2,5 +2,5 @@
 
 [
  ./i3
- ./rofi.nix
+ ./rofi
 ]

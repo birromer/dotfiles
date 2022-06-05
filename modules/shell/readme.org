@@ -1,3 +1,0 @@
-#+title: Readme
-
-all shell and shell program customizations

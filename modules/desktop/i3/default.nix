@@ -194,8 +194,8 @@ for_window [instance="gksqt"] floating enable
         "XF86AudioNext" = "exec playerctl next";
         "XF86AudioPrev" = "exec playerctl previous";
         # RETURN
-        "${mod}+Return" = "exec urxvt";
-        "${mod}+Shift+Return" = "exec urxvt -e tmux";
+        "${mod}+Return" = "exec alacritty";
+        "${mod}+Shift+Return" = "exec alacritty -e tmux";
         # TAB
         #"${mod}+Tab" = "workspace next";
         #"${mod}+Shift+Tab" = "workspace prev";
@@ -205,12 +205,12 @@ for_window [instance="gksqt"] floating enable
         "${mod}+Shift+q" = "kill";
         # w
         "${mod}+w" = "layout tabbed";
-        "${mod}+Shift+w" = "exec urxvt -e nmtui";
+        "${mod}+Shift+w" = "exec alacritty -e nmtui";
         # E
         "${mod}+e" = "layout toggle split";
         #"${mod}+Shift+e exec evince";
         # R
-        "${mod}+r" = "exec urxvt -e ranger";
+        "${mod}+r" = "exec alacritty -e ranger";
         "${mod}+Shift+r" = "restart";
         # T
         #"${mod}+t" = "[class="TelegramDesktop"] scratchpad show ; [class="TelegramDesktop"] move position center";
@@ -222,7 +222,7 @@ for_window [instance="gksqt"] floating enable
         #"${mod}+u" = "[instance="dropdown"] scratchpad show; [instance="dropdown"] move position center";
         "${mod}+Shift+u " = "exec --no-startup-id ~/.scripts/i3cmds/i3resize down";
         # I
-        "${mod}+i" = "exec urxvt -e htop";
+        "${mod}+i" = "exec alacritty -e htop";
         "${mod}+Shift+i" = "exec --no-startup-id ~/.scripts/i3cmds/i3resize up";
         # O
         "${mod}+o" = "sticky toggle";
@@ -271,7 +271,7 @@ for_window [instance="gksqt"] floating enable
         #"${mod}+Shift+c" = "exec calibre";
         #"${mod}+Shift+c        gaps inner current set 10; gaps outer current set 10";
         # V
-        "${mod}+v" = "exec urxvt -e neomutt";
+        "${mod}+v" = "exec alacritty -e neomutt";
         "${mod}+Shift+v" = "floating toggle; sticky toggle; exec --no-startup-id ~/.scripts/i3cmds/bottomleft";
         # B
         "${mod}+b bar" = "mode toggle";
@@ -298,7 +298,7 @@ for_window [instance="gksqt"] floating enable
         "${mod}+space" = "exec rofi -theme ~/.config/rofi/onemon.rasi -show run";
         "${mod}+Shift+space" = "floating toggle";
         # DELETE
-        "${mod}+Shift+Delete" = "exec lmc truemute ; exec $truepause ; workspace lmao ; exec urxvt -e htop ; exec urxvt -e ranger";
+        "${mod}+Shift+Delete" = "exec lmc truemute ; exec $truepause ; workspace lmao ; exec alacritty -e htop ; exec alacritty -e ranger";
       };
 
       bars = [

@@ -62,7 +62,7 @@ in
 
       displayManager = {
         gdm.enable = true; 
-        defaultSession = "none+i3";
+        defaultSession = "gnome-xorg";
         sessionCommands = "${pkgs.xorg.xmodmap}/bin/xmodmap ${custom_layout}";
       };
 

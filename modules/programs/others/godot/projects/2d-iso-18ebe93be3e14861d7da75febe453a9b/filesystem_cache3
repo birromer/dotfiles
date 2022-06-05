@@ -1,9 +1,0 @@
-::res://::1539527913
-dungeon.tscn::PackedScene::1539527913::0::1::res://tileset.tres<>res://troll.tscn
-icon.png::StreamTexture::1539527769::1539527771::1::
-isotiles.png::StreamTexture::1539527769::1539527771::1::
-tileset.tres::TileSet::1539527769::0::1::res://isotiles.png
-tileset_edit.tscn::PackedScene::1539527769::0::1::res://isotiles.png
-troll.gd::GDScript::1539527769::0::1::
-troll.png::StreamTexture::1539527769::1539527771::1::
-troll.tscn::PackedScene::1539527913::0::1::res://troll.gd<>res://troll.png

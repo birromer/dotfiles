@@ -1,3 +1,0 @@
-#+title: Readme
-
-all visual desktop environments / window managers and related stuff
