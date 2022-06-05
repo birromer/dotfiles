@@ -29,6 +29,8 @@ let
   ac     = "#B4BC67";
   sp     = "$666666";
 
+  locker = "${pkgs.i3lock-fancy} -t 'go away' -f 'Comic-Sans-MS-Bold'";
+
 in
 {
   xsession.windowManager.i3 = {
@@ -46,12 +48,36 @@ in
 #        "0: extra" = [{ class = "^Firefox$"; window_role = "About"; }];
       };
 
+      startup = [
+        { command = "fc-cache"; always = true; notification = false; }
+        { command = "dunst"; always = true; notification = false; }
+        { command = "flameshot"; always = true; notification = false; }
+        { command = "redshift"; always = true; notification = false; }
+        { command = "i3mpdupdate"; always = true; notification = false; }
+        { command = "megasync"; always = true; notification = false; }
+        { command = "xautolock -time 30 -locker ${locker}"; always = false; notification = false; }
+        # { command = "compton"; always = true; notification = false; }
+        # exec_always xmodmap -e "keycode 45 = k K NoSymbol NoSymbol backslash"
+        # exec_always xmodmap -e "keycode 46 = l L NoSymbol NoSymbol bar"
+        # exec_always xmodmap -e "keycode 91 = period period period period periodcentered"
+        # exec --no-startup-id urxvt -name dropdown -e tmux
+        # exec --no-startup-id urxvt -name math -e julia
+        # exec --no-startup-id telegram-desktop
+      ];
+
+      menu = "rofi -theme ~/.config/rofi/onemon.rasi -show run";
+
+      gaps = {
+        inner = 10;
+        outer = 0;
+        smartBorder = "on";
+      };
 
       modes = {
         "${mode_system}" = {
-          l  = "exec --no-startup-id $Locker, mode default";
+          l  = "exec --no-startup-id $locker, mode default";
           e  = "exec --no-startup-id i3-msg exit, mode default";
-          s  = "exec --no-startup-id $Locker && systemctl suspend, mode default";
+          s  = "exec --no-startup-id $locker && systemctl suspend, mode default";
           r  = "exec --no-startup-id systemctl reboot, mode default";
           "Shift + s" = "exec --no-startup-id systemctl poweroff -i, mode default";
           Return = "mode default";
@@ -125,13 +151,13 @@ in
         "${mod}+r" = "exec urxvt -e ranger";
         "${mod}+Shift+r" = "restart";
         # T
-        "${mod}+t" = "[class="TelegramDesktop"] scratchpad show ; [class="TelegramDesktop"] move position center";
+        #"${mod}+t" = "[class="TelegramDesktop"] scratchpad show ; [class="TelegramDesktop"] move position center";
         #"${mod}+Shift+t" = "exec tusk";
         # Y
         #"${mod}+Shift+y exec";
         "${mod}+Shift+y" = "exec --no-startup-id ~/.scripts/i3cmds/i3resize left";
         # U
-        "${mod}+u" = "[instance="dropdown"] scratchpad show; [instance="dropdown"] move position center";
+        #"${mod}+u" = "[instance="dropdown"] scratchpad show; [instance="dropdown"] move position center";
         "${mod}+Shift+u " = "exec --no-startup-id ~/.scripts/i3cmds/i3resize down";
         # I
         "${mod}+i" = "exec urxvt -e htop";
@@ -146,11 +172,11 @@ in
         "${mod}+shift+p" = "exec system-config-priter";
         # A
         #"${mod}+a focus parent";
-        "${mod}+a" = "[instance="math"] scratchpad show; [instance="math"] move position center";
+        #"${mod}+a" = "[instance="math"] scratchpad show; [instance="math"] move position center";
         # S
         #"${mod}+s layout stacking";
         #"${mod}+s [instance="spt"] scratchpad show; [instance="spt"] move position center";
-        "${mod}+s" = "[class="Todoist"] scratchpad show; [class="Todoist"] move position center";
+        #"${mod}+s" = "[class="Todoist"] scratchpad show; [class="Todoist"] move position center";
         "${mod}+Shift+s" = "split toggle";
         # D
         "${mod}+d" = "focus mode_toggle";
@@ -176,7 +202,7 @@ in
         # Z
         "${mod}+z" = "toggle split";
         # X
-        "${mod}+Shift+x" = "exec $Locker";
+        "${mod}+Shift+x" = "exec $locker";
         #"${mod}+Shift+x exec i3lock -i /home/birromer/Pictures/wallpapers/dark-souls-firelink.png";
         # C
         "${mod}+c" = "exec zotero";
