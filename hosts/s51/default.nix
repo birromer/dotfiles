@@ -21,10 +21,7 @@ let
 
 in
 {
-  imports =
-    [(import ./hardware-configuration.nix)] ++
-    [(import ../../modules/hardware)] ++
-    [(import ../../modules/shell)];
+  imports = [ (import ./hardware-configuration.nix) ];
 
   boot = {
     # kernelPackages = pkgs.linuxPackages_latest;  # get latest kernel

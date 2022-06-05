@@ -3,13 +3,13 @@
 {
   # Import home-manager modules
   imports =
-     (import ../modules/daemons) ++
-     (import ../modules/desktop) ++
-     (import ../modules/editors) ++
-     (import ../modules/hardware) ++
-     (import ../modules/programs) ++
-     (import ../modules/shell) ++
-     (import ../modules/themes);
+    (import ../modules/editors);#  ++
+#    (import ../modules/daemons)  ++
+#    (import ../modules/desktop)  ++
+#    (import ../modules/hardware) ++
+#    (import ../modules/programs) ++
+#    (import ../modules/shell)    ++
+#    (import ../modules/themes);
 
   # General configurations
   home = {

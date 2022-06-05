@@ -1,31 +1,37 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  programs.vim = {
+  programs.neovim = {
     enable = true;
+    viAlias = true;
+    vimAlias = true;
 
     plugins = with pkgs.vimPlugins; [
-      i3-vim-syntax
       vim-nix
       vim-markdown
-      vim-cpp-enhanced-highlight
+      nerdtree
+      auto-pairs
+      vim-lastplace
+      wombat256-vim
+      srcery-vim
+      lightline-vim
+      indent-blankline-nvim
     ];
 
-    settings = {
-      nocompatible = true;
-      syntax     = true;
-      encoding   = "utf-8";
-      number     = "relativenumber";
-      cursorline = true;
-      expandtab  = true;
-      tabstop    = 4;
-      shiftwidth = 4;
-      autoindent = 4;
-      foldenable = true;
-      foldmethod = "syntax";
-      foldlevel  = 10000;
-    };
-
+    extraConfig = ''
+      set nocompatible true
+      set syntax     true
+      set encoding   utf-8
+      set number     relativenumber
+      set cursorline true
+      set expandtab  true
+      set tabstop    4
+      set shiftwidth 4
+      set autoindent 4
+      set foldenable true
+      set foldmethod syntax
+      set foldlevel  10000
+    '';
 
   };
 }
