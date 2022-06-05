@@ -1,5 +1,6 @@
-{ config, lib, pkgs, user, ... }:
+{ config, lib, pkgs, user, home-manager, ...}:
 
+in
 {
   # General configurations
   home = {
@@ -11,21 +12,38 @@
   # Let Home Manager install and manage itself
   programs.home-manager.enable = true;
 
+  environment.pathsToLing = [ "/libexec" ];
+
   home.packages = with pkgs; [
     # Communication
     spotify
     discord
     slack
+    gnomeExtensions.nordvpn-connect
+    thunderbird
 
     # Media
     calibre
     mcomix3
     qbittorrent
     libreoffice
+    zathura
+    vlc
+    zotero
+    qdirstat
 
     # Gaming
     steam
     lutris
+
+    # Desktop
+    i3
+    i3status-rust
+    i3lock
+    i3lock-fancy
+    i3blocks
+    rofi
+    dmenu
   ];
 
 

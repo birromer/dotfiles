@@ -30,7 +30,7 @@ exec_always xautolock -time 30 -locker $Locker
 exec setxkbmap -layout br
 
 # enable touchpad tap
-exec xinput --set-prop 'ELAN0B00:00 04F3:30EA Touchpad' 'libinput Tapping Enabled' 1
+# exec xinput --set-prop 'ELAN0B00:00 04F3:30EA Touchpad' 'libinput Tapping Enabled' 1
 
 # starts terminal workspace windows loadout
 # exec --no-startup-id /home/birromer/.scripts/load_layout.sh
@@ -47,8 +47,6 @@ exec --no-startup-id redshift
 # todo app
 # exec todoist
 
-# notifications manager
-
 # chat app
 #exec discord
 #exec --no-startup-id telegram-desktop
@@ -63,12 +61,8 @@ exec --no-startup-id redshift
 #exec --no-startup-id lightscreen -b
 exec --no-startup-id flameshot
 
-# Unclutter makes the mouse invisible after a brief period
-exec --no-startup-id unclutter
-
 #launch polybar
 #exec_always --no-startup-id ~/.config/polybar/launch.sh # changed for it to run with the ultrawide script,
-                                                         # uncomment if not using
 
 # launch sync tool
 exec --no-startup-id megasync
