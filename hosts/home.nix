@@ -24,14 +24,6 @@
   home.packages = with pkgs; [
     htop
     gnome.gnome-tweaks
-    gnomeExtensions.nordvpn-connect
-    i3status-rust
-    i3lock-fancy
-    thunderbird
-    zathura
-    vlc
-    zotero
-    qdirstat
     megasync
     flameshot
     neofetch
@@ -39,10 +31,7 @@
     feh
     dunst
     redshift
-    rofi
     pavucontrol
     starship
   ];
-
-
 }

@@ -1,6 +1,5 @@
 { config, lib, pkgs, user, home-manager, ...}:
 
-in
 {
   # General configurations
   home = {
@@ -12,7 +11,7 @@ in
   # Let Home Manager install and manage itself
   programs.home-manager.enable = true;
 
-  environment.pathsToLing = [ "/libexec" ];
+#  environment.pathsToLing = [ "/libexec" ];
 
   home.packages = with pkgs; [
     # Communication
