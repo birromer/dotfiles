@@ -17,15 +17,14 @@ let
     export __GLX_VENDOR_LIBRARY_NAME=nvidia
     export __VK_LAYER_NV_optimus=NVIDIA_only
     exec -a "$0" "$@"
-
   '';
 
 in
 {
   imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+    [(import ./hardware-configuration.nix)] ++
+    (import ../../modules/hardware) ++
+    (import ../../modules/shell);
 
   boot = {
     # kernelPackages = pkgs.linuxPackages_latest;  # get latest kernel
@@ -80,8 +79,11 @@ in
       videoDrivers = [ "nvidia" ];
     };
 
-    blueman.enable = true;
-   };
+    blueman.enable = true;  # bluetooth
+
+    tlp.enable = true;  # power management
+    auto-cpufreq.enable = true;
+  };
 
   hardware = {
     opengl.enable = true;
@@ -98,8 +100,7 @@ in
     };
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # List packages installed in system profile, accessible to any user
   environment.systemPackages = with pkgs; [
     emacs
     firefox

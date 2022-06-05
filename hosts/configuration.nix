@@ -53,9 +53,9 @@
     mediaKeys.enable = true;
   };
 
+  # for pipewire
+  security.rtkit.enable = true;
   hardware.pulseaudio.enable = false;
-
-  security.rtkit.enable = true;  # for pipewire
 
   # Fonts
   fonts.fonts = with pkgs; [
