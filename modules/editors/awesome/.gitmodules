@@ -1,8 +1,0 @@
-[submodule "third_party/apw"]
-	path = third_party/apw
-	url = https://github.com/actionless/apw.git
-	branch = awesome3.6
-[submodule "third_party/revelation"]
-	path = third_party/revelation
-	url = https://github.com/actionless/awesome-revelation
-	branch = awesome3.6
