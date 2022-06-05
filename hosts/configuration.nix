@@ -39,9 +39,9 @@
         enable = true;
         support32Bit = true;
       };
+      pulse.enable = true;
+      jack.enable = true;
     };
-
-    pulse.enable = true;
 
     printing.enable = true;  # CUPS to print documents
 
@@ -50,17 +50,18 @@
 
   sound = {
     enable = true;
-    mediakeys.enable = true;
+    mediaKeys.enable = true;
   };
 
-  hardware.
+  hardware.pulseaudio.enable = false;
+
+  security.rtkit.enable = true;  # for pipewire
 
   # Fonts
   fonts.fonts = with pkgs; [
     source-code-pro
     font-awesome
     corefonts
-    siji
   ];
 
   # Define user accounts
