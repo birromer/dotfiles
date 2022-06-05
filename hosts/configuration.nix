@@ -64,9 +64,9 @@
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
-      experimental-features = nix-command flakes;
-      keep-outputs = true;
-      keep-derivations = true;
+      experimental-features = nix-command flakes
+      keep-outputs = true
+      keep-derivations = true
     '';
     settings.auto-optimise-store = true;
     gc = {
