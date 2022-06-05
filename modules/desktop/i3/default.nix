@@ -46,68 +46,66 @@ in
 
       window.border = 3;
 
-      assigns = {
+#      assigns = {
 #        "2: web" = [{ class = "^Firefox$"; class = "^Navigator$"; class = "^firefoxdeveloperedition$";}];
 #        "2: web" = [{ class = "^Google-chrome$"; }];
 #
 #        "0: extra" = [{ class = "^Firefox$"; window_role = "About"; }];
-      };
+#      };
 
       extraConfig = ''
-
-for_window [class="^.*"] border pixel 3
-# workspace 1
-workspace $workspace1 gaps outer 10
-workspace $workspace1 gaps inner 10
-# workspace 2
-workspace $workspace2 gaps outer 0
-workspace $workspace2 gaps inner 0
-assign [class="Navigator"] $workspace2
-assign [class="Firefox"] $workspace2
-assign [class="firefoxdeveloperedition"] $workspace2
-assign [class="Google-chrome"] $workspace2
-# workspace 3
-assign [class="Atom"] $workspace3
-assign [class="code-oss"] $workspace3
-assign [class="Emacs"] $workspace3
-assign [class="Sublimme_text"] $workspace3
-assign [class="Spyder"] $workspace3
-assign [class="libreoffice-writer"] $workspace3
-assign [class="kile"] $workspace3
-# workspace 4
-assign [class="Roam Research"] $workspace4
-# workspace 5
-assign [class="Org.gnome.Nautilus"] $workspace5
-#assign [class="vlc"] $workspace5
-# workspace 6
-assign [class="Evince"] $workspace6
-assign [class="okular"] $workspace6
-assign [class="MComix"] $workspace6
-assign [class="calibre"] $workspace6
-# workspace 7
-assign [class="Mendeley Desktop"] $workspace7
-assign [class="Zotero"] $workspace7
-assign [class="Steam"] $workspace7
-# workspace 8
-assign [class="discord"] $workspace8
-assign [class="Slack"] $workspace8
-#assign [class="TelegramDesktop"] $workspace8
-# workspace 9
-assign [class="Thunderbird"] $workspace9
-workspace $workspace9 gaps outer 0
-workspace $workspace9 gaps inner 0
-# workspace 10
-for_window [class="Spotify"] move to workspace $workspace10
-
-# set floating windows
-for_window [instance="VIBes-viewer"] floating enable
-for_window [instance="VIBes-0.2.3-linux.AppImage"] floating enable
-for_window [instance="Microsoft Teams - Preview"] floating enable
-for_window [instance="MEGAsync"] floating enable
-for_window [instance="Android Emulator - pixel:5554"] floating enable
-for_window [instance="opencv"] floating enable
-for_window [instance="rot"] floating enable
-for_window [instance="gksqt"] floating enable
+        for_window [class="^.*"] border pixel 3
+        # workspace 1
+        workspace $workspace1 gaps outer 10
+        workspace $workspace1 gaps inner 10
+        # workspace 2
+        workspace $workspace2 gaps outer 0
+        workspace $workspace2 gaps inner 0
+        assign [class="Navigator"] $workspace2
+        assign [class="Firefox"] $workspace2
+        assign [class="firefoxdeveloperedition"] $workspace2
+        assign [class="Google-chrome"] $workspace2
+        # workspace 3
+        assign [class="Atom"] $workspace3
+        assign [class="code-oss"] $workspace3
+        assign [class="Emacs"] $workspace3
+        assign [class="Sublimme_text"] $workspace3
+        assign [class="Spyder"] $workspace3
+        assign [class="libreoffice-writer"] $workspace3
+        assign [class="kile"] $workspace3
+        # workspace 4
+        assign [class="Roam Research"] $workspace4
+        # workspace 5
+        assign [class="Org.gnome.Nautilus"] $workspace5
+        #assign [class="vlc"] $workspace5
+        # workspace 6
+        assign [class="Evince"] $workspace6
+        assign [class="okular"] $workspace6
+        assign [class="MComix"] $workspace6
+        assign [class="calibre"] $workspace6
+        # workspace 7
+        assign [class="Mendeley Desktop"] $workspace7
+        assign [class="Zotero"] $workspace7
+        assign [class="Steam"] $workspace7
+        # workspace 8
+        assign [class="discord"] $workspace8
+        assign [class="Slack"] $workspace8
+        #assign [class="TelegramDesktop"] $workspace8
+        # workspace 9
+        assign [class="Thunderbird"] $workspace9
+        workspace $workspace9 gaps outer 0
+        workspace $workspace9 gaps inner 0
+        # workspace 10
+        for_window [class="Spotify"] move to workspace $workspace10
+        # set floating windows
+        for_window [instance="VIBes-viewer"] floating enable
+        for_window [instance="VIBes-0.2.3-linux.AppImage"] floating enable
+        for_window [instance="Microsoft Teams - Preview"] floating enable
+        for_window [instance="MEGAsync"] floating enable
+        for_window [instance="Android Emulator - pixel:5554"] floating enable
+        for_window [instance="opencv"] floating enable
+        for_window [instance="rot"] floating enable
+        for_window [instance="gksqt"] floating enable
       '';
 
       startup = [
