@@ -1,7 +1,8 @@
 add_newline = false
 
 [character]
-symbol = "λ"
+success_symbol = "[λ](bold green)"
+error_symbol = "[λ](bold red)"
 
 [[battery.display]]
 threshold = 10

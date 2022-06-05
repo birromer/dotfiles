@@ -2,69 +2,18 @@
 export TERM="xterm-256color"
 
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 #ZSH_THEME="agnoster"
 #ZSH_THEME="pygmalion"
 #ZSH_THEME="lambda-gitster"
 #ZSH_THEME="lambda"
 #ZSH_THEME="spaceship"
 ZSH_THEME="cdimascio-lambda"
-# Set list of themes to load
-# Setting this variable when ZSH_THEME=random
-# cause zsh load theme from this variable instead of
-# looking in ~/.oh-my-zsh/themes/
-# An empty array have no effect
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
 )
@@ -72,34 +21,6 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
 
 # =============================================================================
 #                                   Plugins
@@ -109,30 +30,12 @@ source $ZSH/oh-my-zsh.sh
 #source ~/.zplug/init.zsh && zplug update
 source ~/.zplug/init.zsh
 
-#zplug "b4b4r07/enhancd", use:init.sh
-#zplug "b4b4r07/enhancd", use:enhancd.sh
-#zplug "b4b4r07/zsh-vimode-visual", defer:3
-#zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
-#zplug "knu/zsh-manydots-magic", use:manydots-magic, defer:2
 zplug "seebi/dircolors-solarized", ignore:"*", as:plugin
-
-#zplug "plugins/bundler", from:oh-my-zsh, if:"which bundle"
-#zplug "plugins/colored-man-pages", from:oh-my-zsh
-#zplug "plugins/extract", from:oh-my-zsh
-#zplug "plugins/fancy-ctrl-z", from:oh-my-zsh
-#zplug "plugins/git", from:oh-my-zsh, if:"which git"
-#zplug "plugins/globalias", from:oh-my-zsh
-#zplug "plugins/gpg-agent", from:oh-my-zsh, if:"which gpg-agent"
-#zplug "plugins/httpie", from:oh-my-zsh, if:"which httpie"
-#zplug "plugins/nanoc", from:oh-my-zsh, if:"which nanoc"
-#zplug "plugins/vi-mode", from:oh-my-zsh
-
+zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "plugins/git",    from:oh-my-zsh, if:"which git"
-#zplug "plugins/go",     from:oh-my-zsh, if:"which go"
-#zplug "plugins/golang", from:oh-my-zsh, if:"which go"
-#zplug "plugins/nmap",   from:oh-my-zsh, if:"which nmap"
 zplug "plugins/sudo",   from:oh-my-zsh, if:"which sudo"
 zplug "plugins/tmux",   from:oh-my-zsh, if:"which tmux"
+#zplug "plugins/nmap",   from:oh-my-zsh, if:"which nmap"
 
 # Supports oh-my-zsh plugins and the like
 if [[ $OSTYPE = (linux)* ]]; then
@@ -216,13 +119,6 @@ else
 	alias ls='() { $(whence -p ls) -Ctr --file-type --color=auto $@ }'
 fi
 
-# Set editor preference to nvim if available.
-if which nvim &>/dev/null; then
-	alias vim='() { $(whence -p nvim) $@ }'
-else
-	alias vim='() { $(whence -p vim) $@ }'
-fi
-
 # Generic command adaptations.
 alias grep='() { $(whence -p grep) --color=auto $@ }'
 alias egrep='() { $(whence -p egrep) --color=auto $@ }'
@@ -294,24 +190,6 @@ zstyle ":completion:*:default" list-colors ${(s.:.)LS_COLORS}
 #                                   Startup
 # =============================================================================
 
-## Load SSH and GPG agents via keychain.
-#setup_agents() {
-#  [[ $UID -eq 0 ]] && return
-#
-#  if which keychain &> /dev/null; then
-#	local -a ssh_keys gpg_keys
-#	for i in ~/.ssh/**/*pub; do test -f "$i(.N:r)" && ssh_keys+=("$i(.N:r)"); done
-#	gpg_keys=$(gpg -K --with-colons 2>/dev/null | awk -F : '$1 == "sec" { print $5 }')
-#    if (( $#ssh_keys > 0 )) || (( $#gpg_keys > 0 )); then
-#	  alias run_agents='() { $(whence -p keychain) --quiet --eval --inherit any-once --agents ssh,gpg $ssh_keys ${(f)gpg_keys} }'
-#	  [[ -t ${fd:-0} || -p /dev/stdin ]] && eval `run_agents`
-#	  unalias run_agents
-#    fi
-#  fi
-#}
-#setup_agents
-#unfunction setup_agents
-
 # Install plugins if there are plugins that have not been installed
 if ! zplug check; then
     printf "Install? [y/N]: "
@@ -358,39 +236,24 @@ fi
 
 export PATH=/home/birromer/.local/bin:$PATH
 export PATH=$PATH:$HOME/.cargo/bin
-
-alias mtga="/home/birromer/Games/magic-the-gathering-arena/drive_c/Program Files/Wizards of the Coast/MTGA/MTGA.exe"
-#alias vibes="LD_PRELOAD=/usr/lib/libfreetype.so /home/birromer/Documents/VIBES/viewer/build/distrib/bin/VIBes-viewer"
-alias sims4="/home/birromer/.wine/drive_c/Games/The\ Sims\ 4\ Seasons/Game/Bin/TS4_x64.exe"
-alias mobilesim="/usr/local/MobileSim/MobileSim"
+export PATH=~/bin:$PATH
+export BROWSER=/usr/bin/firefox
+export EDITOR=vim
+export DISABLE_AUTO_TITLE='true'
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/wxgtk-dev/lib/
 
 alias e='emacsclient -c'
 alias ec='emacsclient -c'
-#alias vim='emacsclient -t'
-#alias vi='emacsclient -t'
-#export PATH=$PATH:/home/birromer/.gem/ruby/2.7.0/bin
-
-export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig/
-
-#android sdk root
-export ANDROID_SDK_ROOT=/opt/android-sdk
-export PATH=$ANDROID_SDK_ROOT:$PATH
-
-#android home
-#export ANDROID_HOME=/opt/android-sdk
-export ANDROID_HOME=/home/birromer/.android
-export PATH=$ANDROID_SDK_ROOT/tools:$PATH
-export PATH=$ANDROID_SDK_ROOT/tools/bin:$PATH
-export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH
-
-export BROWSER=/usr/bin/firefox-developer-edition
+alias t="tmux"
+alias ta="t a -t"    # attach session
+alias tls="t ls"     # list sessions
+alias tn="t new -t"  # new sessiosn
+alias kakapo="curl parrot.live"
+alias reset="clear && printf '\e[3J'"
+alias pru="paru"
 
 eval "$(starship init zsh)"
-export EDITOR=vim
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
-
-# added by travis gem
-[ ! -s /home/birromer/.travis/travis.sh ] || source /home/birromer/.travis/travis.sh
 
 #source /opt/ros/melodic/setup.zsh
 #export ROS_MASTER_URI=http://127.0.0.1:11313
@@ -439,39 +302,3 @@ ros-connect(){
 ros-clean(){
     docker rm $(docker ps -aq --filter ancestor=birromer/ros-noetic-intervals:latest --filter status=exited)
 }
-
-alias t="tmux"
-alias ta="t a -t"    # attach session
-alias tls="t ls"     # list sessions
-alias tn="t new -t"  # new sessiosn
-
-export DISABLE_AUTO_TITLE='true'
-
-alias kakapo="curl parrot.live"
-export PATH=~/bin:$PATH
-
-alias reset="clear && printf '\e[3J'"
-
-alias firefox="firefox-developer-edition"
-
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/wxgtk-dev/lib/
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/birromer/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/birromer/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/birromer/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/birromer/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-export PATH=/home/birromer/.MATLAB/bin:$PATH
-
-alias pru="paru"
-
