@@ -6,11 +6,22 @@
 
 let
   user = "birromer";
+
   custom_layout = pkgs.writeText "xkb-layout" ''
     keycode 91 = period period period periodcentered
     keycode 46 = l L NoSymbol NoSymbol bar
     keycode 45 = k K NoSymbol NoSymbol backslash
   '';
+
+  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
+    export __NV_PRIME_RENDER_OFFLOAD=1
+    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export __VK_LAYER_NV_optimus=NVIDIA_only
+    exec -a "$0" "$@"
+
+  '';
+
 in
 {
   imports =
@@ -80,19 +91,20 @@ in
 
       displayManager = {
         gdm.enable = true; 
-        defaultSession = "gnome";
+        defaultSession = "gnome-xorg";
         sessionCommands = "${pkgs.xorg.xmodmap}/bin/xmodmap ${custom_layout}";
       };
 
       desktopManager.gnome.enable = true;
 
       windowManager.i3.enable = true;
+      windowManager.i3.package = pkgs.i3-gaps;
 
       layout = "br";  # keymap
 
       libinput.enable = true;  # enable touchpad support (enabled default in most desktopManager).
 
- #      videoDrivers = [ "nvidia" ];
+      videoDrivers = [ "nvidia" ];
     };
 
     printing.enable = true;  # CUPS to print documents
@@ -100,10 +112,26 @@ in
     openssh.enable = true;  # Enable the OpenSSH daemon
    };
 
+  hardware = {
+    opengl.enable = true;
+
+    nvidia = {
+      modesetting.enable = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+      prime = {
+        offload.enable = true;
+        intelBusId = "PCI:0:2:0";
+        nvidiaBusId = "PCI:1:0:0";
+      };
+    };
+
+  };
+
+
   # Sound
   sound.enable = true;
   hardware.pulseaudio.enable = true;
-#   hardware.nvidia.modsetting.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -116,6 +144,7 @@ in
     tmux
     ranger
     firefox
+    nvidia-offload 
   ];
 
   programs = {
@@ -155,15 +184,20 @@ in
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  # nix = {
-  #   settings.auto-optimise-store = true;
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+   
+#    settings.auto-optimise-store = true;
 
-  #   gc = {
-  #     automatic = true;
-  #     dates = "weekly";
-  #     options = "--delete-older-than 15d";
-  #   };
-  # };
+#    gc = {
+#      automatic = true;
+#      dates = "weekly";
+#      options = "--delete-older-than 15d";
+#    };
+  };
 
   # Define user accounts
   users = {
