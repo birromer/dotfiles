@@ -186,17 +186,15 @@ in
 
   nix = {
     package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
+    extraOptions = "experimental-features = nix-command flakes";
    
-#    settings.auto-optimise-store = true;
+   settings.auto-optimise-store = true;
 
-#    gc = {
-#      automatic = true;
-#      dates = "weekly";
-#      options = "--delete-older-than 15d";
-#    };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 15d";
+    };
   };
 
   # Define user accounts
