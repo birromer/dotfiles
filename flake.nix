@@ -12,7 +12,7 @@
   };
 
   # packages that will be installed
-  outputs = { self, nixpkgs, home-manager }:
+  outputs = inputs @ { self, nixpkgs, home-manager }:
 
     let
       system = "x86_64-linux";
@@ -33,21 +33,6 @@
         }
       );
 
-      # nixosConfigurations = {
-      #   s51 = lib.nixosSystem {
-      #     inherit system;
-      #     modules = [
-      #       ./hosts/s51/configuration.nix
-      #       home-manager.nixosModules.home-manager {
-      #         home-manager.useGlobalPkgs = true;
-      #         home-manager.useUserPackages = true;
-      #         home-manager.users.birromer = {
-      #           imports = [ ./hosts/s51/home.nix ];
-      #         };
-      #       }
-      #     ];
-      #   };
-      # };
 
       # hmConfig = {
       #   s51 = home-manager.lib.homeManagerConfiguration {

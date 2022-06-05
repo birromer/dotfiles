@@ -47,18 +47,8 @@ in
 
   networking = {
     hostName = "s51";  # define hostname
-    # wireless.enable = true;  # enables wireless support via wpa_supplicant
-    # networkmanager.enable = true;
-  };
 
-  time.timeZone = "Europe/Paris";
-
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking = {
     useDHCP = false;
-
     interfaces = {
       enp3s0.useDHCP = true;
       wlo1.useDHCP = true;
@@ -69,19 +59,6 @@ in
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Internationalisation properties
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {
-      LC_TIME = "pt_BR.UTF-8";
-      LC_MONETARY = "pt_BR.UTF-8";
-    };
-  };
-
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "br-abnt";
-  };
 
   # Everything that runs as a service
   services = {
@@ -100,16 +77,12 @@ in
       windowManager.i3.enable = true;
       windowManager.i3.package = pkgs.i3-gaps;
 
-      layout = "br";  # keymap
-
       libinput.enable = true;  # enable touchpad support (enabled default in most desktopManager).
 
       videoDrivers = [ "nvidia" ];
     };
 
-    printing.enable = true;  # CUPS to print documents
-
-    openssh.enable = true;  # Enable the OpenSSH daemon
+    blueman.enable = true;
    };
 
   hardware = {
@@ -125,9 +98,7 @@ in
         nvidiaBusId = "PCI:1:0:0";
       };
     };
-
   };
-
 
   # Sound
   sound.enable = true;
@@ -136,76 +107,14 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim 
-    git
     emacs
-    zsh
-    wget
-    tmux
-    ranger
     firefox
     nvidia-offload 
   ];
 
   programs = {
-    mtr.enable = true;
-
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-    };
-
-    zsh = {
-      enable = true;
-      ohMyZsh.enable = true;
-    };
-  };
-
-  # gtk = {
-  #   enable = true;
-  #   theme = {
-  #     name = "Dracula";
-  #     package = pkgs.dracula-theme;
-  #   };
-  #    cursorTheme = {
-  #      name = "Dracula-cursors";
-  #      package = pkgs.dracula-theme;
-  #      size = 16;
-  #    };
-  #   iconTheme = {
-  #     name = "Papirus-dark";
-  #     package = pkgs.papirus-icon-theme;
-  #   };
-  # };
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = "experimental-features = nix-command flakes";
-   
-   settings.auto-optimise-store = true;
-
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 15d";
-    };
-  };
-
-  # Define user accounts
-  users = {
-    defaultUserShell = pkgs.zsh;
-
-    users.${user} = {
-      isNormalUser = true;
-      initialPassword = "nixos";
-      extraGroups = [ "wheel" ];  # enables ‘sudo’
-    };
+    steam.enable = true;
+    gamemode.enable = true;
   };
 
   nixpkgs.config.allowUnfree = true;

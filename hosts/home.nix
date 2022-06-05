@@ -1,6 +1,16 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, user, ... }:
 
 {
+  # Import home-manager modules
+  # imports =
+  #   [(import ../modules/daemons)] ++
+  #   [(import ../modules/desktop)] ++
+  #   [(import ../modules/editors)] ++
+  #   [(import ../modules/hardware)] ++
+  #   [(import ../modules/programs)] ++
+  #   [(import ../modules/shell)] ++
+  #   [(import ../modules/themes)];
+
   # General configurations
   home = {
     username = "${user}";
@@ -42,10 +52,5 @@
     starship
   ];
 
-  # home.file.".doom.d" = {
-  #   source ./doom.d;
-  #   recursive = true;
-  #   onChange = builtins.readFile ./doom.sh;
-  # }
 
 }

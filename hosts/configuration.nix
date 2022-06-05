@@ -104,7 +104,7 @@
     };
   };
 
-  environmnent = {
+  environment = {
     variables = {
       TERMINAL = "alacritty";
       EDITOR = "vim";
