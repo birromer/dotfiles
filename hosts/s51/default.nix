@@ -2,11 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, lib, pkgs, inputs, user, ... }:
 
 let
-  user = "birromer";
-
   custom_layout = pkgs.writeText "xkb-layout" ''
     keycode 91 = period period period periodcentered
     keycode 46 = l L NoSymbol NoSymbol bar

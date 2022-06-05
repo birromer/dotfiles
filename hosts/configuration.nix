@@ -29,35 +29,46 @@
   # Everything that runs as a service in all computers
   services = {
     xserver = {
-      enable = true;  # enable X11
       layout = "br";  # keymap
       libinput.enable = true;  # enable touchpad support (enabled default in most desktopManager).
     };
+
+    pipewire = {
+      enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+    };
+
+    pulse.enable = true;
 
     printing.enable = true;  # CUPS to print documents
 
     openssh.enable = true;  # Enable the OpenSSH daemon
   };
 
-  # Sound
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  sound = {
+    enable = true;
+    mediakeys.enable = true;
+  };
+
+  hardware.
 
   # Fonts
   fonts.fonts = with pkgs; [
     source-code-pro
     font-awesome
     corefonts
+    siji
   ];
 
   # Define user accounts
-  users = {
-    users.${user} = {
-      isNormalUser = true;
-      initialPassword = "nixos";
-      extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" ];
-      shell = pkgs.zsh;
-    };
+  users.users.${user} = {
+    isNormalUser = true;
+    initialPassword = "nixos";
+    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" ];
+    shell = pkgs.zsh;
   };
 
   # Always enable flakes and garbage collection
@@ -68,6 +79,7 @@
       keep-outputs = true
       keep-derivations = true
     '';
+
     settings.auto-optimise-store = true;
     gc = {
       automatic = true;
@@ -82,6 +94,7 @@
   environment.systemPackages = with pkgs; [
     git
     vim
+    nano
     emacs
     zsh
     wget
