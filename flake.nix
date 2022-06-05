@@ -17,12 +17,10 @@
     let
       system = "x86_64-linux";
       user = "birromer";
-
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
       };
-
       lib = nixpkgs.lib;
 
     in {
@@ -32,21 +30,6 @@
           inherit inputs user system home-manager;
         }
       );
-
-
-      # hmConfig = {
-      #   s51 = home-manager.lib.homeManagerConfiguration {
-      #     inherit system pkgs;
-      #     username = "${user}";
-      #     homeDirectory = "/home/${user}";
-      #     configuration = {
-      #       imports = [
-      #         ./hosts/s51/home.nix
-      #       ];
-      #     };
-      #   };
-      # };
-
     };
 
 }

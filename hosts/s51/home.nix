@@ -1,10 +1,10 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, user, ... }:
 
 {
   # General configurations
   home = {
-    username = "birromer";
-    homeDirectory = "/home/birromer";
+    username = "${user}";
+    homeDirectory = "/home/${user}";
     stateVersion = "21.11";
   };
 
@@ -12,31 +12,12 @@
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
-    htop
-    gnome.gnome-tweaks
-    gnomeExtensions.nordvpn-connect
     spotify
     discord
-    thunderbird
-    zathura
-    vlc
-    zotero
-    qdirstat
     qbittorrent
-    megasync
-    flameshot
     slack
-    i3status-rust
-    i3lock-fancy
-    neofetch
-    xorg.xmodmap
-    feh
-    dunst
-    redshift
     calibre
     mcomix3
-    rofi
-    pavucontrol
     steam
     lutris
     starship

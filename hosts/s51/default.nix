@@ -112,10 +112,10 @@ in
     nvidia-offload 
   ];
 
-  programs = {
-    steam.enable = true;
-    gamemode.enable = true;
-  };
+#  programs = {
+#    steam.enable = true;
+#    gamemode.enable = true;
+#  };
 
   nixpkgs.config.allowUnfree = true;
 

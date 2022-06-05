@@ -25,6 +25,8 @@
     htop
     gnome.gnome-tweaks
     gnomeExtensions.nordvpn-connect
+    i3status-rust
+    i3lock-fancy
     spotify
     discord
     thunderbird
@@ -32,23 +34,15 @@
     vlc
     zotero
     qdirstat
-    qbittorrent
     megasync
     flameshot
-    slack
-    i3status-rust
-    i3lock-fancy
     neofetch
     xorg.xmodmap
     feh
     dunst
     redshift
-    calibre
-    mcomix3
     rofi
     pavucontrol
-    steam
-    lutris
     starship
   ];
 
