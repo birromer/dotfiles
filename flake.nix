@@ -30,12 +30,12 @@
         s51 = lib.nixosSystem {
           inherit system;
           modules = [
-            ./hosts/s51/configurations.nix
+            ./hosts/s51/configuration.nix
             home-manager.nixosModules.home-manager {
               home-manager.useGlobalPkgs = true;
-              home-manager.useUserPacakges = true;
+              home-manager.useUserPackages = true;
               home-manager.users.birromer = {
-                imports = [ ./home.nix ];
+                imports = [ ./hosts/s51/home.nix ];
               };
             }
           ];
