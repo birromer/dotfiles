@@ -34,13 +34,20 @@ let
 
 in
 {
+  home.packages = with pkgs; [
+    playerctl
+    system-config-priter
+    xautolock
+    xorg.xbacklight
+  ];
+
   xsession.windowManager.i3 = {
     enable = true;
     config = {
       modifier = mod;
 
       fonts = {
-        names = ["pango" "Dejavu Sans Mono"];
+        names = ["pango" "Dejavu Sans Mono" "FontAwesome"];
         size = 9.0;
       };
 
@@ -129,7 +136,7 @@ in
         "XF86MonBrightnessDown" = "exec xbacklight -dec 5";
         "XF86MonBrightnessUp" = "exec xbacklight -inc 5";
         # Touchpad controls
-        "XF86TouchpadToggle" = "exec ~/.scripts/toggletouchpad.sh";
+        # "XF86TouchpadToggle" = "exec ~/.scripts/toggletouchpad.sh";
         # Media player controls
         "XF86AudioPlay" = "exec playerctl play";
         "XF86AudioPause" = "exec playerctl pause";
@@ -159,16 +166,16 @@ in
         #"${mod}+Shift+t" = "exec tusk";
         # Y
         #"${mod}+Shift+y exec";
-        "${mod}+Shift+y" = "exec --no-startup-id ~/.scripts/i3cmds/i3resize left";
+        "${mod}+Shift+y" = "exec --no-startup-id ${../../../bin/i3/i3resize} left";
         # U
         #"${mod}+u" = "[instance="dropdown"] scratchpad show; [instance="dropdown"] move position center";
-        "${mod}+Shift+u " = "exec --no-startup-id ~/.scripts/i3cmds/i3resize down";
+        "${mod}+Shift+u " = "exec --no-startup-id ${../../../bin/i3/i3resize} down";
         # I
         "${mod}+i" = "exec alacritty -e htop";
-        "${mod}+Shift+i" = "exec --no-startup-id ~/.scripts/i3cmds/i3resize up";
+        "${mod}+Shift+i" = "exec --no-startup-id ${../../../bin/i3/i3resize} up";
         # O
         "${mod}+o" = "sticky toggle";
-        "${mod}+Shift+o" = "exec --no-startup-id ~/.scripts/i3cmds/i3resize right";
+        "${mod}+Shift+o" = "exec --no-startup-id ${../../../bin/i3/i3resize} right";
         #"${mod}+Mod1+o" = "exec xrandr --output eDP-1 --auto --output HDMI-1 --auto --left-of eDP-1; exec killall conky && xinput --set-prop 15 308 1; restart;";
         # P
         #"${mod}+p mode "$mode_system"";
@@ -214,12 +221,12 @@ in
         #"${mod}+Shift+c        gaps inner current set 10; gaps outer current set 10";
         # V
         "${mod}+v" = "exec alacritty -e neomutt";
-        "${mod}+Shift+v" = "floating toggle; sticky toggle; exec --no-startup-id ~/.scripts/i3cmds/bottomleft";
+        "${mod}+Shift+v" = "floating toggle; sticky toggle; exec --no-startup-id ${../../../bin/i3/bottomleft}";
         # B
         "${mod}+b bar" = "mode toggle";
-        "${mod}+Shift+b" = "floating toggle; sticky toggle; exec --no-startup-id ~/.scripts/i3cmds/bottomright";
+        "${mod}+Shift+b" = "floating toggle; sticky toggle; exec --no-startup-id ${../../../bin/i3/bottomright}";
         # N
-        "${mod}+n" = "exec firefox-developer-edition";
+        "${mod}+n" = "exec firefox";
         #"${mod}+Shift+n" = "exec jupyter-notebook";
         # M
         "${mod}+m" = "exec nautilus";

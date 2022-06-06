@@ -30,6 +30,7 @@
     vlc
     zotero
     qdirstat
+    chromium
 
     # Gaming
     steam
