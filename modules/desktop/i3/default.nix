@@ -36,7 +36,7 @@ in
 {
   home.packages = with pkgs; [
     playerctl
-    system-config-priter
+    system-config-printer
     xautolock
     xorg.xbacklight
   ];

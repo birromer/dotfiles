@@ -263,6 +263,14 @@ Quick latex snippet preview
   (global-set-key (kbd "C-c C-g") 'org-preview-latex-fragment)
 #+end_src
 
+Ingnore headlines
+#+begin_src emacs-lisp
+  (use-package! ox-extra
+    :after org
+    :config
+    (ox-extras-activate '(ignore-headlines)))
+#+end_src
+
 Make UNNUMBERED headers export as =\*section{}=
 #+begin_src emacs-lisp
 (advice-add 'org-export-numbered-headline-p :around

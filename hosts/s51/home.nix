@@ -31,6 +31,7 @@
     zotero
     qdirstat
     chromium
+    texlive.combined.scheme-full
 
     # Gaming
     steam

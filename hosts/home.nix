@@ -21,6 +21,7 @@
 
   home = {
     packages = with pkgs; [
+      cmake
       htop
       gnome.gnome-tweaks
       megasync
