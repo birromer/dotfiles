@@ -421,11 +421,15 @@ Base agenda
 TODO options
 #+begin_src emacs-lisp
 (after! org
-    (setq org-todo-keywords '((sequence "TODO(t)" "LOOP(r)" "START(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)" "|" "DONE(d)" "KILLED(k)")
-                              (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)")
-                              (sequence "OKAY(o)" "YES(y)" "|" "NO(n)" ))
+    (setq org-todo-keywords '((sequence "TODO(t)" "OPEN(o)" "START(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)" "|" "CLOSED(c)" "DONE(d)" "KILLED(k)")
+                              (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)"))
   ))
 #+end_src
+
+#+RESULTS:
+| sequence | TODO(t) | OPEN(o) | START(s) | WAIT(w) | HOLD(h) | IDEA(i) |   |   | DONE(d) | KILLED(k) |
+| sequence | [ ](T)  | [-](S)  | [?](W)   |         |         | [x](D)  |   |   |         |           |
+| sequence | OKAY(o) | YES(y)  |          |         | NO(n)   |         |   |   |         |           |
 
 Priorities
 #+begin_src emacs-lisp
