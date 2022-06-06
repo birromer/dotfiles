@@ -36,7 +36,6 @@
     lutris
 
     # Desktop
-    i3
     i3status-rust
     i3lock
     i3lock-fancy

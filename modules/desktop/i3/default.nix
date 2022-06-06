@@ -1,8 +1,8 @@
 { config, lib, pkgs, user, home-manager, ... }:
 
 let
-  mod = "$Mod4";
-  alt = "$Mod1";
+  mod = "Mod4";
+  alt = "Mod1";
 
   mode_system = "System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown";
 
@@ -41,7 +41,7 @@ in
 
       fonts = {
         names = ["pango" "Dejavu Sans Mono"];
-        size = 9;
+        size = 9.0;
       };
 
       window.border = 3;
@@ -52,61 +52,6 @@ in
 #
 #        "0: extra" = [{ class = "^Firefox$"; window_role = "About"; }];
 #      };
-
-      extraConfig = ''
-        for_window [class="^.*"] border pixel 3
-        # workspace 1
-        workspace $workspace1 gaps outer 10
-        workspace $workspace1 gaps inner 10
-        # workspace 2
-        workspace $workspace2 gaps outer 0
-        workspace $workspace2 gaps inner 0
-        assign [class="Navigator"] $workspace2
-        assign [class="Firefox"] $workspace2
-        assign [class="firefoxdeveloperedition"] $workspace2
-        assign [class="Google-chrome"] $workspace2
-        # workspace 3
-        assign [class="Atom"] $workspace3
-        assign [class="code-oss"] $workspace3
-        assign [class="Emacs"] $workspace3
-        assign [class="Sublimme_text"] $workspace3
-        assign [class="Spyder"] $workspace3
-        assign [class="libreoffice-writer"] $workspace3
-        assign [class="kile"] $workspace3
-        # workspace 4
-        assign [class="Roam Research"] $workspace4
-        # workspace 5
-        assign [class="Org.gnome.Nautilus"] $workspace5
-        #assign [class="vlc"] $workspace5
-        # workspace 6
-        assign [class="Evince"] $workspace6
-        assign [class="okular"] $workspace6
-        assign [class="MComix"] $workspace6
-        assign [class="calibre"] $workspace6
-        # workspace 7
-        assign [class="Mendeley Desktop"] $workspace7
-        assign [class="Zotero"] $workspace7
-        assign [class="Steam"] $workspace7
-        # workspace 8
-        assign [class="discord"] $workspace8
-        assign [class="Slack"] $workspace8
-        #assign [class="TelegramDesktop"] $workspace8
-        # workspace 9
-        assign [class="Thunderbird"] $workspace9
-        workspace $workspace9 gaps outer 0
-        workspace $workspace9 gaps inner 0
-        # workspace 10
-        for_window [class="Spotify"] move to workspace $workspace10
-        # set floating windows
-        for_window [instance="VIBes-viewer"] floating enable
-        for_window [instance="VIBes-0.2.3-linux.AppImage"] floating enable
-        for_window [instance="Microsoft Teams - Preview"] floating enable
-        for_window [instance="MEGAsync"] floating enable
-        for_window [instance="Android Emulator - pixel:5554"] floating enable
-        for_window [instance="opencv"] floating enable
-        for_window [instance="rot"] floating enable
-        for_window [instance="gksqt"] floating enable
-      '';
 
       startup = [
         { command = "fc-cache"; always = true; notification = false; }
@@ -130,7 +75,7 @@ in
       gaps = {
         inner = 10;
         outer = 0;
-        smartBorder = "on";
+        smartBorders = "on";
       };
 
       modes = {
@@ -145,18 +90,18 @@ in
         };
       };
 
-      keybindings = lib.mkOptionsDefault {
+      keybindings = lib.mkOptionDefault {
         # switch to workspace
-        "${mod}+1" = "workspace ${ws1}";
-        "${mod}+2" = "workspace ${ws2}";
-        "${mod}+3" = "workspace ${ws3}";
-        "${mod}+4" = "workspace ${ws4}";
-        "${mod}+5" = "workspace ${ws5}";
-        "${mod}+6" = "workspace ${ws6}";
-        "${mod}+7" = "workspace ${ws7}";
-        "${mod}+8" = "workspace ${ws8}";
-        "${mod}+9" = "workspace ${ws9}";
-        "${mod}+0" = "workspace ${ws0}";
+        "${mod}+1" = "workspace ${ws1} ";
+        "${mod}+2" = "workspace ${ws2} ";
+        "${mod}+3" = "workspace ${ws3} ";
+        "${mod}+4" = "workspace ${ws4} ";
+        "${mod}+5" = "workspace ${ws5} ";
+        "${mod}+6" = "workspace ${ws6} ";
+        "${mod}+7" = "workspace ${ws7} ";
+        "${mod}+8" = "workspace ${ws8} ";
+        "${mod}+9" = "workspace ${ws9} ";
+        "${mod}+0" = "workspace ${ws0} ";
         # move focused container to workspace
         "${mod}+Shift+1" = "move container to workspace ${ws1} ";
         "${mod}+Shift+2" = "move container to workspace ${ws2} ";
@@ -170,7 +115,6 @@ in
         "${mod}+Shift+0" = "move container to workspace ${ws0} ";
         # general movements
         "${mod}+Escape" = "workspace back_and_forth";
-        "${mod}+Shift+q" = "kill";
         "${mod}+p" = "mode ${mode_system}";
         # reduce and increase directly outer and inner gaps
         "${mod}+Mod1+Left" = "gaps inner current minus 5";
@@ -340,5 +284,61 @@ in
         }
       ];
     };
+
+    extraConfig = ''
+      for_window [class="^.*"] border pixel 3
+      # workspace 1
+      workspace $ws1 gaps outer 10
+      workspace $ws1 gaps inner 10
+      # workspace 2
+      workspace $ws2 gaps outer 0
+      workspace $ws2 gaps inner 0
+      assign [class="Navigator"] $ws2
+      assign [class="Firefox"] $ws2
+      assign [class="firefoxdeveloperedition"] $ws2
+      assign [class="Google-chrome"] $ws2
+      # workspace 3
+      assign [class="Atom"] $ws3
+      assign [class="code-oss"] $ws3
+      assign [class="Emacs"] $ws3
+      assign [class="Sublimme_text"] $ws3
+      assign [class="Spyder"] $ws3
+      assign [class="libreoffice-writer"] $ws3
+      assign [class="kile"] $ws3
+      # workspace 4
+      assign [class="Roam Research"] $ws4
+      # workspace 5
+      assign [class="Org.gnome.Nautilus"] $ws5
+      #assign [class="vlc"] $ws5
+      # workspace 6
+      assign [class="Evince"] $ws6
+      assign [class="okular"] $ws6
+      assign [class="MComix"] $ws6
+      assign [class="calibre"] $ws6
+      # workspace 7
+      assign [class="Mendeley Desktop"] $ws7
+      assign [class="Zotero"] $ws7
+      assign [class="Steam"] $ws7
+      # workspace 8
+      assign [class="discord"] $ws8
+      assign [class="Slack"] $ws8
+      #assign [class="TelegramDesktop"] $ws8
+      # workspace 9
+      assign [class="Thunderbird"] $ws9
+      workspace $ws9 gaps outer 0
+      workspace $ws9 gaps inner 0
+      # workspace 10
+      for_window [class="Spotify"] move to workspace $ws10
+      # set floating windows
+      for_window [instance="VIBes-viewer"] floating enable
+      for_window [instance="VIBes-0.2.3-linux.AppImage"] floating enable
+      for_window [instance="Microsoft Teams - Preview"] floating enable
+      for_window [instance="MEGAsync"] floating enable
+      for_window [instance="Android Emulator - pixel:5554"] floating enable
+      for_window [instance="opencv"] floating enable
+      for_window [instance="rot"] floating enable
+      for_window [instance="gksqt"] floating enable
+    '';
+
   };
 }

@@ -62,6 +62,7 @@
     source-code-pro
     font-awesome
     corefonts
+    material-icons
   ];
 
   # Define user accounts
