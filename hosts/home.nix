@@ -22,6 +22,7 @@
   home = {
     packages = with pkgs; [
       cmake
+      pandoc
       htop
       gnome.gnome-tweaks
       megasync
