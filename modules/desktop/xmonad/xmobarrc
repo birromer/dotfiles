@@ -1,0 +1,24 @@
+Config {font = "xft:Jetbrains Mono:size=8:antialias=true, Material Icons:size=8:antialias=true,monospaced:size=8:antialias=true"
+       , bgColor = "#282a36"
+       , fgColor = "#f8f8f2"
+       , position = Bottom
+       , textOffset = -1
+       , iconOffset = -1
+       , lowerOnStart = True
+       , iconRoot = "."
+       , allDesktops = True
+       , overrideRedirect = True
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader%}{%battery% λ %date% λ %kbd% "
+       , commands = [ Run Kbd [("de", "<fc=#bd93f9>DE</fc>"),
+                               ("us", "<fc=#bd93f9>US</fc>")]
+                    , Run Date "<fc=#50fa7b>%T %d.%m.%y (%a)</fc>" "date" 10
+                    , Run StdinReader
+                    , Run BatteryP ["BAT0"]
+                                   [ "-t", "<left>%"
+                                   , "-L", "10", "-H", "90"
+                                   , "-l", "#ff5555", "-h", "#50fa7b"
+                                   ]
+                                   600
+                    ]}
