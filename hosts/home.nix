@@ -25,7 +25,7 @@
       pandoc
       htop
       gnome.gnome-tweaks
-      megasync
+      # megasync
       flameshot
       neofetch
       xorg.xmodmap

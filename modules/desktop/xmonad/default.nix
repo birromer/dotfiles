@@ -6,12 +6,10 @@
     system-config-printer
     xautolock
     xorg.xbacklight
-    xmonad
-    xmobar
   ];
 
   xsession.windowManager.xmonad = {
-    enable = true;
-
-  }
+    enableContribAndExtras = true;
+    configh = "xmonad.hs";
+  };
 }

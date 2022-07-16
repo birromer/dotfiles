@@ -71,6 +71,8 @@ in
       windowManager.i3.enable = true;
       windowManager.i3.package = pkgs.i3-gaps;
 
+      windowManager.xmonad.enable = true;
+
       libinput.enable = true;  # enable touchpad support (enabled default in most desktopManager).
 
       videoDrivers = [ "nvidia" ];
