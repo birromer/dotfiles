@@ -126,122 +126,92 @@ This is a package for converting org files into markdown posts for jekyll
 Latex org exporter
 #+begin_src emacs-lisp
 (use-package ox-latex
-  :after ox
-  :after org
+  :after ox :after org
   :custom
   (org-latex-image-default-width "1\\linewidth")
   (org-latex-packages-alist
-   `((,(concat "cache=false,outputdir=" org-export-default-output-folder) "minted")
-     ("T1" "fontenc")
-     ("" "placeins")))
+   `((,(concat "cache=false,outputdir=" org-export-default-output-folder)
+      "minted") ("T1" "fontenc") ("" "placeins")))
   (org-latex-listings 'minted)
-  (org-latex-minted-options
-   '(("breaklines")
-     ("breakafter" "d")
-     ("linenos" "true")
-     ("xleftmargin" "\\parindent")))
-  (org-latex-pdf-process
-   '("latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"
-     "latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"
-     "latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"))
+  (org-latex-minted-options '(("breaklines") ("breakafter" "d") ("linenos"
+                                                                 "true") ("xleftmargin" "\\parindent")))
+  (org-latex-pdf-process '("latexmk -pdflatex='pdflatex -shell-escape -interaction nonstopmode' -pdf -bibtex -f %f"))
+                                        ;  (org-latex-pdf-process  '("latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"  "latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"  "latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"))
   :config
+  (add-to-list
+   'org-latex-classes
+   '("iiufrgs" "\\documentclass{iiufrgs}" ("\\chapter{%s}" .
+                                           "\\chapter*{%s}") ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" .
+                                           "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                                           ("\\paragraph{%s}" . "\\paragraph*{%s}"))) (add-to-list 'org-latex-classes
+   '("newlfm" "\\documentclass{newlfm}" ("\\chapter{%s}" . "\\chapter*{%s}")
+     ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" .
+                                           "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+  (add-to-list 'org-latex-classes '("if-beamer" "\\documentclass{if-beamer}"
+                                    ("\\chapter{%s}" . "\\chapter*{%s}") ("\\section{%s}" . "\\section*{%s}")
+                                    ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" .
+                                                                                "\\subsubsection*{%s}")))
   (add-to-list 'org-latex-classes
-           '("iiufrgs"
-         "\\documentclass{iiufrgs}"
-         ("\\chapter{%s}"       . "\\chapter*{%s}")
-         ("\\section{%s}"       . "\\section*{%s}")
-         ("\\subsection{%s}"    . "\\subsection*{%s}")
-         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-         ("\\paragraph{%s}"     . "\\paragraph*{%s}")))
-  (add-to-list 'org-latex-classes
-           '("newlfm"
-         "\\documentclass{newlfm}"
-         ("\\chapter{%s}"       . "\\chapter*{%s}")
-         ("\\section{%s}"       . "\\section*{%s}")
-         ("\\subsection{%s}"    . "\\subsection*{%s}")
-         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
-  (add-to-list 'org-latex-classes
-           '("if-beamer"
-         "\\documentclass{if-beamer}"
-         ("\\chapter{%s}"       . "\\chapter*{%s}")
-         ("\\section{%s}"       . "\\section*{%s}")
-         ("\\subsection{%s}"    . "\\subsection*{%s}")
-         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
-  (add-to-list 'org-latex-classes
-           '("IEEEtran"
-         "\\documentclass{IEEEtran}"
-         ("\\section{%s}"       . "\\section*{%s}")
-         ("\\subsection{%s}"    . "\\subsection*{%s}")
-         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-         ("\\paragraph{%s}"     . "\\paragraph*{%s}")
-         ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))))
-  ;(add-to-list 'org-structure-template-alist
-  ;             '(,"B"
-  ;"#+TITLE:
-  ;,#+AUTHOR:
-  ;,#+EMAIL:
-  ;,#+DATE:   \\today
-  ;,#+DESCRIPTION:
-  ;,#+KEYWORDS:
-  ;,#+LANGUAGE: en
-  ;,#+LaTeX_HEADER: \\institute[short]{long}
+               '("mimosis"
+                 "\\documentclass{mimosis}
+  [NO-DEFAULT-PACKAGES]
+  [PACKAGES]
+  [EXTRA]"
+                 ("\\chapter{%s}" . "\\addchap{%s}")
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-  ;,#+STARTUP: beamer
-  ;,#+STARTUP: oddeven
-  ;,#+STARTUP: latexpreview
+  (add-to-list 'org-latex-classes '("IEEEtran"
+                                    "\\documentclass{IEEEtran}" ("\\section{%s}" . "\\section*{%s}")
+                                    ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" .
+                                                                                "\\subsubsection*{%s}") ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                                    ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+                                        ;(add-to-list
+                                        ; 'org-structure-template-alist ; '(,"B" ;"#+TITLE: ;,#+AUTHOR: ;,#+EMAIL:
+                                        ;,#+DATE: \\today ;,#+DESCRIPTION: ;,#+KEYWORDS: ;,#+LANGUAGE: en
+                                        ;,#+LaTeX_HEADER: \\institute[short]{long}
 
-  ;,#+LaTeX_CLASS: beamer
-  ;,#+LaTeX_CLASS_OPTIONS: [bigger]
-  ;,#+latex_class_options: [9pt]
+                                        ;,#+STARTUP: beamer ,#+STARTUP: oddeven ,#+STARTUP: latexpreview
 
-  ;,#+BEAMER_THEME: Frankfurt
+                                        ;,#+LaTeX_CLASS: beamer ,#+LaTeX_CLASS_OPTIONS: [bigger]
+                                        ;,#+latex_class_options: [9pt]
 
-  ;,#+OPTIONS:   H:2 toc:t
+                                        ;,#+BEAMER_THEME: Frankfurt
 
-  ;,#+SELECT_TAGS: export
-  ;,#+EXCLUDE_TAGS: noexport
+                                        ;,#+OPTIONS: H:2 toc:t
 
-  ;,#+latex_header: \\usepackage{amsmath}
-  ;,#+latex_header: \\usepackage{amsfonts}
-  ;,#+latex_header: \\usepackage{amssymb}
+                                        ;,#+SELECT_TAGS: export ,#+EXCLUDE_TAGS: noexport
 
-  ;,#+latex_header: \\useinnertheme[shadow=false]{rounded}
-  ;,#+latex_header: \\usecolortheme{orchid}
-  ;,#+begin_src latex
-  ;,\\setbeamertemplate{footline}
-  ;,{
-  ;,    \\leavevmode%
-  ;,    \\hbox{%
-  ;,        \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,center]{author in head/foot}%
-  ;,            \\usebeamerfont{author in head/foot}\\insertshortauthor
-  ;,        \\end{beamercolorbox}%
-  ;,        \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,center]{title in head/foot}%
-  ;,            \\usebeamerfont{title in head/foot}\\insertshorttitle
-  ;,        \\end{beamercolorbox}%
-  ;,        \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,right]{date in head/foot}%
-  ;,            \\usebeamerfont{institute in head/foot}\\insertshortinstitute{}\\hspace*{2em}
-  ;,            \\insertframenumber{} / \\inserttotalframenumber\\hspace*{2ex}
-  ;,        \\end{beamercolorbox}}%
-  ;,        \\vskip0pt%
-  ;,}
-  ;,,#+end_src
+                                        ;,#+latex_header: \\usepackage{amsmath} ,#+latex_header:
+                                        ;\\usepackage{amsfonts} ,#+latex_header: \\usepackage{amssymb}
+
+                                        ;,#+latex_header: \\useinnertheme[shadow=false]{rounded} ,#+latex_header:
+                                        ;\\usecolortheme{orchid} ,#+begin_src latex ,\\setbeamertemplate{footline} ,{
+                                        ;, \\leavevmode% , \\hbox{% ,
+                                        ;\\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,center]{author
+                                        ;in head/foot}% , \\usebeamerfont{author in head/foot}\\insertshortauthor ,
+                                        ;\\end{beamercolorbox}% ,
+                                        ;\\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,center]{title
+                                        ;in head/foot}% , \\usebeamerfont{title in head/foot}\\insertshorttitle ,
+                                        ;\\end{beamercolorbox}% ,
+                                        ;\\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,right]{date
+                                        ;in head/foot}% , \\usebeamerfont{institute in
+                                        ;head/foot}\\insertshortinstitute{}\\hspace*{2em} , \\insertframenumber{} /
+                                        ;\\inserttotalframenumber\\hspace*{2ex} , \\end{beamercolorbox}}% ,
+                                        ;\\vskip0pt% ,} ,,#+end_src
 
 
-  ;,,* Emacs setup :noexport:
-  ;,# Local Variables:
-  ;,# eval: (add-to-list 'load-path ".")
-  ;,# eval: (indent-tabs-mode nil)
-  ;,# eval: (tab-width 4)
-  ;,# eval: (fill-column 70)
-  ;,# eval: (sentence-end-double-space t)
-  ;,# eval: (org-edit-src-content-indentation 0)
-  ;,# eval: (org-adapt-indentation nil)
-  ;,# eval: (org-list-two-spaces-after-bullet-regexp nil)
-  ;,# eval: (org-list-description-max-indent 5)
-  ;,# eval: (org-blank-before-new-entry '((heading . auto) (plain-list-item . auto)))
-  ;,# eval: (set-input-method 'TeX)
-  ;,# eval: (org-pretty-entities t)
-  ;,# End:\n\n? "))
+                                        ;,,* Emacs setup :noexport: ,# Local Variables: ,# eval: (add-to-list
+                                        ;'load-path ".") ,# eval: (indent-tabs-mode nil) ,# eval: (tab-width 4) ,#
+                                        ;eval: (fill-column 70) ,# eval: (sentence-end-double-space t) ,# eval:
+                                        ;(org-edit-src-content-indentation 0) ,# eval: (org-adapt-indentation nil) ,#
+                                        ;eval: (org-list-two-spaces-after-bullet-regexp nil) ,# eval:
+                                        ;(org-list-description-max-indent 5) ,# eval: (org-blank-before-new-entry
+                                        ;'((heading . auto) (plain-list-item . auto))) ,# eval: (set-input-method
+                                        ;'TeX) ,# eval: (org-pretty-entities t) ,# End:\n\n? "))
 #+end_src
 
 Export latex to pdf
@@ -624,35 +594,54 @@ Keybindings
           :desc "org-roam-graph" "g" #'org-roam-graph
           :desc "org-roam-capture-today" "N" #'org-roam-dailies-capture-today
           :desc "org-roam-capture" "c" #'org-roam-capture)
-      (setq org-roam-ref-capture-templates
-            '(("r" "ref" plain (function org-roam-capture--get-point)
-               "%?"
-               :file-name "websites/${slug}"
-               :head "#+TITLE: ${title}\n,#+ROAM_KEY: ${ref}\n- source :: ${ref}"
-               :unnarrowed t)
-              ("t" "text" plain (function org-roam-capture--get-point)
-               "%?"
-               :file-name "${slug}"
-               :head "#+TITLE: ${title}
-,#+LANGUAGE: en
-,#+OPTIONS: broken-links:t toc:nil
-,#+STARTUP: overview indent
-,#+TAGS: noexport(n) deprecated(d) ignore(i)
-,#+EXPORT_SELECT_TAGS: export
-,#+EXPORT_EXCLUDE_TAGS: noexport
-,#+LATEX_CLASS: article
-,#+LATEX_CLASS_OPTIONS: [a4paper, 11pt, english]
-,#+Latex_HEADER: \\usepackage[utf8]{inputenc}
-
-,* metadata :noexport:
-  - tags :: [[id:61e0b309-641e-47b7-b6b6-d966b65e9900][no_tag]]"
-               :unnarrowed t))))
+      (setq org-roam-capture-templates
+      '(("n" "note" plain
+         "%?"
+         :if-new (file+head "zettelkasten/${slug}.org"
+                            "#+title: ${title}\n\n - tags :: \n\n* Notes ")
+         :immediate-finish t
+         :unnarrowed t)
+        ("i" "idea" plain "%?"
+         :if-new
+         (file+head "zettelkasten/${title}.org"
+                    "#+title: ${title}\n\n - tags :: [[id:1b509a50-16cd-4389-b904-3b440678e544][idea]] \n\n* Cues \n- \n\n* Notes ")
+         :immediate-finish t
+         :unnarrowed t)
+        ("p" "person" plain "%?"
+         :if-new
+         (file+head "zettelkasten/${title}.org"
+                    "#+name: ${title}\nPhone: \nEmail: \nAddress: \nOccupation: \nBirthday: \nHow did we meet: \n\n- tags :: [[id:288768f4-c84a-441f-90b6-6f1129174369][person]] \n\n* Notes ")
+         :immediate-finish t
+         :unnarrowed t)
+        ("m" "meeting" plain "%?"
+         :if-new
+         (file+head "zettelkasten/${title}.org"
+                    "#+topic: ${title}\n#+date: %t\n- attendees :: \n- tags :: [[id:aa9c4808-810f-420f-a706-f3f922ecb444][meeting]] \n\n* Agenda \n 1. \n\n* Notes\n")
+         :immediate-finish t
+         :unnarrowed t)
+        ("r" "reference" plain "%?"
+         :if-new
+         (file+head "reference/${title}.org"
+                    "#+title: ${title}\n- tags :: \n- related work :: \n\n* Notes\n\n")
+         :immediate-finish t
+         :unnarrowed t)
+        ("a" "article" plain "%?"
+         :if-new
+         (file+head "articles/${title}.org" "#+title: ${title}\n#+filetags: :article:\n")
+         :immediate-finish t
+         :unnarrowed t)))
+      )
 #+end_src
 
+#+RESULTS:
+| n | note | plain | %? | :if-new | (file+head zettelkasten/${slug}.org #+title: ${title} |
+
+
+
 Dailies
-;;#+begin_src emacs-lisp
-;;  (setq org-roam-dailies-directory "~/mega/org/roam/daily/"
-;;#+end_src
+#+begin_src emacs-lisp
+  (setq org-roam-dailies-directory "~/mega/org/roam/daily/"
+#+end_src
 
 Completion
 #+begin_src emacs-lisp
@@ -694,7 +683,7 @@ Bibtex integration
   (setq orb-templates
         '(("n" "ref+noter" plain (function org-roam-capture--get-point)
            ""
-           :file-name "${slug}"
+           :file-name "reference/${slug}"
            :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS:
 
   - tags ::
@@ -707,6 +696,22 @@ Bibtex integration
   :NOTER_DOCUMENT: %(orb-process-file-field \"${citekey}\")
   :NOTER_PAGE:
   :END:")))
+#+end_src
+
+** Org-roam-ui
+Ok apparently I can have a nice interface for visualizing the graph
+
+#+begin_src emacs-lisp
+(use-package! websocket
+    :after org-roam)
+
+(use-package! org-roam-ui
+    :after org-roam ;; or :after org
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
 #+end_src
 
 ** YAML
