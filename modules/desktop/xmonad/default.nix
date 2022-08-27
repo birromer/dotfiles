@@ -10,6 +10,6 @@
 
   xsession.windowManager.xmonad = {
     enableContribAndExtras = true;
-    configh = "xmonad.hs";
+#    config = "xmonad.hs";
   };
 }

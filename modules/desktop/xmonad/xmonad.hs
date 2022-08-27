@@ -52,7 +52,7 @@ myModMask = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces = map (wrap " " "") ["α", "β", "γ", "δ", "ε", "Ϛ", "ζ", "η", "θ"]
+myWorkspaces = map (wrap " " "") ["α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "ι", "κ"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -78,7 +78,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       -- take screenshot
       ((0, xK_Print), spawn "scrot '%d_%m_%Y_$wx$h_scrot.png' -e 'mv $f ~/Pictures/screenshots/' -z -m"),
       -- launch dmenu
-      ((modm, xK_d), spawn "dmenu_run -nf '#e0def4' -nb '#191724' -sf '#191724' -sb '#f6c177' -fn 'JetBrains-15'"),
+      --((modm, xK_d), spawn "dmenu_run -nf '#e0def4' -nb '#191724' -sf '#191724' -sb '#f6c177' -fn 'JetBrains-15'"),
+      ((modm, xK_d), spawn "rofi -theme ~/.config/rofi/onemon.rasi -show run"),
       -- launch gmrun
       --  , ((modm .|. shiftMask, xK_p     ), spawn "lxsession-logout")
 
@@ -276,7 +277,7 @@ myStartupHook = do
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main = do
-  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobarrc"
+  xmproc <- spawnPipe "xmobar xmobarrc"
   xmonad $ docks (defaults xmproc)
 
 myWMName = "LG3D"
