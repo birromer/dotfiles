@@ -16,7 +16,8 @@ aaa
 
 ** Font
 #+begin_src emacs-lisp
-  (setq doom-font (font-spec :family "Source Code Pro" :size 14))
+;;  (setq doom-font (font-spec :family "Source Code Pro" :size 14))
+  (setq doom-font (font-spec :family "Mononoki" :size 14))
 ;;  (setq doom-font (font-spec :family "Inconsolata" :size 16))
 #+end_src
 
@@ -384,8 +385,8 @@ Having problems with startup time, gotta trim
 Base agenda
 #+begin_src emacs-lisp
 (setq org-log-done t)
-(setq org-agenda-file '("~/mega/org/notes.org"
-                        "~/mega/org/todo.org"))
+(setq org-agenda-file '("~/mega/org/todo.org"))
+;; "~/mega/org/notes.org"
 #+end_src
 
 TODO options
@@ -395,11 +396,6 @@ TODO options
                               (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)"))
   ))
 #+end_src
-
-#+RESULTS:
-| sequence | TODO(t) | OPEN(o) | START(s) | WAIT(w) | HOLD(h) | IDEA(i) |   |   | DONE(d) | KILLED(k) |
-| sequence | [ ](T)  | [-](S)  | [?](W)   |         |         | [x](D)  |   |   |         |           |
-| sequence | OKAY(o) | YES(y)  |          |         | NO(n)   |         |   |   |         |           |
 
 Priorities
 #+begin_src emacs-lisp
@@ -422,8 +418,8 @@ Super agenda
       org-agenda-block-separator nil
       org-agenda-tags-column 100 ;; from testing this seems to be a good value
       org-agenda-compact-blocks t)
-(setq org-agenda-files "~/mega/org/roam/daily/")
-;;                       "~/mega/org/roam/"
+(setq org-agenda-files "~/mega/org/todo.org")
+;;                       "~/mega/org/roam/")
 ;;                       "~/mega/org/")
 (setq org-agenda-custom-commands
       '(("o" "Overview"
@@ -582,7 +578,7 @@ Base directory
   (setq org-roam-directory "~/mega/org/roam/")
 #+end_src
 
-Keybindings
+Keybindings and templates
 #+begin_src emacs-lisp
   (after! org-roam
       (map! :leader
@@ -597,25 +593,31 @@ Keybindings
       (setq org-roam-capture-templates
       '(("n" "note" plain
          "%?"
-         :if-new (file+head "zettelkasten/${slug}.org"
+         :if-new (file+head "main/${slug}.org"
                             "#+title: ${title}\n\n - tags :: \n\n* Notes ")
          :immediate-finish t
          :unnarrowed t)
         ("i" "idea" plain "%?"
          :if-new
-         (file+head "zettelkasten/${title}.org"
+         (file+head "main/${title}.org"
                     "#+title: ${title}\n\n - tags :: [[id:1b509a50-16cd-4389-b904-3b440678e544][idea]] \n\n* Cues \n- \n\n* Notes ")
+         :immediate-finish t
+         :unnarrowed t)
+        ("d" "doctorat" plain "%?"
+         :if-new
+         (file+head "phd/${title}.org"
+                    "#+title: ${title}\n\n - tags :: [[id:03fca6b0-30c2-4825-a439-b130759a6160][phd]] \n- related work :: \n\n* Notes ")
          :immediate-finish t
          :unnarrowed t)
         ("p" "person" plain "%?"
          :if-new
-         (file+head "zettelkasten/${title}.org"
-                    "#+name: ${title}\nPhone: \nEmail: \nAddress: \nOccupation: \nBirthday: \nHow did we meet: \n\n- tags :: [[id:288768f4-c84a-441f-90b6-6f1129174369][person]] \n\n* Notes ")
+         (file+head "main/${title}.org"
+                    "#+name: ${title}\nPhone: \nEmail: \nAddress: \nOccupation: \nBirthday: \nHow did we meet: \n\n- tags :: [[id:d6760fca-d74a-4513-b5f9-e942933a8ccc][person]] \n\n* Notes ")
          :immediate-finish t
          :unnarrowed t)
         ("m" "meeting" plain "%?"
          :if-new
-         (file+head "zettelkasten/${title}.org"
+         (file+head "main/${title}.org"
                     "#+topic: ${title}\n#+date: %t\n- attendees :: \n- tags :: [[id:aa9c4808-810f-420f-a706-f3f922ecb444][meeting]] \n\n* Agenda \n 1. \n\n* Notes\n")
          :immediate-finish t
          :unnarrowed t)
@@ -633,14 +635,10 @@ Keybindings
       )
 #+end_src
 
-#+RESULTS:
-| n | note | plain | %? | :if-new | (file+head zettelkasten/${slug}.org #+title: ${title} |
-
-
 
 Dailies
 #+begin_src emacs-lisp
-  (setq org-roam-dailies-directory "~/mega/org/roam/daily/"
+  (setq org-roam-dailies-directory "~/mega/org/roam/daily/")
 #+end_src
 
 Completion
@@ -665,6 +663,7 @@ Note searching
     (deft-directory "~/mega/org/roam/"
       "~/mega/org/roam/daily/"))
 #+end_src
+
 
 Bibtex integration
 #+begin_src emacs-lisp
