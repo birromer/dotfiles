@@ -9,7 +9,7 @@ aaa
 * Core configuration
 ** Personal information
 #+begin_src emacs-lisp
-  (setq user-full-name "Bernardo Hummes Flores"
+  (setq user-full-name "Bernardo Hummes"
         user-mail-address "hummes@ieee.org")
 ;;  (setq user-full-name "BHF")
 #+end_src
@@ -17,8 +17,8 @@ aaa
 ** Font
 #+begin_src emacs-lisp
 ;;  (setq doom-font (font-spec :family "Source Code Pro" :size 14))
+;;  (setq doom-font (font-spec :family "Inconsolata" :size 14))
   (setq doom-font (font-spec :family "Mononoki" :size 14))
-;;  (setq doom-font (font-spec :family "Inconsolata" :size 16))
 #+end_src
 
 ** Theme and aesthetics
@@ -61,15 +61,6 @@ Highlight trailing whitespace
 #+end_src
 
 * Packages
-** Company
-#+begin_src emacs-lisp
-;;(use-package company
-;;  :config
-;;  (define-key company-active-map (kbd "<return>") nil)
-;;  (define-key company-active-map (kbd "RET") nil)
-;;  (define-key company-active-map (kbd "C-SPC") #'company-complete-selection))
-#+end_src
-
 ** helm
 #+begin_src emacs-lisp
 ;;(use-package helm
@@ -101,26 +92,10 @@ Keybindings
       :desc "helm-bibtex" "b" #'helm-bibtex)
 #+end_src
 
-** ivy-bibtex
-No longer used, replaced with helm
-
-Initial configuration
-#+begin_src emacs-lisp
-;;  (setq ivy-use-virtual-buffers t)
-#+end_src
-
-Keybindings
-#+begin_src emacs-lisp
-;;  (after! ivy-bibtex
-;;      (map! :leader
-;;          :prefix "i"
-;;          :desc "ivy-bibtex" "l" #'ivy-bibtex))
-#+end_src
-
 ** ox-jekyll-lite
 This is a package for converting org files into markdown posts for jekyll
 #+begin_src emacs-lisp
-(setq org-jekyll-project-root "~/Documents/birromer.github.io/")
+; (setq org-jekyll-project-root "~/Sites/bernardo/")
 #+end_src
 
 ** ox-latex
@@ -137,14 +112,15 @@ Latex org exporter
   (org-latex-minted-options '(("breaklines") ("breakafter" "d") ("linenos"
                                                                  "true") ("xleftmargin" "\\parindent")))
   (org-latex-pdf-process '("latexmk -pdflatex='pdflatex -shell-escape -interaction nonstopmode' -pdf -bibtex -f %f"))
-                                        ;  (org-latex-pdf-process  '("latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"  "latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"  "latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"))
+
   :config
   (add-to-list
    'org-latex-classes
    '("iiufrgs" "\\documentclass{iiufrgs}" ("\\chapter{%s}" .
                                            "\\chapter*{%s}") ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" .
                                            "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                                           ("\\paragraph{%s}" . "\\paragraph*{%s}"))) (add-to-list 'org-latex-classes
+                                           ("\\paragraph{%s}" . "\\paragraph*{%s}")))
+  (add-to-list 'org-latex-classes
    '("newlfm" "\\documentclass{newlfm}" ("\\chapter{%s}" . "\\chapter*{%s}")
      ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" .
                                            "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
@@ -157,7 +133,9 @@ Latex org exporter
                  "\\documentclass{mimosis}
   [NO-DEFAULT-PACKAGES]
   [PACKAGES]
-  [EXTRA]"
+  [EXTRA]
+  \newcommand{\mboxparagraph}[1]{\paragraph{#1}\mbox{}\}
+  \newcommand{\mboxsubparagraph}[1]{\subparagraph{#1}\mbox{}\}"
                  ("\\chapter{%s}" . "\\addchap{%s}")
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
@@ -215,7 +193,7 @@ Latex org exporter
                                         ;'TeX) ,# eval: (org-pretty-entities t) ,# End:\n\n? "))
 #+end_src
 
-Export latex to pdf
+Export org to pdf
 #+begin_src emacs-lisp
   (map! :leader
         :prefix "c"
@@ -229,12 +207,19 @@ Export beamer to pdf
         :desc "org-beamer-export-to-pdf" "b" #'org-beamer-export-to-pdf)
 #+end_src
 
-Quick latex snippet preview
+Export org to md for hugo
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-c C-g") 'org-preview-latex-fragment)
+  (map! :leader
+        :prefix "c"
+        :desc "org-hugo-export-to-md" "h" #'org-hugo-export-to-md)
 #+end_src
 
-Ingnore headlines
+Quick latex snippet preview
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-c C-g") 'org-toggle-latex-fragment)
+#+end_src
+
+Ignore headlines
 #+begin_src emacs-lisp
   (use-package! ox-extra
     :after org
@@ -249,20 +234,23 @@ Make UNNUMBERED headers export as =\*section{}=
               (and (funcall orig headline info)
                    (not (org-element-property :UNNUMBERED headline)))))
 #+end_src
+** ox-hugo
+Generate markdown files from org for hugo static site generator
 
-Template for creating presentations
 #+begin_src emacs-lisp
-
+;(use-package ox-hugo
+;  :config
+;  (setq org-hugo-base-dir (file-truename "~/mega/org/notes"))
+;  (setq org-hugo-section "post"))
 #+end_src
-
 ** ROS
-;;#+begin_src emacs-lisp
+#+begin_src emacs-lisp
 ;;  (add-to-list 'load-path "/opt/ros/melodic/share/emacs/site-lisp")
 ;;  (require 'rosemacs-config)
-;;#+end_src
-;;
-;;catkin_make and compilation stuff
-;;#+begin_src emacs-lisp
+#+end_src
+
+catkin_make and compilation stuff
+#+begin_src emacs-lisp
 ;;  ;; run catkin_make
 ;;  (defun ros-catkin-make (dir)
 ;;    "Run catkin_make command in DIR."
@@ -271,9 +259,9 @@ Template for creating presentations
 ;;           (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
 ;;      (compile "catkin_make"))
 ;;    )
-;;#+end_src
-;;
-;;#+begin_src emacs-lisp
+#+end_src
+
+#+begin_src emacs-lisp
 ;;  ;; generate compile_commands.json
 ;;  (defun ros-catkin-make-json (dir)
 ;;    "Run catkin_make command in DIR."
@@ -282,10 +270,10 @@ Template for creating presentations
 ;;           (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
 ;;      (compile "catkin_make -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ."))
 ;;    )
-;;#+end_src
-;;
-;;Debugging
-;;#+begin_src emacs-lisp
+#+end_src
+
+Debugging
+#+begin_src emacs-lisp
 ;;  (defun ros-catkin-make-debug (dir)
 ;;    "Run catkin_make with Debug mode in DIR."
 ;;    (interactive (list (read-directory-name "Directory: ")))
@@ -293,15 +281,13 @@ Template for creating presentations
 ;;           (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
 ;;      (compile "catkin_make -DCMAKE_BUILD_TYPE=Debug"))
 ;;    )
-;;#+end_src
-;;
-;;Some keybindings
-;;#+begin_src emacs-lisp
+#+end_src
+
+Some keybindings
+#+begin_src emacs-lisp
 ;;(global-set-key (kbd "C-x C-r M") 'ros-catkin-make)
 ;;(global-set-key (kbd "C-x C-r C-j") 'ros-catkin-make-json)
-;;#+end_src
-
-**
+#+end_src
 
 ** Hypothesis
 Set user variables
@@ -381,20 +367,76 @@ Having problems with startup time, gotta trim
   (setq org-fancy-priorities-list '("+" "+" "+")))
 #+end_src
 
-*** org-agenda
-Base agenda
+*** org-capture
 #+begin_src emacs-lisp
-(setq org-log-done t)
-(setq org-agenda-file '("~/mega/org/todo.org"))
-;; "~/mega/org/notes.org"
+;(setq org-capture-templates
+;      '(("n" "Notes" entry
+;         (file "~/mega/org/notes/inbox.org") "* %^{Description} %^g\n Added: %U\n%?")
+;        ))
+
 #+end_src
 
+Populates only the EXPORT_FILE_NAME property in the inserted heading.
+(with-eval-after-load 'org-capture
+#+begin_src emacs-lisp
+  (use-package org-fancy-priorities
+    :config
+  (defun org-hugo-new-subtree-post-capture-template ()
+    (let* ((title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
+           (fname (org-hugo-slug title)))
+      (mapconcat #'identity
+                 `(
+                   ,(concat "* TODO " title)
+                   ":PROPERTIES:"
+                   ,(concat ":EXPORT_FILE_NAME: " fname)
+                   ":END:"
+                   "%?\n")          ;Place the cursor here finally
+                 "\n")))
+
+  (add-to-list 'org-capture-templates
+               '("h"                ;`org-capture' binding + h
+                 "Hugo post"
+                 entry
+                 ;; It is assumed that below file is present in `org-directory'
+                 ;; and that it has a "Blog Ideas" heading. It can even be a
+                 ;; symlink pointing to the actual location of all-posts.org!
+;                 (file+olp "all-posts.org" "Capture")
+                 (file "all-posts.org")
+                 (function org-hugo-new-subtree-post-capture-template))))
+#+end_src
+
+
+*** org-todo
 TODO options
 #+begin_src emacs-lisp
 (after! org
     (setq org-todo-keywords '((sequence "TODO(t)" "OPEN(o)" "START(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)" "|" "CLOSED(c)" "DONE(d)" "KILLED(k)")
                               (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)"))
   ))
+#+end_src
+
+TODO faces
+#+begin_src emacs-lisp
+(setq org-todo-keyword-faces
+    (quote (("TODO" :foreground "red" :weight bold)
+            ("OPEN" :foreground "blue" :weight bold)
+            ("START" :foreground "blue" :weight bold)
+            ("WAIT" :foreground "orange" :weight bold)
+            ("HOLD" :foreground "orange" :weight bold)
+            ("IDEA" :foreground "orange" :weight bold)
+            ("DONE" :foreground "forest green" :weight bold)
+            ("CLOSED" :foreground "forest green" :weight bold)
+            ("KILLED" :foreground "forest green" :weight bold))))
+
+;;(setq-default org-export-with-todo-keywords nil)
+#+end_src
+
+*** org-agenda
+Base agenda
+#+begin_src emacs-lisp
+(setq org-log-done t)
+(setq org-agenda-file '("~/mega/org/todo.org"))
+;; "~/mega/org/notes.org"
 #+end_src
 
 Priorities
@@ -421,68 +463,68 @@ Super agenda
 (setq org-agenda-files "~/mega/org/todo.org")
 ;;                       "~/mega/org/roam/")
 ;;                       "~/mega/org/")
-(setq org-agenda-custom-commands
-      '(("o" "Overview"
-         ((agenda "" ((org-agenda-span 'day)
-                      (org-super-agenda-groups
-                       '((:name "Today"
-                          :time-grid t
-                          :date today
-                          :todo "TODAY"
-                          :scheduled today
-                          :order 1)))))
-          (alltodo "" ((org-agenda-overriding-header "")
-                       (org-super-agenda-groups
-                        '((:name "Next to do"
-                           :todo "NEXT"
-                           :order 1)
-                          (:name "Important"
-                           :tag "Important"
-                           :priority "A"
-                           :order 1)
-                          (:name "Due Today"
-                           :deadline today
-                           :order 2)
-                          (:name "Due Soon"
-                           :deadline future
-                           :order 8)
-                          (:name "Overdue"
-                           :deadline past
-                           :face error
-                           :order 7)
-                          (:name "Work"
-                           :tag  "Work"
-                           :order 3)
-                          (:name "Dissertation"
-                           :tag "Dissertation"
-                           :order 7)
-                          (:name "Emacs"
-                           :tag "Emacs"
-                           :order 13)
-                          (:name "Projects"
-                           :tag "Project"
-                           :order 14)
-                          (:name "Essay 1"
-                           :tag "Essay1"
-                           :order 2)
-                          (:name "Reading List"
-                           :tag "Read"
-                           :order 8)
-                          (:name "Work In Progress"
-                           :tag "WIP"
-                           :order 5)
-                          (:name "Blog"
-                           :tag "Blog"
-                           :order 12)
-                          (:name "Essay 2"
-                           :tag "Essay2"
-                           :order 3)
-                          (:name "Trivial"
-                           :priority<= "E"
-                           :tag ("Trivial" "Unimportant")
-                           :todo ("SOMEDAY" )
-                           :order 90)
-                          (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
+;(setq org-agenda-custom-commands
+;      '(("o" "Overview"
+;         ((agenda "" ((org-agenda-span 'day)
+;                      (org-super-agenda-groups
+;                       '((:name "Today"
+;                          :time-grid t
+;                          :date today
+;                          :todo "TODAY"
+;                          :scheduled today
+;                          :order 1)))))
+;          (alltodo "" ((org-agenda-overriding-header "")
+;                       (org-super-agenda-groups
+;                        '((:name "Next to do"
+;                           :todo "NEXT"
+;                           :order 1)
+;                          (:name "Important"
+;                           :tag "Important"
+;                           :priority "A"
+;                           :order 1)
+;                          (:name "Due Today"
+;                           :deadline today
+;                           :order 2)
+;                          (:name "Due Soon"
+;                           :deadline future
+;                           :order 8)
+;                          (:name "Overdue"
+;                           :deadline past
+;                           :face error
+;                           :order 7)
+;                          (:name "Work"
+;                           :tag  "Work"
+;                           :order 3)
+;                          (:name "Dissertation"
+;                           :tag "Dissertation"
+;                           :order 7)
+;                          (:name "Emacs"
+;                           :tag "Emacs"
+;                           :order 13)
+;                          (:name "Projects"
+;                           :tag "Project"
+;                           :order 14)
+;                          (:name "Essay 1"
+;                           :tag "Essay1"
+;                           :order 2)
+;                          (:name "Reading List"
+;                           :tag "Read"
+;                           :order 8)
+;                          (:name "Work In Progress"
+;                           :tag "WIP"
+;                           :order 5)
+;                          (:name "Blog"
+;                           :tag "Blog"
+;                           :order 12)
+;                          (:name "Essay 2"
+;                           :tag "Essay2"
+;                           :order 3)
+;                          (:name "Trivial"
+;                           :priority<= "E"
+;                           :tag ("Trivial" "Unimportant")
+;                           :todo ("SOMEDAY" )
+;                           :order 90)
+;                          (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
 #+end_src
 
 *** org-journal
@@ -571,6 +613,31 @@ Change format of the dates and folder
   :hook
   (org-mode-hook . toc-org-mode))
 #+end_src
+*** ob-sagemath
+#+begin_src emacs-lisp
+;;(use-package! ob-sagemath
+;;  :after org
+;;  :custom
+;;  ;; Ob-sagemath supports only evaluating with a session.
+;;  (setq org-babel-default-header-args:sage '((:session . t)
+;;                                             (:results . "output")))
+;;
+;;  ;; C-c c for asynchronous evaluating (only for SageMath code blocks).
+;;  (with-eval-after-load "org"
+;;    (define-key org-mode-map (kbd "C-c c") 'ob-sagemath-execute-async))
+;;
+;;  ;; Do not confirm before evaluation
+;;  (setq org-confirm-babel-evaluate nil)
+;;
+;;  ;; Do not evaluate code blocks when exporting.
+;;  (setq org-export-babel-evaluate nil)
+;;
+;;  ;; Show images when opening a file.
+;;  (setq org-startup-with-inline-images t)
+;;
+;;  ;; Show images after evaluating code blocks.
+;;  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+#+end_src
 
 *** org-roam
 Base directory
@@ -594,7 +661,7 @@ Keybindings and templates
       '(("n" "note" plain
          "%?"
          :if-new (file+head "main/${slug}.org"
-                            "#+title: ${title}\n\n - tags :: \n\n* Notes ")
+                            "#+title: ${title}\n#+hugo_lastmod: Time-stamp: <>\n\n - tags :: \n\n* Notes ")
          :immediate-finish t
          :unnarrowed t)
         ("i" "idea" plain "%?"
@@ -675,7 +742,7 @@ Bibtex integration
   (setq orb-templates
         '(("r" "ref" plain (function org-roam-capture--get-point) ""
            :file-name "${citekey}"
-           :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}\n" ; <--
+           :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}\n"
            :unnarrowed t)))
   (setq orb-preformat-keywords '(("citekey" . "=key=") "title" "url" "file" "author-or-editor" "keywords"))
 
@@ -697,20 +764,25 @@ Bibtex integration
   :END:")))
 #+end_src
 
-** Org-roam-ui
+*** org-roam-ui
 Ok apparently I can have a nice interface for visualizing the graph
 
 #+begin_src emacs-lisp
-(use-package! websocket
-    :after org-roam)
+;;(use-package! websocket
+;;    :after org-roam)
+;;
+;;(use-package! org-roam-ui
+;;    :after org-roam ;; or :after org
+;;    :config
+;;    (setq org-roam-ui-sync-theme t
+;;          org-roam-ui-follow t
+;;          org-roam-ui-update-on-save t
+;;          org-roam-ui-open-on-start t))
+#+end_src
 
-(use-package! org-roam-ui
-    :after org-roam ;; or :after org
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
+** Markdown
+#+begin_src emacs-lisp
+;;  (add-hook 'before-save-hook 'time-stamp)
 #+end_src
 
 ** YAML

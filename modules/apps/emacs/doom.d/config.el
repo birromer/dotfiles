@@ -1,9 +1,10 @@
-(setq user-full-name "Bernardo Hummes Flores"
+(setq user-full-name "Bernardo Hummes"
         user-mail-address "hummes@ieee.org")
 ;;  (setq user-full-name "BHF")
 
-(setq doom-font (font-spec :family "Source Code Pro" :size 14))
-;;  (setq doom-font (font-spec :family "Inconsolata" :size 16))
+;;  (setq doom-font (font-spec :family "Source Code Pro" :size 14))
+;;  (setq doom-font (font-spec :family "Inconsolata" :size 14))
+  (setq doom-font (font-spec :family "Mononoki" :size 14))
 
 ;(setq doom-theme 'doom-dracula)
 ;(setq doom-theme 'doom-laserwave)
@@ -22,12 +23,6 @@
 (setq show-trailing-whitespace t)
 
 (setq +latex-viewers '(zathura))
-
-;;(use-package company
-;;  :config
-;;  (define-key company-active-map (kbd "<return>") nil)
-;;  (define-key company-active-map (kbd "RET") nil)
-;;  (define-key company-active-map (kbd "C-SPC") #'company-complete-selection))
 
 ;;(use-package helm
 ;;    :config
@@ -50,132 +45,98 @@
     :prefix "o"
     :desc "helm-bibtex" "b" #'helm-bibtex)
 
-;;  (setq ivy-use-virtual-buffers t)
-
-;;  (after! ivy-bibtex
-;;      (map! :leader
-;;          :prefix "i"
-;;          :desc "ivy-bibtex" "l" #'ivy-bibtex))
-
-(setq org-jekyll-project-root "~/Documents/birromer.github.io/")
+; (setq org-jekyll-project-root "~/Sites/bernardo/")
 
 (use-package ox-latex
-  :after ox
-  :after org
+  :after ox :after org
   :custom
   (org-latex-image-default-width "1\\linewidth")
   (org-latex-packages-alist
-   `((,(concat "cache=false,outputdir=" org-export-default-output-folder) "minted")
-     ("T1" "fontenc")
-     ("" "placeins")))
+   `((,(concat "cache=false,outputdir=" org-export-default-output-folder)
+      "minted") ("T1" "fontenc") ("" "placeins")))
   (org-latex-listings 'minted)
-  (org-latex-minted-options
-   '(("breaklines")
-     ("breakafter" "d")
-     ("linenos" "true")
-     ("xleftmargin" "\\parindent")))
-  (org-latex-pdf-process
-   '("latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"
-     "latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"
-     "latexmk -pdfxelatex='xelatex -shell-escape -interaction=nonstopmode' -f -xelatex -outdir=%o %f"))
+  (org-latex-minted-options '(("breaklines") ("breakafter" "d") ("linenos"
+                                                                 "true") ("xleftmargin" "\\parindent")))
+  (org-latex-pdf-process '("latexmk -pdflatex='pdflatex -shell-escape -interaction nonstopmode' -pdf -bibtex -f %f"))
+
   :config
+  (add-to-list
+   'org-latex-classes
+   '("iiufrgs" "\\documentclass{iiufrgs}" ("\\chapter{%s}" .
+                                           "\\chapter*{%s}") ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" .
+                                           "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                                           ("\\paragraph{%s}" . "\\paragraph*{%s}")))
   (add-to-list 'org-latex-classes
-           '("iiufrgs"
-         "\\documentclass{iiufrgs}"
-         ("\\chapter{%s}"       . "\\chapter*{%s}")
-         ("\\section{%s}"       . "\\section*{%s}")
-         ("\\subsection{%s}"    . "\\subsection*{%s}")
-         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-         ("\\paragraph{%s}"     . "\\paragraph*{%s}")))
+   '("newlfm" "\\documentclass{newlfm}" ("\\chapter{%s}" . "\\chapter*{%s}")
+     ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" .
+                                           "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+  (add-to-list 'org-latex-classes '("if-beamer" "\\documentclass{if-beamer}"
+                                    ("\\chapter{%s}" . "\\chapter*{%s}") ("\\section{%s}" . "\\section*{%s}")
+                                    ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" .
+                                                                                "\\subsubsection*{%s}")))
   (add-to-list 'org-latex-classes
-           '("newlfm"
-         "\\documentclass{newlfm}"
-         ("\\chapter{%s}"       . "\\chapter*{%s}")
-         ("\\section{%s}"       . "\\section*{%s}")
-         ("\\subsection{%s}"    . "\\subsection*{%s}")
-         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
-  (add-to-list 'org-latex-classes
-           '("if-beamer"
-         "\\documentclass{if-beamer}"
-         ("\\chapter{%s}"       . "\\chapter*{%s}")
-         ("\\section{%s}"       . "\\section*{%s}")
-         ("\\subsection{%s}"    . "\\subsection*{%s}")
-         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
-  (add-to-list 'org-latex-classes
-           '("IEEEtran"
-         "\\documentclass{IEEEtran}"
-         ("\\section{%s}"       . "\\section*{%s}")
-         ("\\subsection{%s}"    . "\\subsection*{%s}")
-         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-         ("\\paragraph{%s}"     . "\\paragraph*{%s}")
-         ("\\subparagraph{%s}"  . "\\subparagraph*{%s}"))))
-  ;(add-to-list 'org-structure-template-alist
-  ;             '(,"B"
-  ;"#+TITLE:
-  ;,#+AUTHOR:
-  ;,#+EMAIL:
-  ;,#+DATE:   \\today
-  ;,#+DESCRIPTION:
-  ;,#+KEYWORDS:
-  ;,#+LANGUAGE: en
-  ;,#+LaTeX_HEADER: \\institute[short]{long}
+               '("mimosis"
+                 "\\documentclass{mimosis}
+  [NO-DEFAULT-PACKAGES]
+  [PACKAGES]
+  [EXTRA]
+  \newcommand{\mboxparagraph}[1]{\paragraph{#1}\mbox{}\}
+  \newcommand{\mboxsubparagraph}[1]{\subparagraph{#1}\mbox{}\}"
+                 ("\\chapter{%s}" . "\\addchap{%s}")
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-  ;,#+STARTUP: beamer
-  ;,#+STARTUP: oddeven
-  ;,#+STARTUP: latexpreview
+  (add-to-list 'org-latex-classes '("IEEEtran"
+                                    "\\documentclass{IEEEtran}" ("\\section{%s}" . "\\section*{%s}")
+                                    ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" .
+                                                                                "\\subsubsection*{%s}") ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                                    ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+                                        ;(add-to-list
+                                        ; 'org-structure-template-alist ; '(,"B" ;"#+TITLE: ;,#+AUTHOR: ;,#+EMAIL:
+                                        ;,#+DATE: \\today ;,#+DESCRIPTION: ;,#+KEYWORDS: ;,#+LANGUAGE: en
+                                        ;,#+LaTeX_HEADER: \\institute[short]{long}
 
-  ;,#+LaTeX_CLASS: beamer
-  ;,#+LaTeX_CLASS_OPTIONS: [bigger]
-  ;,#+latex_class_options: [9pt]
+                                        ;,#+STARTUP: beamer ,#+STARTUP: oddeven ,#+STARTUP: latexpreview
 
-  ;,#+BEAMER_THEME: Frankfurt
+                                        ;,#+LaTeX_CLASS: beamer ,#+LaTeX_CLASS_OPTIONS: [bigger]
+                                        ;,#+latex_class_options: [9pt]
 
-  ;,#+OPTIONS:   H:2 toc:t
+                                        ;,#+BEAMER_THEME: Frankfurt
 
-  ;,#+SELECT_TAGS: export
-  ;,#+EXCLUDE_TAGS: noexport
+                                        ;,#+OPTIONS: H:2 toc:t
 
-  ;,#+latex_header: \\usepackage{amsmath}
-  ;,#+latex_header: \\usepackage{amsfonts}
-  ;,#+latex_header: \\usepackage{amssymb}
+                                        ;,#+SELECT_TAGS: export ,#+EXCLUDE_TAGS: noexport
 
-  ;,#+latex_header: \\useinnertheme[shadow=false]{rounded}
-  ;,#+latex_header: \\usecolortheme{orchid}
-  ;,#+begin_src latex
-  ;,\\setbeamertemplate{footline}
-  ;,{
-  ;,    \\leavevmode%
-  ;,    \\hbox{%
-  ;,        \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,center]{author in head/foot}%
-  ;,            \\usebeamerfont{author in head/foot}\\insertshortauthor
-  ;,        \\end{beamercolorbox}%
-  ;,        \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,center]{title in head/foot}%
-  ;,            \\usebeamerfont{title in head/foot}\\insertshorttitle
-  ;,        \\end{beamercolorbox}%
-  ;,        \\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,right]{date in head/foot}%
-  ;,            \\usebeamerfont{institute in head/foot}\\insertshortinstitute{}\\hspace*{2em}
-  ;,            \\insertframenumber{} / \\inserttotalframenumber\\hspace*{2ex}
-  ;,        \\end{beamercolorbox}}%
-  ;,        \\vskip0pt%
-  ;,}
-  ;,,#+end_src
+                                        ;,#+latex_header: \\usepackage{amsmath} ,#+latex_header:
+                                        ;\\usepackage{amsfonts} ,#+latex_header: \\usepackage{amssymb}
+
+                                        ;,#+latex_header: \\useinnertheme[shadow=false]{rounded} ,#+latex_header:
+                                        ;\\usecolortheme{orchid} ,#+begin_src latex ,\\setbeamertemplate{footline} ,{
+                                        ;, \\leavevmode% , \\hbox{% ,
+                                        ;\\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,center]{author
+                                        ;in head/foot}% , \\usebeamerfont{author in head/foot}\\insertshortauthor ,
+                                        ;\\end{beamercolorbox}% ,
+                                        ;\\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,center]{title
+                                        ;in head/foot}% , \\usebeamerfont{title in head/foot}\\insertshorttitle ,
+                                        ;\\end{beamercolorbox}% ,
+                                        ;\\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,right]{date
+                                        ;in head/foot}% , \\usebeamerfont{institute in
+                                        ;head/foot}\\insertshortinstitute{}\\hspace*{2em} , \\insertframenumber{} /
+                                        ;\\inserttotalframenumber\\hspace*{2ex} , \\end{beamercolorbox}}% ,
+                                        ;\\vskip0pt% ,} ,,#+end_src
 
 
-  ;,,* Emacs setup :noexport:
-  ;,# Local Variables:
-  ;,# eval: (add-to-list 'load-path ".")
-  ;,# eval: (indent-tabs-mode nil)
-  ;,# eval: (tab-width 4)
-  ;,# eval: (fill-column 70)
-  ;,# eval: (sentence-end-double-space t)
-  ;,# eval: (org-edit-src-content-indentation 0)
-  ;,# eval: (org-adapt-indentation nil)
-  ;,# eval: (org-list-two-spaces-after-bullet-regexp nil)
-  ;,# eval: (org-list-description-max-indent 5)
-  ;,# eval: (org-blank-before-new-entry '((heading . auto) (plain-list-item . auto)))
-  ;,# eval: (set-input-method 'TeX)
-  ;,# eval: (org-pretty-entities t)
-  ;,# End:\n\n? "))
+                                        ;,,* Emacs setup :noexport: ,# Local Variables: ,# eval: (add-to-list
+                                        ;'load-path ".") ,# eval: (indent-tabs-mode nil) ,# eval: (tab-width 4) ,#
+                                        ;eval: (fill-column 70) ,# eval: (sentence-end-double-space t) ,# eval:
+                                        ;(org-edit-src-content-indentation 0) ,# eval: (org-adapt-indentation nil) ,#
+                                        ;eval: (org-list-two-spaces-after-bullet-regexp nil) ,# eval:
+                                        ;(org-list-description-max-indent 5) ,# eval: (org-blank-before-new-entry
+                                        ;'((heading . auto) (plain-list-item . auto))) ,# eval: (set-input-method
+                                        ;'TeX) ,# eval: (org-pretty-entities t) ,# End:\n\n? "))
 
 (map! :leader
       :prefix "c"
@@ -185,14 +146,58 @@
       :prefix "c"
       :desc "org-beamer-export-to-pdf" "b" #'org-beamer-export-to-pdf)
 
-(global-set-key (kbd "C-c C-g") 'org-preview-latex-fragment)
+(map! :leader
+      :prefix "c"
+      :desc "org-hugo-export-to-md" "h" #'org-hugo-export-to-md)
+
+(global-set-key (kbd "C-c C-g") 'org-toggle-latex-fragment)
+
+(use-package! ox-extra
+  :after org
+  :config
+  (ox-extras-activate '(ignore-headlines)))
 
 (advice-add 'org-export-numbered-headline-p :around
             (lambda (orig headline info)
               (and (funcall orig headline info)
                    (not (org-element-property :UNNUMBERED headline)))))
 
+;(use-package ox-hugo
+;  :config
+;  (setq org-hugo-base-dir (file-truename "~/mega/org/notes"))
+;  (setq org-hugo-section "post"))
 
+;;  (add-to-list 'load-path "/opt/ros/melodic/share/emacs/site-lisp")
+;;  (require 'rosemacs-config)
+
+;;  ;; run catkin_make
+;;  (defun ros-catkin-make (dir)
+;;    "Run catkin_make command in DIR."
+;;    (interactive (list (read-directory-name "Directory: ")))
+;;    (let* ((default-directory dir)
+;;           (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
+;;      (compile "catkin_make"))
+;;    )
+
+;;  ;; generate compile_commands.json
+;;  (defun ros-catkin-make-json (dir)
+;;    "Run catkin_make command in DIR."
+;;    (interactive (list (read-directory-name "Directory: ")))
+;;    (let* ((default-directory dir)
+;;           (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
+;;      (compile "catkin_make -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ."))
+;;    )
+
+;;  (defun ros-catkin-make-debug (dir)
+;;    "Run catkin_make with Debug mode in DIR."
+;;    (interactive (list (read-directory-name "Directory: ")))
+;;    (let* ((default-directory dir)
+;;           (compilation-buffer-name-function (lambda (major-mode-name) "*catkin_make*")))
+;;      (compile "catkin_make -DCMAKE_BUILD_TYPE=Debug"))
+;;    )
+
+;;(global-set-key (kbd "C-x C-r M") 'ros-catkin-make)
+;;(global-set-key (kbd "C-x C-r C-j") 'ros-catkin-make-json)
 
 (setq hypothesis-username "birromer")
 (setq hypothesis-token "6879-kTl5hR8KRzyVYL5u78DzJdD0Rt0wx0EIpcPHQdmW2y0")
@@ -240,15 +245,57 @@
   :config
   (setq org-fancy-priorities-list '("+" "+" "+")))
 
-(setq org-log-done t)
-(setq org-agenda-file '("~/mega/org/notes.org"
-                        "~/mega/org/todo.org"))
+;(setq org-capture-templates
+;      '(("n" "Notes" entry
+;         (file "~/mega/org/notes/inbox.org") "* %^{Description} %^g\n Added: %U\n%?")
+;        ))
+
+(use-package org-fancy-priorities
+    :config
+  (defun org-hugo-new-subtree-post-capture-template ()
+    (let* ((title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
+           (fname (org-hugo-slug title)))
+      (mapconcat #'identity
+                 `(
+                   ,(concat "* TODO " title)
+                   ":PROPERTIES:"
+                   ,(concat ":EXPORT_FILE_NAME: " fname)
+                   ":END:"
+                   "%?\n")          ;Place the cursor here finally
+                 "\n")))
+
+  (add-to-list 'org-capture-templates
+               '("h"                ;`org-capture' binding + h
+                 "Hugo post"
+                 entry
+                 ;; It is assumed that below file is present in `org-directory'
+                 ;; and that it has a "Blog Ideas" heading. It can even be a
+                 ;; symlink pointing to the actual location of all-posts.org!
+;                 (file+olp "all-posts.org" "Capture")
+                 (file "all-posts.org")
+                 (function org-hugo-new-subtree-post-capture-template))))
 
 (after! org
-    (setq org-todo-keywords '((sequence "TODO(t)" "LOOP(r)" "START(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)" "|" "DONE(d)" "KILLED(k)")
-                              (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)")
-                              (sequence "OKAY(o)" "YES(y)" "|" "NO(n)" ))
+    (setq org-todo-keywords '((sequence "TODO(t)" "OPEN(o)" "START(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)" "|" "CLOSED(c)" "DONE(d)" "KILLED(k)")
+                              (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)"))
   ))
+
+(setq org-todo-keyword-faces
+    (quote (("TODO" :foreground "red" :weight bold)
+            ("OPEN" :foreground "blue" :weight bold)
+            ("START" :foreground "blue" :weight bold)
+            ("WAIT" :foreground "orange" :weight bold)
+            ("HOLD" :foreground "orange" :weight bold)
+            ("IDEA" :foreground "orange" :weight bold)
+            ("DONE" :foreground "forest green" :weight bold)
+            ("CLOSED" :foreground "forest green" :weight bold)
+            ("KILLED" :foreground "forest green" :weight bold))))
+
+;;(setq-default org-export-with-todo-keywords nil)
+
+(setq org-log-done t)
+(setq org-agenda-file '("~/mega/org/todo.org"))
+;; "~/mega/org/notes.org"
 
 (after! org
   (setq org-priority-faces '((65 :foreground "#e45649")
@@ -266,71 +313,71 @@
       org-agenda-block-separator nil
       org-agenda-tags-column 100 ;; from testing this seems to be a good value
       org-agenda-compact-blocks t)
-(setq org-agenda-files "~/mega/org/roam/daily/")
-;;                       "~/mega/org/roam/"
+(setq org-agenda-files "~/mega/org/todo.org")
+;;                       "~/mega/org/roam/")
 ;;                       "~/mega/org/")
-(setq org-agenda-custom-commands
-      '(("o" "Overview"
-         ((agenda "" ((org-agenda-span 'day)
-                      (org-super-agenda-groups
-                       '((:name "Today"
-                          :time-grid t
-                          :date today
-                          :todo "TODAY"
-                          :scheduled today
-                          :order 1)))))
-          (alltodo "" ((org-agenda-overriding-header "")
-                       (org-super-agenda-groups
-                        '((:name "Next to do"
-                           :todo "NEXT"
-                           :order 1)
-                          (:name "Important"
-                           :tag "Important"
-                           :priority "A"
-                           :order 1)
-                          (:name "Due Today"
-                           :deadline today
-                           :order 2)
-                          (:name "Due Soon"
-                           :deadline future
-                           :order 8)
-                          (:name "Overdue"
-                           :deadline past
-                           :face error
-                           :order 7)
-                          (:name "Work"
-                           :tag  "Work"
-                           :order 3)
-                          (:name "Dissertation"
-                           :tag "Dissertation"
-                           :order 7)
-                          (:name "Emacs"
-                           :tag "Emacs"
-                           :order 13)
-                          (:name "Projects"
-                           :tag "Project"
-                           :order 14)
-                          (:name "Essay 1"
-                           :tag "Essay1"
-                           :order 2)
-                          (:name "Reading List"
-                           :tag "Read"
-                           :order 8)
-                          (:name "Work In Progress"
-                           :tag "WIP"
-                           :order 5)
-                          (:name "Blog"
-                           :tag "Blog"
-                           :order 12)
-                          (:name "Essay 2"
-                           :tag "Essay2"
-                           :order 3)
-                          (:name "Trivial"
-                           :priority<= "E"
-                           :tag ("Trivial" "Unimportant")
-                           :todo ("SOMEDAY" )
-                           :order 90)
-                          (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
+;(setq org-agenda-custom-commands
+;      '(("o" "Overview"
+;         ((agenda "" ((org-agenda-span 'day)
+;                      (org-super-agenda-groups
+;                       '((:name "Today"
+;                          :time-grid t
+;                          :date today
+;                          :todo "TODAY"
+;                          :scheduled today
+;                          :order 1)))))
+;          (alltodo "" ((org-agenda-overriding-header "")
+;                       (org-super-agenda-groups
+;                        '((:name "Next to do"
+;                           :todo "NEXT"
+;                           :order 1)
+;                          (:name "Important"
+;                           :tag "Important"
+;                           :priority "A"
+;                           :order 1)
+;                          (:name "Due Today"
+;                           :deadline today
+;                           :order 2)
+;                          (:name "Due Soon"
+;                           :deadline future
+;                           :order 8)
+;                          (:name "Overdue"
+;                           :deadline past
+;                           :face error
+;                           :order 7)
+;                          (:name "Work"
+;                           :tag  "Work"
+;                           :order 3)
+;                          (:name "Dissertation"
+;                           :tag "Dissertation"
+;                           :order 7)
+;                          (:name "Emacs"
+;                           :tag "Emacs"
+;                           :order 13)
+;                          (:name "Projects"
+;                           :tag "Project"
+;                           :order 14)
+;                          (:name "Essay 1"
+;                           :tag "Essay1"
+;                           :order 2)
+;                          (:name "Reading List"
+;                           :tag "Read"
+;                           :order 8)
+;                          (:name "Work In Progress"
+;                           :tag "WIP"
+;                           :order 5)
+;                          (:name "Blog"
+;                           :tag "Blog"
+;                           :order 12)
+;                          (:name "Essay 2"
+;                           :tag "Essay2"
+;                           :order 3)
+;                          (:name "Trivial"
+;                           :priority<= "E"
+;                           :tag ("Trivial" "Unimportant")
+;                           :todo ("SOMEDAY" )
+;                           :order 90)
+;                          (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
 
 (use-package org-journal
   :bind
@@ -406,41 +453,86 @@
   :hook
   (org-mode-hook . toc-org-mode))
 
+;;(use-package! ob-sagemath
+;;  :after org
+;;  :custom
+;;  ;; Ob-sagemath supports only evaluating with a session.
+;;  (setq org-babel-default-header-args:sage '((:session . t)
+;;                                             (:results . "output")))
+;;
+;;  ;; C-c c for asynchronous evaluating (only for SageMath code blocks).
+;;  (with-eval-after-load "org"
+;;    (define-key org-mode-map (kbd "C-c c") 'ob-sagemath-execute-async))
+;;
+;;  ;; Do not confirm before evaluation
+;;  (setq org-confirm-babel-evaluate nil)
+;;
+;;  ;; Do not evaluate code blocks when exporting.
+;;  (setq org-export-babel-evaluate nil)
+;;
+;;  ;; Show images when opening a file.
+;;  (setq org-startup-with-inline-images t)
+;;
+;;  ;; Show images after evaluating code blocks.
+;;  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+
 (setq org-roam-directory "~/mega/org/roam/")
 
 (after! org-roam
-      (map! :leader
-          :prefix "n"
-          :desc "org-roam" "l" #'org-roam
-          :desc "org-roam-node-insert" "i" #'org-roam-node-insert
-          :desc "org-roam-node-find" "f" #'org-roam-node-find
-          :desc "org-roam-buffer-toggle" "b" #'org-roam-buffer-toggle
-          :desc "org-roam-graph" "g" #'org-roam-graph
-          :desc "org-roam-capture-today" "N" #'org-roam-dailies-capture-today
-          :desc "org-roam-capture" "c" #'org-roam-capture)
-      (setq org-roam-ref-capture-templates
-            '(("r" "ref" plain (function org-roam-capture--get-point)
-               "%?"
-               :file-name "websites/${slug}"
-               :head "#+TITLE: ${title}\n,#+ROAM_KEY: ${ref}\n- source :: ${ref}"
-               :unnarrowed t)
-              ("t" "text" plain (function org-roam-capture--get-point)
-               "%?"
-               :file-name "${slug}"
-               :head "#+TITLE: ${title}
-#+LANGUAGE: en
-#+OPTIONS: broken-links:t toc:nil
-#+STARTUP: overview indent
-#+TAGS: noexport(n) deprecated(d) ignore(i)
-#+EXPORT_SELECT_TAGS: export
-#+EXPORT_EXCLUDE_TAGS: noexport
-#+LATEX_CLASS: article
-#+LATEX_CLASS_OPTIONS: [a4paper, 11pt, english]
-#+Latex_HEADER: \\usepackage[utf8]{inputenc}
+    (map! :leader
+        :prefix "n"
+        :desc "org-roam" "l" #'org-roam
+        :desc "org-roam-node-insert" "i" #'org-roam-node-insert
+        :desc "org-roam-node-find" "f" #'org-roam-node-find
+        :desc "org-roam-buffer-toggle" "b" #'org-roam-buffer-toggle
+        :desc "org-roam-graph" "g" #'org-roam-graph
+        :desc "org-roam-capture-today" "N" #'org-roam-dailies-capture-today
+        :desc "org-roam-capture" "c" #'org-roam-capture)
+    (setq org-roam-capture-templates
+    '(("n" "note" plain
+       "%?"
+       :if-new (file+head "main/${slug}.org"
+                          "#+title: ${title}\n#+hugo_lastmod: Time-stamp: <>\n\n - tags :: \n\n* Notes ")
+       :immediate-finish t
+       :unnarrowed t)
+      ("i" "idea" plain "%?"
+       :if-new
+       (file+head "main/${title}.org"
+                  "#+title: ${title}\n\n - tags :: [[id:1b509a50-16cd-4389-b904-3b440678e544][idea]] \n\n* Cues \n- \n\n* Notes ")
+       :immediate-finish t
+       :unnarrowed t)
+      ("d" "doctorat" plain "%?"
+       :if-new
+       (file+head "phd/${title}.org"
+                  "#+title: ${title}\n\n - tags :: [[id:03fca6b0-30c2-4825-a439-b130759a6160][phd]] \n- related work :: \n\n* Notes ")
+       :immediate-finish t
+       :unnarrowed t)
+      ("p" "person" plain "%?"
+       :if-new
+       (file+head "main/${title}.org"
+                  "#+name: ${title}\nPhone: \nEmail: \nAddress: \nOccupation: \nBirthday: \nHow did we meet: \n\n- tags :: [[id:d6760fca-d74a-4513-b5f9-e942933a8ccc][person]] \n\n* Notes ")
+       :immediate-finish t
+       :unnarrowed t)
+      ("m" "meeting" plain "%?"
+       :if-new
+       (file+head "main/${title}.org"
+                  "#+topic: ${title}\n#+date: %t\n- attendees :: \n- tags :: [[id:aa9c4808-810f-420f-a706-f3f922ecb444][meeting]] \n\n* Agenda \n 1. \n\n* Notes\n")
+       :immediate-finish t
+       :unnarrowed t)
+      ("r" "reference" plain "%?"
+       :if-new
+       (file+head "reference/${title}.org"
+                  "#+title: ${title}\n- tags :: \n- related work :: \n\n* Notes\n\n")
+       :immediate-finish t
+       :unnarrowed t)
+      ("a" "article" plain "%?"
+       :if-new
+       (file+head "articles/${title}.org" "#+title: ${title}\n#+filetags: :article:\n")
+       :immediate-finish t
+       :unnarrowed t)))
+    )
 
-* metadata :noexport:
-  - tags :: [[id:61e0b309-641e-47b7-b6b6-d966b65e9900][no_tag]]"
-               :unnarrowed t))))
+(setq org-roam-dailies-directory "~/mega/org/roam/daily/")
 
 (require 'company-org-roam)
 (use-package company-org-roam
@@ -467,14 +559,14 @@
 (setq orb-templates
       '(("r" "ref" plain (function org-roam-capture--get-point) ""
          :file-name "${citekey}"
-         :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}\n" ; <--
+         :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}\n"
          :unnarrowed t)))
 (setq orb-preformat-keywords '(("citekey" . "=key=") "title" "url" "file" "author-or-editor" "keywords"))
 
 (setq orb-templates
       '(("n" "ref+noter" plain (function org-roam-capture--get-point)
          ""
-         :file-name "${slug}"
+         :file-name "reference/${slug}"
          :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS:
 
 - tags ::
@@ -487,6 +579,19 @@
 :NOTER_DOCUMENT: %(orb-process-file-field \"${citekey}\")
 :NOTER_PAGE:
 :END:")))
+
+;;(use-package! websocket
+;;    :after org-roam)
+;;
+;;(use-package! org-roam-ui
+;;    :after org-roam ;; or :after org
+;;    :config
+;;    (setq org-roam-ui-sync-theme t
+;;          org-roam-ui-follow t
+;;          org-roam-ui-update-on-save t
+;;          org-roam-ui-open-on-start t))
+
+;;  (add-hook 'before-save-hook 'time-stamp)
 
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))

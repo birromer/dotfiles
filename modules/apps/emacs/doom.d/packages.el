@@ -73,3 +73,6 @@
 
 (package! esup)
 (package! org-ref)
+
+(package! sage-shell-mode)
+(package! ob-sagemath)
