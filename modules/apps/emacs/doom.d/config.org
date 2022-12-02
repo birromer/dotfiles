@@ -2,7 +2,7 @@
 #+AUTHOR: Bernardo Hummes
 #+EMAIL: hummes@ieee.org
 #+LANGUAGE: en
-#+STARTUP: inlineimages toc:2
+#+STARTUP: inlineimages toc:2 overview
 
 * Introduction
 aaa
@@ -238,11 +238,12 @@ Make UNNUMBERED headers export as =\*section{}=
 Generate markdown files from org for hugo static site generator
 
 #+begin_src emacs-lisp
-;(use-package ox-hugo
-;  :config
-;  (setq org-hugo-base-dir (file-truename "~/mega/org/notes"))
-;  (setq org-hugo-section "post"))
+(use-package ox-hugo
+  :config
+  (setq org-hugo-base-dir (file-truename "~/Sites/bernardo/"))
+  (setq org-hugo-section "post"))
 #+end_src
+
 ** ROS
 #+begin_src emacs-lisp
 ;;  (add-to-list 'load-path "/opt/ros/melodic/share/emacs/site-lisp")
@@ -404,7 +405,6 @@ Populates only the EXPORT_FILE_NAME property in the inserted heading.
                  (file "all-posts.org")
                  (function org-hugo-new-subtree-post-capture-template))))
 #+end_src
-
 
 *** org-todo
 TODO options
@@ -657,50 +657,38 @@ Keybindings and templates
           :desc "org-roam-graph" "g" #'org-roam-graph
           :desc "org-roam-capture-today" "N" #'org-roam-dailies-capture-today
           :desc "org-roam-capture" "c" #'org-roam-capture)
+
+      ; Now everything is a normal note, posts and phd related stuff just get an additional tag
       (setq org-roam-capture-templates
       '(("n" "note" plain
          "%?"
          :if-new (file+head "main/${slug}.org"
-                            "#+title: ${title}\n#+hugo_lastmod: Time-stamp: <>\n\n - tags :: \n\n* Notes ")
-         :immediate-finish t
-         :unnarrowed t)
-        ("i" "idea" plain "%?"
-         :if-new
-         (file+head "main/${title}.org"
-                    "#+title: ${title}\n\n - tags :: [[id:1b509a50-16cd-4389-b904-3b440678e544][idea]] \n\n* Cues \n- \n\n* Notes ")
-         :immediate-finish t
-         :unnarrowed t)
-        ("d" "doctorat" plain "%?"
-         :if-new
-         (file+head "phd/${title}.org"
-                    "#+title: ${title}\n\n - tags :: [[id:03fca6b0-30c2-4825-a439-b130759a6160][phd]] \n- related work :: \n\n* Notes ")
+                            "#+title: ${title}\n#+startup: content\n\n* metadata :ignore:\n- date created :: %t\n- tags :: \n- related :: \n\n* Notes ")
          :immediate-finish t
          :unnarrowed t)
         ("p" "person" plain "%?"
          :if-new
          (file+head "main/${title}.org"
-                    "#+name: ${title}\nPhone: \nEmail: \nAddress: \nOccupation: \nBirthday: \nHow did we meet: \n\n- tags :: [[id:d6760fca-d74a-4513-b5f9-e942933a8ccc][person]] \n\n* Notes ")
+                    "#+name: ${title}\n#+startup: content\n\n* metadata :ignore:\n- date created :: %t\n- tags :: [[id:32ac744b-c312-435e-9406-55fb38aa9085][person]]\n\n* Information\nPhone:\nEmail:\nAddress:\nOccupation:\nBirthday:\nHow did we meet: \n\n* Notes ")
          :immediate-finish t
          :unnarrowed t)
         ("m" "meeting" plain "%?"
          :if-new
-         (file+head "main/${title}.org"
-                    "#+topic: ${title}\n#+date: %t\n- attendees :: \n- tags :: [[id:aa9c4808-810f-420f-a706-f3f922ecb444][meeting]] \n\n* Agenda \n 1. \n\n* Notes\n")
+         (file+head "main/meeting_%<%Y_%m_%d>_${title}.org"
+                    "#+topic: ${title}\n#+startup: content\n#+date: %t\n\n* metadata :ignore:\n- tags :: [[id:26b5de5d-2806-4b7d-b7d3-b785c231f137][meeting]] \n- attendees :: \n\n* Agenda \n 1. \n\n* Notes\n")
          :immediate-finish t
          :unnarrowed t)
-        ("r" "reference" plain "%?"
+        ("h" "hugo post" plain "%?"
          :if-new
-         (file+head "reference/${title}.org"
-                    "#+title: ${title}\n- tags :: \n- related work :: \n\n* Notes\n\n")
-         :immediate-finish t
-         :unnarrowed t)
-        ("a" "article" plain "%?"
-         :if-new
-         (file+head "articles/${title}.org" "#+title: ${title}\n#+filetags: :article:\n")
+         (file+head "post/${title}.org" "#+title: ${title}\n#+filetags: :article:\n")
          :immediate-finish t
          :unnarrowed t)))
       )
 #+end_src
+
+#+RESULTS:
+| n | note | plain | %? | :if-new | (file+head main/%<%Y_%m_%d>_${slug}.org #+title: ${title} |
+
 
 
 Dailies
