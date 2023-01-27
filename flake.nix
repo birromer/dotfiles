@@ -22,7 +22,7 @@
 
   # function with inputs as parameters
   outputs = inputs @ { nixpkgs, home-manager, darwin, ... }: {
-    darwinConfigurations.MBP = inputs.darwin.lib.darwinSystem {
+    darwinConfigurations.bernardo = inputs.darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       pkgs = import inputs.nixpkgs { system = "aarch64-darwin"; };
       modules = [
@@ -93,7 +93,7 @@
             ];
           };
 
-          inputs.home-manager.darwinModules.home-manager {
+          inputs.home-manager.darwinModules.home-manager = {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
@@ -155,7 +155,7 @@
                 })
               ];
             };
-          }
+          };
         })
       ];
     };
