@@ -55,6 +55,44 @@
               KeyRepeat = 1;
             };
           };
+
+          # backwards compat; don't change
+          system.stateVersion = 4;
+          homebrew = {
+            enable = true;
+            caskArgs.no_quarantine = true;
+            global.brewfile = true;
+            masApps = { };
+            casks = [
+              "dropbox"
+              "firefox"
+              "flameshot"
+              "font-hack-nerd-font"
+              "font-inconsolata-lgc-nerd-font"
+              "font-mononoki"
+              "inkscape"
+              "megasync"
+              "sage"
+              "spotify"
+              "stats"
+              "thunderbird"
+              "vlc"
+            ];
+            taps = [
+              "koekeishiya/formulae"
+              "zegervdv/zathura"
+              "felixkratz/formulae"
+              "d12frosted/emacs-plus"
+            ];
+            brews = [
+              "emacs-plus"
+              "sketchybar"
+              "zathura"
+              "girara"
+              "zathura-pdf-poppler"
+            ];
+          };
+
         })
       ];
     };
