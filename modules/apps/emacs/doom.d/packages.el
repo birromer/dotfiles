@@ -76,3 +76,6 @@
 
 (package! sage-shell-mode)
 (package! ob-sagemath)
+
+(unpin! org-roam)
+(package! org-roam-ui)

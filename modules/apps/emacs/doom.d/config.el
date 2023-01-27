@@ -91,52 +91,8 @@
 
   (add-to-list 'org-latex-classes '("IEEEtran"
                                     "\\documentclass{IEEEtran}" ("\\section{%s}" . "\\section*{%s}")
-                                    ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" .
-                                                                                "\\subsubsection*{%s}") ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                                    ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}") ("\\paragraph{%s}" . "\\paragraph*{%s}")
                                     ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
-                                        ;(add-to-list
-                                        ; 'org-structure-template-alist ; '(,"B" ;"#+TITLE: ;,#+AUTHOR: ;,#+EMAIL:
-                                        ;,#+DATE: \\today ;,#+DESCRIPTION: ;,#+KEYWORDS: ;,#+LANGUAGE: en
-                                        ;,#+LaTeX_HEADER: \\institute[short]{long}
-
-                                        ;,#+STARTUP: beamer ,#+STARTUP: oddeven ,#+STARTUP: latexpreview
-
-                                        ;,#+LaTeX_CLASS: beamer ,#+LaTeX_CLASS_OPTIONS: [bigger]
-                                        ;,#+latex_class_options: [9pt]
-
-                                        ;,#+BEAMER_THEME: Frankfurt
-
-                                        ;,#+OPTIONS: H:2 toc:t
-
-                                        ;,#+SELECT_TAGS: export ,#+EXCLUDE_TAGS: noexport
-
-                                        ;,#+latex_header: \\usepackage{amsmath} ,#+latex_header:
-                                        ;\\usepackage{amsfonts} ,#+latex_header: \\usepackage{amssymb}
-
-                                        ;,#+latex_header: \\useinnertheme[shadow=false]{rounded} ,#+latex_header:
-                                        ;\\usecolortheme{orchid} ,#+begin_src latex ,\\setbeamertemplate{footline} ,{
-                                        ;, \\leavevmode% , \\hbox{% ,
-                                        ;\\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,center]{author
-                                        ;in head/foot}% , \\usebeamerfont{author in head/foot}\\insertshortauthor ,
-                                        ;\\end{beamercolorbox}% ,
-                                        ;\\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,center]{title
-                                        ;in head/foot}% , \\usebeamerfont{title in head/foot}\\insertshorttitle ,
-                                        ;\\end{beamercolorbox}% ,
-                                        ;\\begin{beamercolorbox}[wd=.333333\\paperwidth,ht=1.55ex,dp=1ex,right]{date
-                                        ;in head/foot}% , \\usebeamerfont{institute in
-                                        ;head/foot}\\insertshortinstitute{}\\hspace*{2em} , \\insertframenumber{} /
-                                        ;\\inserttotalframenumber\\hspace*{2ex} , \\end{beamercolorbox}}% ,
-                                        ;\\vskip0pt% ,} ,,#+end_src
-
-
-                                        ;,,* Emacs setup :noexport: ,# Local Variables: ,# eval: (add-to-list
-                                        ;'load-path ".") ,# eval: (indent-tabs-mode nil) ,# eval: (tab-width 4) ,#
-                                        ;eval: (fill-column 70) ,# eval: (sentence-end-double-space t) ,# eval:
-                                        ;(org-edit-src-content-indentation 0) ,# eval: (org-adapt-indentation nil) ,#
-                                        ;eval: (org-list-two-spaces-after-bullet-regexp nil) ,# eval:
-                                        ;(org-list-description-max-indent 5) ,# eval: (org-blank-before-new-entry
-                                        ;'((heading . auto) (plain-list-item . auto))) ,# eval: (set-input-method
-                                        ;'TeX) ,# eval: (org-pretty-entities t) ,# End:\n\n? "))
 
 (map! :leader
       :prefix "c"
@@ -391,10 +347,18 @@
 (setq org-journal-enable-agenda-integration t)
 
 (use-package! org-ref
-    :after org
-    :preface
-    (defconst birromer/user-org-ref-path
-      (expand-file-name "~/mega/org/"))
+  :after org
+  :ensure t
+  :preface
+  (defconst birromer/user-org-ref-path
+    (expand-file-name "~/mega/org/"))
+  :init
+  (with-eval-after-load 'ox
+    (defun my/org-ref-process-buffer--html (backend)
+      (when (org-export-derived-backend-p backend 'html)
+        (org-ref-process-buffer 'html)))
+    (add-to-list 'org-export-before-parsing-hook #'my/org-ref-process-buffer--html))
+
     :custom
     (org-ref-bibliography-notes "~/mega/org/notes.org")
     (org-ref-default-bibliography '("~/mega/org/library.bib"))
@@ -406,7 +370,6 @@
     (org-ref-show-broken-links nil)
     (org-ref-notes-directory birromer/user-org-ref-path)
 
-    :init
     :general
     (:states '(normal visual)
      :keymaps 'org-mode-map
@@ -479,42 +442,61 @@
 (setq org-roam-directory "~/mega/org/roam/")
 
 (after! org-roam
-    (map! :leader
-        :prefix "n"
-        :desc "org-roam" "l" #'org-roam
-        :desc "org-roam-node-insert" "i" #'org-roam-node-insert
-        :desc "org-roam-node-find" "f" #'org-roam-node-find
-        :desc "org-roam-buffer-toggle" "b" #'org-roam-buffer-toggle
-        :desc "org-roam-graph" "g" #'org-roam-graph
-        :desc "org-roam-capture-today" "N" #'org-roam-dailies-capture-today
-        :desc "org-roam-capture" "c" #'org-roam-capture)
+      (map! :leader
+          :prefix "n"
+          :desc "org-roam" "l" #'org-roam
+          :desc "org-roam-node-insert" "i" #'org-roam-node-insert
+          :desc "org-roam-node-find" "f" #'org-roam-node-find
+          :desc "org-roam-buffer-toggle" "b" #'org-roam-buffer-toggle
+          :desc "org-roam-graph" "g" #'org-roam-graph
+          :desc "org-roam-capture-today" "N" #'org-roam-dailies-capture-today
+          :desc "org-roam-capture" "c" #'org-roam-capture)
 
-    ; Now everything is a normal note, posts and phd related stuff just get an additional tag
-    (setq org-roam-capture-templates
-    '(("n" "note" plain
-       "%?"
-       :if-new (file+head "main/${slug}.org"
-                          "#+title: ${title}\n#+startup: content\n\n* metadata :ignore:\n- date created :: %t\n- tags :: \n- related :: \n\n* Notes ")
-       :immediate-finish t
-       :unnarrowed t)
-      ("p" "person" plain "%?"
-       :if-new
-       (file+head "main/${title}.org"
-                  "#+name: ${title}\n#+startup: content\n\n* metadata :ignore:\n- date created :: %t\n- tags :: [[id:32ac744b-c312-435e-9406-55fb38aa9085][person]]\n\n* Information\nPhone:\nEmail:\nAddress:\nOccupation:\nBirthday:\nHow did we meet: \n\n* Notes ")
-       :immediate-finish t
-       :unnarrowed t)
-      ("m" "meeting" plain "%?"
-       :if-new
-       (file+head "main/meeting_%<%Y_%m_%d>_${title}.org"
-                  "#+topic: ${title}\n#+startup: content\n#+date: %t\n\n* metadata :ignore:\n- tags :: [[id:26b5de5d-2806-4b7d-b7d3-b785c231f137][meeting]] \n- attendees :: \n\n* Agenda \n 1. \n\n* Notes\n")
-       :immediate-finish t
-       :unnarrowed t)
-      ("h" "hugo post" plain "%?"
-       :if-new
-       (file+head "post/${title}.org" "#+title: ${title}\n#+filetags: :article:\n")
-       :immediate-finish t
-       :unnarrowed t)))
-    )
+      ; Now everything is a normal note, posts and phd related stuff just get an additional tag
+      (setq org-roam-mode-sections
+       (list #'org-roam-backlinks-section
+             #'org-roam-reflinks-section
+             #'org-roam-unlinked-references-section
+            ))
+      (setq org-roam-capture-templates
+      '(("n" "note" plain
+         "%?"
+         :if-new (file+head "main/${slug}.org"
+                            "#+title: ${title}\n
+* COMMENT metadata
+- date created :: %t
+- tags ::
+- related :: \n
+* setup :ignore:
+#+startup: overview indent
+#+latex_class: article
+#+LATEX_CLASS_OPTIONS: [a4paper, 11pt, english, leqno, hidelinks]
+#+setupfile: ../../org.setup\n
+* Notes\n\n\n
+* bibliography :ignore:
+[[bibliographystyle:ieeetr]]
+[[bibliography:~/mega/org/library.bib]]")
+
+         :immediate-finish t
+         :unnarrowed t)
+        ("p" "person" plain "%?"
+         :if-new
+         (file+head "main/${title}.org"
+                    "#+name: ${title}\n#+startup: content\n\n* metadata :ignore:\n- date created :: %t\n- tags :: [[id:32ac744b-c312-435e-9406-55fb38aa9085][person]]\n\n* Information\nPhone:\nEmail:\nAddress:\nOccupation:\nBirthday:\nHow did we meet: \n\n* Notes ")
+         :immediate-finish t
+         :unnarrowed t)
+        ("m" "meeting" plain "%?"
+         :if-new
+         (file+head "main/meeting_%<%Y_%m_%d>_with_${title}.org"
+                    "#+topic: ${title}\n#+startup: content\n#+date: %t\n\n* metadata :ignore:\n- tags :: [[id:26b5de5d-2806-4b7d-b7d3-b785c231f137][meeting]] \n- attendees :: \n\n* Agenda \n 1. \n\n* Notes\n")
+         :immediate-finish t
+         :unnarrowed t)
+        ("h" "hugo post" plain "%?"
+         :if-new
+         (file+head "post/${title}.org" "#+title: ${title}\n#+filetags: :article:\n")
+         :immediate-finish t
+         :unnarrowed t)))
+      )
 
 (setq org-roam-dailies-directory "~/mega/org/roam/daily/")
 
@@ -564,16 +546,17 @@
 :NOTER_PAGE:
 :END:")))
 
-;;(use-package! websocket
-;;    :after org-roam)
-;;
-;;(use-package! org-roam-ui
-;;    :after org-roam ;; or :after org
-;;    :config
-;;    (setq org-roam-ui-sync-theme t
-;;          org-roam-ui-follow t
-;;          org-roam-ui-update-on-save t
-;;          org-roam-ui-open-on-start t))
+(use-package! websocket
+    :after org-roam)
+
+(use-package! org-roam-ui
+    :after org-roam
+    :hook (after-init . org-roam-ui-mode)
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
 
 ;;  (add-hook 'before-save-hook 'time-stamp)
 
