@@ -93,6 +93,69 @@
             ];
           };
 
+          inputs.home-manager.darwinModules.home-manager {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.bernardo.imports = [
+                ({ pkgs, ... }: {
+                  # don't change this when you change package input
+                  home.stateVersion = "22.11";
+                  # home-manager configurations
+                  home.packages = [
+                    pkgs.ripgrep
+                    pkgs.fd
+                    pkgs.curl
+                    pkgs.less
+                    inputs.pwnvim.packages."aarch64-darwin".default
+                  ];
+                  # home.sessionVariables = {
+                  #   PAGER = "less";
+                  #   CLICLOLOR = 1;
+                  #   EDITOR = "nvim";
+                  # };
+                  programs = {
+                    bat = {
+                      enable = true;
+                      config.theme = "TwoDark";
+                    };
+                    fzf = {
+                      enable = true;
+                      enableZshIntegration = true;
+                    };
+                    exa.enable = true;
+                    git.enable = true;
+                    zsh = {
+                      enable = true;
+                      enableCompletion = true;
+                      enableAutosuggestions = true;
+                      enableSyntaxHighlighting = true;
+                      shellAliases = {
+                        ls = "ls --color=auto -F";
+                        la = "ls -a";
+                        ll = "ls -l";
+                        kakapo = "curl parrot.live";
+                      };
+                    };
+                    starship = {
+                      enable = true;
+                      enableZshIntegration = true;
+                    };
+                  };
+                  home.file.".inputrc".text = ''
+                    set show-all-if-ambiguous on
+                    set completion-ignore-case on
+                    set mark-directories on
+                    set mark-symlinked-directories on
+                    set match-hidden-files off
+                    set visible-stats on
+                    set keymap vi
+                    set editing-mode vi-insert
+                  '';
+                })
+              ];
+            };
+          }
         })
       ];
     };
