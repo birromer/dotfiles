@@ -2,7 +2,7 @@
 #+AUTHOR: Bernardo Hummes
 #+EMAIL: hummes@ieee.org
 #+LANGUAGE: en
-#+STARTUP: inlineimages toc:2 overview
+#+STARTUP: inlineimages toc:2 show2levels
 
 * Introduction
 aaa
@@ -111,7 +111,8 @@ Latex org exporter
   (org-latex-listings 'minted)
   (org-latex-minted-options '(("breaklines") ("breakafter" "d") ("linenos"
                                                                  "true") ("xleftmargin" "\\parindent")))
-  (org-latex-pdf-process '("latexmk -pdflatex='pdflatex -shell-escape -interaction nonstopmode' -pdf -bibtex -f %f"))
+  ; (org-latex-pdf-process '("latexmk -pdflatex='pdflatex -shell-escape -interaction nonstopmode' -pdf -bibtex -f %f"))
+  (org-latex-pdf-process '("lualatex -shell-escape -bibtex -f %f"))
 
   :config
   (add-to-list
@@ -126,8 +127,7 @@ Latex org exporter
                                            "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
   (add-to-list 'org-latex-classes '("if-beamer" "\\documentclass{if-beamer}"
                                     ("\\chapter{%s}" . "\\chapter*{%s}") ("\\section{%s}" . "\\section*{%s}")
-                                    ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" .
-                                                                                "\\subsubsection*{%s}")))
+                                    ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
   (add-to-list 'org-latex-classes
                '("mimosis"
                  "\\documentclass{mimosis}
@@ -172,6 +172,7 @@ Export org to md for hugo
 
 Quick latex snippet preview
 #+begin_src emacs-lisp
+  (setq org-latex-create-formula-image-program 'dvipng)
   (global-set-key (kbd "C-c C-g") 'org-toggle-latex-fragment)
 #+end_src
 
@@ -198,6 +199,12 @@ Generate markdown files from org for hugo static site generator
   :config
   (setq org-hugo-base-dir (file-truename "~/Sites/bernardo/"))
   (setq org-hugo-section "post"))
+#+end_src
+** org-chef
+
+#+begin_src emacs-lisp
+(use-package org-chef
+  :ensure t)
 #+end_src
 
 ** ROS
@@ -271,6 +278,16 @@ Having problems with startup time, gotta trim
 ;;    :config
 ;;    ;; To disable collection of benchmark data after init is done.
 ;;    (add-hook 'after-init-hook 'benchmark-init/deactivate))
+#+end_src
+** spell-fu
+#+begin_src emacs-lisp
+; (use-package spell-fu
+;   :config
+;   (add-hook 'spell-fu-mode-hook
+;     (lambda ()
+;      (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
+;      (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "fr"))
+;      (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "pt"))))
 #+end_src
 
 * File modes
@@ -351,7 +368,7 @@ Populates only the EXPORT_FILE_NAME property in the inserted heading.
                  "\n")))
 
   (add-to-list 'org-capture-templates
-               '("h"                ;`org-capture' binding + h
+               '("h"
                  "Hugo post"
                  entry
                  ;; It is assumed that below file is present in `org-directory'
@@ -366,7 +383,7 @@ Populates only the EXPORT_FILE_NAME property in the inserted heading.
 TODO options
 #+begin_src emacs-lisp
 (after! org
-    (setq org-todo-keywords '((sequence "TODO(t)" "OPEN(o)" "START(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)" "|" "CLOSED(c)" "DONE(d)" "KILLED(k)")
+    (setq org-todo-keywords '((sequence "TODO(t)" "OPEN(o)" "STARTED(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)" "|" "CLOSED(c)" "DONE(d)" "KILLED(k)")
                               (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)"))
   ))
 #+end_src
@@ -376,7 +393,7 @@ TODO faces
 (setq org-todo-keyword-faces
     (quote (("TODO" :foreground "red" :weight bold)
             ("OPEN" :foreground "blue" :weight bold)
-            ("START" :foreground "blue" :weight bold)
+            ("STARTED" :foreground "blue" :weight bold)
             ("WAIT" :foreground "orange" :weight bold)
             ("HOLD" :foreground "orange" :weight bold)
             ("IDEA" :foreground "orange" :weight bold)
@@ -606,6 +623,8 @@ Change format of the dates and folder
 Base directory
 #+begin_src emacs-lisp
   (setq org-roam-directory "~/mega/org/roam/")
+  (setq org-roam-completion-everywhere t)
+;  (setq find-file-visit-truename t)
 #+end_src
 
 Keybindings and templates
@@ -620,47 +639,115 @@ Keybindings and templates
           :desc "org-roam-graph" "g" #'org-roam-graph
           :desc "org-roam-capture-today" "N" #'org-roam-dailies-capture-today
           :desc "org-roam-capture" "c" #'org-roam-capture)
-
-      ; Now everything is a normal note, posts and phd related stuff just get an additional tag
+      (setq org-roam-list-files-commands '(find fd fdfind rg))
       (setq org-roam-mode-sections
        (list #'org-roam-backlinks-section
              #'org-roam-reflinks-section
              #'org-roam-unlinked-references-section
             ))
       (setq org-roam-capture-templates
-      '(("n" "note" plain
+      '(("a" "(add) personal note" plain
          "%?"
          :if-new (file+head "main/${slug}.org"
                             "#+title: ${title}\n
-,* COMMENT metadata
+,* COMMENT Metadata
 - date created :: %t
 - tags ::
 - related :: \n
-,* setup :ignore:
-,#+startup: overview indent
+,* Setup :ignore:
+,#+startup: nofold
 ,#+latex_class: article
-,#+LATEX_CLASS_OPTIONS: [a4paper, 11pt, english, leqno, hidelinks]
-,#+setupfile: ../../org.setup\n
-,* Notes\n\n\n
-,* bibliography :ignore:
+,#+LATEX_CLASS_OPTIONS: [a4paper, 12pt, english, leqno, hidelinks]
+,#+setupfile: ../org.setup\n
+,* Notes\n
+,* COMMENT TODO\n\n
+,* Bibliography :ignore:
 [[bibliographystyle:ieeetr]]
-[[bibliography:~/mega/org/library.bib]]")
-
+[[bibliography:~/mega/org/roam/library.bib]]")
          :immediate-finish t
          :unnarrowed t)
-        ("p" "person" plain "%?"
+        ("n" "phd note" plain
+         "%?"
+         :if-new (file+head "notes/${slug}.org"
+                            "#+title: ${title}\n
+,* COMMENT Metadata
+- date created :: %t
+- tags ::
+- related :: \n
+,* Setup :ignore:
+,#+startup: nofold
+,#+latex_class: article
+,#+LATEX_CLASS_OPTIONS: [a4paper, 12pt, english, leqno, hidelinks]
+,#+options: broken-links:auto
+,#+setupfile: ../org.setup\n
+,* Notes\n
+,* COMMENT TODO\n\n
+,* Bibliography :ignore:
+[[bibliographystyle:ieeetr]]
+[[bibliography:~/mega/org/roam/library.bib]]")
+         :immediate-finish t
+         :unnarrowed t)
+        ("h" "human" plain "%?"
          :if-new
          (file+head "main/${title}.org"
-                    "#+name: ${title}\n#+startup: content\n\n* metadata :ignore:\n- date created :: %t\n- tags :: [[id:32ac744b-c312-435e-9406-55fb38aa9085][person]]\n\n* Information\nPhone:\nEmail:\nAddress:\nOccupation:\nBirthday:\nHow did we meet: \n\n* Notes ")
+                    "#+title: ${title}\n#+startup: nofold\n\n* metadata :ignore:\n- date created :: %t\n- tags :: [[id:32ac744b-c312-435e-9406-55fb38aa9085][person]]\n\n* Information\nPhone:\nEmail:\nAddress:\nOccupation:\nBirthday:\nHow did we meet: \n\n* Notes ")
          :immediate-finish t
          :unnarrowed t)
         ("m" "meeting" plain "%?"
          :if-new
-         (file+head "main/meeting_%<%Y_%m_%d>_with_${title}.org"
-                    "#+topic: ${title}\n#+startup: content\n#+date: %t\n\n* metadata :ignore:\n- tags :: [[id:26b5de5d-2806-4b7d-b7d3-b785c231f137][meeting]] \n- attendees :: \n\n* Agenda \n 1. \n\n* Notes\n")
+         (file+head "notes/meeting_%<%Y_%m_%d>_with_${slug}.org"
+                    "
+,#+filetags: meeting\n
+,#+title:Meeting %<%A, %d %B %Y> with ${title}
+,#+topic: \n
+,#+startup: nofold\n#+date: %t\n\n* metadata :ignore:\n- tags :: [[id:26b5de5d-2806-4b7d-b7d3-b785c231f137][meeting]] \n- attendees :: \n\n* Agenda \n 1. \n\n* Notes\n")
          :immediate-finish t
          :unnarrowed t)
-        ("h" "hugo post" plain "%?"
+        ("r" "recipe" plain
+         "%?"
+         :if-new (file+head "recipes/${slug}.org"
+                            "#+title: ${title}\n
+,* COMMENT Metadata
+- date created :: %t
+- tags :: [[id:0a0955ea-16a0-4014-be78-6c77a7956c58][recipe]]
+- ingredients ::
+,#+filetags: recipe\n
+,* Setup :ignore:
+,#+startup: nofold
+,#+options: toc:nil H:2 tags:nil broken-links:auto title:nil
+,#+latex_class: book
+,#+latex_class_options: [twosides, 12pt]
+,#+latex_header: \\usepackage[utf8]{inputenc}
+,#+latex_header: \\usepackage[T1]{fontenc}
+,#+latex_header: \\usepackage[]{../files/tex/cuisine}\n
+,* Contents :ignore:
+,** Overview :ignore:\n
+\\recette{${title}}
+\\preptime{20 min}
+\\cooktime{20 min}
+\\baketime{210\\textdegree C, 45 min}
+\\cooltime{ 20 min}
+\\people{6}
+\\robot{}\n
+,** Ingredients :ignore:\n
+,#+latex: \\begin{recipe}{
+,#+begin_src latex
+\\unit[1.5]{kg} & ingredient 1 \\\\
+\\unit[1]{l}    & ingredient 2
+,#+end_src\n
+,** Instructions :ignore:\n
+,#+latex: }{
+,#+begin_src latex
+\\item step 1
+\\item step 2
+,#+end_src
+,#+latex: }\\end{recipe}\n
+,** Extra :ignore:\n
+\\info{information about the recipe, something to take care of.}
+\\photo{~/mega/org/roam/files/img/poset_cat_ex.jpg}")
+         :immediate-finish t
+         :unnarrowed t)
+        ("p" "hugo post" plain "%?"
          :if-new
          (file+head "post/${title}.org" "#+title: ${title}\n#+filetags: :article:\n")
          :immediate-finish t
@@ -693,15 +780,14 @@ Note searching
     (deft-recursive t)
     (deft-use-filter-string-for-filename t)
     (deft-default-extension "org")
-    (deft-directory "~/mega/org/roam/"
-      "~/mega/org/roam/daily/"))
+    (deft-directory "~/mega/org/roam/"))
 #+end_src
 
 
 Bibtex integration
 #+begin_src emacs-lisp
   (use-package! org-roam-bibtex
-    :load-path "~/mega/org/library.bib"
+    :load-path "~/mega/org/roam/library.bib"
     :hook (org-roam-mode . org-roam-bibtex-mode)
     :bind (:map org-mode-map
            (("C-c n a" . orb-note-actions))))
