@@ -1,0 +1,15 @@
+{
+  "name": "custom-latex-snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": [
+          "plaintex",
+          "tex",
+          "all"
+        ],
+        "path": "latex.json"
+      }
+    ]
+  }
+}
