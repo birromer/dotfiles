@@ -9,6 +9,12 @@
           "all"
         ],
         "path": "latex.json"
+      },
+      {
+        "language": [
+          "all"
+        ],
+        "path": "tree.json"
       }
     ]
   }

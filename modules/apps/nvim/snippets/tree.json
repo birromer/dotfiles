@@ -1,0 +1,119 @@
+{
+  "Frontmatter": {
+    "prefix": "front",
+    "body": [
+      "\\title{$1}",
+      "\\author{bernardohummes}",
+      "\\date{2023-12-12}"
+    ],
+    "description": "Add base forntmatter to tree"
+  },
+  "Taxon": {
+    "prefix": "taxon",
+    "body": [
+      "\\taxon{$1}"
+    ],
+    "description": "Add taxon ()"
+  },
+  "Ordered listing": {
+    "prefix": "ol",
+    "body": [
+      "\\ol{",
+      "\t$0",
+      "}"
+    ],
+    "description": "Add an ordered listing"
+  },
+  "Paragraph": {
+    "prefix": "par",
+    "body": [
+      "\\p{",
+      "\t$0",
+      "}"
+    ],
+    "description": "Add paragraph"
+  },
+  "Code": {
+    "prefix": "code",
+    "body": [
+      "\\code{",
+      "\t$0",
+      "}"
+    ],
+    "description": "Add code"
+  },
+  "Display math": {
+    "prefix": "##",
+    "body": [
+      "##{",
+      "\t$0",
+      "}"
+    ],
+    "description": "Add display math"
+  },
+  "Inline math": {
+    "prefix": "#",
+    "body": [
+      "#{$0}"
+    ],
+    "description": "Add inline math"
+  },
+  "Listing item": {
+    "prefix": "li",
+    "body": [
+      "\\li{$0}"
+    ],
+    "description": "Add a listing item"
+  },
+  "Emphasis": {
+    "prefix": "emph",
+    "body": [
+      "\\em{$1}"
+    ],
+    "description": "Add emphasis"
+  },
+  "Bold": {
+    "prefix": "bold",
+    "body": [
+      "\\b{$0}"
+    ],
+    "description": "Add bold"
+  },
+  "Tex": {
+    "prefix": "tex",
+    "body": [
+      "\\tex{",
+      "\t$0",
+      "}"
+    ],
+    "description": "Add tex environment"
+  },
+  "Import": {
+    "prefix": "import",
+    "body": [
+      "\\import{$1}"
+    ],
+    "description": "Add import"
+  },
+  "Export": {
+    "prefix": "export",
+    "body": [
+      "\\export{$1}"
+    ],
+    "description": "Add export"
+  },
+  "Transclude": {
+    "prefix": "transclude",
+    "body": [
+      "\\transclude{$1}"
+    ],
+    "description": "Add transclude"
+  },
+  "Hyperlink": {
+    "prefix": "[]",
+    "body": [
+      "[$0]($1)"
+    ],
+    "description": "Add hyperlink"
+  }
+}

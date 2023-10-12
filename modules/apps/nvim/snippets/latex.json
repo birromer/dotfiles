@@ -1,0 +1,170 @@
+{
+  "EqTikz": {
+    "prefix": "eq-tikz",
+    "body": [
+      "\\begin{equation}",
+      "\t\\begin{tikz-cd}",
+      "\t\t$0",
+      "\t\\end{tikz-cd}",
+      "\t\\label{diag:$1}",
+      "\\end{equation}"
+    ],
+    "description": "Add an equation surrounded tikz-cd diagram"
+  },
+  "Tikz": {
+    "prefix": "tikz",
+    "body": [
+      "\\begin{tikz-cd}",
+      "\t$0",
+      "\\end{tikz-cd}"
+    ],
+    "description": "Add a tikz-cd diagram"
+  },
+  "Inline Math — \\( … \\)": {
+    "prefix": "fm",
+    "body": [
+      "\\($TM_SELECTED_TEXT$1\\)"
+    ],
+    "description": "Display Math"
+  },
+  "Inkscape": {
+    "prefix": "inkscape",
+    "body": [
+      "\\begin{figure}[H]",
+      "\t\\begin{center}",
+      "\t\t\\incfig{figures/$1.pdf_tex}",
+      "\t\\end{center}",
+      "\t\\caption{$3}\\label{fig:$4}",
+      "\\end{figure}",
+      "$0"
+    ],
+    "description": "Add a an inkscape (vector) figure"
+  },
+  "Category": {
+    "prefix": "category",
+    "body": [
+      "\\cat{$1}"
+    ],
+    "description": "Add an inkscape (vector) figure"
+  },
+  "Beamer": {
+    "prefix": "t_beamer",
+    "body": [
+      "\\documentclass[bigger, 9pt]{beamer}",
+      "\\usetheme{CambridgeUS}",
+      "\\AtBeginSection[]{\\begin{frame}<beamer>\\frametitle{Presentat‌​‌​ion agenda}\\tableofcontents[currentsection]\\end{frame}}",
+      "\\setbeamertemplate{blocks}[rounded][shadow=false]\n",
+      "\\input{phd-beamer-header.tex}",
+      "\\input{phd-macros.tex}",
+      "\\addbibresource{../library.bib}\n",
+      "\\title{$1}",
+      "\\author{Bernardo Hummes Flores}",
+      "\\date{\\today}\n",
+      "\\begin{document}\n",
+      "\\maketitle",
+      "\\begin{frame}{Outline}",
+      "\\tableofcontents",
+      "\\end{frame}\n",
+      "$0\n",
+      "\\printbibliography",
+      "\\end{document}"
+    ],
+    "description": "Add beamer template"
+  },
+  "Beamer columns": {
+    "prefix": "columns",
+    "body": [
+      "\\begin{columns}",
+      "\t\\begin{column}{0.$1\\columnwidth}",
+      "\t\t$0",
+      "\t\\end{column}",
+      "\t\\begin{column}{0.$2\\columnwidth}",
+      "\t\t$0",
+      "\t\\end{column}",
+      "\\end{columns}"
+    ],
+    "description": "Beamer columns"
+  },
+  "Beamer column": {
+    "prefix": "column",
+    "body": [
+      "\\begin{column}{0.$1\\columnwidth}",
+      "\t$0",
+      "\\end{column}"
+    ],
+    "description": "Beamer columns"
+  },
+  "Beamer block": {
+    "prefix": "block",
+    "body": [
+      "\\begin{block}{$1}",
+      "\t$0",
+      "\\end{block}"
+    ],
+    "description": "Beamer block"
+  },
+  "Beamer frame": {
+    "prefix": "frame",
+    "body": [
+      "\\begin{frame}{$1}",
+      "\t$0",
+      "\\end{frame}"
+    ],
+    "description": "Beamer frame"
+  },
+  "Footnote": {
+    "prefix": "footnote",
+    "body": [
+      "\\footnote{$1}"
+    ],
+    "description": "Add an inkscape (vector) figure"
+  },
+  "Import": {
+    "prefix": "import",
+    "body": [
+      "\\zimport{./}{$1}"
+    ],
+    "description": "Import file correcting headers"
+  },
+  "Notes": {
+    "prefix": "t_note",
+    "body": [
+      "%! TEX root = $1.tex",
+      "\\documentclass[class=article,crop=false,a4paper,12pt,leqno,hidelinks]{standalone}",
+      "\\usepackage{standalone}",
+      "\\input{phd-header}",
+      "\\input{phd-macros}",
+      "\\addbibresource{phd-refs.bib}\n",
+      "\\title{$2}",
+      "\\author{BHF}",
+      "\\date{\\today}\n",
+      "\\begin{document}",
+      "%─────Document───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
+      "\\ifcsname c@InputDepth\\endcsname",
+      "\t% Increase existing counter if imported file",
+      "\t\\addtocounter{InputDepth}{1}",
+      "\\else",
+      "\t% Initialize new counter if main file",
+      "\t\\newcounter{InputDepth}",
+      "\t% Display title, table of contents and table of TODOs only if main file",
+      "\t\\maketitle",
+      "\t\\tableofcontents%",
+      "\t\\setcounter{tocdepth}{1}%",
+      "\t\\listoftodos%",
+      "\\fi",
+      "%─────Content────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
+      "\n$0\n",
+      "%─────End content───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
+      "\\ifnumcomp{\\value{InputDepth}}{=}{0}{%",
+      "\t\\newpage",
+      "\t\\section*{Bibliography}",
+      "\t\\printbibliography",
+      "}{%",
+      "\t\\addtocounter{InputDepth}{-1}",
+      "}",
+      "%─────End document──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
+      "\\end{document}"
+    ],
+    "description": "Add note template"
+  }
+}
