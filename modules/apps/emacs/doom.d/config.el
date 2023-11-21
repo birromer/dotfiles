@@ -5,15 +5,27 @@
 ;;  (setq doom-font (font-spec :family "Source Code Pro" :size 14))
 ;;  (setq doom-font (font-spec :family "Inconsolata" :size 14))
   (setq doom-font (font-spec :family "Mononoki" :size 14))
+;;  (setq doom-unicode-font (font-spec :family "JuliaMono" :size 14))
+  (setq doom-unicode-font (font-spec :family "XITS Math" :size 14))
+  ; (add-to-list 'doom-symbol-fallback-font-families '("MesloLGS NF"))
 
-;(setq doom-theme 'doom-dracula)
+;(use-package! unicode-fonts
+;  :config
+;  ;; Common math symbols
+;  (dolist (unicode-block '("Mathematical Alphanumeric Symbols"))
+;    (push "JuliaMono" (cadr (assoc unicode-block unicode-fonts-block-font-mapping)))))
+;  (dolist (unicode-block '("Greek and Coptic"))
+;    (push "Sarasa Mono CL" (cadr (assoc unicode-block unicode-fonts-block-font-mapping))))
+
+(setq doom-theme 'doom-dracula)
 ;(setq doom-theme 'doom-laserwave)
-(setq doom-theme 'doom-acario-dark)
+;(setq doom-theme 'doom-acario-dark)
 
 (setq doom-modeline-icon nil)
 
 (setq default-tab-width 2)
 (custom-set-variables '(tab-width 2))
+(setq tab-width 2)
 
 (setq undo-limit 80000000
       evil-want-fine-undo t)
@@ -23,17 +35,6 @@
 (setq show-trailing-whitespace t)
 
 (setq +latex-viewers '(zathura))
-
-;;(use-package helm
-;;    :config
-;;    (setq helm-M-x-fuzzy-match t
-;;          helm-apropos-fuzzy-match t
-;;          helm-buffers-fuzzy-matching t
-;;          helm-semantic-fuzzy-matching t
-;;          helm-sessions-fuzzy-matching t
-;;          helm-locate-fuzzy-matching t
-;;          helm-imenu-fuzzy-match t
-;;          helm-recentf-fuzzy-match t))
 
 (setq bibtex-completion-bibliography
       '("~/mega/org/library.bib"
@@ -45,8 +46,6 @@
     :prefix "o"
     :desc "helm-bibtex" "b" #'helm-bibtex)
 
-; (setq org-jekyll-project-root "~/Sites/bernardo/")
-
 (use-package ox-latex
   :after ox :after org
   :custom
@@ -57,8 +56,7 @@
   (org-latex-listings 'minted)
   (org-latex-minted-options '(("breaklines") ("breakafter" "d") ("linenos"
                                                                  "true") ("xleftmargin" "\\parindent")))
-  ; (org-latex-pdf-process '("latexmk -pdflatex='pdflatex -shell-escape -interaction nonstopmode' -pdf -bibtex -f %f"))
-  (org-latex-pdf-process '("lualatex -shell-escape -bibtex -f %f"))
+  (org-latex-pdf-process '("latexmk -pdflatex='lualatex -shell-escape' -pdf -bibtex -f %f"))
 
   :config
   (add-to-list
@@ -124,9 +122,6 @@
   (setq org-hugo-base-dir (file-truename "~/Sites/bernardo/"))
   (setq org-hugo-section "post"))
 
-(use-package org-chef
-  :ensure t)
-
 ;;  (add-to-list 'load-path "/opt/ros/melodic/share/emacs/site-lisp")
 ;;  (require 'rosemacs-config)
 
@@ -181,6 +176,22 @@
 ;      (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "fr"))
 ;      (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "pt"))))
 
+(map! :leader
+    :prefix "m"
+    :desc "writeroom" "w" #'+zen/toggle-fullscreen)
+
+(use-package writeroom-mode
+  :config
+  (add-to-list 'org-structure-template-alist '("th" . "theorem"))
+  (add-to-list 'org-structure-template-alist '("eq" . "equation"))
+  (add-to-list 'org-structure-template-alist '("ex" . "example"))
+  (add-to-list 'org-structure-template-alist '("de" . "definition"))
+  (add-to-list 'org-structure-template-alist '("re" . "remark"))
+  (add-to-list 'org-structure-template-alist '("pr" . "proof"))
+  (add-to-list 'org-structure-template-alist '("le" . "lemma"))
+  (add-to-list 'org-structure-template-alist '("pro" . "proposition"))
+)
+
 (setq org-directory "~/mega/org/")
 
 (setq org-startup-folded t)
@@ -192,6 +203,8 @@
 (use-package org-tempo
   :config
   (add-to-list 'org-structure-template-alist '("th" . "theorem"))
+  (add-to-list 'org-structure-template-alist '("eq" . "equation"))
+  (add-to-list 'org-structure-template-alist '("ex" . "example"))
   (add-to-list 'org-structure-template-alist '("de" . "definition"))
   (add-to-list 'org-structure-template-alist '("re" . "remark"))
   (add-to-list 'org-structure-template-alist '("pr" . "proof"))
@@ -205,7 +218,8 @@
 
 (use-package org-superstar  ;; improved bullets
   :config
-  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
+  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+  )
 
 (use-package org-fancy-priorities
   :hook
@@ -229,7 +243,7 @@
                    ":PROPERTIES:"
                    ,(concat ":EXPORT_FILE_NAME: " fname)
                    ":END:"
-                   "%?\n")          ;Place the cursor here finally
+                   "%?")          ;Place the cursor here finally
                  "\n")))
 
   (add-to-list 'org-capture-templates
@@ -240,20 +254,19 @@
                  ;; and that it has a "Blog Ideas" heading. It can even be a
                  ;; symlink pointing to the actual location of all-posts.org!
 ;                 (file+olp "all-posts.org" "Capture")
-                 (file "all-posts.org")
+                 (file "~/mega/org/roam/content-org/all-posts.org")
                  (function org-hugo-new-subtree-post-capture-template))))
 
 (after! org
-    (setq org-todo-keywords '((sequence "TODO(t)" "OPEN(o)" "STARTED(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)" "|" "CLOSED(c)" "DONE(d)" "KILLED(k)")
+    (setq org-todo-keywords '((sequence "TODO(t)" "OPEN(o)" "STARTED(s)" "WAIT(w)" "IDEA(i)" "|" "DONE(d)" "CLOSED(c)" "KILLED(k)")
                               (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[x](D)"))
   ))
 
 (setq org-todo-keyword-faces
     (quote (("TODO" :foreground "red" :weight bold)
-            ("OPEN" :foreground "blue" :weight bold)
-            ("STARTED" :foreground "blue" :weight bold)
+            ("OPEN" :foreground "sky blue" :weight bold)
+            ("STARTED" :foreground "light blue" :weight bold)
             ("WAIT" :foreground "orange" :weight bold)
-            ("HOLD" :foreground "orange" :weight bold)
             ("IDEA" :foreground "orange" :weight bold)
             ("DONE" :foreground "forest green" :weight bold)
             ("CLOSED" :foreground "forest green" :weight bold)
@@ -484,12 +497,17 @@
 #+startup: nofold
 #+latex_class: article
 #+LATEX_CLASS_OPTIONS: [a4paper, 12pt, english, leqno, hidelinks]
-#+setupfile: ../org.setup\n
-* Notes\n
+#+setupfile: ../org.setup
+#+options: broken-links:auto
+#+hugo_base_dir: ../
+#+hugo_section: note
+#+hugo_auto_set_lastmod: t
+#+hugo_custom_front_matter: :link-citations true
+#+print_bibliography: keyword\n
 * COMMENT TODO\n\n
+* Notes :ignore:\n\n
 * Bibliography :ignore:
-[[bibliographystyle:ieeetr]]
-[[bibliography:~/mega/org/roam/library.bib]]")
+\\printbibliography")
          :immediate-finish t
          :unnarrowed t)
         ("n" "phd note" plain
@@ -504,13 +522,17 @@
 #+startup: nofold
 #+latex_class: article
 #+LATEX_CLASS_OPTIONS: [a4paper, 12pt, english, leqno, hidelinks]
+#+setupfile: ../org.setup
 #+options: broken-links:auto
-#+setupfile: ../org.setup\n
-* Notes\n
+#+hugo_base_dir: ../
+#+hugo_section: note
+#+hugo_auto_set_lastmod: t
+#+hugo_custom_front_matter: :link-citations true
+#+print_bibliography: keyword\n
 * COMMENT TODO\n\n
+* Notes :ignore: \n\n
 * Bibliography :ignore:
-[[bibliographystyle:ieeetr]]
-[[bibliography:~/mega/org/roam/library.bib]]")
+\\printbibliography")
          :immediate-finish t
          :unnarrowed t)
         ("h" "human" plain "%?"
@@ -571,6 +593,19 @@
 ** Extra :ignore:\n
 \\info{information about the recipe, something to take care of.}
 \\photo{~/mega/org/roam/files/img/poset_cat_ex.jpg}")
+         :immediate-finish t
+         :unnarrowed t)
+        ("t" "tree note" plain
+         "%?"
+         :if-new (file+head "../../forest/trees/${slug}.org"
+                            "\\title{${title}}
+\\date{%<%Y-%m-%d>}
+\\author{bernardohummes}
+\\taxon{}
+\\meta{}
+\\import{}
+\\export{}\n
+\\p{}")
          :immediate-finish t
          :unnarrowed t)
         ("p" "hugo post" plain "%?"
@@ -637,11 +672,21 @@
     (setq org-roam-ui-sync-theme t
           org-roam-ui-follow t
           org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
+          org-roam-ui-open-on-start nil))
 
-;;  (add-hook 'before-save-hook 'time-stamp)
+(use-package! org-transclusion
+  :after org
+  :init
+  (map!
+    :map global-map "<f12>" #'org-transclusion-add
+    :leader
+    :prefix "n"
+    :desc "Org Transclusion Mode" "t" #'org-transclusion-mode))
 
-(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+(setq +latex-viewers '(zathura))
 
-(setq-default flycheck-disable-checkers '(python-pylint))
+;(map! :map cdlatex-mode-map :i "TAB" #'cdlatex-tab)
+
+(use-package! reftex
+  :config
+  (setq reftex-default-bibliography "/Users/bernardo/mega/phd/library.bib"))
