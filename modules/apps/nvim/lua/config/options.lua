@@ -4,7 +4,8 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 -- stylua: ignore
-vim.opt.wrap = true                           -- Enable line wrap
+vim.g.base16colorspace=256
+vim.opt.wrap = true -- Enable line wrap
 vim.opt.autowrite = true -- Enable auto write
 vim.opt.clipboard = "unnamedplus" -- Sync with system clipboard
 vim.opt.completeopt = "menu,menuone,noselect"

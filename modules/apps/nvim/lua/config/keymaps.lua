@@ -71,11 +71,14 @@ map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 
 -- formatting
 map({ "n", "v" }, "<leader>cf", function()
-  require("lazyvim.plugins.lsp.format").format({ force = true })
+  require("lazyvim.util").format({ force = true })
 end, { desc = "Format" })
 
 -- lazygit
 map("n", "<leader>gg", "<cmd>LazyGit<cr>", { desc = "Lazygit" })
+
+-- todo list
+map("n", "<leader>t", "<cmd>TodoLocList<cr>", { desc = "Todo telescope" })
 
 -- highlights under cursor
 map("n", "<leader>i", vim.show_pos, { desc = "Inspect Pos" })

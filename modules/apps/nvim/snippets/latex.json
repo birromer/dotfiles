@@ -25,7 +25,16 @@
     "body": [
       "\\($TM_SELECTED_TEXT$1\\)"
     ],
-    "description": "Display Math"
+    "description": "Inline Math"
+  },
+  "Inline Math — \\[ … \\]": {
+    "prefix": "dm",
+    "body": [
+      "\\[",
+      "$TM_SELECTED_TEXT$1",
+      "\\]"
+    ],
+    "description": "Inline Math"
   },
   "Inkscape": {
     "prefix": "inkscape",
@@ -40,12 +49,47 @@
     ],
     "description": "Add a an inkscape (vector) figure"
   },
+  "Label": {
+    "prefix": "label",
+    "body": [
+      "\\label{$1}"
+    ],
+    "description": "Display a category"
+  },
   "Category": {
     "prefix": "category",
     "body": [
       "\\cat{$1}"
     ],
-    "description": "Add an inkscape (vector) figure"
+    "description": "Display a category"
+  },
+  "Caligraphy": {
+    "prefix": "cal",
+    "body": [
+      "\\mathcal{$1}$0"
+    ],
+    "description": "Display in math caligraphy style"
+  },
+  "Black board": {
+    "prefix": "bb",
+    "body": [
+      "\\mathbb{$1}$0"
+    ],
+    "description": "Display in math black board style"
+  },
+  "Typewriter": {
+    "prefix": "tt",
+    "body": [
+      "\\mathtt{$1}$0"
+    ],
+    "description": "Display in math typewriter style"
+  },
+  "Smallcaps": {
+    "prefix": "sc",
+    "body": [
+      "\\textsc{$1}$0"
+    ],
+    "description": "Display in small caps style"
   },
   "Beamer": {
     "prefix": "t_beamer",
@@ -126,45 +170,48 @@
     ],
     "description": "Import file correcting headers"
   },
+  "Emphassis": {
+    "prefix": "emph",
+    "body": [
+      "\\emph{$1}"
+    ],
+    "description": "Add emphasis markup"
+  },
   "Notes": {
     "prefix": "t_note",
     "body": [
-      "%! TEX root = $1.tex",
-      "\\documentclass[class=article,crop=false,a4paper,12pt,leqno,hidelinks]{standalone}",
-      "\\usepackage{standalone}",
-      "\\input{phd-header}",
-      "\\input{phd-macros}",
-      "\\addbibresource{phd-refs.bib}\n",
+      "%! TEX root = ${TM_FILENAME}",
+      "\\documentclass{note}",
+      "% TODO: Add to the index.",
       "\\title{$2}",
-      "\\author{BHF}",
-      "\\date{\\today}\n",
+      "\\date{${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}}\n",
+      "\\author{Bernardo Hummes}",
       "\\begin{document}",
-      "%─────Document───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
-      "\\ifcsname c@InputDepth\\endcsname",
-      "\t% Increase existing counter if imported file",
-      "\t\\addtocounter{InputDepth}{1}",
-      "\\else",
-      "\t% Initialize new counter if main file",
-      "\t\\newcounter{InputDepth}",
-      "\t% Display title, table of contents and table of TODOs only if main file",
-      "\t\\maketitle",
-      "\t\\tableofcontents%",
-      "\t\\setcounter{tocdepth}{1}%",
-      "\t\\listoftodos%",
-      "\\fi",
       "%─────Content────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
-      "\n$0\n",
-      "%─────End content───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
-      "\\ifnumcomp{\\value{InputDepth}}{=}{0}{%",
-      "\t\\newpage",
-      "\t\\section*{Bibliography}",
-      "\t\\printbibliography",
-      "}{%",
-      "\t\\addtocounter{InputDepth}{-1}",
-      "}",
-      "%─────End document──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
+      "\n% TODO: Complete.\n$0\n",
+      "%─────Links───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
+      "\\before",
+      "\\after",
+      "%─────End content────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
       "\\end{document}"
     ],
     "description": "Add note template"
+  },
+  "Literature note": {
+    "prefix": "t_reference_note",
+    "body": [
+      "%! TEX root = ${TM_FILENAME}",
+      "\\documentclass{note}",
+      "\\title{[Reference] $2} %TODO: Add to the index.",
+      "\\date{${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}}",
+      "\\author{Bernardo Hummes}\n",
+      "\\begin{document}",
+      "%─────Content────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
+      "\n% TODO: Complete.\n$0\n",
+      "%─────Links───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
+      "\\seealso\n",
+      "\\end{document}"
+    ],
+    "description": "Add literature note template"
   }
 }

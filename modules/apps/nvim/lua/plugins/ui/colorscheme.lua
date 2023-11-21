@@ -1,7 +1,9 @@
 return {
+  { "chriskempson/base16-vim" },
   {
-    "folke/tokyonight.nvim",
-    lazy = true,
-    opts = { style = "moon" },
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "base16-dracula",
+    },
   },
 }

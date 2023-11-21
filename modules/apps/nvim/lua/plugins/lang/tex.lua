@@ -3,19 +3,22 @@ return {
     "lervag/vimtex",
     lazy = false, -- lazy-loading will disable inverse search
     config = function()
+      vim.g.vimtex_compiler_method = "latexmk"
       vim.g.vimtex_compiler_latexmk = {
-        build_dir = "./out",
+        build_dir = "./slipbox/",
         options = {
           "-verbose",
           "-file-line-error",
           "-synctex=1",
           "-shell-escape",
           "-interaction=nonstopmode",
-          "-outdir=out",
+          "-auxdir=./slipbox/",
+          "-outdir=./slipbox/",
         },
       }
       vim.g.vimtex_view_method = "skim"
-      vim.g.vimtex_view_general_viewer = "zathura"
+      vim.g.vimtex_view_general_viewer = "sioyek"
+      vim.g.vimtex_view_automatic = false
       vim.g.vimtex_view_skim_reading_bar = true
       vim.g.vimtex_view_skim_activate = true
       vim.g.vimtex_view_skim_sync = true
