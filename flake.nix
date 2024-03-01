@@ -12,12 +12,6 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # manage system level software
-    darwin = {
-      url = "github:lnl7/nix-darwin";
-      darwin.inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   # function with inputs as parameters

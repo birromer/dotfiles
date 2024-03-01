@@ -32,5 +32,6 @@ return {
       "<cmd>lua require('harpoon.ui').nav_file(4)<cr>",
       { desc = "4th harpoon mark", noremap = true, silent = true },
     },
+    { "<leader>d", "<cmd>:VimtexTocToggle<cr>", { desc = "Toggle ToC" } },
   },
 }

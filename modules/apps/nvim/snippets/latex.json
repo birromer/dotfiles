@@ -84,6 +84,13 @@
     ],
     "description": "Display in math typewriter style"
   },
+  "Bold face": {
+    "prefix": "bf",
+    "body": [
+      "\\textbf{$1}$0"
+    ],
+    "description": "Display in normal bold face style"
+  },
   "Smallcaps": {
     "prefix": "sc",
     "body": [
@@ -182,13 +189,12 @@
     "body": [
       "%! TEX root = ${TM_FILENAME}",
       "\\documentclass{note}",
-      "% TODO: Add to the index.",
-      "\\title{$2}",
-      "\\date{${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}}\n",
-      "\\author{Bernardo Hummes}",
+      "\\title{$2} %TODO: Add to the index.",
+      "\\date{${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}}",
+      "\\author{Bernardo Hummes}\n",
       "\\begin{document}",
       "%─────Content────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
-      "\n% TODO: Complete.\n$0\n",
+      "% TODO: Complete.\n$0\n",
       "%─────Links───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
       "\\before",
       "\\after",
@@ -202,16 +208,51 @@
     "body": [
       "%! TEX root = ${TM_FILENAME}",
       "\\documentclass{note}",
-      "\\title{[Reference] $2} %TODO: Add to the index.",
+      "\\title{$2} %TODO: Add to the index.",
       "\\date{${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}}",
       "\\author{Bernardo Hummes}\n",
       "\\begin{document}",
       "%─────Content────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
-      "\n% TODO: Complete.\n$0\n",
+      "% TODO: Complete.\n$0\n",
       "%─────Links───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
-      "\\seealso\n",
+      "\\seealso",
+      "%─────End content────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
       "\\end{document}"
     ],
     "description": "Add literature note template"
+  },
+  "Presentation": {
+    "prefix": "t_presentation",
+    "body": [
+      "%! TEX root = ${TM_FILENAME}",
+      "\\documentclass{presentation}",
+      "\\title{$1} %TODO: Add to the index.",
+      "\\date{${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}}",
+      "\\author{Bernardo Hummes}\n",
+      "\\begin{document}",
+      "\\maketitle",
+      "\\begin{frame}{Outline}",
+      "\\tableofcontents",
+      "\\end{frame}",
+      "%─────Content────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
+      "\\section{Context}",
+      "\\begin{frame}{$2} % TODO: Complete.",
+      "$0",
+      "\\end{frame}",
+      "%─────End content────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────",
+      "\\begin{frame}[allowframebreaks]{References}",
+      "\\printbibliography",
+      "\\vfill",
+      "\\end{frame}",
+      "\\end{document}"
+    ],
+    "description": "Add presentation template"
+  },
+  "TODO": {
+    "prefix": "todo",
+    "body": [
+      "\n%TODO: $1\n$0"
+    ],
+    "description": "Add todo comment"
   }
 }

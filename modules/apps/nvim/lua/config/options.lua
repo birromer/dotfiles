@@ -1,15 +1,16 @@
 -- Options are automatically loaded before lazy.nvim startup
 
 vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+vim.g.maplocalleader = ","
 
 -- stylua: ignore
+--
 vim.g.base16colorspace=256
 vim.opt.wrap = true -- Enable line wrap
 vim.opt.autowrite = true -- Enable auto write
 vim.opt.clipboard = "unnamedplus" -- Sync with system clipboard
 vim.opt.completeopt = "menu,menuone,noselect"
-vim.opt.conceallevel = 2
+vim.opt.conceallevel = 1
 vim.opt.confirm = true -- Confirm to save changes before exiting modified buffer
 vim.opt.cursorline = true -- Enable highlighting of the current line
 vim.opt.expandtab = true -- Use spaces instead of tabs
