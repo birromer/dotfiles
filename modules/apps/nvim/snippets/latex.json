@@ -25,16 +25,14 @@
     "body": [
       "\\($TM_SELECTED_TEXT$1\\)"
     ],
-    "description": "Inline Math"
+    "description": "Inline math"
   },
   "Inline Math — \\[ … \\]": {
     "prefix": "dm",
     "body": [
-      "\\[",
-      "$TM_SELECTED_TEXT$1",
-      "\\]"
+      "\\[$TM_SELECTED_TEXT$1\\]"
     ],
-    "description": "Inline Math"
+    "description": "Display math"
   },
   "Inkscape": {
     "prefix": "inkscape",
@@ -251,8 +249,58 @@
   "TODO": {
     "prefix": "todo",
     "body": [
-      "\n%TODO: $1\n$0"
+      "%TODO: $1"
     ],
     "description": "Add todo comment"
+  },
+  "Description": {
+    "prefix": "description",
+    "body": [
+      "\\begin{description}",
+      "\t\\item[$1] $0",
+      "\\end{description}"
+    ],
+    "description": "Add description list"
+  },
+  "Algorithm": {
+    "prefix": "algo2e",
+    "body": [
+      "\\IncMargin{1em}",
+      "\\begin{algorithm}",
+      "\\DontPrintSemicolon",
+      "\t\\SetKwData{Left}{left}",
+      "\t\\SetKwData{This}{this}",
+      "\t\\SetKwData{Up}{up}\n",
+      "\t\\SetKwFunction{Union}{Union}",
+      "\t\\SetKwFunction{FindCompress}{FindCompress}\n",
+      "\t\\SetKwInOut{Input}{input}",
+      "\t\\SetKwInOut{Output}{output}\n",
+      "\t\\Input{A bitmap $Im$ of size $w\\times l$}",
+      "\t\\Output{A partition of the bitmap}",
+      "\t\\BlankLine\n",
+      "\t\\emph{special treatment of the first line}\\;",
+      "\t\\For{$i\\leftarrow 2$ \\KwTo $l$}{",
+      "\t\t\\emph{special treatment of the first element of line $i$}\\;",
+      "\t\t\\For{$j\\leftarrow 2$ \\KwTo $w$}{",
+      "\t\t\t\\Left $\\leftarrow$ \\FindCompress{$Im[i,j-1]$}\\;",
+      "\t\t\t\\Up $\\leftarrow$ \\FindCompress{$Im[i-1,]$}\\;",
+      "\t\t\t\\This $\\leftarrow$ \\FindCompress{$Im[i,j]$}\\;",
+      "\t\t\t\\If(\\tcp*[h]{O(\\Left,\\This)==1}){\\Left compatible with \\This}{",
+      "\t\t\t\t\\lIf{\\Left $<$ \\This}{\\Union{\\Left,\\This}}",
+      "\t\t\t\t\\lElse{\\Union{\\This,\\Left}}",
+      "\t\t\t}",
+      "\t\t}",
+      "\t\t\\lForEach{element $e$ of the line $i$}{",
+      "\t\t\t\\FindCompress{p}",
+      "\t\t}",
+      "\t\t\\nl\\While{$S \\neq \\emptyset$}{",
+      "\t\t\tremove $x$ from the list of $T$ of maximal index\\;",
+      "\t\t\t\\FindCompress{x}\\;",
+      "\t\t}",
+      "\t}",
+      "\t\\caption{disjoint decomposition} \\label{algo_disjdecomp}",
+      "\\end{algorithm}\\DecMargin{1em}"
+    ],
+    "description": "Add algorithm template (style a2e)"
   }
 }
