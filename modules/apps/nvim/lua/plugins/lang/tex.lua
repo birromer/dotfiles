@@ -2,9 +2,6 @@ return {
   {
     "lervag/vimtex",
     lazy = false, -- lazy-loading will disable inverse search
-    keys = {
-      { "<leader>d", "<cmd>:VimtexTocToggle<cr>", { desc = "Toggle ToC" } },
-    },
     config = function()
       vim.g.vimtex_compiler_method = "latexmk"
       vim.g.vimtex_compiler_progname = "nvr"

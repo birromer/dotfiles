@@ -8,7 +8,6 @@ return {
     -- you also will likely want nvim-cmp or some completion engine
   },
 
-  -- see details below for full configuration options
   opts = {
     lsp = {
       on_attach = on_attach,

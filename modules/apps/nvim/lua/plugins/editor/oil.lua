@@ -11,39 +11,6 @@ end
 
 local M = {
   "stevearc/oil.nvim",
-  keys = {
-    {
-      "<leader>E",
-      function()
-        require("oil").open()
-      end,
-      desc = "File Explorer",
-    },
-
-    {
-      "<leader>e",
-      function()
-        require("oil").open_float()
-      end,
-      desc = "File Browser",
-    },
-
-    {
-      "<leader>fb",
-      function()
-        require("oil").toggle_float(vim.fn.getcwd())
-      end,
-      desc = "File Browser (CWD)",
-    },
-
-    {
-      "<leader>fN",
-      function()
-        require("oil").toggle_float("~/mega/phd/notes/")
-      end,
-      desc = "Notes folder",
-    },
-  },
   cmd = "Oil",
   opts = function(_, o)
     o.columns = default_coloumns(true)
