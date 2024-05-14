@@ -32,6 +32,7 @@ return {
       -- )
 
       vim.g.vimtex_view_reverse_search_edit_cmd = "split"
+      vim.g.vimtex_fold_manual = true
 
       vim.g.vimtex_view_automatic = false
       vim.g.vimtex_mappings_disable = { ["n"] = { "K" } } -- disable `K` as it conflicts with LSP hover
