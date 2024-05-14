@@ -57,9 +57,30 @@
   "Category": {
     "prefix": "category",
     "body": [
-      "\\cat{$1}"
+      "\\Cat{$1}"
     ],
     "description": "Display a category"
+  },
+  "Functor": {
+    "prefix": "functor",
+    "body": [
+      "\\Fun{$1}"
+    ],
+    "description": "Display a functor"
+  },
+  "Morphism": {
+    "prefix": "morphism",
+    "body": [
+      "\\Mor{$1}"
+    ],
+    "description": "Display a morphism"
+  },
+  "Object": {
+    "prefix": "object",
+    "body": [
+      "\\Ob{$1}"
+    ],
+    "description": "Display an object"
   },
   "Caligraphy": {
     "prefix": "cal",
@@ -263,7 +284,7 @@
     "description": "Add description list"
   },
   "Algorithm": {
-    "prefix": "algo2e",
+    "prefix": "algorithm",
     "body": [
       "\\IncMargin{1em}",
       "\\begin{algorithm}",
@@ -302,5 +323,12 @@
       "\\end{algorithm}\\DecMargin{1em}"
     ],
     "description": "Add algorithm template (style a2e)"
+  },
+  "Cleverref": {
+    "prefix": "cref",
+    "body": [
+      "\\Cref{$1}"
+    ],
+    "description": "Add a reference"
   }
 }

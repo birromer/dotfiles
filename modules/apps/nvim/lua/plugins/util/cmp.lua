@@ -14,13 +14,8 @@ return{
         "L3MON4D3/LuaSnip",
       },
       config = function()
-        -- Here is where you configure the autocompletion settings.
-        -- The arguments for .extend() have the same shape as `manage_nvim_cmp`:
-        -- https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#manage_nvim_cmp
-
         require('lsp-zero.cmp').extend()
 
-        -- And you can configure cmp even more, if you want to.
         local cmp = require('cmp')
 
         local has_words_before = function()
@@ -30,14 +25,6 @@ return{
               vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") ==
               nil
         end
-
-        local completion =
-            cmp.mapping.confirm({
-              -- documentation says this is important.
-              -- I don't know why.
-              behavior = cmp.ConfirmBehavior.Replace,
-              select = true,
-            })
 
         cmp.setup({
           sources = {
@@ -59,8 +46,8 @@ return{
             ["<Tab>"] = cmp.mapping(function(fallback)
               if cmp.visible() then
                 cmp.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true })
-              elseif luasnip.expand_or_locally_jumpable() then
-                luasnip.expand_or_jump()
+              elseif require("luasnip").expand_or_locally_jumpable() then
+                require("luasnip").expand_or_jump()
               elseif has_words_before() then
                 cmp.complete()
               else
@@ -70,8 +57,8 @@ return{
             ["<S-Tab>"] = cmp.mapping(function(fallback)
               if cmp.visible() then
                 cmp.select_prev_item()
-              elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
+              elseif require("luasnip").jumpable(-1) then
+                require("luasnip").jump(-1)
               else
                 fallback()
               end
@@ -95,45 +82,9 @@ return{
 --              end
 --            end)
           },
-          experimental = {
-            -- ghost_text = true,
-          },
         })
-      end
-    },
-
---        snippet = {
---          expand = function(args)
---            print(args.body)
---            require("luasnip").lsp_expand(args.body)
---          end,
---        },
---        mapping = {
---          ["<CR>"] = vim.NIL,
---          ["<Tab>"] = cmp.mapping(function(fallback)
---            if cmp.visible() then
---              cmp.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true })
---            elseif luasnip.expand_or_locally_jumpable() then
---              luasnip.expand_or_jump()
---            elseif has_words_before() then
---              cmp.complete()
---            else
---              fallback()
---            end
---          end, { "i", "s" }),
---          ["<S-Tab>"] = cmp.mapping(function(fallback)
---            if cmp.visible() then
---              cmp.select_prev_item()
---            elseif luasnip.jumpable(-1) then
---              luasnip.jump(-1)
---            else
---              fallback()
---            end
---          end, { "i", "s" }),
---        },
---      })
---  },
-
+    end
+  },
   {
     "saadparwaiz1/cmp_luasnip",
     dependencies = {
