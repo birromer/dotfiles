@@ -94,7 +94,7 @@ map("n", "<leader>pv", vim.cmd.Ex)
 -- Lazygit
 map("n", "<leader>gg", "<cmd>LazyGit<cr>", { desc = "Lazygit" })
 map("n", "<leader>gd", "<cmd>Git difftool --name-only<cr>", { desc = "Previous in quickfix list" })
-map("n", "<leader>gf", function() local git_path = vim.api.nvim_buf_get_name(0) LazyVim.lazygit({args = { "-f", vim.trim(git_path) }}) end, { desc = "Lazygit Current File History" })
+--map("n", "<leader>gf", function() local git_path = vim.api.nvim_buf_get_name(0) LazyVim.lazygit({args = { "-f", vim.trim(git_path) }}) end, { desc = "Lazygit Current File History" })
 
 -- Telescope
 local builtin_telescope = require("telescope.builtin")
@@ -114,9 +114,6 @@ map("n", "<leader>fu", builtin_telescope.current_buffer_fuzzy_find, { desc = "Fu
 map("n", "<leader>ft", builtin_telescope.treesitter, { desc = "Treesitter" })
 map( "n", "<leader>fb", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { noremap = true, desc = "Telescope file browser" })
 map("n", "<leader>fh", builtin_telescope.help_tags, { desc = "Telescope find help" })
-
--- Todo list
-map("n", "<leader>t", "<cmd>TodoLocList<cr>", { desc = "Todo telescope" })
 
 -- Harpoon
 map("n", "<leader>a", "<cmd>lua require('harpoon.mark').add_file()<cr>", { desc = "Mark file with harpoon" })
@@ -143,13 +140,34 @@ map("n", "<C-\\>", require("nvim-tmux-navigation").NvimTmuxNavigateLastActive)
 map("n", "<C-Space>", require("nvim-tmux-navigation").NvimTmuxNavigateNext)
 
 -- Forester
-map("n", "<leader>n.", "<cmd>Forester browse<CR>", { silent = true })
-map("n", "<leader>nn", "<cmd>Forester new<CR>", { silent = true })
-map("i", "<C-t>", "<cmd>Forester transclude<CR>", { silent = true })
-map("i", "<C-l>", "<cmd>Forester link<CR>", { silent = true })
+-- map("n", "<leader>n.", "<cmd>Forester browse<CR>", { silent = true })
+-- map("n", "<leader>nn", "<cmd>Forester new<CR>", { silent = true })
+-- map("n", "<leader>nr", "<cmd>Forester new_random<CR>", { silent = true })
+-- map("i", "<C-t>", "<cmd>Forester transclude<CR>", { silent = true })
+-- map("i", "<C-l>", "<cmd>Forester link<CR>", { silent = true })
 
 -- Vimtex
 map("n", "<leader>d", "<cmd>:VimtexTocToggle<cr>", { desc = "Toggle ToC" } )
+
+vim.g.tex_compiles_successfully = false
+vim.g.term_pdf_vierer_open = false
+
+function VimtexPDFToggle()
+    if vim.g.term_pdf_vierer_open then
+        vim.print("Case pdf open")
+        vim.fn.system("kitty @ --to $KITTY_LISTEN_ON close-window --match title:termpdf")
+        vim.g.term_pdf_vierer_open = false
+    elseif vim.g.tex_compiles_successfully then
+        vim.print("case pdf not open")
+        vim.fn.system("kitty @ --to $KITTY_LISTEN_ON launch --location=vsplit --cwd=current --title=termpdf")
+        local command = "termpdf.py " .. vim.fn.getcwd() .. "/slipbox/" .. vim.api.nvim_call_function("expand", {"%:r"}) .. ".pdf" .. "'\r'"
+        local kitty = "kitty @ --to $KITTY_LISTEN_ON send-text --match title:termpdf "
+        vim.fn.system(kitty .. command)
+        vim.g.term_pdf_vierer_open = true
+    end
+end
+
+map("n", "<leader>p", ":lua VimtexPDFToggle()<cr>")
 
 -- Maximizer
 map("n", "<leader>wm", "<cmd>MaximizerToggle<cr>", {desc = "Toggle maximizer"} )
@@ -172,7 +190,15 @@ map("n", "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", {desc = "
 map("n", "<leader>st", "<cmd>TodoTelescope<cr>", {desc = "Todo" })
 map("n", "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", {desc = "Todo/Fix/Fixme" })
 
+-- Todo list
+--map("n", "<leader>t", "<cmd>TodoLocList<cr>", { desc = "Todo telescope" })
+map("n", "<leader>t", "<cmd>TodoTelescope<cr>", {desc = "Todo" })
+
+
 -- Undotree
 map("n",  "<leader>u", vim.cmd.UndotreeToggle, {desc = "Undotree toggle"})
 
-
+-- Fold
+map('n', '<tab>', function() return require('fold-cycle').open() end, {silent = true, desc = 'Fold-cycle: open folds'})
+map('n', '<s-tab>', function() return require('fold-cycle').close() end, {silent = true, desc = 'Fold-cycle: close folds'})
+map('n', 'zC', function() return require('fold-cycle').close_all() end, {remap = true, silent = true, desc = 'Fold-cycle: close all folds'})

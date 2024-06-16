@@ -180,14 +180,28 @@
     ],
     "description": "Add rhetorical emphasis macro"
   },
+  "todoi": {
+    "prefix": "tdo",
+    "body": [
+      "\\todoi{$1}"
+    ],
+    "description": "Add an inline todo"
+  },
   "todom": {
-    "prefix": "todom",
+    "prefix": "tdom",
     "body": [
       "\\todom{$1}"
     ],
-    "description": "Add todo on the margin."
+    "description": "Add a magin todo"
   },
-  "TODO": {
+  "todo fill": {
+    "prefix": "fill",
+    "body": [
+      "\\tfill$1"
+    ],
+    "description": "Add a to fill todo"
+  },
+  "TODOC": {
     "prefix": "todoc",
     "body": [
       "%TODO: $1"
@@ -209,7 +223,7 @@
     "description": "Add a reference"
   },
   "Description": {
-    "prefix": "description",
+    "prefix": "desc",
     "body": [
       "\\begin{description}",
       "\t\\item[$1] $0",
@@ -254,7 +268,7 @@
     "description": "Insert example environment"
   },
   "Definition environment": {
-    "prefix": "definition",
+    "prefix": "def",
     "body": [
       "\\begin{definition}{$1}{$2}",
       "\t$0",
@@ -281,7 +295,7 @@
     "description": "Insert lemma environment"
   },
   "Proposition environment": {
-    "prefix": "proposition",
+    "prefix": "prop",
     "body": [
       "\\begin{proposition}{$1}{$2}",
       "\t$0",
@@ -306,5 +320,75 @@
       "\\end{proof}"
     ],
     "description": "Insert proof environment"
+  },
+  "Section": {
+      "prefix": "sec",
+      "body": [
+          "\\section{$1} % {{{",
+          "\\label{sec:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "${0:$TM_SELECTED_TEXT}",
+          "% section $1 }}}"
+      ],
+      "description": "Section"
+  },
+  "Sub Paragraph": {
+      "prefix": "subp",
+      "body": [
+          "\\subparagraph{$1} % {{{",
+          "\\label{subp:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "${0:$TM_SELECTED_TEXT}",
+          "% subparagraph $1 }}}"
+      ],
+      "description": "Sub Paragraph"
+  },
+  "Sub Section": {
+      "prefix": "sub",
+      "body": [
+          "\\subsection{$1} % {{{",
+          "\\label{sub:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "${0:$TM_SELECTED_TEXT}",
+          "% subsection $1 }}}"
+      ],
+      "description": "Sub Section"
+  },
+  "Sub Sub Section": {
+      "prefix": "subs",
+      "body": [
+          "\\subsubsection{${1:subsubsection name}} % {{{",
+          "\\label{sec:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "${0:$TM_SELECTED_TEXT}",
+          "% subsubsection $1 }}}"
+      ],
+      "description": "Sub Sub Section"
+  },
+  "Chapter": {
+      "prefix": "cha",
+      "body": [
+          "\\chapter{$1} % {{{",
+          "\\label{chap:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "${0:$TM_SELECTED_TEXT}",
+          "% chapter $1 }}}"
+      ],
+      "description": "Chapter"
+  },
+  "Paragraph": {
+      "prefix": "par",
+      "body": [
+          "\\paragraph{${1:paragraph name}} % {{{",
+          "\\label{par:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "${0:$TM_SELECTED_TEXT}",
+          "% paragraph $1 }}}"
+      ],
+      "description": "Paragraph"
+  },
+  "Part": {
+      "prefix": "part",
+      "body": [
+          "\\part{${1:part name}} % {{{",
+          "\\label{prt:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "${0:$TM_SELECTED_TEXT}",
+          "% part $1 }}}"
+      ],
+      "description": "Part"
   }
 }

@@ -14,7 +14,6 @@ vim.opt.conceallevel = 1     -- conceal
 vim.opt.cursorline = true    -- enable highlighting of the current line
 vim.opt.laststatus = 3       -- global statusline
 vim.opt.list = true          -- show some invisible characters
-vim.opt.foldmethod = "manual"
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.showmode = false  -- don't show mode since we have a statusline
@@ -29,13 +28,18 @@ vim.opt.fillchars = {
   eob = " ",
 }
 
+-- Folding
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldlevelstart = 1
+
 -- Disable netew
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 -- Line wrap options
-vim.opt.cc = "80"
 vim.opt.wrap = true
+vim.opt.cc = "80"
 -- vim.opt.linebreak = true
 -- vim.opt.wrapmargin = 0
 -- vim.opt.textwidth = 0

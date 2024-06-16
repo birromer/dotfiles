@@ -1,0 +1,122 @@
+{
+  "Inkscape": {
+    "prefix": "inkscape",
+    "body": [
+      "\\begin{figure}[H]",
+      "\t\\begin{center}",
+      "\t\t\\incfig{figures/$1.pdf_tex}",
+      "\t\\end{center}",
+      "\t\\caption{$3}\\label{fig:$4}",
+      "\\end{figure}",
+      "$0"
+    ],
+    "description": "Add a an inkscape (vector) figure"
+  },
+  "Notes": {
+    "prefix": "t_note",
+    "body": [
+      "%! TEX root = ${TM_FILENAME}",
+      "\\documentclass{note}",
+      "\\title{$2} %TODO: Add to the index.",
+      "\\author{Bernardo Hummes}",
+      "\\date{${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}}\n",
+      "\\begin{document}",
+      "% ================================== Content ==================================\n",
+      "% TODO: Complete.\n$0\n",
+      "% =================================== Links ===================================",
+      "\\before",
+      "\\after",
+      "% ================================ End content ================================",
+      "\\end{document}"
+    ],
+    "description": "Add note template"
+  },
+  "Literature note": {
+    "prefix": "t_reference_note",
+    "body": [
+      "%! TEX root = ${TM_FILENAME}",
+      "\\documentclass{note}",
+      "\\title{$2} %TODO: Add to the index.",
+      "\\author{Bernardo Hummes}",
+      "\\date{${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}}\n",
+      "\\begin{document}",
+      "% ================================== Content ==================================\n",
+      "% TODO: Complete.\n$0\n",
+      "% =================================== Links ===================================",
+      "\\seealso",
+      "% ================================ End content ================================",
+      "\\end{document}"
+    ],
+    "description": "Add literature note template"
+  },
+  "Presentation": {
+    "prefix": "t_presentation",
+    "body": [
+      "%! TEX root = ${TM_FILENAME}",
+      "\\documentclass{presentation}",
+      "\\title{$1} %TODO: Add to the index.",
+      "\\author{Bernardo Hummes}",
+      "\\date{${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}}\n",
+      "\\begin{document}",
+      "\\maketitle",
+      "% ================================== Content ==================================\n",
+      "% TODO: Complete.\n$0\n",
+      "% ================================ End content ================================",
+      "\\section*{}",
+      "\\begin{frame}{}",
+      "\t\\begin{center}",
+      "\t\t{\\LARGE \\textcolor{title.fg}{Thank you for your attention!}}",
+      "\t\\end{center}",
+      "\\end{frame}",
+      "\\appendix",
+      "\\section*{Appendix}",
+      "\\begin{frame}[allowframebreaks]{References}",
+      "\\printbibliography",
+      "\\vfill",
+      "\\end{frame}",
+      "\\end{document}"
+    ],
+    "description": "Add presentation template"
+  },
+  "Algorithm": {
+    "prefix": "algorithm",
+    "body": [
+      "\\IncMargin{1em}",
+      "\\begin{algorithm}",
+      "\\DontPrintSemicolon",
+      "\t\\SetKwData{Left}{left}",
+      "\t\\SetKwData{This}{this}",
+      "\t\\SetKwData{Up}{up}\n",
+      "\t\\SetKwFunction{Union}{Union}",
+      "\t\\SetKwFunction{FindCompress}{FindCompress}\n",
+      "\t\\SetKwInOut{Input}{input}",
+      "\t\\SetKwInOut{Output}{output}\n",
+      "\t\\Input{A bitmap $Im$ of size $w\\times l$}",
+      "\t\\Output{A partition of the bitmap}",
+      "\t\\BlankLine\n",
+      "\t\\emph{special treatment of the first line}\\;",
+      "\t\\For{$i\\leftarrow 2$ \\KwTo $l$}{",
+      "\t\t\\emph{special treatment of the first element of line $i$}\\;",
+      "\t\t\\For{$j\\leftarrow 2$ \\KwTo $w$}{",
+      "\t\t\t\\Left $\\leftarrow$ \\FindCompress{$Im[i,j-1]$}\\;",
+      "\t\t\t\\Up $\\leftarrow$ \\FindCompress{$Im[i-1,]$}\\;",
+      "\t\t\t\\This $\\leftarrow$ \\FindCompress{$Im[i,j]$}\\;",
+      "\t\t\t\\If(\\tcp*[h]{O(\\Left,\\This)==1}){\\Left compatible with \\This}{",
+      "\t\t\t\t\\lIf{\\Left $<$ \\This}{\\Union{\\Left,\\This}}",
+      "\t\t\t\t\\lElse{\\Union{\\This,\\Left}}",
+      "\t\t\t}",
+      "\t\t}",
+      "\t\t\\lForEach{element $e$ of the line $i$}{",
+      "\t\t\t\\FindCompress{p}",
+      "\t\t}",
+      "\t\t\\nl\\While{$S \\neq \\emptyset$}{",
+      "\t\t\tremove $x$ from the list of $T$ of maximal index\\;",
+      "\t\t\t\\FindCompress{x}\\;",
+      "\t\t}",
+      "\t}",
+      "\t\\caption{disjoint decomposition} \\label{algo_disjdecomp}",
+      "\\end{algorithm}\\DecMargin{1em}"
+    ],
+    "description": "Add algorithm template (style a2e)"
+  }
+}
