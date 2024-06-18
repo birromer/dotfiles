@@ -4,7 +4,8 @@
 local map = vim.keymap.set
 local user_func = vim.api.nvim_create_user_command
 local fn = vim.fn
-local NOTES_DIR = "/Users/bernardo/mega/zk-notes"
+local NOTES_DIR = "/Users/bernardo/mega/notes"
+local MAX_NOTE_ID = 4095
 -- local NOTES_DIR = "/Users/bernardo/mega/notes"
 -- Alternatively, it can use an environment variable with fn.expand('$NOTES_DIR/')
 
@@ -21,8 +22,8 @@ local function create_zettel(prefix, id, split)
   print(fn.expand('%:p:~'))
 end
 
-local function create_next_sequential_zettel(split)
-  -- get filename without path nor extension
+local function create_zettel_behind(split)
+  -- get id without path nor extension
   local current_file = vim.fn.expand("%:t:r")
   -- get prefix and id
   local prefix, current_id = current_file:match("^(.*)_(.*)")
@@ -56,10 +57,36 @@ local function create_next_sequential_zettel(split)
   create_zettel(prefix .. "_", current_id .. next_char, split) -- Create and open the new note
 end
 
+local function create_zettel_independent(split)
+  -- get id without path nor extension
+  local current_file = vim.fn.expand("%:t:r")
+  vim.print("Current file: " .. current_file)
+  -- get prefix and id -- HACK: Fixed for note id of 3 characters.
+  local prefix, current_id, current_children_id = current_file:match("^(.*)_(...)(.*)")
 
-user_func('NewZettelIndependent', function() create_next_sequential_zettel('edit') end, { nargs = 0 })
+  vim.print("Predix: " .. prefix)
+  vim.print("ID: " .. current_id)
+  vim.print("Children ID: " .. current_children_id)
 
-user_func('NewZettelBehind', function() create_next_sequential_zettel('vsplit') end, { nargs = 0 })
+  if split ~= 'split' and split ~= 'vsplit' and split ~= 'edit' then
+    split = 'edit'
+  end
+
+  local id = tonumber(current_id, 16)+1
+  local new_id = string.format("%03X", id)
+
+  while id < MAX_NOTE_ID and 1 == vim.fn.filereadable(fn.fnameescape(NOTES_DIR .. "/" .. prefix .. "_" .. new_id .. ".tex")) do
+    id = id + 1
+    new_id = string.format("%03X", id)
+  end
+
+  create_zettel(prefix .. "_", new_id, split) -- Create and open the new note
+end
+
+
+user_func('NewZettelIndependent', function() create_zettel_independent('edit') end, { nargs = 0 })
+
+user_func('NewZettelBehind', function() create_zettel_behind('vsplit') end, { nargs = 0 })
 
 user_func('NewZettelSearch', function()
     create_zettel(
