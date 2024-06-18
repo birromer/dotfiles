@@ -159,12 +159,19 @@
     ],
     "description": "Add an inkscape (vector) figure"
   },
-  "Import": {
-    "prefix": "import",
+  "Transclude": {
+    "prefix": "transclude",
     "body": [
-      "\\zimport{./}{$1}"
+      "\\transclude{$1}}"
     ],
-    "description": "Import file correcting headers"
+    "description": "Transclude file: id "
+  },
+  "Link": {
+    "prefix": "link",
+    "body": [
+      "\\link{$1}{$2}"
+    ],
+    "description": "Link file: id, text"
   },
   "Definitional Emphassis": {
     "prefix": "demph",
