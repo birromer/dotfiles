@@ -3,10 +3,10 @@
 {
   # Import home-manager modules
   imports =
-    (import ../modules/apps)     ++
-    (import ../modules/desktop)  ++
-    (import ../modules/daemons)  ++
-    (import ../modules/dev)      ++
+    (import ../modules/apps)      ++
+    (import ../modules/interface) ++
+    (import ../modules/daemons)   ++
+    (import ../modules/dev)       ++
     (import ../modules/hardware);
 
   # General configurations

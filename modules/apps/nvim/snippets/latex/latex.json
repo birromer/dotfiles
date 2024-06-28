@@ -111,6 +111,13 @@
     ],
     "description": "Display in small caps style"
   },
+  "Quotations": {
+    "prefix": "quote",
+    "body": [
+      "``$1''$0"
+    ],
+    "description": "Add quotation marks"
+  },
   "Beamer columns": {
     "prefix": "columns",
     "body": [
@@ -187,15 +194,30 @@
     ],
     "description": "Add rhetorical emphasis macro"
   },
+  "Knowledge": {
+    "prefix": "kl",
+    "body": [
+      "\\knowledge{notion}",
+      "\t|$1"
+    ],
+    "description": "Add an inline todo"
+  },
+  "Margin note": {
+    "prefix": "note",
+    "body": [
+      "\\marginnote{$1}"
+    ],
+    "description": "Add an inline todo"
+  },
   "todoi": {
-    "prefix": "tdo",
+    "prefix": "todo",
     "body": [
       "\\todoi{$1}"
     ],
     "description": "Add an inline todo"
   },
   "todom": {
-    "prefix": "tdom",
+    "prefix": "todom",
     "body": [
       "\\todom{$1}"
     ],
@@ -216,7 +238,7 @@
     "description": "Add todo comment"
   },
   "NOTE": {
-    "prefix": "note",
+    "prefix": "notec",
     "body": [
       "%NOTE: $1"
     ],
@@ -226,6 +248,13 @@
     "prefix": "cref",
     "body": [
       "\\Cref{$1}"
+    ],
+    "description": "Add a reference"
+  },
+  "Knowledge cleverref": {
+    "prefix": "kcref",
+    "body": [
+      "\\kCref{$1}"
     ],
     "description": "Add a reference"
   },

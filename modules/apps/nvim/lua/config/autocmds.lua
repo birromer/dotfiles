@@ -18,6 +18,12 @@ autocmd("InsertEnter", {group = "Random", command = "set timeoutlen=100"})
 autocmd("InsertLeave", {group = "Random", command = "set timeoutlen=1000"})
 
 -- vimtex
+
+autocmd({"BufEnter", "BufWinEnter"}, {
+  pattern = {"*.tex", "*.tree", "*.md"},
+  command = "Wrapwidth 80",
+})
+
 vim.g.tex_compiles_successfully = false
 vim.g.term_pdf_vierer_open = false
 

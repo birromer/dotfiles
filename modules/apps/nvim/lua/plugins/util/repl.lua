@@ -1,3 +1,5 @@
-return {
-	{ "rafcamlet/nvim-luapad" },
-}
+return {}
+
+-- return {
+-- 	{ "rafcamlet/nvim-luapad" },
+-- }

@@ -57,16 +57,12 @@ local function create_zettel_behind(split)
   create_zettel(prefix .. "_", current_id .. next_char, split) -- Create and open the new note
 end
 
-local function create_zettel_independent(split)
+local function create_zettel_independent(prefix, split)
   -- get id without path nor extension
   local current_file = vim.fn.expand("%:t:r")
-  vim.print("Current file: " .. current_file)
   -- get prefix and id -- HACK: Fixed for note id of 3 characters.
-  local prefix, current_id, current_children_id = current_file:match("^(.*)_(...)(.*)")
-
-  vim.print("Predix: " .. prefix)
-  vim.print("ID: " .. current_id)
-  vim.print("Children ID: " .. current_children_id)
+--  local prefix, current_id, current_children_id = current_file:match("^(.*)_(...)(.*)")
+    local current_id = "001"
 
   if split ~= 'split' and split ~= 'vsplit' and split ~= 'edit' then
     split = 'edit'
@@ -84,8 +80,15 @@ local function create_zettel_independent(split)
 end
 
 
-user_func('NewZettelIndependent', function() create_zettel_independent('edit') end, { nargs = 0 })
+-- Create new independent note in the prefix specified by the user.
+user_func('NewZettelIndependent', function()
+  create_zettel_independent(
+  vim.fn.input('Prefix: '),
+  'edit'
+  ) end, { nargs = 0 }
+)
 
+-- Create new note "behind" the current note (adding next letter or number available)
 user_func('NewZettelBehind', function() create_zettel_behind('vsplit') end, { nargs = 0 })
 
 user_func('NewZettelSearch', function()
@@ -128,7 +131,6 @@ user_func('SplitJumpToNote', function()
   { nargs = 0 }
 )
 
-
 user_func('ZettelReferences', function()
     require('telescope.builtin').live_grep({ default_text = vim.fn.expand('%:t:r') })
   end,
@@ -158,7 +160,7 @@ map("n", "<leader>ns", "<cmd>NewZettelSearch<cr>",
 map("n", '<leader>nj', '<cmd>JumpToNote<cr>',
 { silent = false, desc="Jump to note under cursor"})
 
-map("n", '<leader>nk', '<cmd>SplitJumpToNote<cr>',
+map("n", '<leader>nh', '<cmd>SplitJumpToNote<cr>',
 { silent = false, desc="Jump to note under cursor (vsplit)"})
 
 map("n",  -- Change working directory to zettelkasten and open index
@@ -167,6 +169,13 @@ map("n",  -- Change working directory to zettelkasten and open index
   .. '<CMD> cd '.. NOTES_DIR .. ' <CR>'
   .. '<CMD> pwd <CR>',
   { desc="Go to index note"})
+
+map("n",  -- Change working directory to zettelkasten and open index
+  '<leader>nk',
+  '<CMD> e ' .. NOTES_DIR .. '/notions.kl <CR>'
+  .. '<CMD> cd '.. NOTES_DIR .. ' <CR>'
+  .. '<CMD> pwd <CR>',
+  { desc="Go to knowledges file"})
 
 map("n", '<leader>nr', '<CMD> :ZettelReferences <CR>',
 { desc="List all references to current note"})

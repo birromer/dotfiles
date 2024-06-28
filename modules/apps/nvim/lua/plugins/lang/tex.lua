@@ -5,18 +5,20 @@ return {
     config = function()
       vim.g.vimtex_compiler_method = "latexmk"
       vim.g.vimtex_compiler_progname = "nvr"
-      vim.g.vimtex_compiler_latexmk = {
-        build_dir = "./slipbox/",
-        options = {
-          "-file-line-error",
-          "-synctex=1",
-          "-shell-escape",
-          "-verbose",
-          "-interaction=nonstopmode",
-          "-auxdir=./slipbox/",
-          "-outdir=./slipbox/",
-        },
-      }
+
+--      vim.g.vimtex_compiler_latexmk = {
+--        build_dir = "./slipbox/",
+--        options = {
+--          "-file-line-error",
+--          "-synctex=1",
+--          "-shell-escape",
+--          "-verbose",
+--          "-interaction=nonstopmode",
+--          "-auxdir=./slipbox/",
+--          "-outdir=./slipbox/",
+--        },
+--      }
+
       vim.g.vimtex_view_method = "sioyek"
       vim.g.vimtex_view_general_viewer = "skim"
 

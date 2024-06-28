@@ -22,5 +22,5 @@ require("lazy").setup({
     missing = true,
     colorscheme = { "catpuccin" },
   },
-  checker = { enabled = true }, -- Automatically check for plugin updates
+  checker = { enabled = false }, -- Automatically check for plugin updates
 })

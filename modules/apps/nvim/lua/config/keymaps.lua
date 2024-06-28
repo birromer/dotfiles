@@ -9,7 +9,7 @@ map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 
 -- Better replace
-map("x", "<leader>p", "\"_dP")
+map("x", "<leader>p", "\"_dP", { desc = "Paste preserving clipboard"})
 
 -- Better up/down
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -33,7 +33,7 @@ map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
 
 -- Windows
-map("n", "<leader>ww", "<C-W>p", { desc = "Other Window", remap = true })
+-- map("n", "<leader>ww", "<C-W>p", { desc = "Other Window", remap = true })
 map("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
 map("n", "<leader>w-", "<C-W>s", { desc = "Split Window Below", remap = true })
 map("n", "<leader>w|", "<C-W>v", { desc = "Split Window Right", remap = true })
@@ -173,7 +173,8 @@ map("n", "<leader>p", ":lua VimtexPDFToggle()<cr>")
 map("n", "<leader>wm", "<cmd>MaximizerToggle<cr>", {desc = "Toggle maximizer"} )
 
 -- Wrapwidth
---map("n", "<leader>uw", "<cmd>Wrapwidth<cr>", {desc = "Enable wrap"})
+map("n", "<leader>ww", "<cmd>Wrapwidth 80<cr>", {desc = "Enable wrap"})
+map("n", "<leader>wf", "<cmd>Wrapwidth! <cr>", {desc = "Fix wrap"})
 
 -- Flash
 map({ "n", "x", "o" }, "s", function() require("flash").jump() end, {desc = "Flash"})

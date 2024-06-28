@@ -2,6 +2,7 @@
 
 -- Latex option
 vim.g.latex_to_unicode_keymap = 1
+vim.g.vimtex_syntax_conceal_disable = 1
 
 -- Python options
 vim.g.lazyvim_python_lsp = "pyright"
@@ -10,7 +11,7 @@ vim.g.lazyvim_python_ruff = "ruff_lsp"
 -- UI options
 vim.g.base16colorspace = 256
 vim.opt.termguicolors = true -- Truecolor
-vim.opt.conceallevel = 1     -- conceal
+vim.opt.conceallevel = 2     -- conceal
 vim.opt.cursorline = true    -- enable highlighting of the current line
 vim.opt.laststatus = 3       -- global statusline
 vim.opt.list = true          -- show some invisible characters
@@ -38,9 +39,11 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 -- Line wrap options
+vim.opt.linebreak = true
+vim.g.wrapwidth_sign = '|'
+vim.g.wrapwidth_number = 1
 vim.opt.wrap = true
-vim.opt.cc = "80"
--- vim.opt.linebreak = true
+-- vim.opt.cc = "80"
 -- vim.opt.wrapmargin = 0
 -- vim.opt.textwidth = 0
 -- vim.opt_local.columns = 120

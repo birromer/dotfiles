@@ -1,0 +1,342 @@
+#export TERM="rxvt-unicode"
+export TERM="xterm-256color"
+
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+
+#ZSH_THEME="spaceship"
+ZSH_THEME="cdimascio-lambda"
+
+source $ZSH/oh-my-zsh.sh
+
+# =============================================================================
+#                                   Plugins
+# =============================================================================
+# Check if zplug is installed
+[ ! -d ~/.zplug ] && git clone https://github.com/zplug/zplug ~/.zplug
+#source ~/.zplug/init.zsh && zplug update
+source ~/.zplug/init.zsh
+
+zplug "seebi/dircolors-solarized", ignore:"*", as:plugin
+
+zplug "plugins/colored-man-pages", from:oh-my-zsh
+# zplug "plugins/vi-mode", from:oh-my-zsh
+
+zplug "plugins/git",    from:oh-my-zsh, if:"which git"
+zplug "plugins/sudo",   from:oh-my-zsh, if:"which sudo"
+zplug "plugins/tmux",   from:oh-my-zsh, if:"which tmux"
+
+# Supports oh-my-zsh plugins and the like
+if [[ $OSTYPE = (linux)* ]]; then
+  zplug "plugins/archlinux", from:oh-my-zsh, if:"which pacman"
+  zplug "plugins/dnf",       from:oh-my-zsh, if:"which dnf"
+fi
+
+if [[ $OSTYPE = (darwin)* ]]; then
+  zplug "plugins/osx",      from:oh-my-zsh
+  zplug "plugins/brew",     from:oh-my-zsh, if:"which brew"
+  zplug "plugins/macports", from:oh-my-zsh, if:"which port"
+fi
+
+zplug "zsh-users/zsh-completions",              defer:0
+zplug "zsh-users/zsh-autosuggestions",          defer:2, on:"zsh-users/zsh-completions"
+zplug "zsh-users/zsh-syntax-highlighting",      defer:3, on:"zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-history-substring-search", defer:3, on:"zsh-users/zsh-syntax-highlighting"
+
+
+# =============================================================================
+#                                   Options
+# =============================================================================
+
+# improved less option
+export LESS="--tabs=4 --no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS"
+
+# Watching other users
+#WATCHFMT="%n %a %l from %m at %t."
+watch=(notme)         # Report login/logout events for everybody except ourself.
+#watch=(all)         # Report login/logout events for everybody except ourself.
+LOGCHECK=60           # Time (seconds) between checks for login/logout activity.
+REPORTTIME=5          # Display usage statistics for commands running > 5 sec.
+#WORDCHARS="\"*?_-.[]~=/&;!#$%^(){}<>\""
+WORDCHARS="\"*?_-[]~&;!#$%^(){}<>\""
+
+# History
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+
+setopt autocd                   # Allow changing directories without `cd`
+setopt append_history           # Dont overwrite history
+setopt extended_history         # Also record time and duration of commands.
+setopt share_history            # Share history between multiple shells
+setopt hist_expire_dups_first   # Clear duplicates when trimming internal hist.
+setopt hist_find_no_dups        # Dont display duplicates during searches.
+setopt hist_ignore_dups         # Ignore consecutive duplicates.
+setopt hist_ignore_all_dups     # Remember only one unique copy of the command.
+setopt hist_reduce_blanks       # Remove superfluous blanks.
+
+# Changing directories
+#setopt auto_pushd
+setopt pushd_ignore_dups        # Dont push copies of the same dir on stack.
+setopt pushd_minus              # Reference stack entries with "-".
+
+setopt extended_glob
+
+# =============================================================================
+#                                   Aliases
+# =============================================================================
+
+# In the definitions below, you will see use of function definitions instead of
+# aliases for some cases. We use this method to avoid expansion of the alias in
+# combination with the globalias plugin.
+
+# Directory coloring
+if [[ $OSTYPE = (darwin|freebsd)* ]]; then
+  export CLICOLOR="YES" # Equivalent to passing -G to ls.
+  export LSCOLORS="exgxdHdHcxaHaHhBhDeaec"
+
+  [ -d "/opt/local/bin" ] && export PATH="/opt/local/bin:$PATH"
+
+  # Prefer GNU version, since it respects dircolors.
+  if which gls &>/dev/null; then
+    alias ls='() { $(whence -p gls) -Ctr --file-type --color=auto $@ }'
+  else
+    alias ls='() { $(whence -p ls) -CFtr $@ }'
+  fi
+else
+  alias ls='() { $(whence -p ls) -Ctr --file-type --color=auto $@ }'
+fi
+
+# Set editor preference to nvim if available.
+if which nvim &>/dev/null; then
+  alias vim='() { $(whence -p nvim) $@ }'
+else
+  alias vim='() { $(whence -p vim) $@ }'
+fi
+
+# Generic command adaptations.
+alias grep='() { $(whence -p grep) --color=auto $@ }'
+alias egrep='() { $(whence -p egrep) --color=auto $@ }'
+
+# Directory management
+alias la='ls -a'
+alias ll='ls -l'
+alias lal='ls -al'
+alias d='dirs -v'
+alias 1='pu'
+alias 2='pu -2'
+alias 3='pu -3'
+alias 4='pu -4'
+alias 5='pu -5'
+alias 6='pu -6'
+alias 7='pu -7'
+alias 8='pu -8'
+alias 9='pu -9'
+alias pu='() { pushd $1 &> /dev/null; dirs -v; }'
+alias po='() { popd &> /dev/null; dirs -v; }'
+
+zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
+
+# =============================================================================
+#                                Key Bindings
+# =============================================================================
+
+# Common CTRL bindings.
+bindkey "^a" beginning-of-line
+bindkey "^e" end-of-line
+bindkey "^f" forward-word
+bindkey "^b" backward-word
+bindkey "^k" kill-line
+bindkey "^d" delete-char
+bindkey "^y" accept-and-hold
+bindkey "^w" backward-kill-word
+bindkey "^u" backward-kill-line
+bindkey "^R" history-incremental-pattern-search-backward
+bindkey "^F" history-incremental-pattern-search-forward
+
+# Do not require a space when attempting to tab-complete.
+bindkey "^i" expand-or-complete-prefix
+
+# Fixes for alt-backspace and arrows keys
+bindkey '^[^?' backward-kill-word
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+
+# =============================================================================
+#                                 Completions
+# =============================================================================
+
+zstyle ':completion:*' rehash true
+#zstyle ':completion:*' verbose yes
+#zstyle ':completion:*:descriptions' format '%B%d%b'
+#zstyle ':completion:*:messages' format '%d'
+#zstyle ':completion:*:warnings' format 'No matches for: %d'
+#zstyle ':completion:*' group-name ''
+
+# case-insensitive (all), partial-word and then substring completion
+zstyle ":completion:*" matcher-list \
+  "m:{a-zA-Z}={A-Za-z}" \
+  "r:|[._-]=* r:|=*" \
+  "l:|=* r:|=*"
+
+zstyle ":completion:*:default" list-colors ${(s.:.)LS_COLORS}
+
+# =============================================================================
+#                                   Startup
+# =============================================================================
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+# Then, source plugins and add commands to $PATH
+zplug load
+
+if zplug check "seebi/dircolors-solarized"; then
+  if which gdircolors &> /dev/null; then
+  alias dircolors='() { $(whence -p gdircolors) }'
+  fi
+  if which dircolors &> /dev/null; then
+    scheme="dircolors.256dark"
+    eval $(dircolors ~/.zplug/repos/seebi/dircolors-solarized/$scheme)
+  fi
+fi
+
+# History
+if zplug check "zsh-users/zsh-history-substring-search"; then
+  zmodload zsh/terminfo
+  bindkey "$terminfo[kcuu1]" history-substring-search-up
+  bindkey "$terminfo[kcud1]" history-substring-search-down
+  bindkey "^[[1;5A" history-substring-search-up
+  bindkey "^[[1;5B" history-substring-search-down
+fi
+
+[ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"
+
+# Source local zsh customizations.
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+# Source functions and aliases.
+[[ -f ~/.zsh_functions ]] && source ~/.zsh_functions
+[[ -f ~/.zsh_aliases ]] && source ~/.zsh_aliases
+
+#autoload -Uz compinit
+#compinitee
+
+#ZLE_RPROMPT_INDENT=0
+
+# === environment variables ===
+
+# PATH
+export PATH=$HOME/.local/bin:$PATH         # local scripts
+export PATH=$PATH:$HOME/.cargo/bin         # rust
+export PATH=~/bin:$PATH                    # other local scripts
+export PATH=~/.agda:$PATH                  # agda
+export PATH=/home/$USER/.MATLAB/bin:$PATH  # matlab
+export PATH=/home/$USER/.cabal/bin:$PATH   # haskell
+
+# starship
+eval "$(starship init zsh)"
+
+# c++
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig/
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/wxgtk-dev/lib/
+
+# latex
+export TEXMFHOME=~/Library/texmf
+#export VIMTEX_OUTPUT_DIRECTORY=slipbox
+
+# ros
+export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
+
+# vim
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export EDITOR=open_in_nvim
+
+# === aliases ===
+
+alias reset="clear && printf '\e[3J'"
+alias pomodoro="porsmo"
+alias wiki="wiki-tui"
+alias forester-launch="nix --extra-experimental-features nix-command \
+  --extra-experimental-features flakes develop --command zsh"
+alias wdiff="wdiff -n \
+  -w $'\033[30;41m' -x $'\033[0m' \
+  -y $'\033[30;42m' -z $'\033[0m' " 
+export NOTES_DIR="~/mega/notes"
+
+# setup ROS commands
+ros-start-custom(){
+docker run --rm -it --privileged --net=host --ipc=host --env="DISPLAY" \
+    --device=/dev/dri:/dev/dri \
+    -v "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+    -v $HOME/.Xauthority:/home/$(id -un)/.Xauthority -e XAUTHORITY=/home/$(id -un)/.Xauthority \
+    -v /home/$(id -un)/robotics:/home/$(id -un)/ros \
+    -v /home/$(id -un)/mega/datasets:/home/$(id -un)/ros/data \
+    -v /home/$(id -un)/Documents/CoppeliaSim:/home/$(id -un)/ros/software/coppelia_sim \
+    -e DISPLAY=$DISPLAY \
+    -e DOCKER_USER_NAME=$(id -un) \
+    -e DOCKER_USER_ID=$(id -u) \
+    -e DOCKER_USER_GROUP_NAME=$(id -gn) \
+    -e DOCKER_USER_GROUP_ID=$(id -g) \
+    -e ROS_IP=127.0.0.1 \
+    birromer/ros-noetic:robot #-c "cp /ros/.bashrc /root/.bashrc && bash"
+}
+
+ros-start(){
+docker run --rm -it --privileged --net=host --ipc=host --env="DISPLAY" \
+    --device=/dev/dri:/dev/dri \
+    -v "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+    -v $HOME/.Xauthority:/home/robot/.Xauthority \
+    -e XAUTHORITY=/home/robot/.Xauthority \
+    -v /home/$(id -un)/robotics:/home/robot/ros \
+    -v /tmp/:/tmp \
+    -v /home/$(id -un)/mega/datasets:/home/robot/ros/data \
+    -v /home/$(id -un)/Documents/CoppeliaSim:/home/robot/ros/software/coppelia_sim \
+    -e DISPLAY=$DISPLAY \
+    -e ROS_IP=127.0.0.1 \
+    -e DOCKER_USER_NAME=robot \
+    -e DOCKER_USER_ID=$(id -u) \
+    -e DOCKER_USER_GROUP_NAME=$(id -gn) \
+    -e DOCKER_USER_GROUP_ID=$(id -g) \
+    birromer/ros-noetic-intervals:latest
+}
+
+ros-connect(){
+    docker exec -ti $(docker ps -aq --filter ancestor=birromer/ros-noetic-intervals:latest --filter status=running) zsh
+}
+
+ros-clean(){
+    docker rm $(docker ps -aq --filter ancestor=birromer/ros-noetic-intervals:latest --filter status=exited)
+}
+
+
+# opam configuration
+[[ ! -r /Users/bernardo/.opam/opam-init/init.zsh ]] || source /Users/bernardo/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/opt/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+# >>> juliaup initialize >>>
+# !! Contents within this block are managed by juliaup !!
+path=('/Users/bernardo/.juliaup/bin' $path)
+export PATH
+# <<< juliaup initialize <<<
+

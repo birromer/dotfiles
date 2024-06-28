@@ -1,9 +1,16 @@
 [user]
-	email = hummescmpa@gmail.com
+	email = hummesbe@gmail.com
 	name = Bernardo Hummes
 
 [github]
     user = birromer
+
+[diff]
+  tool = diffr --line-numbers
+[core]
+  pager = diffr --line-numbers | less -R
+[interactive]
+  diffFilter = diffr
 
 [alias]
     # today's done stuff
