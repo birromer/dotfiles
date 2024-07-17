@@ -12,49 +12,35 @@
     ],
     "description": "Add a an inkscape (vector) figure"
   },
-  "Notes": {
+  "Note": {
     "prefix": "t_note",
     "body": [
       "%! TEX root = ${TM_FILENAME}",
-      "\\documentclass{note}",
+      "\\documentclass[project=$1]{note}",
       "\\title{$2} %TODO: Add to the index.",
       "\\author{Bernardo Hummes}",
-      "\\date{${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}}\n",
+      "\\date{${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}}\n",
       "\\begin{document}",
-      "% ================================== Content ==================================\n",
-      "% TODO: Complete.\n$0\n",
-      "% =================================== Links ===================================",
-      "\\before",
-      "\\after",
-      "% ================================ End content ================================",
+      "% =================================== Content ========================= %<*note>",
+      "\n% TODO: Complete.$0\n",
+      "%</note> ============================ External =================================",
+      "\\external{}",
+      "% ================================== Backlinks =================================",
+      "\\begin{backlinks}",
+      "\t\\item[$3] ",
+      "\\end{backlinks}",
+      "% ================================ End content =================================",
       "\\end{document}"
     ],
     "description": "Add note template"
-  },
-  "Literature note": {
-    "prefix": "t_reference_note",
-    "body": [
-      "%! TEX root = ${TM_FILENAME}",
-      "\\documentclass{note}",
-      "\\title{$2} %TODO: Add to the index.",
-      "\\author{Bernardo Hummes}",
-      "\\date{${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}}\n",
-      "\\begin{document}",
-      "% ================================== Content ==================================\n",
-      "% TODO: Complete.\n$0\n",
-      "% =================================== Links ===================================",
-      "\\seealso",
-      "% ================================ End content ================================",
-      "\\end{document}"
-    ],
-    "description": "Add literature note template"
   },
   "Presentation": {
     "prefix": "t_presentation",
     "body": [
       "%! TEX root = ${TM_FILENAME}",
       "\\documentclass{presentation}",
-      "\\title{$1} %TODO: Add to the index.",
+      "\\input{$1_macros}",
+      "\\title{$2} %TODO: Add to the index.",
       "\\author{Bernardo Hummes}",
       "\\date{${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}}\n",
       "\\begin{document}",

@@ -104,6 +104,13 @@
     ],
     "description": "Display in normal italic face style"
   },
+  "Verbatim": {
+    "prefix": "verb",
+    "body": [
+      "\\verb|$1|$0"
+    ],
+    "description": "Display in verbatim style"
+  },
   "Smallcaps": {
     "prefix": "sc",
     "body": [
@@ -115,6 +122,20 @@
     "prefix": "quote",
     "body": [
       "``$1''$0"
+    ],
+    "description": "Add quotation marks"
+  },
+  "Introduce": {
+    "prefix": "intro",
+    "body": [
+     "\\intro{$0}" 
+    ],
+    "description": "Introduce a knowledge"
+  },
+  "Kl": {
+    "prefix": "\"",
+    "body": [
+      "\\kl[$1]{$2}$0"
     ],
     "description": "Add quotation marks"
   },
@@ -169,14 +190,23 @@
   "Transclude": {
     "prefix": "transclude",
     "body": [
-      "\\transclude{$1}}"
+      "\\transclude{$1}"
+    ],
+    "description": "Transclude file: id "
+  },
+  "Backlinks": {
+    "prefix": "backlinks",
+    "body": [
+      "\\begin{backlinks}",
+      "\t\\item[$1] $2",
+      "\\end{backlinks}"
     ],
     "description": "Transclude file: id "
   },
   "Link": {
     "prefix": "link",
     "body": [
-      "\\link{$1}{$2}"
+      "\\link{$1}[$2]"
     ],
     "description": "Link file: id, text"
   },
@@ -194,34 +224,33 @@
     ],
     "description": "Add rhetorical emphasis macro"
   },
-  "Knowledge": {
-    "prefix": "kl",
+  "Notion": {
+    "prefix": "notion",
     "body": [
-      "\\knowledge{notion}",
-      "\t|$1"
+      "\\knowledge{$1}[$2]{notion}"
     ],
-    "description": "Add an inline todo"
+    "description": "Add a knowledge entry"
   },
   "Margin note": {
     "prefix": "note",
     "body": [
       "\\marginnote{$1}"
     ],
-    "description": "Add an inline todo"
+    "description": "Add an margin note"
   },
   "todoi": {
     "prefix": "todo",
     "body": [
-      "\\todoi{$1}"
+      "\\todoi[BH][$1]{$2}"
     ],
     "description": "Add an inline todo"
   },
   "todom": {
     "prefix": "todom",
     "body": [
-      "\\todom{$1}"
+      "\\todom[BH][$1]{$2}"
     ],
-    "description": "Add a magin todo"
+    "description": "Add a margin todo"
   },
   "todo fill": {
     "prefix": "fill",
@@ -363,7 +392,7 @@
           "\\section{$1} % {{{",
           "\\label{sec:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
           "${0:$TM_SELECTED_TEXT}",
-          "% section $1 }}}"
+          "% end $1 }}}"
       ],
       "description": "Section"
   },
@@ -373,7 +402,7 @@
           "\\subparagraph{$1} % {{{",
           "\\label{subp:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
           "${0:$TM_SELECTED_TEXT}",
-          "% subparagraph $1 }}}"
+          "% end $1 }}}"
       ],
       "description": "Sub Paragraph"
   },
@@ -383,7 +412,7 @@
           "\\subsection{$1} % {{{",
           "\\label{sub:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
           "${0:$TM_SELECTED_TEXT}",
-          "% subsection $1 }}}"
+          "% end $1 }}}"
       ],
       "description": "Sub Section"
   },
@@ -393,7 +422,7 @@
           "\\subsubsection{${1:subsubsection name}} % {{{",
           "\\label{sec:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
           "${0:$TM_SELECTED_TEXT}",
-          "% subsubsection $1 }}}"
+          "% end $1 }}}"
       ],
       "description": "Sub Sub Section"
   },
@@ -403,7 +432,7 @@
           "\\chapter{$1} % {{{",
           "\\label{chap:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
           "${0:$TM_SELECTED_TEXT}",
-          "% chapter $1 }}}"
+          "% end $1 }}}"
       ],
       "description": "Chapter"
   },
@@ -413,7 +442,7 @@
           "\\paragraph{${1:paragraph name}} % {{{",
           "\\label{par:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
           "${0:$TM_SELECTED_TEXT}",
-          "% paragraph $1 }}}"
+          "% end $1 }}}"
       ],
       "description": "Paragraph"
   },
@@ -423,7 +452,7 @@
           "\\part{${1:part name}} % {{{",
           "\\label{prt:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
           "${0:$TM_SELECTED_TEXT}",
-          "% part $1 }}}"
+          "% end $1 }}}"
       ],
       "description": "Part"
   }

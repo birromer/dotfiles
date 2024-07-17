@@ -120,10 +120,10 @@ map("n", "<leader>a", "<cmd>lua require('harpoon.mark').add_file()<cr>", { desc 
 map("n", "<C-e>", "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", { desc = "Show harpoon marks", noremap = true, silent = true })
 
 -- Oil
-map("n", "<leader>E", function() require("oil").open() end, {desc = "File Explorer"})
+map("n", "<leader>E", function() require("oil").open(); require("oil").open_preview() end, {desc = "File Explorer"})
 map("n", "<leader>e", function() require("oil").open_float() end, {desc = "File Browser"})
 map("n", "<leader>fb", function() require("oil").toggle_float(vim.fn.getcwd()) end, {desc = "File Browser (CWD)"})
-map("n", "<leader>fN", function() require("oil").toggle_float("~/mega/phd/notes/") end, {desc = "Notes folder"})
+map("n", "<leader>fN", function() require("oil").toggle_float("~/mega/notes/") end, {desc = "Notes folder"})
 
 -- Spectre
 map("n", "<leader>S", '<cmd>lua require("spectre").toggle()<CR>', { desc = "Toggle Spectre", })

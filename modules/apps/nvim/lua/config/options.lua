@@ -32,7 +32,7 @@ vim.opt.fillchars = {
 -- Folding
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-vim.opt.foldlevelstart = 1
+vim.opt.foldlevelstart = 2
 
 -- Disable netew
 vim.g.loaded_netrw = 1
