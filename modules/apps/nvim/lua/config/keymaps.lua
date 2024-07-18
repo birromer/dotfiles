@@ -169,6 +169,9 @@ end
 
 map("n", "<leader>p", ":lua VimtexPDFToggle()<cr>")
 
+-- No neck pain
+map("n", "<leader>wc", "<cmd>NoNeckPain<cr>", {desc = "Toggle centering"} )
+
 -- Maximizer
 map("n", "<leader>wm", "<cmd>MaximizerToggle<cr>", {desc = "Toggle maximizer"} )
 
