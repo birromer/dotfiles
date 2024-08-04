@@ -81,9 +81,9 @@ end
 
 local function create_zettel_independent(prefix, split)
   -- get id without path nor extension
-  local current_file = vim.fn.expand("%:t:r")
-  -- get prefix and id -- HACK: Fixed for note id of 3 characters.
-  --  local prefix, current_id, current_children_id = current_file:match("^(.*)_(...)(.*)")
+  -- local current_file = vim.fn.expand("%:t:r")
+  -- local prefix, current_id, current_children_id = current_file:match("^(.*)_(...)(.*)")
+  -- get prefix and id -- HACK: Fixed for note id of 4 characters.
     local current_id = "0001"
 
   if split ~= 'split' and split ~= 'vsplit' and split ~= 'edit' then
@@ -92,7 +92,7 @@ local function create_zettel_independent(prefix, split)
 
   local id = tonumber(current_id, 36)+1
   local new_id = to_base36(id, NOTE_ID_SIZE)
-  while id < NOTE_ID_MAX and 1 == vim.fn.filereadable(fn.fnameescape(NOTES_DIR .. "/" .. prefix .. NOTES_SEP .. new_id .. ".tex")) do
+  while id < NOTE_ID_MAX and 1 == vim.fn.filereadable(fn.expand(fn.fnameescape(NOTES_DIR .. "/" .. prefix .. NOTES_SEP .. new_id .. ".tex"))) do
     id = id + 1
     new_id = to_base36(id, NOTE_ID_SIZE)
   end
