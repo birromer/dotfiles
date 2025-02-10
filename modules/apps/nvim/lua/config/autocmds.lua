@@ -3,6 +3,21 @@
 local autocmd = vim.api.nvim_create_autocmd
 vim.api.nvim_create_augroup("Random", {clear = true})
 
+-- vim.api.nvim_create_autocmd('User', {
+--     pattern = 'VimtexEventView',
+--     callback = function()
+--         -- Add a small delay to ensure Skim is fully opened
+--         vim.fn.system('sleep 0.5 && osascript ~/Library/Scripts/ArrangeSkim.scpt')
+--     end,
+-- })
+--
+autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "*_notions.tex",
+  callback = function()
+    vim.opt_local.wrap = false  -- Use opt_local to set it only for this buffer
+  end
+})
+
 autocmd("VimResized", {
     group = "Random",
     desc = "Keep windows equally resized",

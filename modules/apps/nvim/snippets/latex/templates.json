@@ -16,10 +16,11 @@
     "prefix": "t_note",
     "body": [
       "%! TEX root = ${TM_FILENAME}",
-      "\\documentclass[project=$1]{note}",
-      "\\title{$2} %TODO: Add to the index.",
+      "\\documentclass[project=$1,root]{note}",
+      "\\title{$2} %TODO: Add to the knowledge base and reference in a task.",
       "\\author{Bernardo Hummes}",
-      "\\date{${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}}\n",
+      "\\created{${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}}",
+      "\\date{\\today}\n",
       "\\begin{document}",
       "% =================================== Content ========================= %<*note>",
       "\n% TODO: Complete.$0\n",
@@ -27,7 +28,7 @@
       "\\external{}",
       "% ================================== Backlinks =================================",
       "\\begin{backlinks}",
-      "\t\\item[$3] ",
+      "\t\\item[$1_0001] Index of $3",
       "\\end{backlinks}",
       "% ================================ End content =================================",
       "\\end{document}"
@@ -38,7 +39,7 @@
     "prefix": "t_presentation",
     "body": [
       "%! TEX root = ${TM_FILENAME}",
-      "\\documentclass{presentation}",
+      "\\documentclass[aspect=43]{presentation}",
       "\\input{$1_macros}",
       "\\title{$2} %TODO: Add to the index.",
       "\\author{Bernardo Hummes}",

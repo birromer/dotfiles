@@ -30,9 +30,12 @@ return {
           },
         }
       })
-      -- setup must be called before loading
-      vim.cmd.colorscheme "catppuccin"
     end,
+  },
+  { "chriskempson/base16-vim" },
+  {
+    "agude/vim-eldar",
+    lazy = false,
+    priority = 1000,
   }
---  { "chriskempson/base16-vim" },
 }

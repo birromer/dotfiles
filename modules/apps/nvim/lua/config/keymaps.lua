@@ -78,7 +78,7 @@ map("v", ">", ">gv")
 map("n", "<leader>L", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
 -- New file
-map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
+-- map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 
 -- Formatting
 map({ "n", "v" }, "<leader>cf", function()
@@ -123,7 +123,18 @@ map("n", "<C-e>", "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", { de
 map("n", "<leader>E", function() require("oil").open(); require("oil").open_preview() end, {desc = "File Explorer"})
 map("n", "<leader>e", function() require("oil").open_float() end, {desc = "File Browser"})
 map("n", "<leader>fb", function() require("oil").toggle_float(vim.fn.getcwd()) end, {desc = "File Browser (CWD)"})
-map("n", "<leader>fN", function() require("oil").toggle_float("~/mega/notes/") end, {desc = "Notes folder"})
+
+map("n", "<leader>fn", function()
+  -- Prompt for prefix
+  vim.ui.input({ prompt = "Enter prefix (e.g. bhf): " }, function(prefix)
+    if prefix then  -- check if prefix was provided (not cancelled)
+      require("telescope.builtin").live_grep({
+        default_text = prefix .. "_.*",
+        prompt_title = "Search in " .. prefix .. " Notes",
+      })
+    end
+  end)
+end, { desc = "Search in Notes with prefix" })
 
 -- Spectre
 map("n", "<leader>S", '<cmd>lua require("spectre").toggle()<CR>', { desc = "Toggle Spectre", })
@@ -206,3 +217,6 @@ map("n",  "<leader>u", vim.cmd.UndotreeToggle, {desc = "Undotree toggle"})
 map('n', '<tab>', function() return require('fold-cycle').open() end, {silent = true, desc = 'Fold-cycle: open folds'})
 map('n', '<s-tab>', function() return require('fold-cycle').close() end, {silent = true, desc = 'Fold-cycle: close folds'})
 map('n', 'zC', function() return require('fold-cycle').close_all() end, {remap = true, silent = true, desc = 'Fold-cycle: close all folds'})
+
+-- MdEval
+map('n', '<leader>cc', "<cmd>lua require 'mdeval'.eval_code_block()<CR>", {silent = true, noremap = true})

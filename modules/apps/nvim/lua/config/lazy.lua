@@ -20,7 +20,7 @@ require("lazy").setup({
   spec = { { import = "plugins" } },
   install = {
     missing = true,
-    colorscheme = { "catpuccin" },
+    colorscheme = { "elflord" },
   },
   checker = { enabled = false }, -- Automatically check for plugin updates
 })

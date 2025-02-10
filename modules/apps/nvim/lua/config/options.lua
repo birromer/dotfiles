@@ -9,10 +9,11 @@ vim.g.lazyvim_python_lsp = "pyright"
 vim.g.lazyvim_python_ruff = "ruff_lsp"
 
 -- UI options
+vim.cmd.colorscheme "elflord"
 vim.g.base16colorspace = 256
 vim.opt.termguicolors = true -- Truecolor
 vim.opt.conceallevel = 2     -- conceal
-vim.opt.cursorline = true    -- enable highlighting of the current line
+vim.opt.cursorline = false    -- enable highlighting of the current line
 vim.opt.laststatus = 3       -- global statusline
 vim.opt.list = true          -- show some invisible characters
 vim.opt.number = true
@@ -28,11 +29,17 @@ vim.opt.fillchars = {
   diff = "╱",
   eob = " ",
 }
+vim.g.markdown_fenced_languages = {'python', 'cpp', 'julia'}
+vim.g.vim_markdown_folding_disabled = 1
+vim.g.vim_markdown_conceal = 2
+vim.g.vim_markdown_conceal_code_blocks = 0
+vim.g.vim_markdown_math = 1
+vim.g.vim_markdown_frontmatter = 1
 
 -- Folding
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-vim.opt.foldlevelstart = 2
+vim.opt.foldlevelstart = 0  -- 2 should show everything from sections
 
 -- Disable netew
 vim.g.loaded_netrw = 1

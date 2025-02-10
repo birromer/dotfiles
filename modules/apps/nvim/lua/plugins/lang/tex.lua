@@ -6,21 +6,23 @@ return {
       vim.g.vimtex_compiler_method = "latexmk"
       vim.g.vimtex_compiler_progname = "nvr"
 
---      vim.g.vimtex_compiler_latexmk = {
---        build_dir = "./slipbox/",
---        options = {
---          "-file-line-error",
---          "-synctex=1",
---          "-shell-escape",
---          "-verbose",
---          "-interaction=nonstopmode",
---          "-auxdir=./slipbox/",
---          "-outdir=./slipbox/",
---        },
---      }
+      vim.g.vimtex_compiler_latexmk = {
+        build_dir = "build",
+        aux_dir = "build",
+        out_dir = "build",
+        options = {
+          "-file-line-error",
+          "-synctex=1",
+          "-shell-escape",
+          "-verbose",
+          "-interaction=nonstopmode",
+          "-auxdir=build",
+          "-outdir=build",
+        },
+      }
 
-      vim.g.vimtex_view_method = "sioyek"
-      vim.g.vimtex_view_general_viewer = "skim"
+      vim.g.vimtex_view_method = "skim"
+      vim.g.vimtex_view_general_viewer = "sioyek"
 
       vim.g.vimtex_view_skim_reading_bar = 1
       vim.g.vimtex_view_skim_activate = 0

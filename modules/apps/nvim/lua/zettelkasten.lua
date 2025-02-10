@@ -5,8 +5,8 @@ local map = vim.keymap.set
 local user_func = vim.api.nvim_create_user_command
 local fn = vim.fn
 
---local NOTES_DIR = "~/mega/test-notes"
-local NOTES_DIR = "~/mega/notes"
+--local NOTES_DIR = "~/cloud/test-notes"
+local NOTES_DIR = "~/cloud/notes"
 local NOTES_SEP = "_"
 local NOTES_INDEX = "000_index.tex"
 local NOTES_NOTIONS = "000_notions.tex"
@@ -109,6 +109,13 @@ user_func('NewZettelIndependent', function()
   ) end, { nargs = 0 }
 )
 
+user_func('SplitNewZettelIndependent', function()
+  create_zettel_independent(
+  vim.fn.input('Prefix: '),
+  'vsplit'
+  ) end, { nargs = 0 }
+)
+
 -- Create new note "behind" the current note (adding next letter or number available)
 user_func('NewZettelBehind', function() create_zettel_behind('vsplit') end, { nargs = 0 })
 
@@ -166,6 +173,9 @@ user_func('ZettelReferences', function()
 map("n", "<leader>nn", "<cmd>NewZettelIndependent<cr>",
 { silent = false, desc="Create new independent note "})
 
+map("n", "<leader>nN", "<cmd>SplitNewZettelIndependent<cr>",
+{ silent = false, desc="Create new independent note (vsplit)"})
+
 map("n", "<leader>nb", "<cmd>NewZettelBehind<cr>",
 { silent = false, desc="Create new note behind current"})
 
@@ -197,6 +207,13 @@ map("n",  -- Change working directory to zettelkasten and open index
   .. '<CMD> cd '.. NOTES_DIR .. ' <CR>'
   .. '<CMD> pwd <CR>',
   { desc="Go to knowledges file"})
+
+map("n",  -- Change working directory to zettelkasten and open index
+  '<leader>nK',
+  '<CMD> vs ' .. NOTES_DIR .. '/' .. NOTES_NOTIONS .. '<CR>'
+  .. '<CMD> cd '.. NOTES_DIR .. ' <CR>'
+  .. '<CMD> pwd <CR>',
+  { desc="Go to knowledges file (vsplit)"})
 
 map("n", '<leader>nr', '<CMD> :ZettelReferences <CR>',
 { desc="List all references to current note"})
