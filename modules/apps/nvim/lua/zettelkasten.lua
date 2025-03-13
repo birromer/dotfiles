@@ -5,13 +5,41 @@ local map = vim.keymap.set
 local user_func = vim.api.nvim_create_user_command
 local fn = vim.fn
 
---local NOTES_DIR = "~/cloud/test-notes"
-local NOTES_DIR = "~/cloud/notes"
-local NOTES_SEP = "_"
-local NOTES_INDEX = "000_index.tex"
-local NOTES_NOTIONS = "000_notions.tex"
-local NOTE_ID_MAX = 4095
-local NOTE_ID_SIZE = 4
+-- Configuration for different directories
+local configs = {
+  ["~/cloud/phd"] = {
+    dir = "~/cloud/phd",
+    sep = "-",
+    index = "000-contents.tex",
+    notions = "000-notation.tex",
+    id_max = 4095,
+    id_size = 4
+  },
+  ["~/cloud/notes"] = {
+    dir = "~/cloud/notes",
+    sep = "_",
+    index = "000_index.tex",
+    notions = "000_notions.tex",
+    id_max = 4095,
+    id_size = 4
+  }
+}
+
+-- Function to get current configuration based on working directory
+local function get_config()
+  local cwd = fn.expand(fn.getcwd())
+
+  -- Try to match the current working directory with our config directories
+  for dir, config in pairs(configs) do
+    local expanded_dir = fn.expand(dir)
+    if cwd:find(expanded_dir, 1, true) then
+      return config
+    end
+  end
+
+  -- Default to notes
+  return configs["~/cloud/notes"]
+end
 
 -- Helper function
 local function to_base36(number, digits)
@@ -33,8 +61,9 @@ end
 
 -- Function definitions
 local function create_zettel(prefix, id, split)
+  local config = get_config()
   local zettel_name = fn.fnameescape(
-    NOTES_DIR .. "/" .. prefix .. id .. '.tex'
+    config.dir .. "/" .. prefix .. id .. '.tex'
   )
   if split ~= 'split' and split ~= 'vsplit' and split ~= 'edit' then
     split = 'edit'
@@ -45,10 +74,11 @@ local function create_zettel(prefix, id, split)
 end
 
 local function create_zettel_behind(split)
+  local config = get_config()
   -- get id without path nor extension
   local current_file = vim.fn.expand("%:t:r")
   -- get prefix and id
-  local prefix, current_id = current_file:match("^(.*)-(.*)")
+  local prefix, current_id = current_file:match("^(.*)" .. config.sep .. "(.*)")
   local next_char, first_char, last_char
 
   if split ~= 'split' and split ~= 'vsplit' and split ~= 'edit' then
@@ -70,38 +100,34 @@ local function create_zettel_behind(split)
       t_char = string.char(char)
     end
 
-    if 0 == vim.fn.filereadable(fn.fnameescape(NOTES_DIR .. "/" .. prefix .. NOTES_SEP .. current_id .. t_char .. ".tex")) then
+    if 0 == vim.fn.filereadable(fn.fnameescape(config.dir .. "/" .. prefix .. config.sep .. current_id .. t_char .. ".tex")) then
       next_char = t_char
       break
     end
   end
 
-  create_zettel(prefix .. NOTES_SEP, current_id .. next_char, split) -- Create and open the new note
+  create_zettel(prefix .. config.sep, current_id .. next_char, split) -- Create and open the new note
 end
 
 local function create_zettel_independent(prefix, split)
-  -- get id without path nor extension
-  -- local current_file = vim.fn.expand("%:t:r")
-  -- local prefix, current_id, current_children_id = current_file:match("^(.*)_(...)(.*)")
-  -- get prefix and id -- HACK: Fixed for note id of 4 characters.
-    local current_id = "0001"
+  local config = get_config()
+  local current_id = "0001"
 
   if split ~= 'split' and split ~= 'vsplit' and split ~= 'edit' then
     split = 'edit'
   end
 
   local id = tonumber(current_id, 36)+1
-  local new_id = to_base36(id, NOTE_ID_SIZE)
-  while id < NOTE_ID_MAX and 1 == vim.fn.filereadable(fn.expand(fn.fnameescape(NOTES_DIR .. "/" .. prefix .. NOTES_SEP .. new_id .. ".tex"))) do
+  local new_id = to_base36(id, config.id_size)
+  while id < config.id_max and 1 == vim.fn.filereadable(fn.expand(fn.fnameescape(config.dir .. "/" .. prefix .. config.sep .. new_id .. ".tex"))) do
     id = id + 1
-    new_id = to_base36(id, NOTE_ID_SIZE)
+    new_id = to_base36(id, config.id_size)
   end
 
-  create_zettel(prefix .. NOTES_SEP, new_id, split) -- Create and open the new note
+  create_zettel(prefix .. config.sep, new_id, split) -- Create and open the new note
 end
 
-
--- Create new independent note in the prefix specified by the user.
+-- Commands remain the same, but now use dynamic configuration
 user_func('NewZettelIndependent', function()
   create_zettel_independent(
   vim.fn.input('Prefix: '),
@@ -116,12 +142,12 @@ user_func('SplitNewZettelIndependent', function()
   ) end, { nargs = 0 }
 )
 
--- Create new note "behind" the current note (adding next letter or number available)
 user_func('NewZettelBehind', function() create_zettel_behind('vsplit') end, { nargs = 0 })
 
 user_func('NewZettelSearch', function()
+    local config = get_config()
     create_zettel(
-      vim.fn.input('Prefix: ') .. NOTES_SEP,
+      vim.fn.input('Prefix: ') .. config.sep,
       vim.fn.input('Note ID: '),
       'edit')
   end,
@@ -129,8 +155,9 @@ user_func('NewZettelSearch', function()
 )
 
 user_func('SplitZettel', function()
+    local config = get_config()
     create_zettel(
-      vim.fn.input('Prefix: ') .. NOTES_SEP,
+      vim.fn.input('Prefix: ') .. config.sep,
       vim.fn.input('Note ID: '),
       'split'
     )
@@ -139,8 +166,9 @@ user_func('SplitZettel', function()
 )
 
 user_func('VertZettel', function()
+    local config = get_config()
     create_zettel(
-      vim.fn.input('Prefix: ') .. NOTES_SEP,
+      vim.fn.input('Prefix: ') .. config.sep,
       vim.fn.input('Note ID: '),
       'vsplit')
   end,
@@ -166,10 +194,7 @@ user_func('ZettelReferences', function()
 )
 
 -- Keymaps
--- nn : new independent note
--- nb : new note behind current note
--- ns : search for note and  open if exists, create otherwise
---
+-- Updated to use dynamic configuration
 map("n", "<leader>nn", "<cmd>NewZettelIndependent<cr>",
 { silent = false, desc="Create new independent note "})
 
@@ -182,38 +207,33 @@ map("n", "<leader>nb", "<cmd>NewZettelBehind<cr>",
 map("n", "<leader>ns", "<cmd>NewZettelSearch<cr>",
 { silent = false, desc="Search and open or create note"})
 
--- map("n", '<leader>ns', '<cmd>SplitZettel <cr>',
--- { silent = false, desc="Create new note (same prefix) (hsplit)"})
-
--- map("n", '<leader>nv', '<cmd>VertZettel<cr>',
--- { silent = false, desc="Create new note (same prefix) (vsplit)"})
-
 map("n", '<leader>nj', '<cmd>JumpToNote<cr>',
 { silent = false, desc="Jump to note under cursor"})
 
 map("n", '<leader>nh', '<cmd>SplitJumpToNote<cr>',
 { silent = false, desc="Jump to note under cursor (vsplit)"})
 
-map("n",  -- Change working directory to zettelkasten and open index
-  '<leader>ni',
-  '<CMD> e ' .. NOTES_DIR .. '/' .. NOTES_INDEX .. '<CR>'
-  .. '<CMD> cd '.. NOTES_DIR .. ' <CR>'
-  .. '<CMD> pwd <CR>',
-  { desc="Go to index note"})
+-- Dynamic index and notions mappings
+map("n", '<leader>ni', function()
+  local config = get_config()
+  vim.cmd('e ' .. config.dir .. '/' .. config.index)
+  vim.cmd('cd ' .. config.dir)
+  vim.cmd('pwd')
+end, { desc="Go to index note"})
 
-map("n",  -- Change working directory to zettelkasten and open index
-  '<leader>nk',
-  '<CMD> e ' .. NOTES_DIR .. '/' .. NOTES_NOTIONS .. '<CR>'
-  .. '<CMD> cd '.. NOTES_DIR .. ' <CR>'
-  .. '<CMD> pwd <CR>',
-  { desc="Go to knowledges file"})
+map("n", '<leader>nk', function()
+  local config = get_config()
+  vim.cmd('e ' .. config.dir .. '/' .. config.notions)
+  vim.cmd('cd ' .. config.dir)
+  vim.cmd('pwd')
+end, { desc="Go to knowledges file"})
 
-map("n",  -- Change working directory to zettelkasten and open index
-  '<leader>nK',
-  '<CMD> vs ' .. NOTES_DIR .. '/' .. NOTES_NOTIONS .. '<CR>'
-  .. '<CMD> cd '.. NOTES_DIR .. ' <CR>'
-  .. '<CMD> pwd <CR>',
-  { desc="Go to knowledges file (vsplit)"})
+map("n", '<leader>nK', function()
+  local config = get_config()
+  vim.cmd('vs ' .. config.dir .. '/' .. config.notions)
+  vim.cmd('cd ' .. config.dir)
+  vim.cmd('pwd')
+end, { desc="Go to knowledges file (vsplit)"})
 
 map("n", '<leader>nr', '<CMD> :ZettelReferences <CR>',
 { desc="List all references to current note"})

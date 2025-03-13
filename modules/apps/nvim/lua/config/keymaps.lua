@@ -9,7 +9,7 @@ map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 
 -- Better replace
-map("x", "<leader>p", "\"_dP", { desc = "Paste preserving clipboard"})
+-- map("x", "<leader>p", "\"_dP", { desc = "Paste preserving clipboard"})
 
 -- Better up/down
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -87,7 +87,7 @@ end, { desc = "Format" })
 
 -- Highlights under cursor
 map("n", "<leader>i", vim.show_pos, { desc = "Inspect Pos" })
-map("n", "<leader>pv", vim.cmd.Ex)
+-- map("n", "<leader>pv", vim.cmd.Ex)
 
 -- -- Plugins --
 
@@ -98,22 +98,26 @@ map("n", "<leader>gd", "<cmd>Git difftool --name-only<cr>", { desc = "Previous i
 
 -- Telescope
 local builtin_telescope = require("telescope.builtin")
-wk.register({
-  ["<leader>f"] = { name = "Telescope", }
+
+wk.register({ -- Register groups
+  ["<leader>f"] = { group = "+telescope" },
+  ["<leader>s"] = { group = "+search" },
 })
-local find_buffer_description = "Telescope find buffer"
-map("n", "<leader>fp", "<Cmd>Telescope projects<CR>", {desc = "Projects"})
-map("n", "<leader>fd", builtin_telescope.git_bcommits, { desc = "Telecope commits for current buffer" })
-map("n", "<leader>fs", builtin_telescope.git_status, { desc = "Telecope git status" })
-map("n", "<leader>ff", builtin_telescope.find_files, { desc = find_buffer_description })
-map("n", "<leader><space>", builtin_telescope.find_files, { desc = find_buffer_description })
-map("n", "<leader>,", builtin_telescope.buffers, { desc = find_buffer_description })
-map("n", "<leader>fg", builtin_telescope.live_grep, { desc = "Telescope live grep" })
-map("n", "<leader>fm", builtin_telescope.keymaps, { desc = "Telescope find mapping/keybinding" })
-map("n", "<leader>fu", builtin_telescope.current_buffer_fuzzy_find, { desc = "Fuzzy find in the current buffer" })
-map("n", "<leader>ft", builtin_telescope.treesitter, { desc = "Treesitter" })
-map( "n", "<leader>fb", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { noremap = true, desc = "Telescope file browser" })
-map("n", "<leader>fh", builtin_telescope.help_tags, { desc = "Telescope find help" })
+
+wk.register({
+  ["<leader>fp"] = { "<Cmd>Telescope projects<CR>", "Projects" },
+  ["<leader>fd"] = { builtin_telescope.git_bcommits, "Commits for current buffer" },
+  ["<leader>fs"] = { builtin_telescope.git_status, "Git status" },
+  ["<leader>ff"] = { builtin_telescope.find_files, "Find files" },
+  ["<leader><space>"] = { builtin_telescope.find_files, "Find files" },
+  ["<leader>,"] = { builtin_telescope.buffers, "Find buffers" },
+  ["<leader>fg"] = { builtin_telescope.live_grep, "Live grep" },
+  ["<leader>fm"] = { builtin_telescope.keymaps, "Find keybindings" },
+  ["<leader>fu"] = { builtin_telescope.current_buffer_fuzzy_find, "Fuzzy find in buffer" },
+  ["<leader>ft"] = { builtin_telescope.treesitter, "Treesitter" },
+  ["<leader>fb"] = { ":Telescope file_browser path=%:p:h select_buffer=true<CR>", "File browser" },
+  ["<leader>fh"] = { builtin_telescope.help_tags, "Find help" },
+})
 
 -- Harpoon
 map("n", "<leader>a", "<cmd>lua require('harpoon.mark').add_file()<cr>", { desc = "Mark file with harpoon" })
@@ -129,12 +133,23 @@ map("n", "<leader>fn", function()
   vim.ui.input({ prompt = "Enter prefix (e.g. bhf): " }, function(prefix)
     if prefix then  -- check if prefix was provided (not cancelled)
       require("telescope.builtin").live_grep({
-        default_text = prefix .. "_.*",
-        prompt_title = "Search in " .. prefix .. " Notes",
+        vimgrep_arguments = {
+          "rg",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+          "--smart-case",
+          "--glob",
+          prefix .. "_*.tex",
+--          "-v",  
+--          "\\\\item\\[[[:ascii:]]{8}\\]" -- WARN: Not working exclude \item[id]
+        },
+        prompt_title = "Search in " .. prefix .. " files",
       })
     end
   end)
-end, { desc = "Search in Notes with prefix" })
+end, { desc = "Search in files with prefix" })
 
 -- Spectre
 map("n", "<leader>S", '<cmd>lua require("spectre").toggle()<CR>', { desc = "Toggle Spectre", })
@@ -178,7 +193,7 @@ function VimtexPDFToggle()
     end
 end
 
-map("n", "<leader>p", ":lua VimtexPDFToggle()<cr>")
+-- map("n", "<leader>p", ":lua VimtexPDFToggle()<cr>")
 
 -- No neck pain
 map("n", "<leader>wc", "<cmd>NoNeckPain<cr>", {desc = "Toggle centering"} )

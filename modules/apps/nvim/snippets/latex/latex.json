@@ -266,6 +266,13 @@
     ],
     "description": "Add a margin todo"
   },
+  "verify": {
+    "prefix": "verif",
+    "body": [
+      "\\verify{$1}"
+    ],
+    "description": "Highlight that something needs to be verified"
+  },
   "todo fill": {
     "prefix": "fill",
     "body": [

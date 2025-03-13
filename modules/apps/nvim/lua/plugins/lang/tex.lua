@@ -30,10 +30,10 @@ return {
       vim.g.vimtex_fold_enabled = 1
       vim.g.vimtex_toc_config = { split_pos = ":vert :botright" }
 
-      -- vim.g.vimtex_view_sioyek_options = string.format(
-      --   '--reuse-window --inverse-search="nvr --servername %s +%%2 %%1" --forward-search-file @tex --forward-search-line @line @pdf',
-      --   vim.v.servername
-      -- )
+      vim.g.vimtex_view_sioyek_options = string.format(
+        '--reuse-window --inverse-search="nvr --servername %s +%%2 %%1" --forward-search-file @tex --forward-search-line @line @pdf',
+        vim.v.servername
+      )
 
       vim.g.vimtex_view_reverse_search_edit_cmd = "split"
       vim.g.vimtex_fold_manual = true

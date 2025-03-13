@@ -12,6 +12,35 @@
     ],
     "description": "Add a an inkscape (vector) figure"
   },
+  "PhD": {
+    "prefix": "t_content",
+    "body": [
+      "%! TEX root = ${TM_FILENAME}",
+      "% ================================ Configuration ===============================",
+      "\\documentclass[a4paper,11pt,leqno,hidelinks]{article}\n",
+      "\\title{$1} %TODO: Add to the knowledge base and reference in a task.",
+      "\\author{Bernardo Hummes Flores}",
+      "\\date{\\today}\n",
+      "\\usepackage{sty/preamble}",
+      "\\usepackage{sty/zettel}",
+      "\\usepackage{sty/todo}",
+      "\\input{000-notation.kl}",
+      "\\input{000-contents.kl}\n",
+      "\\begin{document}",
+      "\\redlistoftodos",
+      "% =================================== Content ========================= %<*note>",
+      "\n% TODO: Complete.$0\n",
+      "%</note> ============================ External =================================",
+      "\\external{}",
+      "% ================================== Backlinks =================================",
+      "\\begin{notes}",
+      "\t\\item[000-contents] Index of content notes",
+      "\\end{notes}",
+      "% ===================================== End ====================================",
+      "\\end{document}"
+    ],
+    "description": "Add note template"
+  },
   "Note": {
     "prefix": "t_note",
     "body": [
@@ -28,7 +57,8 @@
       "\\external{}",
       "% ================================== Backlinks =================================",
       "\\begin{backlinks}",
-      "\t\\item[$1_0001] Index of $3",
+      "\t\\item[000_index] Index of all notes",
+      "\t\\item[$1_0001] Project index",
       "\\end{backlinks}",
       "% ================================ End content =================================",
       "\\end{document}"
