@@ -1,0 +1,39 @@
+{
+  "name": "custom-latex-snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": [ "plaintex", "tex", "all" ],
+        "path": "latex/latex.json"
+      },
+      {
+        "language": [ "plaintex", "tex"],
+        "path": "latex/templates.json"
+      },
+      {
+        "language": [ "plaintex", "tex"],
+        "path": "latex/friendly-1.json"
+      },
+      {
+        "language": [ "plaintex", "tex"],
+        "path": "latex/friendly-2.json"
+      },
+      {
+        "language": [ "plaintex", "tex"],
+        "path": "friendly-3-vs.json"
+      },
+      {
+        "language": [ "plaintex", "tex"],
+        "path": "friendly-3-vs.json"
+      },
+      {
+        "language": ["bibtex", "bib"],
+        "path": "latex/bibtex.json"
+      },
+      {
+        "language": [ "tree", "forester" ],
+        "path": "tree.json"
+      }
+    ]
+  }
+}

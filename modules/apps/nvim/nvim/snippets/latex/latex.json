@@ -1,0 +1,577 @@
+{
+  "EqTikz": {
+    "prefix": "eq-tikz",
+    "body": [
+      "\\begin{equation}",
+      "\t\\begin{tikz-cd}",
+      "\t\t$0",
+      "\t\\end{tikz-cd}",
+      "\t\\label{diag:$1}",
+      "\\end{equation}"
+    ],
+    "description": "Add an equation surrounded tikz-cd diagram"
+  },
+  "Tikz": {
+    "prefix": "tikz",
+    "body": [
+      "\\begin{tikz-cd}",
+      "\t$0",
+      "\\end{tikz-cd}"
+    ],
+    "description": "Add a tikz-cd diagram"
+  },
+  "Inline Math — \\( … \\)": {
+    "prefix": "fm",
+    "body": [
+      "\\($TM_SELECTED_TEXT$1\\)"
+    ],
+    "description": "Inline math"
+  },
+  "Inline Math — \\[ … \\]": {
+    "prefix": "dm",
+    "body": [
+      "\\[$TM_SELECTED_TEXT$1\\]"
+    ],
+    "description": "Display math"
+  },
+  "Label": {
+    "prefix": "label",
+    "body": [
+      "\\label{$1}"
+    ],
+    "description": "Display a category"
+  },
+  "Category": {
+    "prefix": "category",
+    "body": [
+      "\\Cat{$1}"
+    ],
+    "description": "Display a category"
+  },
+  "Functor": {
+    "prefix": "functor",
+    "body": [
+      "\\Fun{$1}"
+    ],
+    "description": "Display a functor"
+  },
+  "Morphism": {
+    "prefix": "morphism",
+    "body": [
+      "\\Mor{$1}"
+    ],
+    "description": "Display a morphism"
+  },
+  "Object": {
+    "prefix": "object",
+    "body": [
+      "\\Ob{$1}"
+    ],
+    "description": "Display an object"
+  },
+  "Caligraphy": {
+    "prefix": "cal",
+    "body": [
+      "\\mathcal{$1}$0"
+    ],
+    "description": "Display in math caligraphy style"
+  },
+  "Black board": {
+    "prefix": "bb",
+    "body": [
+      "\\mathbb{$1}$0"
+    ],
+    "description": "Display in math black board style"
+  },
+  "Typewriter": {
+    "prefix": "tt",
+    "body": [
+      "\\mathtt{$1}$0"
+    ],
+    "description": "Display in math typewriter style"
+  },
+  "Bold face": {
+    "prefix": "bf",
+    "body": [
+      "\\textbf{$1}$0"
+    ],
+    "description": "Display in normal bold face style"
+  },
+  "Italic face": {
+    "prefix": "it",
+    "body": [
+      "\\textit{$1}$0"
+    ],
+    "description": "Display in normal italic face style"
+  },
+  "Verbatim": {
+    "prefix": "verb",
+    "body": [
+      "\\verb|$1|$0"
+    ],
+    "description": "Display in verbatim style"
+  },
+  "Smallcaps": {
+    "prefix": "sc",
+    "body": [
+      "\\textsc{$1}$0"
+    ],
+    "description": "Display in small caps style"
+  },
+  "Quotations": {
+    "prefix": "quote",
+    "body": [
+      "``$1''$0"
+    ],
+    "description": "Add quotation marks"
+  },
+  "Introduce": {
+    "prefix": "intro",
+    "body": [
+     "\\intro{$0}" 
+    ],
+    "description": "Introduce a knowledge"
+  },
+  "Kl": {
+    "prefix": "kl",
+    "body": [
+      "\\kl{$1}$0"
+    ],
+    "description": "Add quotation marks"
+  },
+  "Beamer columns": {
+    "prefix": "columns",
+    "body": [
+      "\\begin{columns}",
+      "\t\\begin{column}{0.$1\\columnwidth}",
+      "\t\t$0",
+      "\t\\end{column}",
+      "\t\\begin{column}{0.$2\\columnwidth}",
+      "\t\t$0",
+      "\t\\end{column}",
+      "\\end{columns}"
+    ],
+    "description": "Beamer columns"
+  },
+  "Beamer column": {
+    "prefix": "column",
+    "body": [
+      "\\begin{column}{0.$1\\columnwidth}",
+      "\t$0",
+      "\\end{column}"
+    ],
+    "description": "Beamer columns"
+  },
+  "Beamer block": {
+    "prefix": "block",
+    "body": [
+      "\\begin{block}{$1}",
+      "\t$0",
+      "\\end{block}"
+    ],
+    "description": "Beamer block"
+  },
+  "Beamer frame": {
+    "prefix": "frame",
+    "body": [
+      "\\begin{frame}{$1}",
+      "\t$0",
+      "\\end{frame}"
+    ],
+    "description": "Beamer frame"
+  },
+  "Footnote": {
+    "prefix": "footnote",
+    "body": [
+      "\\footnote{$1}"
+    ],
+    "description": "Add an inkscape (vector) figure"
+  },
+  "Transclude": {
+    "prefix": "transclude",
+    "body": [
+      "\\transclude{$1}"
+    ],
+    "description": "Transclude file: id "
+  },
+  "TSection": {
+    "prefix": "tsection",
+    "body": [
+      "\\tsection{$1}{$2}"
+    ],
+    "description": "Transclude file as a section on its own"
+  },
+  "TRemark": {
+    "prefix": "tremark",
+    "body": [
+      "\\tremark{$1}[$2]"
+    ],
+    "description": "Transclude file as a remark with optional title"
+  },
+  "Backlinks": {
+    "prefix": "backlinks",
+    "body": [
+      "\\begin{backlinks}",
+      "\t\\item[$1] $2",
+      "\\end{backlinks}"
+    ],
+    "description": "Transclude file: id "
+  },
+  "Link": {
+    "prefix": "link",
+    "body": [
+      "\\link{$1}[$2]"
+    ],
+    "description": "Link file: id, text"
+  },
+  "Definitional Emphassis": {
+    "prefix": "demph",
+    "body": [
+      "\\demph{$1}"
+    ],
+    "description": "Add definitional emphasis macro"
+  },
+  "Rhetorical Emphassis": {
+    "prefix": "remph",
+    "body": [
+      "\\remph{$1}"
+    ],
+    "description": "Add rhetorical emphasis macro"
+  },
+  "Notion": {
+    "prefix": "notion",
+    "body": [
+      "\\knowledge{$1}[$2]{notion}"
+    ],
+    "description": "Add a knowledge entry"
+  },
+  "Margin note": {
+    "prefix": "note",
+    "body": [
+      "\\marginnote{$1}"
+    ],
+    "description": "Add an margin note"
+  },
+  "todoi": {
+    "prefix": "todo",
+    "body": [
+      "\\todoi{$1}"
+    ],
+    "description": "Add an inline todo"
+  },
+  "todoibh": {
+    "prefix": "bh",
+    "body": [
+      "\\todoi[BH]{$1}"
+    ],
+    "description": "Add an inline todo"
+  },
+  "todom": {
+    "prefix": "todom",
+    "body": [
+      "\\todom[BH][$1]{$2}"
+    ],
+    "description": "Add a margin todo"
+  },
+  "verify": {
+    "prefix": "verif",
+    "body": [
+      "\\verify{$1}"
+    ],
+    "description": "Highlight that something needs to be verified"
+  },
+  "todo fill": {
+    "prefix": "fill",
+    "body": [
+      "\\tfill$1"
+    ],
+    "description": "Add a to fill todo"
+  },
+  "TODOC": {
+    "prefix": "todoc",
+    "body": [
+      "%TODO: $1"
+    ],
+    "description": "Add todo comment"
+  },
+  "NOTE": {
+    "prefix": "notec",
+    "body": [
+      "%NOTE: $1"
+    ],
+    "description": "Add note comment"
+  },
+  "Cleverref": {
+    "prefix": "cref",
+    "body": [
+      "\\Cref{$1}"
+    ],
+    "description": "Add a reference"
+  },
+  "Knowledge cleverref": {
+    "prefix": "kcref",
+    "body": [
+      "\\kCref{$1}"
+    ],
+    "description": "Add a reference"
+  },
+  "Description": {
+    "prefix": "desc",
+    "body": [
+      "\\begin{description}",
+      "\t\\item[$1] $0",
+      "\\end{description}"
+    ],
+    "description": "Add description list"
+  },
+  "Remark environment tcb": {
+    "prefix": "remarkt",
+    "body": [
+      "\\begin{remark}{$1}{$2}",
+      "\t$0",
+      "\\end{remark}"
+    ],
+    "description": "Insert remark environment"
+  },
+  "Assumption environment TCB": {
+    "prefix": "assumptiont",
+    "body": [
+      "\\begin{assumption}{$1}{$2}",
+      "\t$0",
+      "\\end{assumption}"
+    ],
+    "description": "Insert assumption environment TCB"
+  },
+  "Guess environment TCB": {
+    "prefix": "guesst",
+    "body": [
+      "\\begin{guess}{$1}{$2}",
+      "\t$0",
+      "\\end{guess}"
+    ],
+    "description": "Insert guess environment TCB"
+  },
+  "Example environment TCB": {
+    "prefix": "examplet",
+    "body": [
+      "\\begin{example}{$1}{$2}",
+      "\t$0",
+      "\\end{example}"
+    ],
+    "description": "Insert example environment TCB"
+  },
+  "Definition environment TCB": {
+    "prefix": "deft",
+    "body": [
+      "\\begin{definition}{$1}{$2}",
+      "\t$0",
+      "\\end{definition}"
+    ],
+    "description": "Insert definition environment TCB"
+  },
+  "Scenario environment TCB": {
+    "prefix": "scenariot",
+    "body": [
+      "\\begin{scenario}{$1}{$2}",
+      "\t$0",
+      "\\end{scenario}"
+    ],
+    "description": "Insert scenario environment TCB"
+  },
+  "Lemma environment TCB": {
+    "prefix": "lemmat",
+    "body": [
+      "\\begin{lemma}{$1}{$2}",
+      "\t$0",
+      "\\end{lemma}"
+    ],
+    "description": "Insert lemma environment TCB"
+  },
+  "Proposition environment TCB": {
+    "prefix": "propt",
+    "body": [
+      "\\begin{proposition}{$1}{$2}",
+      "\t$0",
+      "\\end{proposition}"
+    ],
+    "description": "Insert proposition environment TCB"
+  },
+  "Theorem environment TCB": {
+    "prefix": "theoremt",
+    "body": [
+      "\\begin{theorem}{$1}{$2}",
+      "\t$0",
+      "\\end{theorem}"
+    ],
+    "description": "Insert theorem environment TCB"
+  },
+  "Remark environment": {
+    "prefix": "remark",
+    "body": [
+      "\\begin{remark}[$1]\\label{rmk:$2}",
+      "\t$0",
+      "\\end{remark}"
+    ],
+    "description": "Insert remark environment"
+  },
+  "Assumption environment": {
+    "prefix": "assumption",
+    "body": [
+      "\\begin{assumption}[$1]\\label{ass:$2}",
+      "\t$0",
+      "\\end{assumption}"
+    ],
+    "description": "Insert assumption environment"
+  },
+  "Guess environment": {
+    "prefix": "guess",
+    "body": [
+      "\\begin{guess}[$1]\\label{guess:$2}",
+      "\t$0",
+      "\\end{guess}"
+    ],
+    "description": "Insert guess environment"
+  },
+  "Example environment": {
+    "prefix": "example",
+    "body": [
+      "\\begin{example}[$1]\\label{ex:$2}",
+      "\t$0",
+      "\\end{example}"
+    ],
+    "description": "Insert example environment"
+  },
+  "Definition environment": {
+    "prefix": "def",
+    "body": [
+      "\\begin{definition}[$1]\\label{def:$2}",
+      "\t$0",
+      "\\end{definition}"
+    ],
+    "description": "Insert definition environment"
+  },
+  "Scenario environment": {
+    "prefix": "scenario",
+    "body": [
+      "\\begin{scenario}[$1]\\label{sc:$2}",
+      "\t$0",
+      "\\end{scenario}"
+    ],
+    "description": "Insert scenario environment"
+  },
+  "Lemma environment": {
+    "prefix": "lemma",
+    "body": [
+      "\\begin{lemma}[$1]\\label{lem:$2}",
+      "\t$0",
+      "\\end{lemma}"
+    ],
+    "description": "Insert lemma environment"
+  },
+  "Proposition environment": {
+    "prefix": "prop",
+    "body": [
+      "\\begin{proposition}[$1]\\label{prop:$2}",
+      "\t$0",
+      "\\end{proposition}"
+    ],
+    "description": "Insert proposition environment"
+  },
+  "Theorem environment": {
+    "prefix": "theorem",
+    "body": [
+      "\\begin{theorem}[$1]\\label{thm:$2}",
+      "\t$0",
+      "\\end{theorem}"
+    ],
+    "description": "Insert theorem environment"
+  },
+  "Proof environment": {
+    "prefix": "proof",
+    "body": [
+      "\\begin{proof}",
+      "\t$0",
+      "\\end{proof}"
+    ],
+    "description": "Insert proof environment"
+  },
+  "Sketch environment": {
+    "prefix": "sketch",
+    "body": [
+      "\\begin{sketch}",
+      "\t$0",
+      "\\end{sketch}"
+    ],
+    "description": "Insert proof sketch environment"
+  },
+  "Section": {
+      "prefix": "sec",
+      "body": [
+          "\\section{$1} % {{{",
+          "\\label{sec:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "${0:$TM_SELECTED_TEXT}",
+          "% end $1 }}}"
+      ],
+      "description": "Section"
+  },
+  "Sub Paragraph": {
+      "prefix": "subp",
+      "body": [
+          "\\subparagraph{$1} % {{{",
+          "\\label{subp:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "${0:$TM_SELECTED_TEXT}",
+          "% end $1 }}}"
+      ],
+      "description": "Sub Paragraph"
+  },
+  "Sub Section": {
+      "prefix": "sub",
+      "body": [
+          "\\subsection{$1} % {{{",
+          "\\label{sub:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "${0:$TM_SELECTED_TEXT}",
+          "% end $1 }}}"
+      ],
+      "description": "Sub Section"
+  },
+  "Sub Sub Section": {
+      "prefix": "subs",
+      "body": [
+          "\\subsubsection{${1:subsubsection name}} % {{{",
+          "\\label{sec:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "${0:$TM_SELECTED_TEXT}",
+          "% end $1 }}}"
+      ],
+      "description": "Sub Sub Section"
+  },
+  "Chapter": {
+      "prefix": "cha",
+      "body": [
+          "\\chapter{$1} % {{{",
+          "\\label{chap:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "${0:$TM_SELECTED_TEXT}",
+          "% end $1 }}}"
+      ],
+      "description": "Chapter"
+  },
+  "Paragraph": {
+      "prefix": "par",
+      "body": [
+          "\\paragraph{${1:paragraph name}} % {{{",
+          "\\label{par:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "${0:$TM_SELECTED_TEXT}",
+          "% end $1 }}}"
+      ],
+      "description": "Paragraph"
+  },
+  "Part": {
+      "prefix": "part",
+      "body": [
+          "\\part{${1:part name}} % {{{",
+          "\\label{prt:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "${0:$TM_SELECTED_TEXT}",
+          "% end $1 }}}"
+      ],
+      "description": "Part"
+  }
+}
