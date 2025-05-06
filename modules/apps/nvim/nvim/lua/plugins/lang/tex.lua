@@ -21,24 +21,26 @@ return {
         },
       }
 
-      vim.g.vimtex_view_method = "skim"
-      vim.g.vimtex_view_general_viewer = "sioyek"
+      vim.g.vimtex_view_method = "sioyek"
+      vim.g.vimtex_view_general_viewer = "skim"
 
       vim.g.vimtex_view_skim_reading_bar = 1
       vim.g.vimtex_view_skim_activate = 0
       vim.g.vimtex_view_skim_sync = 0
+
+      vim.g.vimtex_view_reverse_search_edit_cmd = "split"
+      vim.g.vimtex_view_automatic = false
+
+      vim.g.vimtex_fold_manual = true
       vim.g.vimtex_fold_enabled = 1
+
       vim.g.vimtex_toc_config = { split_pos = ":vert :botright" }
 
       vim.g.vimtex_view_sioyek_options = string.format(
-        '--reuse-window --inverse-search="nvr --servername %s +%%2 %%1" --forward-search-file @tex --forward-search-line @line @pdf',
+        '--reuse-window --inverse-search="nvr --servername %s +%%2 %%1" --forward-search-file %%1 --forward-search-line %%2',
         vim.v.servername
       )
 
-      vim.g.vimtex_view_reverse_search_edit_cmd = "split"
-      vim.g.vimtex_fold_manual = true
-
-      vim.g.vimtex_view_automatic = false
       vim.g.vimtex_mappings_disable = { ["n"] = { "K" } } -- disable `K` as it conflicts with LSP hover
       vim.g.vimtex_quickfix_method = vim.fn.executable("pplatex") == 1 and "pplatex" or "latexlog"
     end,

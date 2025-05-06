@@ -10,8 +10,9 @@ local configs = {
   ["~/cloud/Research/thesis"] = {
     dir = "~/cloud/Research/thesis",
     sep = "-",
-    index = "000-contents.tex",
-    notions = "000-notation.tex",
+    index = "000-contents.kl",
+    notions = "000-notions.kl",
+    notations = "000-macros.sty",
     id_max = 4095,
     id_size = 4
   },
@@ -20,6 +21,16 @@ local configs = {
     sep = "_",
     index = "000_index.tex",
     notions = "000_notions.tex",
+    notations = "macros.sty",
+    id_max = 4095,
+    id_size = 4
+  },
+  ["~/cloud/Notes"] = {
+    dir = "~/cloud/Notes",
+    sep = "-",
+    index = "000-contents.kl",
+    notions = "000-notions.kl",
+    notations = "000-macros.sty",
     id_max = 4095,
     id_size = 4
   }
@@ -234,6 +245,20 @@ map("n", '<leader>nK', function()
   vim.cmd('cd ' .. config.dir)
   vim.cmd('pwd')
 end, { desc="Go to knowledges file (vsplit)"})
+
+map("n", '<leader>nm', function()
+  local config = get_config()
+  vim.cmd('e ' .. config.dir .. '/' .. config.notations)
+  vim.cmd('cd ' .. config.dir)
+  vim.cmd('pwd')
+end, { desc="Go to notations file"})
+
+map("n", '<leader>nK', function()
+  local config = get_config()
+  vim.cmd('vs ' .. config.dir .. '/' .. config.notations)
+  vim.cmd('cd ' .. config.dir)
+  vim.cmd('pwd')
+end, { desc="Go to notations file (vsplit)"})
 
 map("n", '<leader>nr', '<CMD> :ZettelReferences <CR>',
 { desc="List all references to current note"})

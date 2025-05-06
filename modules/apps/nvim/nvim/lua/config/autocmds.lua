@@ -12,11 +12,27 @@ vim.api.nvim_create_augroup("Random", {clear = true})
 -- })
 --
 autocmd({"BufRead", "BufNewFile"}, {
-  pattern = "*_notions.tex",
+  pattern = "*-contents.tex",
   callback = function()
     vim.opt_local.wrap = false  -- Use opt_local to set it only for this buffer
   end
 })
+
+autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "*.kl",
+  callback = function()
+    vim.bo.filetype = "tex"
+  end
+})
+
+autocmd("BufEnter", {
+  pattern = {"*/thesis/*.tex", "*/thesis/*.kl",
+  "*/Notes/*.tex","*/Notes/*.kl",
+  "*/Zettel/*.tex","*/Zettel/*.kl"},
+  callback = function()
+    vim.opt_local.iskeyword:append("-")
+  end
+}) -- "-" stays in the same word
 
 autocmd("VimResized", {
     group = "Random",
