@@ -68,7 +68,7 @@ map("i", ".", ".<c-g>u")
 map("i", ";", ";<c-g>u")
 
 -- Save file
-map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
+-- map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 
 -- Better indenting
 map("v", "<", "<gv")
@@ -84,6 +84,8 @@ map("n", "<leader>L", "<cmd>Lazy<cr>", { desc = "Lazy" })
 map({ "n", "v" }, "<leader>cf", function()
   require("lazyvim.util").format({ force = true })
 end, { desc = "Format" })
+
+
 
 -- Highlights under cursor
 map("n", "<leader>i", vim.show_pos, { desc = "Inspect Pos" })
@@ -173,6 +175,7 @@ map("n", "<C-Space>", require("nvim-tmux-navigation").NvimTmuxNavigateNext)
 
 -- Vimtex
 map("n", "<leader>d", "<cmd>:VimtexTocToggle<cr>", { desc = "Toggle ToC" } )
+map("n", "<leader>lw", "<cmd>:VimtexCountWords<cr>", { desc = "Word Count" })
 
 vim.g.tex_compiles_successfully = false
 vim.g.term_pdf_vierer_open = false
@@ -191,6 +194,7 @@ function VimtexPDFToggle()
         vim.g.term_pdf_vierer_open = true
     end
 end
+
 
 -- map("n", "<leader>p", ":lua VimtexPDFToggle()<cr>")
 

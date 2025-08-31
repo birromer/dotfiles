@@ -9,10 +9,12 @@ local fn = vim.fn
 local configs = {
   ["~/cloud/Research/thesis"] = {
     dir = "~/cloud/Research/thesis",
-    sep = "-",
+    sep = "",
     index = "000-contents.kl",
     notions = "000-notions.kl",
     notations = "000-macros.sty",
+    main = "thesis.tex",
+    scratchpad = "tmp.tex",
     id_max = 4095,
     id_size = 4
   },
@@ -35,6 +37,41 @@ local configs = {
     id_size = 4
   }
 }
+
+function get_config()
+  local cwd = fn.expand(fn.getcwd())
+
+  -- Try to match the current working directory with our config directories
+  for dir, config in pairs(configs) do
+    local expanded_dir = fn.expand(dir)
+    if cwd:find(expanded_dir, 1, true) then
+      return config
+    end
+  end
+
+  -- Default to notes
+  return configs["~/cloud/notes"]
+end
+
+-- toggle scratchpad function
+local function toggle_scratchpad()
+  local config = get_config()
+  if not config or not config.scratchpad then
+    print("No scratchpad defined for this project.")
+    return
+  end
+
+  local scratchpad_path = fn.expand(config.dir .. "/" .. config.scratchpad)
+  local current_buf_path = fn.expand("%:p")
+
+  if current_buf_path == scratchpad_path then
+    vim.cmd("e #") -- Go back to the previous buffer
+  else
+    vim.cmd("e " .. scratchpad_path)
+  end
+end
+
+
 
 -- Function to get current configuration based on working directory
 local function get_config()
@@ -221,7 +258,7 @@ map("n", "<leader>ns", "<cmd>NewZettelSearch<cr>",
 map("n", '<leader>nj', '<cmd>JumpToNote<cr>',
 { silent = false, desc="Jump to note under cursor"})
 
-map("n", '<leader>nh', '<cmd>SplitJumpToNote<cr>',
+map("n", '<leader>nJ', '<cmd>SplitJumpToNote<cr>',
 { silent = false, desc="Jump to note under cursor (vsplit)"})
 
 -- Dynamic index and notions mappings
@@ -231,6 +268,28 @@ map("n", '<leader>ni', function()
   vim.cmd('cd ' .. config.dir)
   vim.cmd('pwd')
 end, { desc="Go to index note"})
+
+map("n", '<leader>nm', function()
+  local config = get_config()
+  vim.cmd('e ' .. config.dir .. '/' .. config.main)
+  vim.cmd('cd ' .. config.dir)
+  vim.cmd('pwd')
+end, { desc="Go to main note"})
+
+map("n", '<leader>nM', function()
+  local config = get_config()
+  vim.cmd('e ' .. config.dir .. '/' .. config.main)
+  vim.cmd('cd ' .. config.dir)
+  vim.cmd('pwd')
+end, { desc="Go to main note (vsplit)"})
+
+map({ "i", "x", "n", "s" }, "<C-s>", function()
+  vim.cmd("w")
+  if vim.api.nvim_get_mode().mode:find("[ixs]") then
+    vim.api.nvim_input("<Esc>")
+  end
+  toggle_scratchpad()
+end, { desc = "Save and Toggle Scratchpad" })
 
 map("n", '<leader>nk', function()
   local config = get_config()
@@ -246,14 +305,14 @@ map("n", '<leader>nK', function()
   vim.cmd('pwd')
 end, { desc="Go to knowledges file (vsplit)"})
 
-map("n", '<leader>nm', function()
+map("n", '<leader>nl', function()
   local config = get_config()
   vim.cmd('e ' .. config.dir .. '/' .. config.notations)
   vim.cmd('cd ' .. config.dir)
   vim.cmd('pwd')
 end, { desc="Go to notations file"})
 
-map("n", '<leader>nK', function()
+map("n", '<leader>nL', function()
   local config = get_config()
   vim.cmd('vs ' .. config.dir .. '/' .. config.notations)
   vim.cmd('cd ' .. config.dir)

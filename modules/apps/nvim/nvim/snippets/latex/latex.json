@@ -135,7 +135,7 @@
   "Kl": {
     "prefix": "kl",
     "body": [
-      "\\kl{$1}$0"
+      "\\kl($2){$1}$0"
     ],
     "description": "Add quotation marks"
   },
@@ -245,6 +245,14 @@
     ],
     "description": "Add a knowledge entry"
   },
+  "Quote Notion": {
+    "prefix": "qnotion",
+    "body": [
+      "\\knowledge{notion$1}",
+      "  | $2"
+    ],
+    "description": "Add a knowledge entry"
+  },
   "Margin note": {
     "prefix": "note",
     "body": [
@@ -252,12 +260,19 @@
     ],
     "description": "Add an margin note"
   },
-  "todoi": {
+  "todo": {
     "prefix": "todo",
     "body": [
       "\\todoi{$1}"
     ],
     "description": "Add an inline todo"
+  },
+  "todoi": {
+    "prefix": "todoi",
+    "body": [
+      "\\todoi[$1]{$2}"
+    ],
+    "description": "Add an inline todo with author or type"
   },
   "todoibh": {
     "prefix": "bh",
@@ -269,7 +284,7 @@
   "todom": {
     "prefix": "todom",
     "body": [
-      "\\todom[BH][$1]{$2}"
+      "\\todom{$2}"
     ],
     "description": "Add a margin todo"
   },
@@ -504,74 +519,67 @@
     ],
     "description": "Insert proof sketch environment"
   },
+  "Part": {
+      "prefix": "part",
+      "body": [
+          "\\part{${1:part name}} \\label{prt:$2} % {{{",
+          "${0:$TM_SELECTED_TEXT}",
+          "% prt:$2 }}}"
+      ],
+      "description": "Part"
+  },
+  "Chapter": {
+      "prefix": "cha",
+      "body": [
+          "\\chapter{$1} \\label{cha:$2} % {{{",
+          "${0:$TM_SELECTED_TEXT}",
+          "% cha:$2 }}}"
+      ],
+      "description": "Chapter"
+  },
   "Section": {
       "prefix": "sec",
       "body": [
-          "\\section{$1} % {{{",
-          "\\label{sec:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "\\section{$1} \\label{sec:$2} % {{{",
           "${0:$TM_SELECTED_TEXT}",
-          "% end $1 }}}"
+          "% }}}"
       ],
       "description": "Section"
-  },
-  "Sub Paragraph": {
-      "prefix": "subp",
-      "body": [
-          "\\subparagraph{$1} % {{{",
-          "\\label{subp:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
-          "${0:$TM_SELECTED_TEXT}",
-          "% end $1 }}}"
-      ],
-      "description": "Sub Paragraph"
   },
   "Sub Section": {
       "prefix": "sub",
       "body": [
-          "\\subsection{$1} % {{{",
-          "\\label{sub:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "\\subsection{$1} \\label{sec:$2} % {{{",
           "${0:$TM_SELECTED_TEXT}",
-          "% end $1 }}}"
+          "% }}}"
       ],
       "description": "Sub Section"
   },
   "Sub Sub Section": {
       "prefix": "subs",
       "body": [
-          "\\subsubsection{${1:subsubsection name}} % {{{",
-          "\\label{sec:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "\\subsubsection{${1:subsubsection name}} \\label{sec:$2} % {{{",
           "${0:$TM_SELECTED_TEXT}",
-          "% end $1 }}}"
+          "% }}}"
       ],
       "description": "Sub Sub Section"
-  },
-  "Chapter": {
-      "prefix": "cha",
-      "body": [
-          "\\chapter{$1} % {{{",
-          "\\label{chap:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
-          "${0:$TM_SELECTED_TEXT}",
-          "% end $1 }}}"
-      ],
-      "description": "Chapter"
   },
   "Paragraph": {
       "prefix": "par",
       "body": [
-          "\\paragraph{${1:paragraph name}} % {{{",
-          "\\label{par:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "\\paragraph{${1:paragraph name}} \\label{par:$2} % {{{",
           "${0:$TM_SELECTED_TEXT}",
-          "% end $1 }}}"
+          "% }}}"
       ],
       "description": "Paragraph"
   },
-  "Part": {
-      "prefix": "part",
+  "Delimiter": {
+      "prefix": "delim",
       "body": [
-          "\\part{${1:part name}} % {{{",
-          "\\label{prt:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "% $1 {{{",
           "${0:$TM_SELECTED_TEXT}",
-          "% end $1 }}}"
+          "% }}}"
       ],
-      "description": "Part"
+      "description": "Delimiter comment"
   }
 }

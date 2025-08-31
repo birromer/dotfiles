@@ -3,6 +3,27 @@
 local autocmd = vim.api.nvim_create_autocmd
 vim.api.nvim_create_augroup("Random", {clear = true})
 
+-- vimtex conceal toggle
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "tex",
+  desc = "Setup conceal toggle for VimTeX",
+  callback = function()
+    -- concealing off by default
+    vim.wo.conceallevel = 0
+
+    -- keymap only for this buffer
+    vim.keymap.set("n", "<leader>p", function()
+      if vim.wo.conceallevel == 0 then
+        vim.wo.conceallevel = 2
+        vim.notify("VimTeX Conceal ON", vim.log.levels.INFO, { title = "View Mode" })
+      else
+        vim.wo.conceallevel = 0
+        vim.notify("VimTeX Conceal OFF", vim.log.levels.INFO, { title = "View Mode" })
+      end
+    end, { buffer = true, silent = true, desc = "Toggle Conceal (VimTeX)" })
+  end,
+})
+
 -- vim.api.nvim_create_autocmd('User', {
 --     pattern = 'VimtexEventView',
 --     callback = function()
