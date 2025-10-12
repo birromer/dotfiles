@@ -1,24 +1,19 @@
 {
-  "EqTikz": {
-    "prefix": "eq-tikz",
-    "body": [
-      "\\begin{equation}",
-      "\t\\begin{tikz-cd}",
-      "\t\t$0",
-      "\t\\end{tikz-cd}",
-      "\t\\label{diag:$1}",
-      "\\end{equation}"
-    ],
-    "description": "Add an equation surrounded tikz-cd diagram"
-  },
   "Tikz": {
-    "prefix": "tikz",
+    "prefix": "cd",
     "body": [
       "\\begin{tikz-cd}",
       "\t$0",
       "\\end{tikz-cd}"
     ],
     "description": "Add a tikz-cd diagram"
+  },
+  "TikzIt": {
+    "prefix": "tikzit",
+    "body": [
+      "\\ctikzfig{fig\/$1}$0"
+    ],
+    "description": "Add a tikzit figure"
   },
   "Inline Math — \\( … \\)": {
     "prefix": "fm",
@@ -39,35 +34,70 @@
     "body": [
       "\\label{$1}"
     ],
-    "description": "Display a category"
+    "description": "Insert a label"
   },
   "Category": {
-    "prefix": "category",
+    "prefix": "cat",
     "body": [
-      "\\Cat{$1}"
+      "\\cat{$1}$0"
     ],
     "description": "Display a category"
   },
-  "Functor": {
-    "prefix": "functor",
+  "Object": {
+    "prefix": "ob",
     "body": [
-      "\\Fun{$1}"
+      "\\obj{$1}$0"
+    ],
+    "description": "Display an obect"
+  },
+  "Functor": {
+    "prefix": "fun",
+    "body": [
+      "\\fun{$1}$0"
     ],
     "description": "Display a functor"
   },
   "Morphism": {
-    "prefix": "morphism",
+    "prefix": "mor",
     "body": [
-      "\\Mor{$1}"
+      "\\mor{$1}$0"
     ],
     "description": "Display a morphism"
   },
-  "Object": {
-    "prefix": "object",
+  "Objects category": {
+    "prefix": "obc",
     "body": [
-      "\\Ob{$1}"
+      "\\Ob{$1}$0"
     ],
-    "description": "Display an object"
+    "description": "Display object category"
+  },
+  "Functor category": {
+    "prefix": "funcat",
+    "body": [
+      "\\funcat{$1}$0"
+    ],
+    "description": "Display a functor category"
+  },
+  "Identity object": {
+    "prefix": "ido",
+    "body": [
+      "\\ido{$1}$0"
+    ],
+    "description": "Display an identity obect"
+  },
+  "Homset": {
+    "prefix": "hom",
+    "body": [
+      "\\Hom[$1]{$2}{$3}$0"
+    ],
+    "description": "Display a homset"
+  },
+  "Opposite": {
+    "prefix": "op",
+    "body": [
+      "\\op"
+    ],
+    "description": "Add opposite category mark"
   },
   "Caligraphy": {
     "prefix": "cal",
@@ -339,6 +369,15 @@
     ],
     "description": "Add description list"
   },
+  "Block deactivate": {
+    "prefix": "iffalse",
+    "body": [
+      "\\iffalse",
+      "\t$1",
+      "\\fi"
+    ],
+    "description": "Add inactive block"
+  },
   "Remark environment tcb": {
     "prefix": "remarkt",
     "body": [
@@ -450,7 +489,7 @@
   "Example environment": {
     "prefix": "example",
     "body": [
-      "\\begin{example}[$1]\\label{ex:$2}",
+      "\\begin{example}[$1]\\label{exa:$2}",
       "\t$0",
       "\\end{example}"
     ],
@@ -468,7 +507,7 @@
   "Scenario environment": {
     "prefix": "scenario",
     "body": [
-      "\\begin{scenario}[$1]\\label{sc:$2}",
+      "\\begin{scenario}[$1]\\label{sce:$2}",
       "\t$0",
       "\\end{scenario}"
     ],
@@ -486,7 +525,7 @@
   "Proposition environment": {
     "prefix": "prop",
     "body": [
-      "\\begin{proposition}[$1]\\label{prop:$2}",
+      "\\begin{proposition}[$1]\\label{prp:$2}",
       "\t$0",
       "\\end{proposition}"
     ],

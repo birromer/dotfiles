@@ -35,7 +35,7 @@
       "% TODO: Complete.$0",
       "%</note> =========================== Backlinks =================================",
       "\\begin{notes}",
-      "\t\\item[000-contents] Index of content notes",
+      "\t\\item[000-contents] Index$2",
       "\\end{notes}",
       "% ===================================== End ====================================",
       "\\printbibliography",
