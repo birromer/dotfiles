@@ -153,6 +153,7 @@ return {
           "neocmake",
           "clangd",
           "jsonls",
+          "texlab",
         },
         handlers = {
           -- Default handler for all servers
@@ -213,6 +214,36 @@ return {
                 json = {
                   schemas = require("schemastore").json.schemas(),
                   validate = { enable = true },
+                },
+              },
+            })
+          end,
+
+          -- Custom handler for texlab - ADDED
+          texlab = function()
+            lspconfig.texlab.setup({
+              capabilities = lsp_capabilities,
+              settings = {
+                texlab = {
+                  build = {
+                    executable = "latexmk",
+                    args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+                    onSave = false,
+                    forwardSearchAfter = false,
+                  },
+                  auxDirectory = "build",
+                  chktex = {
+                    onOpenAndSave = false,
+                    onEdit = false,
+                  },
+                  diagnosticsDelay = 300,
+                  diagnostics = {
+                    ignoredPatterns = { 
+                      "^Undefined reference",
+                      "^Reference .* undefined",
+--                      "^Citation .* undefined",
+                    },
+                  },
                 },
               },
             })
