@@ -2,7 +2,7 @@
 
 -- Latex option
 vim.g.latex_to_unicode_keymap = 1
-vim.g.vimtex_syntax_conceal_disable = 1
+-- vim.g.vimtex_syntax_conceal_disable = 1
 
 -- Python options
 vim.g.lazyvim_python_lsp = "pyright"
@@ -13,7 +13,7 @@ vim.cmd.colorscheme "elflord"
 vim.g.base16colorspace = 256
 vim.opt.termguicolors = true -- Truecolor
 vim.opt.conceallevel = 2     -- conceal
-vim.opt.cursorline = false    -- enable highlighting of the current line
+vim.opt.cursorline = false   -- enable highlighting of the current line
 vim.opt.laststatus = 3       -- global statusline
 vim.opt.list = true          -- show some invisible characters
 vim.opt.number = true

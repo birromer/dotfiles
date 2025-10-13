@@ -1,24 +1,19 @@
 {
-  "EqTikz": {
-    "prefix": "eq-tikz",
-    "body": [
-      "\\begin{equation}",
-      "\t\\begin{tikz-cd}",
-      "\t\t$0",
-      "\t\\end{tikz-cd}",
-      "\t\\label{diag:$1}",
-      "\\end{equation}"
-    ],
-    "description": "Add an equation surrounded tikz-cd diagram"
-  },
   "Tikz": {
-    "prefix": "tikz",
+    "prefix": "cd",
     "body": [
       "\\begin{tikz-cd}",
       "\t$0",
       "\\end{tikz-cd}"
     ],
     "description": "Add a tikz-cd diagram"
+  },
+  "TikzIt": {
+    "prefix": "tikzit",
+    "body": [
+      "\\ctikzfig{fig\/$1}$0"
+    ],
+    "description": "Add a tikzit figure"
   },
   "Inline Math — \\( … \\)": {
     "prefix": "fm",
@@ -39,35 +34,70 @@
     "body": [
       "\\label{$1}"
     ],
-    "description": "Display a category"
+    "description": "Insert a label"
   },
   "Category": {
-    "prefix": "category",
+    "prefix": "cat",
     "body": [
-      "\\Cat{$1}"
+      "\\cat{$1}$0"
     ],
     "description": "Display a category"
   },
-  "Functor": {
-    "prefix": "functor",
+  "Object": {
+    "prefix": "ob",
     "body": [
-      "\\Fun{$1}"
+      "\\obj{$1}$0"
+    ],
+    "description": "Display an obect"
+  },
+  "Functor": {
+    "prefix": "fun",
+    "body": [
+      "\\fun{$1}$0"
     ],
     "description": "Display a functor"
   },
   "Morphism": {
-    "prefix": "morphism",
+    "prefix": "mor",
     "body": [
-      "\\Mor{$1}"
+      "\\mor{$1}$0"
     ],
     "description": "Display a morphism"
   },
-  "Object": {
-    "prefix": "object",
+  "Objects category": {
+    "prefix": "obc",
     "body": [
-      "\\Ob{$1}"
+      "\\Ob{$1}$0"
     ],
-    "description": "Display an object"
+    "description": "Display object category"
+  },
+  "Functor category": {
+    "prefix": "funcat",
+    "body": [
+      "\\funcat{$1}$0"
+    ],
+    "description": "Display a functor category"
+  },
+  "Identity object": {
+    "prefix": "ido",
+    "body": [
+      "\\ido{$1}$0"
+    ],
+    "description": "Display an identity obect"
+  },
+  "Homset": {
+    "prefix": "hom",
+    "body": [
+      "\\Hom[$1]{$2}{$3}$0"
+    ],
+    "description": "Display a homset"
+  },
+  "Opposite": {
+    "prefix": "op",
+    "body": [
+      "\\op"
+    ],
+    "description": "Add opposite category mark"
   },
   "Caligraphy": {
     "prefix": "cal",
@@ -135,7 +165,7 @@
   "Kl": {
     "prefix": "kl",
     "body": [
-      "\\kl{$1}$0"
+      "\\kl($2){$1}$0"
     ],
     "description": "Add quotation marks"
   },
@@ -245,6 +275,14 @@
     ],
     "description": "Add a knowledge entry"
   },
+  "Quote Notion": {
+    "prefix": "qnotion",
+    "body": [
+      "\\knowledge{notion$1}",
+      "  | $2"
+    ],
+    "description": "Add a knowledge entry"
+  },
   "Margin note": {
     "prefix": "note",
     "body": [
@@ -252,17 +290,31 @@
     ],
     "description": "Add an margin note"
   },
-  "todoi": {
+  "todo": {
     "prefix": "todo",
     "body": [
-      "\\todoi[BH][$1]{$2}"
+      "\\todoi{$1}"
+    ],
+    "description": "Add an inline todo"
+  },
+  "todoi": {
+    "prefix": "todoi",
+    "body": [
+      "\\todoi[$1]{$2}"
+    ],
+    "description": "Add an inline todo with author or type"
+  },
+  "todoibh": {
+    "prefix": "bh",
+    "body": [
+      "\\todoi[BH]{$1}"
     ],
     "description": "Add an inline todo"
   },
   "todom": {
     "prefix": "todom",
     "body": [
-      "\\todom[BH][$1]{$2}"
+      "\\todom{$2}"
     ],
     "description": "Add a margin todo"
   },
@@ -316,6 +368,15 @@
       "\\end{description}"
     ],
     "description": "Add description list"
+  },
+  "Block deactivate": {
+    "prefix": "iffalse",
+    "body": [
+      "\\iffalse",
+      "\t$1",
+      "\\fi"
+    ],
+    "description": "Add inactive block"
   },
   "Remark environment tcb": {
     "prefix": "remarkt",
@@ -428,7 +489,7 @@
   "Example environment": {
     "prefix": "example",
     "body": [
-      "\\begin{example}[$1]\\label{ex:$2}",
+      "\\begin{example}[$1]\\label{exa:$2}",
       "\t$0",
       "\\end{example}"
     ],
@@ -446,7 +507,7 @@
   "Scenario environment": {
     "prefix": "scenario",
     "body": [
-      "\\begin{scenario}[$1]\\label{sc:$2}",
+      "\\begin{scenario}[$1]\\label{sce:$2}",
       "\t$0",
       "\\end{scenario}"
     ],
@@ -464,7 +525,7 @@
   "Proposition environment": {
     "prefix": "prop",
     "body": [
-      "\\begin{proposition}[$1]\\label{prop:$2}",
+      "\\begin{proposition}[$1]\\label{prp:$2}",
       "\t$0",
       "\\end{proposition}"
     ],
@@ -497,74 +558,67 @@
     ],
     "description": "Insert proof sketch environment"
   },
+  "Part": {
+      "prefix": "part",
+      "body": [
+          "\\part{${1:part name}} \\label{prt:$2} % {{{",
+          "${0:$TM_SELECTED_TEXT}",
+          "% prt:$2 }}}"
+      ],
+      "description": "Part"
+  },
+  "Chapter": {
+      "prefix": "cha",
+      "body": [
+          "\\chapter{$1} \\label{cha:$2} % {{{",
+          "${0:$TM_SELECTED_TEXT}",
+          "% cha:$2 }}}"
+      ],
+      "description": "Chapter"
+  },
   "Section": {
       "prefix": "sec",
       "body": [
-          "\\section{$1} % {{{",
-          "\\label{sec:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "\\section{$1} \\label{sec:$2} % {{{",
           "${0:$TM_SELECTED_TEXT}",
-          "% end $1 }}}"
+          "% }}}"
       ],
       "description": "Section"
-  },
-  "Sub Paragraph": {
-      "prefix": "subp",
-      "body": [
-          "\\subparagraph{$1} % {{{",
-          "\\label{subp:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
-          "${0:$TM_SELECTED_TEXT}",
-          "% end $1 }}}"
-      ],
-      "description": "Sub Paragraph"
   },
   "Sub Section": {
       "prefix": "sub",
       "body": [
-          "\\subsection{$1} % {{{",
-          "\\label{sub:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "\\subsection{$1} \\label{sec:$2} % {{{",
           "${0:$TM_SELECTED_TEXT}",
-          "% end $1 }}}"
+          "% }}}"
       ],
       "description": "Sub Section"
   },
   "Sub Sub Section": {
       "prefix": "subs",
       "body": [
-          "\\subsubsection{${1:subsubsection name}} % {{{",
-          "\\label{sec:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "\\subsubsection{${1:subsubsection name}} \\label{sec:$2} % {{{",
           "${0:$TM_SELECTED_TEXT}",
-          "% end $1 }}}"
+          "% }}}"
       ],
       "description": "Sub Sub Section"
-  },
-  "Chapter": {
-      "prefix": "cha",
-      "body": [
-          "\\chapter{$1} % {{{",
-          "\\label{chap:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
-          "${0:$TM_SELECTED_TEXT}",
-          "% end $1 }}}"
-      ],
-      "description": "Chapter"
   },
   "Paragraph": {
       "prefix": "par",
       "body": [
-          "\\paragraph{${1:paragraph name}} % {{{",
-          "\\label{par:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "\\paragraph{${1:paragraph name}} \\label{par:$2} % {{{",
           "${0:$TM_SELECTED_TEXT}",
-          "% end $1 }}}"
+          "% }}}"
       ],
       "description": "Paragraph"
   },
-  "Part": {
-      "prefix": "part",
+  "Delimiter": {
+      "prefix": "delim",
       "body": [
-          "\\part{${1:part name}} % {{{",
-          "\\label{prt:${1/([a-zA-Z]+)|([^a-zA-Z]+)/${1:/downcase}${2:+_}/g}}",
+          "% $1 {{{",
           "${0:$TM_SELECTED_TEXT}",
-          "% end $1 }}}"
+          "% }}}"
       ],
-      "description": "Part"
+      "description": "Delimiter comment"
   }
 }

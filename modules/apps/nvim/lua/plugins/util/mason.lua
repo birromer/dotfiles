@@ -14,6 +14,7 @@ return {
       "marksman",
       "haskell-language-server",
       "haskell-debug-adapter",
+      "texlab",
     },
   },
   ---@param opts MasonSettings | {ensure_installed: string[]}

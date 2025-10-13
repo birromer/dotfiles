@@ -1,3 +1,5 @@
-return {
-  "puremourning/vimspector"
-}
+return {}
+
+-- return {
+--   "puremourning/vimspector"
+-- }

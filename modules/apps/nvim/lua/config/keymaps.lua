@@ -68,7 +68,7 @@ map("i", ".", ".<c-g>u")
 map("i", ";", ";<c-g>u")
 
 -- Save file
-map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
+-- map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 
 -- Better indenting
 map("v", "<", "<gv")
@@ -85,6 +85,8 @@ map({ "n", "v" }, "<leader>cf", function()
   require("lazyvim.util").format({ force = true })
 end, { desc = "Format" })
 
+
+
 -- Highlights under cursor
 map("n", "<leader>i", vim.show_pos, { desc = "Inspect Pos" })
 -- map("n", "<leader>pv", vim.cmd.Ex)
@@ -99,25 +101,24 @@ map("n", "<leader>gd", "<cmd>Git difftool --name-only<cr>", { desc = "Previous i
 -- Telescope
 local builtin_telescope = require("telescope.builtin")
 
-wk.register({ -- Register groups
-  ["<leader>f"] = { group = "+telescope" },
-  ["<leader>s"] = { group = "+search" },
+wk.add({ -- Register groups
+  { "<leader>f", group = "telescope" },
+  { "<leader>s", group = "search" },
 })
 
-wk.register({
-  ["<leader>fp"] = { "<Cmd>Telescope projects<CR>", "Projects" },
-  ["<leader>fd"] = { builtin_telescope.git_bcommits, "Commits for current buffer" },
-  ["<leader>fs"] = { builtin_telescope.git_status, "Git status" },
-  ["<leader>ff"] = { builtin_telescope.find_files, "Find files" },
-  ["<leader><space>"] = { builtin_telescope.find_files, "Find files" },
-  ["<leader>,"] = { builtin_telescope.buffers, "Find buffers" },
-  ["<leader>fg"] = { builtin_telescope.live_grep, "Live grep" },
-  ["<leader>fm"] = { builtin_telescope.keymaps, "Find keybindings" },
-  ["<leader>fu"] = { builtin_telescope.current_buffer_fuzzy_find, "Fuzzy find in buffer" },
-  ["<leader>ft"] = { builtin_telescope.treesitter, "Treesitter" },
-  ["<leader>fb"] = { ":Telescope file_browser path=%:p:h select_buffer=true<CR>", "File browser" },
-  ["<leader>fh"] = { builtin_telescope.help_tags, "Find help" },
-})
+-- Telescope mappings
+map("n", "<leader>fp", "<Cmd>Telescope projects<CR>", { desc = "Projects" })
+map("n", "<leader>fd", builtin_telescope.git_bcommits, { desc = "Commits for current buffer" })
+map("n", "<leader>fs", builtin_telescope.git_status, { desc = "Git status" })
+map("n", "<leader>ff", builtin_telescope.find_files, { desc = "Find files" })
+map("n", "<leader><space>", builtin_telescope.find_files, { desc = "Find files" })
+map("n", "<leader>,", builtin_telescope.buffers, { desc = "Find buffers" })
+map("n", "<leader>fg", builtin_telescope.live_grep, { desc = "Live grep" })
+map("n", "<leader>fm", builtin_telescope.keymaps, { desc = "Find keybindings" })
+map("n", "<leader>fu", builtin_telescope.current_buffer_fuzzy_find, { desc = "Fuzzy find in buffer" })
+map("n", "<leader>ft", builtin_telescope.treesitter, { desc = "Treesitter" })
+map("n", "<leader>fb", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { desc = "File browser" })
+map("n", "<leader>fh", builtin_telescope.help_tags, { desc = "Find help" })
 
 -- Harpoon
 map("n", "<leader>a", "<cmd>lua require('harpoon.mark').add_file()<cr>", { desc = "Mark file with harpoon" })
@@ -174,6 +175,7 @@ map("n", "<C-Space>", require("nvim-tmux-navigation").NvimTmuxNavigateNext)
 
 -- Vimtex
 map("n", "<leader>d", "<cmd>:VimtexTocToggle<cr>", { desc = "Toggle ToC" } )
+map("n", "<leader>lw", "<cmd>:VimtexCountWords<cr>", { desc = "Word Count" })
 
 vim.g.tex_compiles_successfully = false
 vim.g.term_pdf_vierer_open = false
@@ -192,6 +194,7 @@ function VimtexPDFToggle()
         vim.g.term_pdf_vierer_open = true
     end
 end
+
 
 -- map("n", "<leader>p", ":lua VimtexPDFToggle()<cr>")
 
