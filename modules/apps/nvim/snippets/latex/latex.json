@@ -268,6 +268,13 @@
     ],
     "description": "Add rhetorical emphasis macro"
   },
+  "Color Emphassis": {
+    "prefix": "cemph",
+    "body": [
+      "\\cemph{$1}"
+    ],
+    "description": "Add color emphasis macro"
+  },
   "Notion": {
     "prefix": "notion",
     "body": [

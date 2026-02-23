@@ -15,6 +15,7 @@ return {
     lazy = false,
     config = true,
   },
+--  { "barreiroleo/ltex_extra.nvim" },
   {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
@@ -154,16 +155,15 @@ return {
           "clangd",
           "jsonls",
           "texlab",
+--          "ltex",
         },
         handlers = {
-          -- Default handler for all servers
           function(server_name)
             lspconfig[server_name].setup({
               capabilities = lsp_capabilities,
             })
           end,
 
-          -- Custom handler for lua_ls
           lua_ls = function()
             lspconfig.lua_ls.setup({
               capabilities = lsp_capabilities,
@@ -183,7 +183,6 @@ return {
             })
           end,
 
-          -- Custom handler for clangd
           clangd = function()
             lspconfig.clangd.setup({
               capabilities = vim.tbl_extend("force", lsp_capabilities, {
@@ -206,7 +205,6 @@ return {
             })
           end,
 
-          -- Custom handler for jsonls
           jsonls = function()
             lspconfig.jsonls.setup({
               capabilities = lsp_capabilities,
@@ -219,7 +217,6 @@ return {
             })
           end,
 
-          -- Custom handler for texlab - ADDED
           texlab = function()
             lspconfig.texlab.setup({
               capabilities = lsp_capabilities,
@@ -248,6 +245,35 @@ return {
               },
             })
           end,
+
+--          ltex = function()
+--            lspconfig.ltex.setup({
+--              capabilities = lsp_capabilities,
+--              -- This 'on_attach' is the magic fix. It enables the commands.
+--              on_attach = function(client, bufnr)
+--                require("ltex_extra").setup({
+--                  load_langs = { "en-US" }, 
+--                  init_check = true,
+--                  path = ".ltex", -- This creates a hidden folder in your project to store ignored words
+--                })
+--              end,
+--              filetypes = { "latex", "tex", "bib", "markdown" },
+--              settings = {
+--                ltex = {
+--                  language = "en-US",
+--                  checkFrequency = "save",
+--                  additionalRules = {
+--                    enablePickyRules = true,
+--                    motherTongue = "en-US",
+--                  },
+--                  hiddenFalsePositives = {
+--                    "transclude", 
+--                    "executemetadata",
+--                  },
+--                },
+--              },
+--            })
+--          end,
 
           -- Skip rust_analyzer - rustaceanvim handles it
           rust_analyzer = function() end,

@@ -1,119 +1,255 @@
 {
-  "Frontmatter": {
-    "prefix": "front",
+  "Note template": {
+    "prefix": "note",
     "body": [
       "\\title{$1}",
       "\\author{bernardohummes}",
-      "\\date{2023-12-12}"
+      "\\taxon{${2:Note}}",
+      "\\tag{${3:misc}}",
+      "",
+      "\\import{macros-math}",
+      "",
+      "\\p{$0}"
     ],
-    "description": "Add base forntmatter to tree"
+    "description": "Basic note with title, author, taxon, tag, and paragraph"
   },
-  "Taxon": {
-    "prefix": "taxon",
+  "Definition": {
+    "prefix": "def",
     "body": [
-      "\\taxon{$1}"
+      "\\title{$1}",
+      "\\author{bernardohummes}",
+      "\\taxon{Definition}",
+      "\\tag{${2:misc}}",
+      "",
+      "\\import{base-macros}",
+      "",
+      "\\p{$0}"
     ],
-    "description": "Add taxon ()"
+    "description": "Definition tree"
   },
-  "Ordered listing": {
-    "prefix": "ol",
+  "Theorem": {
+    "prefix": "thm",
     "body": [
-      "\\ol{",
-      "\t$0",
+      "\\title{$1}",
+      "\\author{bernardohummes}",
+      "\\taxon{Theorem}",
+      "\\tag{${2:misc}}",
+      "",
+      "\\import{macros-math}",
+      "",
+      "\\p{$0}"
+    ],
+    "description": "Theorem tree"
+  },
+  "Lemma": {
+    "prefix": "lem",
+    "body": [
+      "\\title{$1}",
+      "\\author{bernardohummes}",
+      "\\taxon{Lemma}",
+      "\\tag{${2:misc}}",
+      "",
+      "\\import{macros-math}",
+      "",
+      "\\p{$0}"
+    ],
+    "description": "Lemma tree"
+  },
+  "Proof": {
+    "prefix": "proof",
+    "body": [
+      "\\scope{",
+      "  \\put\\transclude/toc{false}",
+      "  \\subtree{",
+      "    \\taxon{Proof}",
+      "    \\p{$0}",
+      "  }",
       "}"
     ],
-    "description": "Add an ordered listing"
+    "description": "Proof environment"
   },
   "Paragraph": {
-    "prefix": "par",
-    "body": [
-      "\\p{",
-      "\t$0",
-      "}"
-    ],
-    "description": "Add paragraph"
-  },
-  "Code": {
-    "prefix": "code",
-    "body": [
-      "\\code{",
-      "\t$0",
-      "}"
-    ],
-    "description": "Add code"
-  },
-  "Display math": {
-    "prefix": "##",
-    "body": [
-      "##{",
-      "\t$0",
-      "}"
-    ],
-    "description": "Add display math"
+    "prefix": "p",
+    "body": ["\\p{$0}"],
+    "description": "Paragraph"
   },
   "Inline math": {
-    "prefix": "#",
-    "body": [
-      "#{$0}"
-    ],
-    "description": "Add inline math"
+    "prefix": "fm",
+    "body": ["#{$1}$0"],
+    "description": "Inline math mode"
   },
-  "Listing item": {
-    "prefix": "li",
-    "body": [
-      "\\li{$0}"
-    ],
-    "description": "Add a listing item"
+  "Display math": {
+    "prefix": "dm",
+    "body": ["##{$1}$0"],
+    "description": "Display math mode"
   },
-  "Emphasis": {
-    "prefix": "emph",
-    "body": [
-      "\\em{$1}"
-    ],
-    "description": "Add emphasis"
+  "Transclude": {
+    "prefix": "tr",
+    "body": ["\\transclude{$1}$0"],
+    "description": "Transclude another tree"
   },
-  "Bold": {
-    "prefix": "bold",
-    "body": [
-      "\\b{$0}"
-    ],
-    "description": "Add bold"
-  },
-  "Tex": {
-    "prefix": "tex",
-    "body": [
-      "\\tex{",
-      "\t$0",
-      "}"
-    ],
-    "description": "Add tex environment"
+  "Link": {
+    "prefix": "link",
+    "body": ["[$1]($2)$0"],
+    "description": "Link to tree or URL"
   },
   "Import": {
     "prefix": "import",
-    "body": [
-      "\\import{$1}"
-    ],
-    "description": "Add import"
+    "body": ["\\import{$1}$0"],
+    "description": "Import macros from another tree"
   },
-  "Export": {
-    "prefix": "export",
-    "body": [
-      "\\export{$1}"
-    ],
-    "description": "Add export"
+  "Import systems": {
+    "prefix": "isys",
+    "body": ["\\import{macros-system}"],
+    "description": "Import systems macros (distributed + robotics)"
   },
-  "Transclude": {
-    "prefix": "transclude",
-    "body": [
-      "\\transclude{$1}"
-    ],
-    "description": "Add transclude"
+  "Import theories": {
+    "prefix": "ith",
+    "body": ["\\import{macros-theory}"],
+    "description": "Import theories macros (categories + control + sheaves)"
   },
-  "Hyperlink": {
-    "prefix": "[]",
+  "Import all": {
+    "prefix": "iall",
+    "body": ["\\import{macros-all}"],
+    "description": "Import all macros"
+  },
+  "Strong": {
+    "prefix": "strong",
+    "body": ["\\strong{$1}$0"],
+    "description": "Bold text"
+  },
+  "Emphasis": {
+    "prefix": "em",
+    "body": ["\\em{$1}$0"],
+    "description": "Italic text"
+  },
+  "Code": {
+    "prefix": "code",
+    "body": ["\\code{$1}$0"],
+    "description": "Monospace code"
+  },
+  "Ordered list": {
+    "prefix": "ol",
     "body": [
-      "[$0]($1)"
+      "\\ol{",
+      "  \\li{$1}",
+      "  \\li{$2}",
+      "}"
     ],
-    "description": "Add hyperlink"
+    "description": "Ordered list"
+  },
+  "Unordered list": {
+    "prefix": "ul",
+    "body": [
+      "\\ul{",
+      "  \\li{$1}",
+      "  \\li{$2}",
+      "}"
+    ],
+    "description": "Unordered list"
+  },
+  "List item": {
+    "prefix": "li",
+    "body": ["\\li{$1}$0"],
+    "description": "List item"
+  },
+  "Subtree": {
+    "prefix": "sub",
+    "body": [
+      "\\subtree{",
+      "  \\title{$1}",
+      "  \\p{$0}",
+      "}"
+    ],
+    "description": "Inline subtree"
+  },
+  "Tag": {
+    "prefix": "tag",
+    "body": ["\\tag{$1}$0"],
+    "description": "Add tag"
+  },
+  "Date": {
+    "prefix": "date",
+    "body": ["\\date{${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}}"],
+    "description": "Insert current date"
+  },
+  "Meta": {
+    "prefix": "meta",
+    "body": ["\\meta{$1}{$2}$0"],
+    "description": "Add metadata"
+  },
+  "Category": {
+    "prefix": "cat",
+    "body": ["\\cat{$1}$0"],
+    "description": "Category notation"
+  },
+  "Functor": {
+    "prefix": "fun",
+    "body": ["\\fun{$1}$0"],
+    "description": "Functor notation"
+  },
+  "Object": {
+    "prefix": "obj",
+    "body": ["\\obj{$1}$0"],
+    "description": "Object notation"
+  },
+  "Morphism": {
+    "prefix": "mor",
+    "body": ["\\mor{$1}$0"],
+    "description": "Morphism notation"
+  },
+  "Homset": {
+    "prefix": "hom",
+    "body": ["\\Hom{$1}{$2}{$3}$0"],
+    "description": "Hom-set"
+  },
+  "Opposite": {
+    "prefix": "op",
+    "body": ["\\op"],
+    "description": "Opposite category superscript"
+  },
+  "Natural transformation": {
+    "prefix": "nat",
+    "body": ["\\nat"],
+    "description": "Natural transformation arrow"
+  },
+  "Blackboard": {
+    "prefix": "bb",
+    "body": ["\\mathbb{$1}$0"],
+    "description": "Blackboard bold"
+  },
+  "Calligraphic": {
+    "prefix": "cal",
+    "body": ["\\mathcal{$1}$0"],
+    "description": "Calligraphic"
+  },
+  "Mathbf": {
+    "prefix": "mbf",
+    "body": ["\\mathbf{$1}$0"],
+    "description": "Math bold"
+  },
+  "Reference": {
+    "prefix": "ref",
+    "body": [
+      "\\title{$1}",
+      "\\taxon{Reference}",
+      "\\meta{doi}{$2}",
+      "\\meta{author}{$3}",
+      "\\meta{year}{$4}",
+      "",
+      "\\p{$0}"
+    ],
+    "description": "Bibliographic reference tree"
+  },
+  "Person": {
+    "prefix": "person",
+    "body": [
+      "\\title{$1}",
+      "\\taxon{Person}",
+      "\\meta{institution}{$2}",
+      "",
+      "\\p{$0}"
+    ],
+    "description": "Biographical tree"
   }
 }

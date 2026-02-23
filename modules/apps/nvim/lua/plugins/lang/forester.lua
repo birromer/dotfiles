@@ -1,15 +1,14 @@
 return {
-    "kentookura/forester.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      { "nvim-telescope/telescope.nvim" },
-      { "nvim-treesitter/nvim-treesitter" },
-      { "nvim-lua/plenary.nvim" },
-    },
+--  {
+--    "neovim/nvim-lspconfig",
+--    optional = true,
+--    init = function()
+--      vim.lsp.config["forester-lsp"] = {
+--        cmd = { "forester", "lsp" },
+--        filetypes = { "forester" },
+--        root_markers = { "forest.toml" },
+--      }
+--      vim.lsp.enable("forester-lsp")
+--    end,
+--  },
 }
-
---  -- optionally, configure the cmp source:
---  local foresterCompletionSource = require("forester.completion")
---
---  require("cmp").register_source("forester", foresterCompletionSource)
---  require("cmp").setup.filetype("forester", { sources = { { name = "forester", dup = 0 } } })

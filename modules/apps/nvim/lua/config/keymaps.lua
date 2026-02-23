@@ -175,7 +175,7 @@ map("n", "<C-Space>", require("nvim-tmux-navigation").NvimTmuxNavigateNext)
 
 -- Vimtex
 map("n", "<leader>d", "<cmd>:VimtexTocToggle<cr>", { desc = "Toggle ToC" } )
-map("n", "<leader>lw", "<cmd>:VimtexCountWords<cr>", { desc = "Word Count" })
+map("n", "<C-w>c", "<cmd>:VimtexCountWords<cr>", { desc = "Word Count" })
 
 vim.g.tex_compiles_successfully = false
 vim.g.term_pdf_vierer_open = false

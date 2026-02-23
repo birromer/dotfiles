@@ -12,6 +12,8 @@ syntax region texDemphArg matchgroup=MyTexConceal start="\\demph{" end="}" conta
 highlight link texDemphArg texStyleBold
 syntax region texRemphArg matchgroup=MyTexConceal start="\\remph{" end="}" contains=@texCluster concealends
 highlight link texRemphArg texStyleItal
+syntax region texCemphArg matchgroup=MyTexConceal start="\\cemph{" end="}" contains=@texCluster concealends
+highlight texCemphArg guifg=red ctermfg=red
 syntax keyword texMacroIE \\ie conceal
 
 " -- Basic Math
