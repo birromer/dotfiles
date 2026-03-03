@@ -30,6 +30,11 @@ local config_cache = {}
 local function find_config_file(start_dir)
   -- Use current buffer's directory, not cwd
   local dir = fn.expand(start_dir or fn.expand("%:p:h"))
+  if dir == "" or dir == "." then
+    dir = fn.getcwd()
+  end
+
+
   local root = fn.has("win32") == 1 and dir:match("^%a:\\") or "/"
 
   while dir and dir ~= "" and dir ~= root do

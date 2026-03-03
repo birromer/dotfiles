@@ -4,10 +4,11 @@
     "body": [
       "\\title{$1}",
       "\\author{bernardohummes}",
-      "\\taxon{${2:Note}}",
+      "\\date{${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}}",
+      "\\taxon{${2:note}}",
       "\\tag{${3:misc}}",
       "",
-      "\\import{macros-math}",
+      "\\import{macros}",
       "",
       "\\p{$0}"
     ],
@@ -35,7 +36,7 @@
       "\\taxon{Theorem}",
       "\\tag{${2:misc}}",
       "",
-      "\\import{macros-math}",
+      "\\import{macros-theory}",
       "",
       "\\p{$0}"
     ],
@@ -49,7 +50,7 @@
       "\\taxon{Lemma}",
       "\\tag{${2:misc}}",
       "",
-      "\\import{macros-math}",
+      "\\import{macros-theory}",
       "",
       "\\p{$0}"
     ],
