@@ -220,6 +220,19 @@ local function create_zettel_independent(prefix, split)
   create_zettel(prefix .. config.sep, new_id, split)
 end
 
+local function get_note_ref_under_cursor()
+  local line = vim.api.nvim_get_current_line()
+  local col = vim.api.nvim_win_get_cursor(0)[2] + 1
+
+  for match_start, ref, match_end in line:gmatch("()(%w+-%w+)()") do
+    if col >= match_start and col < match_end then
+      return ref
+    end
+  end
+
+  return vim.fn.expand('<cword>')
+end
+
 -- Commands
 user_func('NewZettelIndependent', function()
   create_zettel_independent(vim.fn.input('Prefix: '), 'edit')
@@ -249,11 +262,13 @@ user_func('VertZettel', function()
 end, { nargs = 0 })
 
 user_func('JumpToNote', function()
-  create_zettel("", vim.fn.expand('<cword>'), 'edit')
+--  create_zettel("", vim.fn.expand('<cword>'), 'edit')
+  create_zettel("", get_note_ref_under_cursor(), 'edit')
 end, { nargs = 0 })
 
 user_func('SplitJumpToNote', function()
-  create_zettel("", vim.fn.expand('<cword>'), 'vsplit')
+--  create_zettel("", vim.fn.expand('<cword>'), 'vsplit')
+  create_zettel("", get_note_ref_under_cursor(), 'vsplit')
 end, { nargs = 0 })
 
 user_func('ZettelReferences', function()

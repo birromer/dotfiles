@@ -1,0 +1,113 @@
+% ==============================================================================
+% Theorem environment
+% ================================== Preamble ===================================
+\RequirePackage{amsmath}
+\RequirePackage{amsthm}    % Must be loaded after hyperref and before cleveref
+\RequirePackage{mathtools}
+\RequirePackage{thmtools}  % Must be loaded after amsthm.
+\RequirePackage{etoolbox}  % For the eend of environment triangle
+
+% =================================== Style ====================================
+\colorlet{qedgray}{black!60!white}
+
+%WARN: This is the old code for when I used thmtools to define the environments.
+% \declaretheoremstyle[
+%   spaceabove=\abovedisplayskip,
+%   spacebelow=\belowdisplayskip,
+%   preheadhook=\renewcommand\@upn{}, % Workaround for thmtools bug:
+%                                     % http://tex.stackexchange.com/a/91491
+%   headfont={\sffamily\bfseries},
+%   headformat=\NAME~\NUMBER\,\NOTE,
+%   notefont=\normalsize\normalfont,
+%   notebraces={(}{)},
+%   preheadspace=\newline,
+%   preheadhook={% https://tex.stackexchange.com/a/121781
+%     \makebox[0.85\parindent][l]{%
+%       \textcolor{qedgray}{\small\hspace{-0.2ex}$\blacktriangleright$}}},
+%    qed={\textcolor{qedgray}{\small$\blacktriangleleft$\hspace{-0.2ex}}}
+%  ]{break}
+% 
+% \declaretheoremstyle[
+%   spaceabove=\abovedisplayskip,
+%   spacebelow=\belowdisplayskip,
+%   preheadhook=\renewcommand\@upn{}, % Workaround for thmtools bug:
+%                                     % http://tex.stackexchange.com/a/91491
+%   headfont=\sffamily\bfseries,
+%   headformat=\textcolor{qedgray}{\(\blacktriangleright\)}\nobreakspace\NAME~\NUMBER\,\NOTE,
+%   notefont=\normalsize\normalfont,
+%   notebraces={(}{)},
+%   qed={\textcolor{qedgray}{\small$\blacktriangleleft$\hspace{-0.2ex}}}
+%  ]{nobreak}
+
+\renewcommand*{\qedsymbol}{{\footnotesize$\color{qedgray}\blacksquare$}}
+\newcommand{\myqed}{\hfill\textcolor{qedgray}{\small$\blacktriangleleft$\hspace{-0.2ex}}}
+
+\newtheoremstyle{nobreakStyle}
+  {\topsep}          % Space above
+  {\topsep}          % Space below
+  {\normalfont}      % Body font
+  {0pt}              % Indent amount
+  {\sffamily\bfseries} % Head font
+  {.}                % Punctuation after head
+  {.5em}             % Space after head
+  { % Head spec
+    \textcolor{qedgray}{\small$\blacktriangleright$}\nobreakspace%
+    \thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}%
+  }
+
+% =============================== Declarations =================================
+\theoremstyle{nobreakStyle}
+
+%NOTE: If compiled file is the main body or the individual chapters, the numbering remains the same.
+\makeatletter
+\@ifclassloaded{memoir}{
+  \newtheorem{theorem}{Theorem}[chapter]
+}{
+  \newtheorem{theorem}{Theorem}
+}
+\makeatother
+
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{category}[theorem]{Category}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{task}[theorem]{Task}
+\newtheorem{scenario}[theorem]{Scenario}
+\newtheorem{warning}[theorem]{Warning}
+\newtheorem{guess}[theorem]{Guess}
+\newtheorem{remark}[theorem]{Remark}
+
+\AtEndEnvironment{definition}{\myqed}
+\AtEndEnvironment{example}{\myqed}
+\AtEndEnvironment{assumption}{\myqed}
+\AtEndEnvironment{proposition}{\myqed}
+\AtEndEnvironment{lemma}{\myqed}
+\AtEndEnvironment{corollary}{\myqed}
+\AtEndEnvironment{axiom}{\myqed}
+\AtEndEnvironment{remark}{\myqed}
+\AtEndEnvironment{guess}{\myqed}
+\AtEndEnvironment{warning}{\myqed}
+
+\newenvironment{sketch}[1][Proof sketch]{\begin{proof}[#1]}{\end{proof}}
+
+% ---------------------------------- Names -------------------------------------
+
+\crefname{theorem}{theorem}{theorems}
+\crefname{proposition}{proposition}{propositions}
+\crefname{lemma}{lemma}{lemmas}
+\crefname{corollary}{corollary}{corollarys}
+\crefname{definition}{definition}{definitions}
+\crefname{category}{category}{categories}
+\crefname{assumption}{assumption}{assumptions}
+\crefname{axiom}{axiom}{axioms}
+\crefname{example}{example}{examples}
+\crefname{task}{task}{tasks}
+\crefname{scenario}{scenario}{scenarios}
+\crefname{warning}{warning}{warnings}
+\crefname{guess}{guess}{guesses}
+\crefname{remark}{remark}{remarks}
+\crefname{diagram}{Diagram}{Diagrams}

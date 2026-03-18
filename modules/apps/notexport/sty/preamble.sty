@@ -1,0 +1,235 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{sty/preamble}[13/03/2025]
+
+% ================================= Utilities ==================================
+\RequirePackage{etex}
+\RequirePackage{xifthen}
+\RequirePackage{xstring}
+\RequirePackage{xargs}
+
+\usepackage{pdfpages}  % To include 1ere and 4eme
+\usepackage{lipsum}    % Placeholder text
+\usepackage{datetime2} % Precise date
+
+% ==================== Gettings and parsing string options ====================
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{
+  family=preamble,
+  prefix=preamble@
+}
+
+% Enable fancy theorem environments
+\DeclareStringOption[tcb]{theorems}  % Options are 'tcb' and 'simple'
+
+% Enable modified headers
+\DeclareStringOption[fancy]{headers} % Options are 'fancy' and 'simple'
+
+% Set display mode depending if 'root' is true or false
+\DeclareBoolOption[false]{root}
+\ProcessKeyvalOptions*
+
+% ============================= Save creation date =============================
+\usepackage{datetime2}
+\NewDocumentCommand{\created}{m}{%
+  \DTMsavedate{documentCreationDate}{#1}%
+}
+
+\NewDocumentCommand{\creationdate}{}{%
+  \DTMusedate{documentCreationDate}%
+}
+
+
+% =============================== Input encoding ===============================
+\RequirePackage[T1]{fontenc}
+
+% ================================== Fonts =====================================
+%\RequirePackage{libertine}
+%\RequirePackage{tgtermes}
+%\RequirePackage{lmodern}
+\RequirePackage{palatino}
+\RequirePackage[oldstyle, scale=0.7]{sourcecodepro}
+\RequirePackage[sf,scaled=0.9]{quattrocento}
+\RequirePackage{microtype}
+\RequirePackage{spverbatim}
+
+% ================================ Enumeration =================================
+\RequirePackage{enumitem}
+
+% ================================== Figures ===================================
+\RequirePackage{graphicx}
+%\RequirePackage{subfig}
+\RequirePackage{subcaption}
+\RequirePackage{epsfig}
+\graphicspath{{./figures/}}
+
+% ================================= Appendix ===================================
+\RequirePackage{appendix}
+
+% ================================== Colors ====================================
+\RequirePackage[dvipsnames]{xcolor}
+\input{sty/colors.sty}
+
+% ================================== Headers ===================================
+\ifpreamble@root
+\else
+  \RequirePackage{fancyhdr}
+  \renewcommand{\maketitle}{ % Redefine make title command
+    \thispagestyle{empty}
+    \begin{center}
+      \textbf{\huge \textsc{\@title}}\\
+      \vspace{2ex}
+      \large \@author\\
+      \vspace{1ex}
+      \itshape \normalsize \textcolor{dark_yellow}{Compiled: \@date}\\
+    \end{center}
+  }
+  \pagestyle{fancy}
+  \renewcommand{\headrulewidth}{0pt}
+
+  \fancyhead[L]{\parbox[t]{0.30\linewidth}
+  {\link{000-contents}[\texttt{\jobname}]}}
+  \fancyhead[C]{\parbox[t]{0.65\linewidth}
+  {\centering\textsc{\@title}}}
+  \fancyhead[R]{\textcolor{dark_yellow}{\texttt{\@date}}}
+  \renewcommand{\headrulewidth}{0pt}
+
+  \AtBeginDocument{
+    \maketitle
+    \tableofcontents
+  }
+\fi
+
+% ============================= Referencing pt.1 ===============================
+\RequirePackage{xr-hyper}
+\RequirePackage{hyperref}
+\hypersetup{colorlinks=true,
+            filecolor=cFile,
+            linkcolor=cLink,
+            citecolor=cCite,
+            urlcolor=cUrl,
+            pdfencoding=unicode,
+            linktoc=section
+           }
+
+% =================================== Math =====================================
+\RequirePackage{amsmath}
+\RequirePackage{amsthm}  % after hyperref and before cleveref
+\RequirePackage{amssymb}
+\RequirePackage{mathrsfs}
+\RequirePackage{slashed}
+\RequirePackage{mathtools}
+\RequirePackage{mathpartir}
+\setcounter{MaxMatrixCols}{20}
+
+% ============================= Referencing pt.2 ===============================
+\RequirePackage[capitalize, nameinlink, noabbrev]{cleveref}
+
+% ================================== Tables ===================================
+\RequirePackage{booktabs}
+\RequirePackage{rotating}[figuresleft]
+\RequirePackage{float}
+
+% ============================== Environments ==================================
+\input{sty/theorems.sty}
+
+% ============================== External files ================================
+\RequirePackage{standalone}
+\RequirePackage{import}
+\RequirePackage{url}
+
+% ================================== BibLaTex =================================
+%\RequirePackage[backend=biber,
+%                doi=true,
+%                url=true,
+%                hyperref=true,
+%                uniquename=false,
+%                maxcitenames=2,
+%                maxbibnames=99,
+%                sortcites=true,
+%                style=alphabetic
+%               ]{biblatex} % numeric
+%
+%\setlength\bibitemsep{1\baselineskip}
+%\AtEveryBibitem{
+%  \clearfield{urlyear}
+%  \clearfield{urlmonth}
+%  \clearfield{note}
+%  \clearfield{issn}
+%  \clearfield{isbn}
+%  \clearfield{pages}
+%  \clearfield{pagetotal}
+%  \clearfield{arxiv}
+%  \ifentrytype{online}{}{
+%    \clearfield{url}
+%  }
+%}
+
+\RequirePackage[backend=biber,
+                style=alphabetic,
+                doi=true,
+                hyperref=true,
+                maxcitenames=2,
+                maxbibnames=99,
+                giveninits=true,
+                isbn=false,
+                url=true,
+                eprint=false,
+                sorting=nty,
+                backref=true,
+                backrefstyle=three
+               ]{biblatex}
+
+\setlength\bibitemsep{0.5\baselineskip}
+
+\DeclareFieldFormat{doi}{%
+  \ifhyperref
+    {\href{https://doi.org/#1}{\nolinkurl{doi:#1}}}
+    {\nolinkurl{doi:#1}}}
+
+\renewbibmacro{in:}{%
+  \ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
+
+% CLEANUP CONFIGURATION
+\AtEveryBibitem{
+  \clearfield{month}
+  \clearfield{day}
+  \clearfield{note}
+  \clearfield{issn}
+  \clearfield{pages}
+  \clearfield{pagetotal}
+  \clearfield{series}
+  \clearfield{number}
+  \clearfield{pubstate}   % Removes "Pre-published"
+  \clearfield{urlyear}    % Removes "visited on" year
+  \clearfield{urldate}    % Removes "visited on" completely
+  \clearname{editor}      % Removes "Ed. by..."
+  \clearlist{location}
+  \clearlist{publisher}
+
+  \ifentrytype{online}{
+      % Always keep URL for online entries
+  }{
+      \iffieldundef{doi}{
+          % No DOI? Keep the URL.
+      }{
+          % Has DOI? Clear the URL to avoid redundancy.
+          \clearfield{url}
+      }
+  }
+}
+
+\addbibresource{./refs.bib}
+
+% ================================== Index ====================================
+%\RequirePackage{makeidx}
+
+% ================================ Algorithms =================================
+%\input{sty/algorithms.sty}
+
+% ================================= Diagrams ==================================
+\RequirePackage{quiver}
+\input{sty/tikzcd.sty}
+\input{sty/tikzit.sty}
+\input{sty/lics23-styles.tikzstyles}
+\input{sty/sheaves.tikzstyles}
+\usetikzlibrary{calc}

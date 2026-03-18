@@ -1,0 +1,296 @@
+\ProvidesPackage{sty/zettel}[13/03/2025]
+
+% ================================= Utilities ==================================
+\RequirePackage{xifthen}
+\RequirePackage{xstring}
+\RequirePackage{xargs}  % Required for \newcommandx and \renewcommandx
+\RequirePackage{etoolbox}  % For toggle functionality
+
+% ==================== Gettings and parsing string options ====================
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{
+  family=zettel,
+  prefix=zettel@
+}
+% Set knowledge mode: 'draft', 'print' and 'digital'
+
+\DeclareStringOption[draft]{mode}
+\DeclareBoolOption[false]{displayids}
+\ProcessKeyvalOptions*
+
+\IfEqCase{\zettel@mode}{
+  {draft}{\def\knowledgepackagemode{composition}}
+  {print}{\def\knowledgepackagemode{paper}}
+  {digital}{\def\knowledgepackagemode{electronic}}
+}
+
+% =========================== Knowledge management ============================
+\usepackage{sty/colors}
+\usepackage{mathcommand}
+\usepackage[makeidx]{knowledge} % Must be loaded after cleveref
+
+\knowledgeconfigure{notion, quotation}
+\knowledgeconfigure{protect quotation={tikzcd}}
+\knowledgeconfigure{diagnose line=true}
+
+\ifzettel@displayids
+  \newcommand{\leftmarginnote}[2][0pt]{%
+    \marginpar{\raisebox{#1}[0pt][0pt]{%
+        \parbox[t]{3cm}{\hspace{40pt}\raggedright\textcolor{cCite}{\texttt{#2}}}%
+    }}%
+  }
+  \reversemarginpar
+\else
+  \newcommand{\leftmarginnote}[2][0pt]{
+    %
+  }
+\fi
+
+\IfKnowledgePaperModeTF{
+  \knowledgestyle{intro notion}{color={cNotion}, emphasize}
+  \knowledgestyle{notion}{color={cNotion}}
+  %
+}{
+  % If we are NOT in paper mode (i.e. in composition mode or electronic mode)
+%  \knowledgestyle{intro notion}{color={cIntro}, emphasize}
+  \knowledgestyle{intro notion}{color={cNotion}, emphasize}
+  \knowledgestyle{notion}{color={cNotion}}
+  \hypersetup{
+      colorlinks=true,
+      breaklinks=true,
+      linkcolor={cLink}, % Links to sections, pages, etc.
+      citecolor={cCite}, % Links to bibliography
+      filecolor={cFile}, % Links to local file
+      urlcolor={cUrl},
+  }
+  \IfKnowledgeElectronicModeTF{
+      %
+  }{
+    % If we are in composition mode, highlight unknown stuff (in yellow) and display the anchor point.
+    \knowledgestyle{intro notion}{color={cIntro}, emphasize}
+    \knowledgestyle{notion}{color={cNotion}}
+    \knowledgeconfigure{anchor point color={cIntro}, anchor point shape=corner}
+    \knowledgestyle{intro unknown}{color={cUndefined}, emphasize}
+    \knowledgestyle{intro unknown cont}{color={cUndefined}, emphasize}
+    \knowledgestyle{kl unknown}{color={cUndefined}}
+    \knowledgestyle{kl unknown cont}{color={cUndefined}}
+  }
+}
+
+% ========================= Define minimum knowledge ==========================
+% The notes environment defines a knowledge per entry. The item's content is 
+% the filename, and it goes automatically to the index.
+\newcommandx{\addnote}[2][2='']{
+  \knowledge{#1}[#2]{url=file:#1.pdf,color=ForestGreen,index=:#1@\kl{#1}}
+}
+
+%% Disabled as for now I want everything to be explicit.
+%% =========================== Import knowledge files ==========================
+%% Import the macros and notions related to the current project.
+%\def\filend{-macros.tex}
+%\input{\expandafter\zettel@project\filend}
+%
+%% Set the default scope for the project, so that the project notions work.
+%\expandafter\knowledgeimport\expandafter{\zettel@project}
+%
+%% Disabled for now, I'm not sure I want to have two formats.
+%% ======================= Smaller header for note files ========================
+%% Set up header. Left header shows the file name, the center one shows the
+%% title and the right one shows the create date.
+%% This has to come before the catchfilebetweentags fix.
+%
+%\RequirePackage{fancyhdr}
+%\RequirePackage{xcolor}
+%
+%\ifnote@root
+%  \input{sty/headers.sty}
+%
+%  \AtBeginDocument{
+%    \maketitle
+%    \tableofcontents
+%    \listoftodos[List of todos]
+%  }
+%  \AtEndDocument{
+%    \printindex
+%  }
+%\else
+%  % \formatlabel{\jobname}
+%  \pagestyle{fancy}
+%  \fancyhead[L]{\parbox[t]{0.30\linewidth}
+%  {\textcolor{rio_green}{\link{000-contents}[\texttt{\jobname}]}}}
+%  \fancyhead[C]{\parbox[t]{0.65\linewidth}
+%  {\centering\color{grande_red}\@title}}
+%  \fancyhead[R]{\textcolor{sul_yellow}{\texttt{\@date}}}
+%  \renewcommand{\headrulewidth}{0pt}
+%\fi
+
+% ============================== Link a note file ==============================
+% The link command makes reference to a note that must have been previously
+% defined in the index. An undefined knowledge warning will appear otherwise.
+% The second parameter is an optional text, to be displayed instead of the 
+% filename.
+\newcommandx{\link}[2][2='']{\kl[#1]{
+  \ifthenelse{\equal{#2}{''}}{\texttt{\formatlabel{#1}}}{#2}}
+}
+
+% ========================== Transclude a note file ============================
+% Includes the contents of another file. When with the standalone package,
+% only includes the contents inside of the document delimitator.
+% Does not work properly if used inside of a subsection (The include counter
+% is not updated properly other than at the beginning of a document).
+
+\RequirePackage{catchfilebetweentags}
+
+%%Fix newlines with catchfilebetweentags
+\makeatletter
+\def\CatchFBT@Fin@l#1[#2]{%
+   \begingroup
+      %\endlinechar\m@ne % <- this is the guilty party
+%      \catcode`\"=12  % <- ADD THIS LINE: Make quotes inactive
+%      \catcode`\&=4   % Keep ampersands as alignment tabs for matrices
+      \makeatletter #2%
+      \scantokens\expandafter{%
+         \expandafter\CatchFBT@tok\expandafter{\the\CatchFBT@tok}}%
+      \CatchFBT@IsAToken{#1}
+         {\global#1\expandafter{\the\CatchFBT@tok}}
+         {\xdef#1{\the\CatchFBT@tok}}%
+      \ifx\CatchFBT@tok#1\else\global\CatchFBT@tok{}\fi
+   \endgroup
+}% \CatchFBT@Final
+\makeatother
+
+% https://tex.stackexchange.com/a/61803
+\newenvironment{leveldown}{% Demote sectional commands
+   \let\section\subsection%
+   \let\subsection\subsubsection%
+%   \let\subsubsection\paragraph%
+%   \let\paragraph\subparagraph%
+  }{}
+\newenvironment{levelup}{% Promote sectional commands
+%   \let\subparagraph\paragraph%
+%   \let\paragraph\subsubsection%
+   \let\subsubsection\subsection%
+   \let\subsection\section%
+   %\let\section\relax%
+  }{}
+
+% Default (\transclude): Demotes sectioning levels for nested notes.
+% Starred (\transclude*): Preserves sectioning levels for top-level chapters.
+
+\makeatletter
+\DeclareRobustCommand{\transclude}{\@ifstar\transclude@star\transclude@nostar}
+
+% No demotion if starred
+\newcommand{\transclude@star}[2][note]{%
+  \addtocounter{InputDepth}{1}%
+  \leftmarginnote[-1.5\baselineskip]{\textcolor{cCite}{\texttt{\formatlabel{#2}}}}
+  \ExecuteMetaData[./#2.tex]{#1}%
+  \addtocounter{InputDepth}{-1}%
+}
+
+% Normal demotion in transclusion
+\newcommand{\transclude@nostar}[2][note]{%
+  \begin{leveldown}%
+    \addtocounter{InputDepth}{1}%
+      \leftmarginnote[-1.8\baselineskip]{\textcolor{cCite}{\texttt{\formatlabel{#2}}}}
+      \ExecuteMetaData[./#2.tex]{#1}%
+    \addtocounter{InputDepth}{-1}%
+  \end{leveldown}%
+}
+\makeatother
+
+% \tsection is equivalent to declaring a section and following it by a transclude
+\newcommand{\tsection}[4][note]{%
+  \section{#3}
+  \label{#4}
+  \begin{leveldown}
+    \addtocounter{InputDepth}{1}
+    \ExecuteMetaData[./#2.tex]{#1}
+    \addtocounter{InputDepth}{-1}
+  \end{leveldown}
+}
+
+% \tsection is equivalent to wrapping a transclude with a remark environment
+\newcommandx{\tremark}[3][1=note,3='']{%
+  \ifthenelse{\equal{#3}{''}}{
+    \begin{remark}
+    \ExecuteMetaData[./#2.tex]{#1}
+    \end{remark}
+  }{
+    \begin{remark}[#3]
+    \ExecuteMetaData[./#2.tex]{#1}
+    \end{remark}
+  }
+}
+
+% ================================== Utilities =================================
+\newcommand{\formatlabel}[1]{%
+  \expandafter\formatlabelaux#1--\relax%
+}
+\def\formatlabelaux#1-#2-#3\relax{%
+  \ifx\relax#2\relax
+    #1% No hyphen case - return unchanged
+  \else
+    #1.#2% Hyphen case - replace hyphen with dot
+  \fi
+}
+
+% ====================== Environments for aggregating notes ====================
+
+\RequirePackage{listofitems}
+\newcommandx\listoflinks[2][1={}]{%
+  \readlist*\myargs{#2}%
+  Ref. \foreachitem\id\in\myargs{: \link{\id}}
+}
+
+\providecommand*\linklabel{}
+\makeatletter
+\newenvironment{notes}
+{\renewcommand{\linklabel}[1]{\hspace\labelsep\link{##1}}%
+  \list{}{\labelwidth\z@ \itemindent-\leftmargin
+          \let\makelabel\linklabel}}
+  {\endlist}
+\makeatother
+
+% The backlinks environment adds a list of all references at the bottom of the document.
+\providecommand*\backlinklabel{}
+\makeatletter
+\newenvironment{backlinks}
+{\renewcommand{\backlinklabel}[1]{\hspace\labelsep\link{##1}}%
+   \vfill\par
+   \paragraph{Backlinks}
+   \list{}{\labelwidth\z@ \itemindent-\leftmargin
+          \let\makelabel\backlinklabel}}
+  {\endlist}
+\makeatother
+
+% ======================== Add links for exernal notes =========================
+% List of external references to transclude at the end of a document, in a
+% decicated section
+
+% https://tex.stackexchange.com/a/537222
+\newcommand{\external}[1]{
+  \expandafter\ifx\expandafter\relax\detokenize{#1}\relax
+  \else
+    \readlist*\myargs{#1}%
+    \section{External references}
+    \foreachitem\id\in\myargs{\transclude{\id}}
+  \fi
+}
+
+% ==================== Hooks for correcting transclusions  =====================
+\AtBeginDocument{
+  \ifcsname c@InputDepth\endcsname
+    \addtocounter{InputDepth}{1}
+  \else
+    \newcounter{InputDepth}
+  \fi
+  \markboth{\jobname}{\jobname}
+}
+
+\AtEndDocument{
+  \ifnumcomp{\value{InputDepth}}{=}{0}{%
+  }{%
+    \addtocounter{InputDepth}{-1}
+  }
+}

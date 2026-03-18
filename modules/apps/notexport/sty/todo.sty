@@ -1,0 +1,111 @@
+% ==============================================================================
+% Todos and notes
+% ==================== Gettings and parsing string options ====================
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{
+  family=todo,
+  prefix=todo@
+}
+
+% Set display mode depending if 'root' is true or false
+\DeclareBoolOption[false]{disable}
+\DeclareBoolOption[false]{list}
+\ProcessKeyvalOptions*
+
+% ================================== Preamble ==================================
+\RequirePackage{xifthen}
+\RequirePackage{xstring}
+\RequirePackage{xargs}
+\RequirePackage[noadjust]{marginnote}
+\RequirePackage{ragged2e}
+\RequirePackage{cancel}
+\RequirePackage[framemethod=tikz,xcolor=true]{mdframed}
+
+\setlength{\marginparwidth}{2.7cm}
+
+\iftodo@disable
+\RequirePackage[figwidth=8cm, textwidth=\marginparwidth,disable]{todonotes}
+\else
+\RequirePackage[figwidth=8cm, textwidth=\marginparwidth]{todonotes}
+\fi
+
+% =================================== Notes ====================================
+% ----------------------------------- Notes -----------------------------------
+\renewcommand*{\marginfont}{% https://tex.stackexchange.com/a/224565
+  \noindent\rule{0pt}{0.7\baselineskip}\footnotesize\itshape}
+\renewcommand*{\raggedleftmarginnote}{\RaggedLeft}
+\renewcommand*{\raggedrightmarginnote}{\RaggedRight}
+
+% ----------------------------------- Todos -----------------------------------
+\newcounter{todocounter}
+
+\todostyle{todopar}{inline,noinlinepar,backgroundcolor=white,bordercolor=black}
+\todostyle{todofill}{inline,backgroundcolor=white,bordercolor=red,noinlinepar,inlinewidth=0.9cm}
+\todostyle{todoinline}{inline,backgroundcolor=white,bordercolor=white,linecolor=red,size=small,author=\textcolor{red}{Todo}}
+\todostyle{todomargin}{backgroundcolor=white,bordercolor=white,size=footnotesize,noline}
+
+\newcommand{\todof}[2][]{
+  \stepcounter{todocounter}
+  \missingfigure[caption={\thetodocounter. #2},#1]{#2}
+}  % figure
+
+\newcommand{\tfill}[1][]{
+  \stepcounter{todocounter}
+  \todo[todofill,caption={\thetodocounter. Fill},#1]{???} \quad
+}  % hole to be filled
+
+% auxtodo[<todoinline or todomargin>][<author>][<short version for toc>][<extra options>]{<long version>}
+\newcommandx{\auxtodo}[5][1=todoinline, 2=TODO, 3='', 4={}]{
+  \stepcounter{todocounter}
+  \ifthenelse{\equal{#3}{''}}{%
+    \todo[#1, author={\textcolor{red}{#2}},caption={\thetodocounter. #5},#4]{#5}
+  }{%
+    \todo[#1, author={\textcolor{red}{#2}},caption={\thetodocounter. #3},#4]{#5}
+  }
+} % auxiliary command
+
+\newcommandx{\todoi}[4][1=\textcolor{red}{\(\mathtt{todo}\)},2='',3={}] % inline
+{\auxtodo[todoinline][#1][#2][textcolor=black,#3]{#4}}
+
+\newcommandx{\todone}[4][1=\(\Box\),2='',3={}]{
+  \auxtodo[todoinline][#1][#2][textcolor=ForestGreen,#3]{\textbf{[DONE]} #4}
+} % inline
+
+\newcommandx{\todom}[4][1=,2='',3={}]{
+  \auxtodo[todomargin][#1][#2][#3]{\em #4}
+} % margin
+
+\newcommandx{\reply}[2][1='']{
+  \ifthenelse{\equal{#1}{''}}{%
+    \textcolor{blue}{#2}
+  }{%
+    \textcolor{blue}{#1: #2}
+  }
+}
+
+\newcommandx{\verify}[2][1='']{
+  \ifthenelse{\equal{#1}{x}}{\cancel{#2}}{\textcolor{red}{#2}}
+}
+
+\newcommandx{\replace}[2][1='']{
+  \(\cancelto{\textcolor{red}{\text{#1}}}{\textcolor{red}{\text{#2}}}\)
+}
+
+\newcommand{\redlistoftodos}{
+  \begin{mdframed}[tikzsetting={draw=red,ultra thick}]
+  \listoftodos[\color{red}{TODO}]
+  \end{mdframed}
+}
+
+% Each item is later translated to an environment of that type, with the exception of "text" which has no environment and "bibliography" which becomes text too, but I know it envolves hunting for references only.
+\newcommand{\TXT}{\textcolor{rio_green}{\(\mathtt{txt}\)}}   % Text
+\newcommand{\DEF}{\textcolor{blue}{\(\mathtt{def}\)}}        % Definition
+\newcommand{\ASS}{\textcolor{blue}{\(\mathtt{ass}\)}}        % Assumption
+\newcommand{\BIB}{\textcolor{blue}{\(\mathtt{bib}\)}}        % Bibliography*
+\newcommand{\EXA}{\textcolor{dark_yellow}{\(\mathtt{exa}\)}} % Example
+\newcommand{\RMK}{\textcolor{dark_yellow}{\(\mathtt{rmk}\)}} % Remark
+\newcommand{\FIG}{\textcolor{dark_yellow}{\(\mathtt{fig}\)}} % Figure
+\newcommand{\THM}{\textcolor{red}{\(\mathtt{thm}\)}}         % Theorem
+\newcommand{\PRF}{\textcolor{red}{\(\mathtt{prf}\)}}         % Proof
+\newcommand{\LEM}{\textcolor{red}{\(\mathtt{lem}\)}}         % Lemma
+\newcommand{\COR}{\textcolor{red}{\(\mathtt{cor}\)}}         % Corollary

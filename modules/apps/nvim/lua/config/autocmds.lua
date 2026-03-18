@@ -3,6 +3,15 @@
 local autocmd = vim.api.nvim_create_autocmd
 vim.api.nvim_create_augroup("Random", {clear = true})
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "julia",
+  callback = function()
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.tabstop = 2
+    vim.opt_local.expandtab = true
+  end,
+})
+
 -- vimtex conceal toggle
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "tex",

@@ -1,0 +1,41 @@
+$pdf_previewer = "open %S";
+
+## EPS to PDF conversion hook
+add_cus_dep('eps', 'pdf', 0, 'eps2pdf');
+sub eps2pdf {
+    system("epstopdf \"$_[0].eps\"");
+}
+
+## Enable shell-escape for all *latex commands  
+set_tex_cmds( '--shell-escape %O %S' );
+
+## Use pdflatex with shell-escape and synctex
+$pdf_mode = 1; # $ 1 = pdflatex, 4 = lualatex
+$pdflatex = "pdflatex --shell-escape --synctex=1 --file-line-error %O %S";
+$lualatex = "lualatex --shell-escape %O %S --synctex=1 --file-line-error ";
+$postscript_mode = $dvi_mode = 0;
+
+# @default_files = ('main.tex');
+@default_files = ("*.tex");
+@default_excluded_files = ("*notions.tex", "*macros.tex");
+
+## Default file to compile (comment out to compile all)
+@default_files = ('main.tex');
+# @default_excluded_files = ("*notions.tex", "*macros.tex");
+
+## Build and auxiliary directories
+$out_dir = 'build';
+$aux_dir = 'build';
+
+## Bibtex: 2 = run bibtex when needed, delete .bbl on clean
+$bibtex_use = 2;
+
+## Silence output (set to 0 for verbose)
+$silent = 1;
+
+## Continuous preview (uncomment to enable)
+# $preview_continuous_mode = 1;
+
+## Extensions to clean
+$clean_ext = 'aux dvi log out synctex.gz fls fdb_latexmk';
+$clean_full_ext = 'bbl pdf';

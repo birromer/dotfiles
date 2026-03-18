@@ -1,0 +1,5 @@
+#!/bin/sh
+
+for i in *.tex
+  do latexmk -pdflatex='lualatex -shell-escape' -pdf -bibtex -synctex=1 -shell-escape -verbose -interaction=nonstopmode -auxdir=./slipbox/ -outdir=./slipbox/ -f $1
+done

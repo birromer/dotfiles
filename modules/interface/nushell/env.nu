@@ -16,14 +16,16 @@ $env.PATH = ($env.PATH | prepend [
     $"($env.HOME)/.agda"              # Agda
     $"($env.HOME)/.MATLAB/bin"        # MATLAB
     $"($env.HOME)/.cabal/bin"         # Haskell
-    $"($env.HOME)/.opam/default/bin"  # OCaml
 ])
 
-# Adding conda paths
-$env.PATH = ($env.PATH | prepend [
-    "/opt/anaconda3/bin"
-    "/opt/anaconda3/condabin"
-])
+# Initialize Opam (PowerShell parsing workaround)
+opam env --shell=powershell | parse "$env:{key} = '{val}'" | transpose -rd | load-env
+
+# # Adding conda paths
+# $env.PATH = ($env.PATH | prepend [
+#     "/opt/anaconda3/bin"
+#     "/opt/anaconda3/condabin"
+# ])
 
 # Adding Julia paths
 $env.PATH = ($env.PATH | prepend [

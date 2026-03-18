@@ -1,0 +1,74 @@
+%! TEX root = {{OUTPUT_FILE}}
+%! TEX program = pdflatex
+\documentclass[a4paper,UKenglish,cleveref,autoref,thm-restate,anonymous]{lipics-v2021}
+% ============================ Document parameters =============================
+%This is a template for producing LIPIcs articles. 
+%See lipics-v2021-authors-guidelines.pdf for further information.
+%for A4 paper format use option "a4paper", for US-letter use option "letterpaper"
+%for british hyphenation rules use option "UKenglish", for american hyphenation rules use option "USenglish"
+%for section-numbered lemmas etc., use "numberwithinsect"
+%for enabling cleveref support, use "cleveref"
+%for enabling autoref support, use "autoref"
+%for anonymousing the authors (e.g. for double-blind review), add "anonymous"
+%for enabling thm-restate support, use "thm-restate"
+%for enabling a two-column layout for the author/affilation part (only applicable for > 6 authors), use "authorcolumns"
+%for producing a PDF according the PDF/A standard, add "pdfa"
+% =================================== Flags ====================================
+%\pdfoutput=1 %uncomment to ensure pdflatex processing (mandatatory e.g. to submit to arXiv)
+\hideLIPIcs  %uncomment to remove references to LIPIcs series (logo, DOI, ...), e.g. when preparing a pre-final version to be uploaded to arXiv or another public repository
+%\nolinenumbers %uncomment to disable line numbering
+\graphicspath{./fig/} %helpful if your graphic files are in another directory
+\bibliographystyle{plainurl}% the mandatory bibstyle
+% ============================= Extra information ==============================
+% \authorrunning{} %NOTE: mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
+% \Copyright{} %NOTE: mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+% \ccsdesc[100]{\textcolor{red}{Replace ccsdesc macro with valid one}} %NOTE: mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm 
+% \keywords{} %NOTE: mandatory; please add comma-separated list of keywords
+% \category{} %NOTE: optional, e.g. invited paper
+% \relatedversion{} %NOTE: optional, e.g. full version hosted on arXiv, HAL, or other respository/website
+% \relatedversiondetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93]{Classification (e.g. Full Version, Extended Version, Previous Version}{URL to related version} %NOTE: linktext and cite are optional
+% \supplement{} %NOTE: optional, e.g. related research data, source code, ... hosted on a repository like zenodo, figshare, GitHub, ...
+% \supplementdetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93, subcategory={Description, Subcategory}, swhid={Software Heritage Identifier}]{General Classification (e.g. Software, Dataset, Model, ...)}{URL to related version} %NOTE: linktext, cite, and subcategory are optional
+%\funding{(Optional) general funding statement \dots} %NOTE: optional, to capture a funding statement, which applies to all authors. Please enter author specific funding statements as fifth argument of the \author macro.
+% ================================ Editor stuff ================================
+%NOTE: Editor-only macros:: begin (do not touch as author)
+% \EventEditors{}
+% \EventNoEds{}
+% \EventLongTitle{}
+% \EventShortTitle{}
+% \EventAcronym{}
+% \EventYear{}
+% \EventDate{}
+% \EventLocation{}
+% \EventLogo{}
+% \SeriesVolume{}
+% \ArticleNo{}
+% ================================= Packages ===================================
+\usepackage[mode=draft]{sty/zettel} %TODO: Change to 'digital' for submission.
+\usepackage{sty/todo} %TODO: Disable for submission.
+\usepackage{sty/tikzit}
+\usepackage{booktabs}
+% ================================== Macros ====================================
+\input{notions.kl}
+\usepackage{macros}
+\input{sty/diag.tikzstyles}
+\input{sty/sheaves.tikzstyles}
+% =================================== Title ====================================
+\title{{{TITLE}}}
+%\titlerunning{short}
+% ================================== Authors ===================================
+% \author{Jane {Open Access}}{Dummy University Computing Laboratory, [optional: Address], Country \and My second affiliation, Country \and \url{http://www.myhomepage.edu} }{johnqpublic@dummyuni.org}{https://orcid.org/0000-0002-1825-0097}{(Optional) author-specific funding acknowledgements} %NOTE: mandatory, please use full name; only 1 author per \author macro; first two parameters are mandatory, other parameters can be empty. Please provide at least the name of the affiliation and the country. The full address is optional. Use additional curly braces to indicate the correct name splitting when the last name consists of multiple name parts.
+% ============================== Acknowledgements ==============================
+\acknowledgements{}
+% ================================= Document ===================================
+\begin{document}
+\maketitle
+\begin{abstract} %NOTE: mandatory: add short abstract of the document
+\end{abstract}
+\tableofcontents %TODO: Remove before final version
+\listoftodos[List of todos] %TODO: Remove before final version
+% =================================== Content ==================================
+{{CONTENT}}
+% ================================ End content =================================
+\bibliography{refs}
+\end{document}

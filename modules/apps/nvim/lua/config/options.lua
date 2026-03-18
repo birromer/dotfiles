@@ -1,5 +1,8 @@
 -- Options are automatically loaded before lazy.nvim startup
 
+-- Shell
+vim.o.shell = "/bin/bash"
+
 -- Latex option
 vim.g.latex_to_unicode_keymap = 1
 -- vim.g.vimtex_syntax_conceal_disable = 1

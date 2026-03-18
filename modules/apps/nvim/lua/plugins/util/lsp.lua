@@ -139,6 +139,8 @@ return {
         vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Diagnostic loclist" })
       end)
 
+      vim.lsp.enable("julials")
+
       -- Setup neodev before lspconfig
       require("neodev").setup({})
 
@@ -162,24 +164,30 @@ return {
             lspconfig[server_name].setup({
               capabilities = lsp_capabilities,
             })
-          end,
+        end,
 
-          lua_ls = function()
-            lspconfig.lua_ls.setup({
-              capabilities = lsp_capabilities,
-              settings = {
-                Lua = {
-                  runtime = { version = "LuaJIT" },
-                  diagnostics = { globals = { "vim" } },
-                  workspace = {
-                    library = vim.api.nvim_get_runtime_file("", true),
-                    checkThirdParty = false,
-                    maxPreload = 10000,
-                    preloadFileSize = 10000,
-                  },
-                  telemetry = { enable = false },
+        julials = function()
+          lspconfig.julials.setup({
+            capabilities = lsp_capabilities,
+          })
+        end,
+
+        lua_ls = function()
+          lspconfig.lua_ls.setup({
+            capabilities = lsp_capabilities,
+            settings = {
+              Lua = {
+                runtime = { version = "LuaJIT" },
+                diagnostics = { globals = { "vim" } },
+                workspace = {
+                  library = vim.api.nvim_get_runtime_file("", true),
+                  checkThirdParty = false,
+                  maxPreload = 10000,
+                  preloadFileSize = 10000,
                 },
+                telemetry = { enable = false },
               },
+            },
             })
           end,
 
