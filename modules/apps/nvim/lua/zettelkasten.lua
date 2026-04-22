@@ -9,7 +9,7 @@ local fn = vim.fn
 local CONFIG_FILENAME = ".zettel.lua"
 
 -- Default notes directory (fallback when no .zettelkasten.lua found)
-local DEFAULT_NOTES_DIR = "~/cloud/Research/notes"
+local DEFAULT_NOTES_DIR = "~/cloud/notes"
 
 -- Default/fallback configuration (used if no local config found)
 local default_config = {
@@ -161,7 +161,8 @@ local function create_zettel(prefix, id, split)
   end
 
   vim.cmd(split .. ' ' .. zettel_name)
-  print(fn.expand('%:p:~'))
+--  print(fn.expand('%:p:~'))
+  vim.notify(" Opened: " .. fn.expand('%:p:~'), vim.log.levels.INFO)
 end
 
 local function create_zettel_behind(split)

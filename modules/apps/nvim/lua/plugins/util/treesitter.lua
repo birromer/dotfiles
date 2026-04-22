@@ -1,6 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master",
     build = ":TSUpdate",
     config = function()
       local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
@@ -13,13 +14,17 @@ return {
         filetype = "forester",
       }
 
-      vim.filetype.add({ extension = { tree = "forester" } })
+      vim.filetype.add({
+        extension = {
+          tree = "forester",
+        },
+      })
 
       require("nvim-treesitter.configs").setup({
         ensure_installed = {
-          "lua", "bibtex", "latex", "python", "ninja", "yaml", "ron",
+          "lua", "bibtex", "python", "ninja", "yaml", "ron",
           "toml", "rst", "haskell", "rust", "markdown", "markdown_inline",
-          "json", "json5", "jsonc", "cmake", "c", "cpp", "forester",
+          "json", "json5", "jsonc", "cmake", "c", "cpp", "forester", 
         },
         highlight = {
           enable = true,
@@ -27,7 +32,6 @@ return {
         },
       })
 
-      -- Forester LSP
       vim.lsp.config["forester-lsp"] = {
         cmd = { "forester", "lsp", "forest.toml" },
         filetypes = { "forester" },
@@ -36,6 +40,22 @@ return {
       vim.lsp.enable("forester-lsp")
     end,
   },
+
   { "nvim-treesitter/nvim-treesitter-textobjects", event = "InsertEnter" },
-  { "JoosepAlviste/nvim-ts-context-commentstring" },
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    opts = {
+      enable_autocmd = false,
+    },
+    config = function(_, opts)
+      require("ts_context_commentstring").setup(opts)
+      -- hook into native gc
+      local get_option = vim.filetype.get_option
+      vim.filetype.get_option = function(filetype, option)
+        return option == "commentstring"
+          and require("ts_context_commentstring.internal").calculate_commentstring()
+          or get_option(filetype, option)
+      end
+    end,
+  },
 }

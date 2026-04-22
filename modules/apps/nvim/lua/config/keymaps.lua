@@ -205,7 +205,7 @@ map("n", "<leader>wc", "<cmd>NoNeckPain<cr>", {desc = "Toggle centering"} )
 map("n", "<leader>wm", "<cmd>MaximizerToggle<cr>", {desc = "Toggle maximizer"} )
 
 -- Wrapwidth
-map("n", "<leader>ww", "<cmd>Wrapwidth 80<cr>", {desc = "Enable wrap"})
+map("n", "<leader>ww", "<cmd>Wrapwidth 100<cr>", {desc = "Enable wrap"})
 map("n", "<leader>wf", "<cmd>Wrapwidth! <cr>", {desc = "Fix wrap"})
 
 -- Flash
@@ -238,3 +238,59 @@ map('n', 'zC', function() return require('fold-cycle').close_all() end, {remap =
 
 -- MdEval
 map('n', '<leader>cc', "<cmd>lua require 'mdeval'.eval_code_block()<CR>", {silent = true, noremap = true})
+
+-- Org filetype overrides
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "org",
+  callback = function()
+    vim.keymap.set("n", "<Tab>", "<cmd>lua require('orgmode').action('org_mappings.cycle')<CR>", { buffer = true, silent = true })
+    vim.keymap.set("n", "<S-Tab>", "<cmd>lua require('orgmode').action('org_mappings.global_cycle')<CR>", { buffer = true, silent = true })
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "org", "orgagenda" },
+  callback = function()
+    vim.keymap.set("n", "<leader>oB", function()
+      -- From agenda, jump to source file first
+      if vim.bo.filetype == "orgagenda" then
+        require('orgmode').action('agenda.switch_to_item')
+      end
+
+      -- Now we should be in an org buffer on a headline
+      local line = vim.api.nvim_get_current_line()
+      local stars = line:match("^(%*+)")
+      if not stars then
+        vim.notify("Not on a headline", vim.log.levels.WARN)
+        return
+      end
+      local new_stars = stars .. "*"
+      local current_line = vim.api.nvim_win_get_cursor(0)[1]
+      local total_lines = vim.api.nvim_buf_line_count(0)
+      local level = #stars
+
+      local insert_at = total_lines
+      for i = current_line + 1, total_lines do
+        local l = vim.api.nvim_buf_get_lines(0, i - 1, i, false)[1]
+        local s = l:match("^(%*+)%s")
+        if s and #s <= level then
+          insert_at = i - 1
+          break
+        end
+      end
+
+      vim.api.nvim_buf_set_lines(0, insert_at, insert_at, false, { new_stars .. " TODO " })
+      vim.api.nvim_win_set_cursor(0, { insert_at + 1, #new_stars + 6 })
+      vim.cmd("startinsert!")
+    end, { buffer = true, desc = "New child TODO" })
+  end,
+})
+
+map("n", "<leader>od", "<cmd>Org agenda D<CR>", { desc = "Today" })
+map("n", "<leader>ow", "<cmd>Org agenda w<CR>", { desc = "Work" })
+map("n", "<leader>op", "<cmd>Org agenda p<CR>", { desc = "Perso" })
+map("n", "<leader>oW", "<cmd>Org agenda W<CR>", { desc = "Week" })
+
+vim.keymap.set('n', '<leader>fo', function()
+  require('telescope').extensions.orgmode.search_headings()
+end, { desc = 'Search org headlines' })

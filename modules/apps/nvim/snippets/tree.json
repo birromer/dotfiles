@@ -71,7 +71,11 @@
   },
   "Paragraph": {
     "prefix": "p",
-    "body": ["\\p{$0}"],
+    "body": [
+      "\\p{",
+      "\t$0",
+      "}"
+    ],
     "description": "Paragraph"
   },
   "Inline math": {
