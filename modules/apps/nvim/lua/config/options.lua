@@ -13,6 +13,7 @@ vim.g.lazyvim_python_ruff = "ruff_lsp"
 
 -- UI options
 vim.cmd.colorscheme "elflord"
+vim.api.nvim_set_hl(0, "@markup.math.forester", { link = "Statement" })
 vim.g.base16colorspace = 256
 vim.opt.termguicolors = true -- Truecolor
 vim.opt.conceallevel = 2     -- conceal
@@ -42,7 +43,7 @@ vim.g.vim_markdown_frontmatter = 1
 -- Folding
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-vim.opt.foldlevelstart = 0  -- 2 should show everything from sections
+vim.opt.foldlevelstart = 2  -- 2 should show everything from sections
 
 -- Disable netew
 vim.g.loaded_netrw = 1
@@ -53,7 +54,7 @@ vim.opt.linebreak = true
 vim.g.wrapwidth_sign = '|'
 vim.g.wrapwidth_number = 1
 vim.opt.wrap = true
--- vim.opt.cc = "80"
+-- vim.opt.cc = "100"
 -- vim.opt.wrapmargin = 0
 -- vim.opt.textwidth = 0
 -- vim.opt_local.columns = 120
