@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
-# Show currently clocked-in task with session / total / remaining vs effort.
+# Output format:
+#   ACTIVE|⏱ 00:15 / 00:45 / -00:30 Task name
+#   OVER|⏱ 00:05 / 01:45 / -00:00 Task name
+#   NONE|No clock running
 
 ORG_DIR="$HOME/cloud/org"
 
 effort_to_minutes() {
   local eff="$1"
   local total=0
-
   if [[ "$eff" =~ ^([0-9]+):([0-9]+)$ ]]; then
-    echo $(( ${BASH_REMATCH[1]} * 60 + ${BASH_REMATCH[2]} ))
-    return
+    echo $(( ${BASH_REMATCH[1]} * 60 + ${BASH_REMATCH[2]} )); return
   fi
   if [[ "$eff" =~ ^([0-9]+)d$ ]]; then
     echo $(( ${BASH_REMATCH[1]} * 8 * 60 )); return
@@ -26,23 +27,6 @@ effort_to_minutes() {
   [ "$total" -gt 0 ] && echo "$total"
 }
 
-# Format minutes as "Xm" or "H:MM" or "-Xm" / "-H:MM"
-# fmt_duration() {
-#   local mins=$1
-#   local sign=""
-#   if [ "$mins" -lt 0 ]; then
-#     sign="-"
-#     mins=$(( -mins ))
-#   fi
-#   local h=$((mins / 60))
-#   local m=$((mins % 60))
-#   if [ $h -gt 0 ]; then
-#     printf "%s%d:%02d" "$sign" "$h" "$m"
-#   else
-#     printf "%s%dm" "$sign" "$m"
-#   fi
-# }
-
 fmt_duration() {
   local mins=$1
   local h=$((mins / 60))
@@ -56,7 +40,6 @@ for f in "$ORG_DIR"/*.org; do
   [ -z "$clock_line" ] && continue
 
   line_num=$(echo "$clock_line" | cut -d: -f1)
-
   date_part=$(echo "$clock_line" | sed -nE 's/.*\[([0-9]{4}-[0-9]{2}-[0-9]{2}) [A-Za-z]+ ([0-9]{2}:[0-9]{2})\].*/\1 \2/p')
 
   session_min=0
@@ -66,16 +49,13 @@ for f in "$ORG_DIR"/*.org; do
     session_min=$(( (now_epoch - start_epoch) / 60 ))
   fi
 
-  # Find the headline's line number
   headline_line=$(sed -n "1,${line_num}p" "$f" | grep -nE '^\*+ ' | tail -1 | cut -d: -f1)
   headline=$(sed -n "${headline_line}p" "$f")
   [ -z "$headline" ] && continue
 
-  # Determine subtree end: next headline at same or lower level, or EOF
   stars=$(echo "$headline" | grep -oE '^\*+')
   level=${#stars}
   total_lines=$(wc -l < "$f")
-
   subtree_end=$total_lines
   for (( i=headline_line+1; i<=total_lines; i++ )); do
     line=$(sed -n "${i}p" "$f")
@@ -88,22 +68,18 @@ for f in "$ORG_DIR"/*.org; do
     fi
   done
 
-  # Sum all closed clocks in this subtree (lines with "=> H:MM")
   total_clocked=0
   while IFS= read -r l; do
     if [[ "$l" =~ \=\>[[:space:]]+([0-9]+):([0-9]+) ]]; then
       total_clocked=$(( total_clocked + ${BASH_REMATCH[1]} * 60 + ${BASH_REMATCH[2]} ))
     fi
   done < <(sed -n "${headline_line},${subtree_end}p" "$f")
-  # Add the active session
   total_clocked=$(( total_clocked + session_min ))
 
-  # Extract effort from the properties drawer in this subtree
   effort_str=$(sed -n "${headline_line},${subtree_end}p" "$f" \
     | grep -m1 -E ':Effort:[[:space:]]+' \
     | sed -E 's/.*:Effort:[[:space:]]+([^[:space:]].*[^[:space:]]|[^[:space:]])[[:space:]]*$/\1/')
 
-  # Strip title
   title=$(echo "$headline" \
     | sed -E 's/^\*+[[:space:]]+//' \
     | sed -E 's/^(TODO|NEXT|WAIT|LATER|DONE|CANCELLED)[[:space:]]+//' \
@@ -114,18 +90,24 @@ for f in "$ORG_DIR"/*.org; do
   session_str=$(fmt_duration $session_min)
   total_str=$(fmt_duration $total_clocked)
 
+  status="ACTIVE"
   if [ -n "$effort_str" ]; then
     effort_min=$(effort_to_minutes "$effort_str")
     if [ -n "$effort_min" ] && [ "$effort_min" -gt 0 ]; then
       remaining=$(( effort_min - total_clocked ))
-      [ "$remaining" -lt 0 ] && remaining=0
+      if [ "$remaining" -le 0 ]; then
+        remaining=0
+        status="OVER"
+      fi
       remaining_str=$(fmt_duration $remaining)
-      echo "⏱ ${session_str} | ${total_str} | -${remaining_str} | ${title} "
+      echo "${status}| ⏱ ${title} | + ${session_str} | ~ ${total_str} | - ${remaining_str}"
       exit 0
     fi
   fi
 
-  # No effort: just session / total
-  echo "⏱ ${session_str} | ${total_str} ${title}"
+  echo "ACTIVE|⏱ ${title} | + ${session_str} | ~ ${total_str} "
   exit 0
 done
+
+# No clock found
+echo "NONE|⚠ no clock running"
