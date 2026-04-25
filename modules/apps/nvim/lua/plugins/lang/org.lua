@@ -11,7 +11,7 @@ return {
 
         -- States
         org_todo_keywords = {
-          'TODO(t)', 'NEXT(n)', 'WAIT(w@/!)', 'LATER(l)',
+          'NEXT(n)', 'TODO(t)', 'WAIT(w@/!)', 'LATER(l)',
           '|',
           'DONE(d!)', 'CANCELLED(c@)',
         },
