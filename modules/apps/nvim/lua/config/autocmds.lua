@@ -3,6 +3,100 @@
 local autocmd = vim.api.nvim_create_autocmd
 vim.api.nvim_create_augroup("Random", {clear = true})
 
+-- Tag namespace coloring via extmark post-processing
+local tag_prefix_hl = {
+  t_ = 'OrgTagWorkType',
+  i_ = 'OrgTagInterest',
+  c_ = 'OrgTagContext',
+  w_ = 'OrgTagWrite',
+  d_ = 'OrgTagDev',
+  r_ = 'OrgTagRead',
+  q_ = 'OrgTagQuestion',
+  p_ = 'OrgTagProject',
+}
+
+-- Filetag emojis (single-emoji, file-level tags) get their own colors.
+-- These are matched exactly, before the prefix lookup.
+local tag_exact_hl = {
+  ['📥'] = 'OrgTagInbox',
+  ['🛠️'] = 'OrgTagWork',
+  ['🙋'] = 'OrgTagPerso',
+  ['⏰'] = 'OrgTagHabit',
+}
+
+for group, fg in pairs({
+  OrgTagWorkType = '#f7768e',
+  OrgTagInterest = '#bb9af7',
+  OrgTagContext  = '#7aa2f7',
+  OrgTagWrite    = '#9ece6a',
+  OrgTagDev      = '#7dcfff',
+  OrgTagRead     = '#ff9e64',
+  OrgTagQuestion = '#e0af68',
+  OrgTagProject  = '#565f89',
+  OrgTagInbox    = '#e0af68',
+  OrgTagWork     = '#f7768e',
+  OrgTagPerso    = '#9ece6a',
+  OrgTagHabit    = '#565f89',
+}) do
+  vim.api.nvim_set_hl(0, group, { fg = fg })
+end
+
+local function recolor_agenda_tags(buf)
+  local ns = vim.api.nvim_get_namespaces()['org_agenda']
+  if not ns then return end
+  local marks = vim.api.nvim_buf_get_extmarks(buf, ns, 0, -1, { details = true })
+  for _, mark in ipairs(marks) do
+    local id, row, col, opts = mark[1], mark[2], mark[3], mark[4]
+    if opts.virt_text then
+      local changed = false
+      local new_vt = {}
+      for _, chunk in ipairs(opts.virt_text) do
+        local text, hl = chunk[1], chunk[2]
+        -- Tag column: ':tag:tag:' with no internal whitespace.
+        -- %S (not [%a_:]) so emoji bytes in tags are accepted.
+        if type(text) == 'string' and text:match('^:%S+:$') then
+          new_vt[#new_vt+1] = { ':', '@org.agenda.tag' }
+          for tag in text:gmatch(':([^:]+)') do
+            local tag_hl = tag_exact_hl[tag] or tag_prefix_hl[tag:sub(1, 2)] or '@org.agenda.tag'
+            new_vt[#new_vt+1] = { tag, tag_hl }
+            new_vt[#new_vt+1] = { ':', '@org.agenda.tag' }
+          end
+          changed = true
+        else
+          new_vt[#new_vt+1] = chunk
+        end
+      end
+      if changed then
+        local clean = vim.tbl_extend('force', opts, { virt_text = new_vt, id = id })
+        clean.ns_id = nil
+        vim.api.nvim_buf_set_extmark(buf, ns, row, col, clean)
+      end
+    end
+  end
+end
+
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  pattern = 'orgagenda',
+  callback = function(ev)
+    vim.defer_fn(function()
+      if not vim.api.nvim_buf_is_valid(ev.buf) then return end
+      recolor_agenda_tags(ev.buf)
+      -- set up r remap once per buffer
+      if not vim.b[ev.buf].org_tag_remap then
+        vim.b[ev.buf].org_tag_remap = true
+        vim.keymap.set('n', 'r', function()
+          require('orgmode').action('agenda.redo', 'mapping')
+          vim.defer_fn(function()
+            if vim.api.nvim_buf_is_valid(ev.buf) then
+              recolor_agenda_tags(ev.buf)
+            end
+          end, 100)
+        end, { buffer = ev.buf })
+      end
+    end, 100)
+  end,
+})
+
 vim.api.nvim_create_autocmd({"ColorScheme", "FileType"}, {
   pattern = "*",
   callback = function()
@@ -18,7 +112,7 @@ vim.api.nvim_create_autocmd({"ColorScheme", "FileType"}, {
     vim.api.nvim_set_hl(0, "@org.keyword.todo",      { fg = "#ff5555", bold = true })
     vim.api.nvim_set_hl(0, "@org.keyword.done",      { fg = "#55ff55" })
     vim.api.nvim_set_hl(0, "OrgTODO",      { fg = "#ff5555", bold = true })
-    vim.api.nvim_set_hl(0, "OrgNEXT",      { fg = "#ffaa00", bold = true })
+    vim.api.nvim_set_hl(0, "OrgWEEK",      { fg = "#ffaa00", bold = true })
     vim.api.nvim_set_hl(0, "OrgWAITING",   { fg = "#ff55ff" })
     vim.api.nvim_set_hl(0, "OrgMAYBE",     { fg = "#888888", italic = true })
     vim.api.nvim_set_hl(0, "OrgDONE",      { fg = "#55ff55" })
@@ -128,7 +222,7 @@ autocmd("InsertLeave", {group = "Random", command = "set timeoutlen=1000"})
 
 autocmd({"BufEnter", "BufWinEnter"}, {
   pattern = {"*.tex", "*.tree", "*.md", "org", "orgagenda"},
-  command = "Wrapwidth 100",
+  command = "Wrapwidth 95",
 })
 
 vim.g.tex_compiles_successfully = false
